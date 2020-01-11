@@ -1,0 +1,2 @@
+file.create("netlify.toml")
+blogdown::hugo_version()

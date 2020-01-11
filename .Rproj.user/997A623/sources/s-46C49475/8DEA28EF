@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1578775013698.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8DEA28EF",
+    "lastKnownWriteTime" : 1578775048,
+    "last_content_update" : 1578775048308,
+    "path" : "C:/Users/amitl/R_code/amitlevinson.com/netlify.toml",
+    "project_path" : "netlify.toml",
+    "properties" : {
+        "cursorPosition" : "4,24",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}
