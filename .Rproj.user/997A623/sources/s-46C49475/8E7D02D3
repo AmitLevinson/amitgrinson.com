@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3437463232",
+    "hash" : "0",
     "id" : "8E7D02D3",
-    "lastKnownWriteTime" : 1578675082,
-    "last_content_update" : 1578675082,
+    "lastKnownWriteTime" : 1578776234,
+    "last_content_update" : 1578776234807,
     "path" : "C:/Users/amitl/R_code/amitlevinson.com/config.toml",
     "project_path" : "config.toml",
     "properties" : {
+        "cursorPosition" : "55,15",
+        "scrollLine" : "50"
     },
     "read_only" : false,
     "read_only_alternatives" : [

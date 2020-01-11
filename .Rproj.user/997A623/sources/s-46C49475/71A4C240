@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1578778180595.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1511176545",
+    "id" : "71A4C240",
+    "lastKnownWriteTime" : 1578778292,
+    "last_content_update" : 1578778292665,
+    "path" : "C:/Users/amitl/R_code/amitlevinson.com/config/_default/params.toml",
+    "project_path" : "config/_default/params.toml",
+    "properties" : {
+        "cursorPosition" : "57,0",
+        "scrollLine" : "53"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}

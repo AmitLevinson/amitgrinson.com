@@ -7,7 +7,7 @@ exampleSite/public/
 
 # Jupyter
 .ipynb_checkpoints/
-
+https://github.com/AmitLevinson/amitlevinson.com.git
 # Node
 node_modules/
 
