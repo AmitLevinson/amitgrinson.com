@@ -1,0 +1,107 @@
+---
+title: Mapping bomb shelters
+author: Amit Levinson
+date: '2019-11-15'
+slug: bomb-shelters
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2019-11-15T21:55:54+02:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+
+<p>While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva bomb shelters.<br />
+For a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> encouraged me to do so.<br />
+A day before doing so, i discovered our municupality’s open access data <a href="https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx">website</a>. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.</p>
+<p>Let’s begin with the packages we’ll need:</p>
+<pre class="r"><code>#for data manipulation
+library(tidyverse)
+#for a nice map
+library(ggmap)
+#for reading and working with .geojson file
+library(geojsonio)
+library(sp)
+#for integrating a nice font
+library(extrafont)</code></pre>
+<div id="loading-and-tidying-the-data" class="section level3">
+<h3>Loading and tidying the data</h3>
+<p>I initially tried using the csv file they have on their webiste but I was having too much trouble with the Hebrew so I decided to try and work with the <code>geojsonio</code> package. I had no idea how to work with a .geojson file or frankly how to work with maps in general. To my save, i found this incredible blog by<a href="https://randomjohn.github.io/r-geojson-srt/">John Johnson</a> to help me transform a ‘geomjson’ file to a dataframe you can work with.</p>
+<pre class="r"><code>#read the .geojson file
+my_geojson &lt;- &quot;shelters.geojson&quot;
+#convert the .geojson file to an sp object
+data_json &lt;- geojson_read(my_geojson, what = &quot;sp&quot;)
+#now we can convert it to a nice data frame
+shelters &lt;- as.data.frame(data_json)
+#last tidying of the column names
+names(shelters)[6:7] &lt;- c(&quot;long&quot;, &quot;lat&quot;)</code></pre>
+<p>What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use <code>rename</code> from the <code>plyr</code> package but i liked the base R function Johnson used in his blog so I’ll stick with that.<br />
+let’s look at the top 3 observations of our new data frame:</p>
+<pre><code>##       long      lat        name X.U.05E7..U.05D5..U.05D3._.U.05E1.
+## 1 34.80821 31.25902  &lt;U+05D2&gt;/2                                 17
+## 2 34.80789 31.25980  &lt;U+05D2&gt;/1                                 17
+## 3 34.80937 31.25925 &lt;U+05D2&gt;/25                                 17
+##                elc group_ F_.U.05E6..U.05D5..U.05D5..U.05EA.
+## 1 &lt;U+05D9&gt;&lt;U+05E9&gt;      0                                   
+## 2 &lt;U+05D9&gt;&lt;U+05E9&gt;      0                                   
+## 3 &lt;U+05D9&gt;&lt;U+05E9&gt;      0</code></pre>
+<p>Ugh, well the names weren’t read well into <code>R</code>. While this isn’t a big issue to resolve, I don’t find it necessary for the final piece. the names of the shelters are anyway in hebrew and only represnt a letter and some sort of number (for e.g, A/23, only in Hebrew). Therefore we’ll leave it as is since what I’m interested in is the long and lat coordinations and for that we don’t need a string value.</p>
+</div>
+<div id="retrieving-the-map" class="section level3">
+<h3>Retrieving the map</h3>
+<p>So we have our data frame with long and lat points, let’s get our map. I want a map the can be readable in terms of streets and roads, therefore I’ll give <code>ggmap</code> a try<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The map requires registering in order to recieve an API key to pull maps to plot. Unfortunately I won’t cover that part in this blog but I’m sure you can find plenty of tutorials addressing it.<br />
+Let’s get Be’er-Sheva’s map:</p>
+<pre class="r"><code>b7_map &lt;- get_map(location = c(34.7913 , 31.25181), 
+              zoom = 13, scale = 2, maptype = &quot;roadmap&quot;)</code></pre>
+<p>What we did here was use the <code>get_map</code> function to pull the map according to the long and lat coordinates I gave it of Be’er-Sheva. In addition you can change other features such as the zoom level, the maptype and more (See <code>?get_map</code> for more info).</p>
+</div>
+<div id="plot" class="section level3">
+<h3>Plot</h3>
+<p>Now that we have our data set ready and the map as an object we can go on to plot it. ggmap extends ggplot features so we can run the data frame smoothly into the <code>ggmap</code> function:</p>
+<pre class="r"><code>ggmap(b7_map)+
+  geom_point(shelters, mapping = aes(long,lat),
+            color = &quot;red&quot;, size = 0.3, shape = 15)</code></pre>
+<p><img src="/post/bomb-shelters/2020-01-12-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>What we did was pass the b7_map as an object into the <code>ggmap</code> and add a geom, in this case <code>geom_point</code> representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show <em>my address</em> clearly.</p>
+<p>Let’s try zooming in so that we can see what we’re looking at:</p>
+<pre class="r"><code>#retreiving a new map with a larger `zoom`
+b7_map_zoom &lt;- get_map(location = c(34.7913 , 31.25181), 
+                    zoom = 16, scale = 2, maptype = &quot;roadmap&quot;)
+#plot
+p &lt;- ggmap(b7_map_zoom)+
+geom_point(shelters, mapping = aes(long,lat), color = &quot;red&quot;,
+           size = 4, shape = 15)
+p</code></pre>
+<p><img src="/post/bomb-shelters/2020-01-12-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Much nicer and clearer. using the zoom option in <code>get_map</code> enabled us to center more on where i want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:</p>
+<pre class="r"><code>p+  
+#for the title, caption and removing the X and Y axis
+  labs (title = &quot;Neighborhood B, Beer-Sheva, Israel, bomb shelters&quot;,
+        x = NULL, y = NULL,
+        caption = &quot;data: www.beer-sheva.muni.il | @Amit_Levinson&quot;)+
+  theme_minimal()+
+    theme(text = element_text(family = &quot;Microsoft Tai Le&quot;),
+    #Changing the position of the title
+    plot.title = element_text(hjust = 0.5, size = 20, face = &quot;bold&quot;),
+    axis.text = element_blank(),
+    plot.caption = element_text(size = 9, face = &quot;italic&quot;, hjust = 0),
+    panel.border = element_rect(color = &quot;black&quot;, size=2, fill = NA)
+  )</code></pre>
+<p><img src="/post/bomb-shelters/2020-01-12-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Perfect, I can now save the plot and distribute it if someone needs it.</p>
+<pre class="r"><code>ggsave(&quot;shelters_b_eng.png&quot;, width = 8, height = 8)</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For a first map I decided to go with a static one, but an interactive one can definately be a 2.0 version of this blog. Hopefully we won’t need it.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

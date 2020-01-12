@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My research interests include drug markets and political participation
+bio: I'm a R beginner and enthusiast interested in R analysis, drug markets and political participation.
 education:
   courses:
 #  - course: PhD in Artificial Intelligence
@@ -13,7 +13,7 @@ education:
   - course: B.A in Sociology, Anthropology & Political Science
     institution: Ben-Gurion University
     year: 2018
-email: "amitlevi@post.bgu.ac.il"
+email: "amitlevinson1@gmail.com"
 interests:
 - Drug markets and technology
 - Online and Offline political participation
@@ -22,7 +22,7 @@ name: Amit Levinson
 organizations:
 - name: Ben-Gurion University
   url: "https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx"
-role: Sociology masters student
+role: Sociology MA student
 social:
 - icon: envelope
   icon_pack: fa
