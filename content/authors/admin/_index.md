@@ -7,10 +7,10 @@ education:
 #  - course: PhD in Artificial Intelligence
 #    institution: Stanford University
 #    year: 2012
-  - course: M.A in Sociology & Anthropology
+  - course: MA in Sociology & Anthropology
     institution: Ben-Gurion University
     year: 2020 (Expected)
-  - course: B.A in Sociology, Anthropology & Political Science
+  - course: BA in Sociology, Anthropology & Political Science
     institution: Ben-Gurion University
     year: 2018
 email: "amitlevinson1@gmail.com"
@@ -45,6 +45,6 @@ user_groups:
 - Visitors
 ---
 
-Hi, I'm Amit Levinson, I'm a M.A student for Sociology & Anthropology at Ben-Gurion University. I live with my fiance at Be'er Sheva in southern Israel. My interests include my thesis topic, drug markets and technology, other fields like political participation, statistics and *`R`*. I currently TA 'introduction to statistics' in the S & A department, and am a research assistant to [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the political science department researching online and offline political participation.
+Hi, I'm Amit Levinson, I'm a MA student for Sociology & Anthropology at Ben-Gurion University. I live with my fiance in Be'er Sheva, southern Israel. My interests include my thesis topic, drug markets and technology, other fields like political participation, statistics and *`R`*. I currently TA 'introduction to statistics' in the S & A department, and am a research assistant to [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the political science department researching online and offline political participation.  
 
 I opened this website so that I can have a reason to blog and challenge myself with new R analysis and visulizations; and to share what and how I analyze for others to use.

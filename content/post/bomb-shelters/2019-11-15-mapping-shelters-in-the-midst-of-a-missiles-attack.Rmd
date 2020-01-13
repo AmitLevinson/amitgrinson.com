@@ -125,4 +125,10 @@ Perfect, I can now save the plot and distribute it if someone needs it.
 ggsave("shelters_b_eng.png", width = 8, height = 8)
 ```
 
+
+
+```{r echo=FALSE}
+blogdown::shortcode('tweet','1194274713759039488')
+```
+
 [^1]: For a first map I decided to go with a static one, but an interactive one can definately be a 2.0 version of this blog. Hopefully we won't need it.
