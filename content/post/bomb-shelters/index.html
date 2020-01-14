@@ -1,5 +1,5 @@
 ---
-title: Mapping bomb shelters
+title: Mapping bomb shelters in Be'er-Sheva, IL
 author: Amit Levinson
 date: '2019-11-15'
 slug: bomb-shelters
@@ -13,7 +13,7 @@ featured: no
 image:
   caption: ''
   focal_point: ''
-  preview_only: no
+  preview_only: yes
 projects: []
 ---
 
@@ -43,7 +43,7 @@ data_json &lt;- geojson_read(my_geojson, what = &quot;sp&quot;)
 shelters &lt;- as.data.frame(data_json)
 #last tidying of the column names
 names(shelters)[6:7] &lt;- c(&quot;long&quot;, &quot;lat&quot;)</code></pre>
-<p>What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use <code>rename</code> from the <code>plyr</code> package but i liked the base R function Johnson used in his blog so I’ll stick with that.<br />
+<p>What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use <code>dplyr::rename</code> but i liked the base R function Johnson used in his blog so I’ll stick with that.<br />
 let’s look at the top 3 observations of our new data frame:</p>
 <pre><code>##       long      lat        name X.U.05E7..U.05D5..U.05D3._.U.05E1.
 ## 1 34.80821 31.25902  &lt;U+05D2&gt;/2                                 17
@@ -69,7 +69,7 @@ Let’s get Be’er-Sheva’s map:</p>
 <pre class="r"><code>ggmap(b7_map)+
   geom_point(shelters, mapping = aes(long,lat),
             color = &quot;red&quot;, size = 0.3, shape = 15)</code></pre>
-<p><img src="/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/post/bomb-shelters/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>What we did was pass the b7_map as an object into the <code>ggmap</code> and add a geom, in this case <code>geom_point</code> representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show <em>my address</em> clearly.</p>
 <p>Let’s try zooming in so that we can see what we’re looking at:</p>
 <pre class="r"><code>#retreiving a new map with a larger `zoom`
@@ -80,7 +80,7 @@ p &lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &quot;red&quot;,
            size = 4, shape = 15)
 p</code></pre>
-<p><img src="/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Much nicer and clearer. using the zoom option in <code>get_map</code> enabled us to center more on where i want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:</p>
 <pre class="r"><code>p+  
 #for the title, caption and removing the X and Y axis
@@ -95,7 +95,7 @@ p</code></pre>
     plot.caption = element_text(size = 9, face = &quot;italic&quot;, hjust = 0),
     panel.border = element_rect(color = &quot;black&quot;, size=2, fill = NA)
   )</code></pre>
-<p><img src="/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Perfect, I can now save the plot and distribute it if someone needs it.</p>
 <pre class="r"><code>ggsave(&quot;shelters_b_eng.png&quot;, width = 8, height = 8)</code></pre>
 <center>

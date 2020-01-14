@@ -1,5 +1,5 @@
 ---
-title: Mapping bomb shelters
+title: Mapping bomb shelters in Be'er-Sheva, IL
 author: Amit Levinson
 date: '2019-11-15'
 slug: bomb-shelters
@@ -13,7 +13,7 @@ featured: no
 image:
   caption: ''
   focal_point: ''
-  preview_only: no
+  preview_only: yes
 projects: []
 ---
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -54,7 +54,7 @@ shelters <- as.data.frame(data_json)
 names(shelters)[6:7] <- c("long", "lat")
 ```
 
-What we did was load the geojson file, read it as an 'sp' object and then turn it to a dataframe. I changed the names so that it'll be easier to read the columns. we could also use `rename` from the `plyr` package but i liked the base R function Johnson used in his blog so I'll stick with that.  
+What we did was load the geojson file, read it as an 'sp' object and then turn it to a dataframe. I changed the names so that it'll be easier to read the columns. we could also use `dplyr::rename` but i liked the base R function Johnson used in his blog so I'll stick with that.  
 let's look at the top 3 observations of our new data frame:
 ```{r echo = FALSE}
 shelters <- shelters %>% 
@@ -125,10 +125,10 @@ Perfect, I can now save the plot and distribute it if someone needs it.
 ggsave("shelters_b_eng.png", width = 8, height = 8)
 ```
 
-
-
+<center>
 ```{r echo=FALSE}
 blogdown::shortcode('tweet','1194274713759039488')
 ```
+</center>
 
 [^1]: For a first map I decided to go with a static one, but an interactive one can definately be a 2.0 version of this blog. Hopefully we won't need it.

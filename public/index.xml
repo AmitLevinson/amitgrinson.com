@@ -75,7 +75,7 @@
     </item>
     
     <item>
-      <title>Mapping bomb shelters</title>
+      <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
       <link>/2019/11/15/bomb-shelters/</link>
       <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
       <guid>/2019/11/15/bomb-shelters/</guid>
@@ -106,7 +106,7 @@ data_json &amp;lt;- geojson_read(my_geojson, what = &amp;quot;sp&amp;quot;)
 shelters &amp;lt;- as.data.frame(data_json)
 #last tidying of the column names
 names(shelters)[6:7] &amp;lt;- c(&amp;quot;long&amp;quot;, &amp;quot;lat&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use &lt;code&gt;rename&lt;/code&gt; from the &lt;code&gt;plyr&lt;/code&gt; package but i liked the base R function Johnson used in his blog so I’ll stick with that.&lt;br /&gt;
+&lt;p&gt;What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use &lt;code&gt;dplyr::rename&lt;/code&gt; but i liked the base R function Johnson used in his blog so I’ll stick with that.&lt;br /&gt;
 let’s look at the top 3 observations of our new data frame:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;##       long      lat        name X.U.05E7..U.05D5..U.05D3._.U.05E1.
 ## 1 34.80821 31.25902  &amp;lt;U+05D2&amp;gt;/2                                 17
@@ -132,7 +132,7 @@ Let’s get Be’er-Sheva’s map:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggmap(b7_map)+
   geom_point(shelters, mapping = aes(long,lat),
             color = &amp;quot;red&amp;quot;, size = 0.3, shape = 15)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;What we did was pass the b7_map as an object into the &lt;code&gt;ggmap&lt;/code&gt; and add a geom, in this case &lt;code&gt;geom_point&lt;/code&gt; representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show &lt;em&gt;my address&lt;/em&gt; clearly.&lt;/p&gt;
 &lt;p&gt;Let’s try zooming in so that we can see what we’re looking at:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#retreiving a new map with a larger `zoom`
@@ -143,7 +143,7 @@ p &amp;lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &amp;quot;red&amp;quot;,
            size = 4, shape = 15)
 p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Much nicer and clearer. using the zoom option in &lt;code&gt;get_map&lt;/code&gt; enabled us to center more on where i want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p+  
 #for the title, caption and removing the X and Y axis
@@ -158,12 +158,14 @@ p&lt;/code&gt;&lt;/pre&gt;
     plot.caption = element_text(size = 9, face = &amp;quot;italic&amp;quot;, hjust = 0),
     panel.border = element_rect(color = &amp;quot;black&amp;quot;, size=2, fill = NA)
   )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/2019-11-15-mapping-shelters-in-the-midst-of-a-missiles-attack_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Perfect, I can now save the plot and distribute it if someone needs it.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggsave(&amp;quot;shelters_b_eng.png&amp;quot;, width = 8, height = 8)&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;1.  I&amp;#39;ve been wanting to learn to plot maps in &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;2. Yesterday I encountered open data our municipality publishes&lt;br&gt;3. Today missiles are fired towards Israel in response to assassination of a top terrorist.&lt;br&gt;&lt;br&gt;1+2+3: Plotting bomb shelter locations near where I live&lt;a href=&#34;https://twitter.com/hashtag/ggmap?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#ggmap&lt;/a&gt; &lt;a href=&#34;https://t.co/4Irz0ZKuZr&#34;&gt;pic.twitter.com/4Irz0ZKuZr&lt;/a&gt;&lt;/p&gt;&amp;mdash; Amit Levinson (@Amit_Levinson) &lt;a href=&#34;https://twitter.com/Amit_Levinson/status/1194274713759039488?ref_src=twsrc%5Etfw&#34;&gt;November 12, 2019&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
+&lt;/center&gt;
 &lt;/div&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
