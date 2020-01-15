@@ -20,9 +20,9 @@
       <description>
 
 
-&lt;p&gt;While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva bomb shelters.&lt;br /&gt;
+&lt;p&gt;While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.&lt;br /&gt;
 For a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#Tidytuesday&lt;/a&gt; encouraged me to do so.&lt;br /&gt;
-A day before doing so, i discovered our municupality’s open access data &lt;a href=&#34;https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx&#34;&gt;website&lt;/a&gt;. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.&lt;/p&gt;
+A day before this piece, I discovered our municupality’s open access data &lt;a href=&#34;https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx&#34;&gt;website&lt;/a&gt;. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.&lt;/p&gt;
 &lt;p&gt;Let’s begin with the packages we’ll need:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#for data manipulation
 library(tidyverse)
@@ -35,7 +35,8 @@ library(sp)
 library(extrafont)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;loading-and-tidying-the-data&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Loading and tidying the data&lt;/h3&gt;
-&lt;p&gt;I initially tried using the csv file they have on their webiste but I was having too much trouble with the Hebrew so I decided to try and work with the &lt;code&gt;geojsonio&lt;/code&gt; package. I had no idea how to work with a .geojson file or frankly how to work with maps in general. To my save, i found this incredible blog by&lt;a href=&#34;https://randomjohn.github.io/r-geojson-srt/&#34;&gt;John Johnson&lt;/a&gt; to help me transform a ‘geomjson’ file to a dataframe you can work with.&lt;/p&gt;
+&lt;p&gt;I initially tried using the &lt;code&gt;.csv&lt;/code&gt; file they have on their webiste but I was having too much trouble with the Hebrew so I decided to try and work with the &lt;code&gt;geojsonio&lt;/code&gt; package. I had no idea how to work with a &lt;code&gt;.geojson&lt;/code&gt; file or frankly how to work with maps in general. To my save, i found this incredible blog by&lt;a href=&#34;https://randomjohn.github.io/r-geojson-srt/&#34;&gt;John Johnson&lt;/a&gt; to help me transform a ‘geomjson’ file to a dataframe you can work with.&lt;/p&gt;
+&lt;p&gt;Let’s begin:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#read the .geojson file
 my_geojson &amp;lt;- &amp;quot;shelters.geojson&amp;quot;
 #convert the .geojson file to an sp object
@@ -44,7 +45,7 @@ data_json &amp;lt;- geojson_read(my_geojson, what = &amp;quot;sp&amp;quot;)
 shelters &amp;lt;- as.data.frame(data_json)
 #last tidying of the column names
 names(shelters)[6:7] &amp;lt;- c(&amp;quot;long&amp;quot;, &amp;quot;lat&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What we did was load the geojson file, read it as an ‘sp’ object and then turn it to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use &lt;code&gt;dplyr::rename&lt;/code&gt; but i liked the base R function Johnson used in his blog so I’ll stick with that.&lt;br /&gt;
+&lt;p&gt;What we did was load the geojson file, read it as an ‘sp’ object and then turn it into to a dataframe. I changed the names so that it’ll be easier to read the columns. we could also use &lt;code&gt;dplyr::rename&lt;/code&gt; but I liked the base R function Johnson used in his blog so I’ll stick with that.&lt;br /&gt;
 let’s look at the top 3 observations of our new data frame:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;##       long      lat        name X.U.05E7..U.05D5..U.05D3._.U.05E1.
 ## 1 34.80821 31.25902  &amp;lt;U+05D2&amp;gt;/2                                 17
@@ -54,11 +55,11 @@ let’s look at the top 3 observations of our new data frame:&lt;/p&gt;
 ## 1 &amp;lt;U+05D9&amp;gt;&amp;lt;U+05E9&amp;gt;      0                                   
 ## 2 &amp;lt;U+05D9&amp;gt;&amp;lt;U+05E9&amp;gt;      0                                   
 ## 3 &amp;lt;U+05D9&amp;gt;&amp;lt;U+05E9&amp;gt;      0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ugh, well the names weren’t read well into &lt;code&gt;R&lt;/code&gt;. While this isn’t a big issue to resolve, I don’t find it necessary for the final piece. the names of the shelters are anyway in hebrew and only represnt a letter and some sort of number (for e.g, A/23, only in Hebrew). Therefore we’ll leave it as is since what I’m interested in is the long and lat coordinations and for that we don’t need a string value.&lt;/p&gt;
+&lt;p&gt;Ugh, well the names weren’t read well into &lt;code&gt;R&lt;/code&gt;. While this isn’t a big issue to resolve, I don’t find it necessary for the final piece. the names of the shelters are anyway in Hebrew and only represnt a letter and some sort of number (for e.g, A/23, only in Hebrew). Therefore we’ll leave it as is since what I’m interested in is the longitude and latitude coordinations and for that we don’t need the character column.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;retrieving-the-map&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Retrieving the map&lt;/h3&gt;
-&lt;p&gt;So we have our data frame with long and lat points, let’s get our map. I want a map the can be readable in terms of streets and roads, therefore I’ll give &lt;code&gt;ggmap&lt;/code&gt; a try&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. The map requires registering in order to recieve an API key to pull maps to plot. Unfortunately I won’t cover that part in this blog but I’m sure you can find plenty of tutorials addressing it.&lt;br /&gt;
+&lt;p&gt;So we have our data frame with long and lat points, let’s get our map. I want a map the can be readable in terms of streets and roads, therefore I’ll give the &lt;code&gt;ggmap&lt;/code&gt; package a try&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. Google requires you to register in order to recieve an API key to pull maps to plot. Unfortunately I won’t cover how to regiser in this blog but I’m sure you can find plenty of tutorials addressing it online.&lt;br /&gt;
 Let’s get Be’er-Sheva’s map:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;b7_map &amp;lt;- get_map(location = c(34.7913 , 31.25181), 
               zoom = 13, scale = 2, maptype = &amp;quot;roadmap&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
@@ -71,25 +72,25 @@ Let’s get Be’er-Sheva’s map:&lt;/p&gt;
   geom_point(shelters, mapping = aes(long,lat),
             color = &amp;quot;red&amp;quot;, size = 0.3, shape = 15)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;What we did was pass the b7_map as an object into the &lt;code&gt;ggmap&lt;/code&gt; and add a geom, in this case &lt;code&gt;geom_point&lt;/code&gt; representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show &lt;em&gt;my address&lt;/em&gt; clearly.&lt;/p&gt;
+&lt;p&gt;What we did was pass the b7_map as an object into the &lt;code&gt;ggmap&lt;/code&gt; function and add a geom, in this case &lt;code&gt;geom_point&lt;/code&gt; representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show &lt;em&gt;my address&lt;/em&gt; clearly.&lt;/p&gt;
 &lt;p&gt;Let’s try zooming in so that we can see what we’re looking at:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#retreiving a new map with a larger `zoom`
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#retreiving a new map with a greater `zoom`
 b7_map_zoom &amp;lt;- get_map(location = c(34.7913 , 31.25181), 
                     zoom = 16, scale = 2, maptype = &amp;quot;roadmap&amp;quot;)
-#plot
+
 p &amp;lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &amp;quot;red&amp;quot;,
            size = 4, shape = 15)
 p&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Much nicer and clearer. using the zoom option in &lt;code&gt;get_map&lt;/code&gt; enabled us to center more on where i want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:&lt;/p&gt;
+&lt;p&gt;Much nicer and clearer. Using the zoom option in &lt;code&gt;get_map&lt;/code&gt; enables to center more on where I want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p+  
 #for the title, caption and removing the X and Y axis
   labs (title = &amp;quot;Neighborhood B, Beer-Sheva, Israel, bomb shelters&amp;quot;,
         x = NULL, y = NULL,
         caption = &amp;quot;data: www.beer-sheva.muni.il | @Amit_Levinson&amp;quot;)+
   theme_minimal()+
-    theme(text = element_text(family = &amp;quot;Microsoft Tai Le&amp;quot;),
+  theme(text = element_text(family = &amp;quot;Microsoft Tai Le&amp;quot;),
     #Changing the position of the title
     plot.title = element_text(hjust = 0.5, size = 20, face = &amp;quot;bold&amp;quot;),
     axis.text = element_blank(),
