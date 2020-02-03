@@ -28,11 +28,11 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 You can read more about it [here](https://github.com/rfordatascience/tidytuesday).
 
 Basically, every week the R4DS community publishes a **new data set** where the R community (or any code-based methdogology) is welcome to **analyze** and **visualize** the data. 
-When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it's what get me motivated and fascinated with R. Every week you're challenged with a new data set and get to see how others have analyzed it.  
+When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it's what get me motivated and fascinated with R. Every week you're challenged with a new data set and get to see how others have analyzed it. Whenever I have some free time I like to join in.
 If you're looking to get some practice or enjoy analyzing the same data sets as others - Join the party, there's much to learn!  
 </br>
 
-### Plots  
+## Plots  
 
 Below are graphs I made, organized in a descending order. Some I'm more proud of than others, but I chose to display all of them in case someone finds anything useful :smile:
 </br>
