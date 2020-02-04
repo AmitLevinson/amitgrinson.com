@@ -45,6 +45,6 @@ user_groups:
 - Visitors
 ---
 
-Hi, I'm Amit Levinson, I'm a MA student for Sociology & Anthropology at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my fiancé in Be'er Sheva, southern Israel. My interests include my thesis topic, drug markets and technology, other fields such as political participation, statistics and *`R`*. I currently TA 'introduction to statistics' in the Sociology & Anthropology Department and work as research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the Political Science Department researching online and offline political participation.  
+Hi, I'm Amit Levinson, I'm an MA student for Sociology & Anthropology at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my fiancé in Be'er Sheva, southern Israel. My interests include my thesis topic, drug markets and technology, other fields such as political participation, statistics and *`R`*. I currently TA 'introduction to statistics' in the Sociology & Anthropology Department and work as research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the Political Science Department researching online and offline political participation.  
 
 I opened this website so that I can have a reason to blog and challenge myself with new R analysis and visulizations; and to share what and how I analyze for others to use. Enjoy!
