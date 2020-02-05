@@ -64,6 +64,11 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 <img src = "/img/tt/parking_tickets_hours.png" width = "700">
 </p>
 
+### **20.11.2019**  
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd)
+  
+![](/img/tt/nz_bird_vote.png)
+
 ### **6.11.2019**
 
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd)
