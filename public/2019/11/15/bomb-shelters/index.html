@@ -30,7 +30,7 @@
   
   <meta name="description" content="While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.
 For a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on #Tidytuesday encouraged me to do so.
-A day before this piece, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more.">
+A day before this visualizaiton, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more.">
 
   
   <link rel="alternate" hreflang="en-us" href="/2019/11/15/bomb-shelters/">
@@ -271,7 +271,7 @@ A day before this piece, I discovered our municupality’s open access data webs
   <meta property="og:title" content="Mapping bomb shelters in Be&#39;er-Sheva, IL | Amit Levinson">
   <meta property="og:description" content="While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.
 For a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on #Tidytuesday encouraged me to do so.
-A day before this piece, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more."><meta property="og:image" content="/2019/11/15/bomb-shelters/featured.png">
+A day before this visualizaiton, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more."><meta property="og:image" content="/2019/11/15/bomb-shelters/featured.png">
   <meta property="twitter:image" content="/2019/11/15/bomb-shelters/featured.png"><meta property="og:locale" content="en-us">
   
     
@@ -327,7 +327,7 @@ A day before this piece, I discovered our municupality’s open access data webs
       "url": "img//"
     }
   },
-  "description": "While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.\nFor a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on #Tidytuesday encouraged me to do so.\nA day before this piece, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more."
+  "description": "While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.\nFor a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on #Tidytuesday encouraged me to do so.\nA day before this visualizaiton, I discovered our municupality’s open access data website. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more."
 }
 </script>
 
@@ -593,7 +593,7 @@ A day before this piece, I discovered our municupality’s open access data webs
 
 <p>While rockets were fired towards Israel I decided to take the opportunity and plot Be’er-Sheva’s bomb shelters.<br />
 For a while now I’ve been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> encouraged me to do so.<br />
-A day before this piece, I discovered our municupality’s open access data <a href="https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx">website</a>. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.</p>
+A day before this visualizaiton, I discovered our municupality’s open access data <a href="https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx">website</a>. In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.</p>
 <p>Let’s begin with the packages we’ll need:</p>
 <pre class="r"><code>#for data manipulation
 library(tidyverse)
@@ -606,7 +606,7 @@ library(sp)
 library(extrafont)</code></pre>
 <div id="loading-and-tidying-the-data" class="section level3">
 <h3>Loading and tidying the data</h3>
-<p>I initially tried using the <code>.csv</code> file they have on their webiste but I was having too much trouble with the Hebrew so I decided to try and work with the <code>geojsonio</code> package. I had no idea how to work with a <code>.geojson</code> file or frankly how to work with maps in general. To my save, i found this incredible blog by<a href="https://randomjohn.github.io/r-geojson-srt/">John Johnson</a> to help me transform a ‘geomjson’ file to a dataframe you can work with.</p>
+<p>I initially tried using the <code>.csv</code> file they have on their webiste but I was having too much trouble with the Hebrew so I decided to try and work with the <code>geojsonio</code> package. I had no idea how to work with a <code>.geojson</code> file or frankly how to work with maps in general. To my save, i found this incredible blog by <a href="https://randomjohn.github.io/r-geojson-srt/">John Johnson</a> to help me transform a ‘geomjson’ file to a dataframe you can work with.</p>
 <p>Let’s begin:</p>
 <pre class="r"><code>#read the .geojson file
 my_geojson &lt;- &quot;shelters.geojson&quot;
@@ -630,7 +630,7 @@ let’s look at the top 3 observations of our new data frame:</p>
 </div>
 <div id="retrieving-the-map" class="section level3">
 <h3>Retrieving the map</h3>
-<p>So we have our data frame with long and lat points, let’s get our map. I want a map the can be readable in terms of streets and roads, therefore I’ll give the <code>ggmap</code> package a try<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Google requires you to register in order to recieve an API key to pull maps to plot. Unfortunately I won’t cover how to regiser in this blog but I’m sure you can find plenty of tutorials addressing it online.<br />
+<p>So we have our data frame with long and lat points, let’s get our map. I want a map that can be readable in terms of streets and roads, therefore I’ll give the <code>ggmap</code> package a try<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Google requires you to register in order to recieve an API key to pull maps to plot. Unfortunately I won’t cover how to regiser in this blog but I’m sure you can find plenty of tutorials addressing it online.<br />
 Let’s get Be’er-Sheva’s map:</p>
 <pre class="r"><code>b7_map &lt;- get_map(location = c(34.7913 , 31.25181), 
               zoom = 13, scale = 2, maptype = &quot;roadmap&quot;)</code></pre>
@@ -651,7 +651,7 @@ b7_map_zoom &lt;- get_map(location = c(34.7913 , 31.25181),
 
 p &lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &quot;red&quot;,
-           size = 4, shape = 15)
+           size = 3, shape = 15)
 p</code></pre>
 <p><img src="/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Much nicer and clearer. Using the zoom option in <code>get_map</code> enables to center more on where I want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:</p>
@@ -680,7 +680,7 @@ p</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>For a first map I decided to go with a static one, but an interactive one can definately be a 2.0 version of this blog. Hopefully we won’t need it.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>For a first map I decided to go with a static one, but an interactive one can defenitely be a 2.0 version of this blog. Hopefully we won’t need it.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
