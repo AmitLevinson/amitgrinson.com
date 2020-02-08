@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ggimage | Amit Levinson</title>
+    <link>/tags/ggimage/</link>
+      <atom:link href="/tags/ggimage/index.xml" rel="self" type="application/rss+xml" />
+    <description>ggimage</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <title>ggimage</title>
+      <link>/tags/ggimage/</link>
+    </image>
+    
+    <item>
+      <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
+      <link>/2020/02/07/eliud-kichoge/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/02/07/eliud-kichoge/</guid>
+      <description>
+
+
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-1&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/marath_record/new_record.jpg&#34; alt=&#34;_Eliud Kipchoge breaks the two-hour marathon barrier. Photo from the &#39;New York Times&#39;. Leonhard Foeger/Reuters _&#34;  /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: &lt;em&gt;Eliud Kipchoge breaks the two-hour marathon barrier. Photo from the ‘New York Times’. Leonhard Foeger/Reuters &lt;/em&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;table-of-contents&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Table of Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#background&#34;&gt;Background&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#retrieving-data-from-wikipedia&#34;&gt;Retrieving data from wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#warngling-the-data&#34;&gt;Warngling the Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#plot&#34;&gt;Plot&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#ggimage&#34;&gt;ggimage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#plot-aesthetics&#34;&gt;Plot Aesthetics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#final-annotation&#34;&gt;Final annotation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#appendix&#34;&gt;Appendix&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;background&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;On saturday October 12, 2019, Eliud Kipchoge broke (unofficially) the two-hour marathon barrier 🏆&lt;br /&gt;
+I found this amazing and decided to show the marathon record progression throughout the years with this new achivement. In this post I’ll walk through how I obtained the data from a Wikipedia page with &lt;code&gt;{rvest}&lt;/code&gt;, wrangled and tidied it and eventually plotted it using &lt;code&gt;{ggimage}&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;When I initally created the plot I mistakenly took the &lt;a href=&#34;https://en.wikipedia.org/wiki/Marathon_year_rankings&#34;&gt;Marathon year rankings&lt;/a&gt; from the Wikipedia webpage. That page showcases The yearly rankings and not the world records in general. In addition, I also changed the method of obtaining the data from first creating the plot to now. When I first did it I copied and pasted the table from Wikipedia into a &lt;code&gt;.csv&lt;/code&gt; file and worked with that. For that specific time point, where my experience with &lt;code&gt;R&lt;/code&gt; was extremly novice, I think it was adequate. This time around I gave scraping Wikipedia’s webpage a try which also renders a reproducible example.&lt;/p&gt;
+&lt;p&gt;Let’s start with loading the packages we’ll need:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(rvest)
+library(janitor)
+library(lubridate)
+library(ggimage)
+library(hrbrthemes)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’ll use &lt;code&gt;{tidyverse}&lt;/code&gt; for tidy manipulation and plotting, &lt;code&gt;{janitor}&lt;/code&gt; for cleaning the column names, &lt;code&gt;{lubridate}&lt;/code&gt; for working with dates, &lt;code&gt;{ggimage}&lt;/code&gt; for a plot with images and &lt;code&gt;{hrbrthemes}&lt;/code&gt; for a nice quick aesthetic theme.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;retrieving-data-from-wikipedia&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Retrieving data from wikipedia&lt;/h2&gt;
+&lt;p&gt;In order to view the new record in comparison to other world records, We’ll turn to Wikipedia and see what we can find there.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:wiki-ss&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/marath_record/wikipage.png&#34; alt=&#34;_Wikipedia page of marathon world records_&#34;  /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: &lt;em&gt;Wikipedia page of marathon world records&lt;/em&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Here we can see that the webpage contains information about Marathon records, where in the screenshot we see the Men section. We only want this table with Men’s records, so let’s get that:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#The Wikipage we&amp;#39;ll need
+wiki_url &amp;lt;- &amp;quot;https://en.wikipedia.org/wiki/Marathon_world_record_progression&amp;quot;
+
+runners_wiki &amp;lt;- wiki_url %&amp;gt;% 
+  read_html() %&amp;gt;% 
+  html_nodes(xpath=&amp;#39;//*[@id=&amp;quot;mw-content-text&amp;quot;]/div/table[1]&amp;#39;) %&amp;gt;% 
+  html_table(fill = TRUE) %&amp;gt;% 
+  as.data.frame()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;{rvest}&lt;/code&gt; package we are able to scrape the Wikipedia page for the table we wanted. Frankly, this is the first time I used &lt;code&gt;rvest&lt;/code&gt;, but I found a good example from &lt;a href=&#34;https://r-tastic.co.uk/post/exploring-london-crime-with-r-heat-maps/&#34;&gt;Kasia Kulma’s blog post&lt;/a&gt; exploring London crime with R heat maps. I used the &lt;em&gt;SelctorGadget&lt;/em&gt; which identified the page’s content as “mw-content-text”. Using that id we looked for the tables (/div/table), specifically the first table &lt;code&gt;[1]&lt;/code&gt; of Men world records we saw earlier in figure &lt;a href=&#34;#fig:wiki-ss&#34;&gt;2&lt;/a&gt;. Once we have the table we turn it into a dataframe for us to use.&lt;/p&gt;
+&lt;p&gt;Alternatively, you can also use the following method to extract a table by extracting all tables from the Wikipedia page and choosing the first one:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_wiki_alternative &amp;lt;- wiki_url %&amp;gt;% 
+  read_html() %&amp;gt;%
+  html_table(fill = TRUE) %&amp;gt;%
+  .[[1]]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This option extracts all table from the html page using &lt;code&gt;html_table()&lt;/code&gt;. Using this on the whole page parses the html tables into data frames nesting within a list object. Likw before, &lt;code&gt;{rvest}&lt;/code&gt; makes it easy for us and if the tables have inconsistent number of values it requires (or demands?) us to fill them. Once we have the tables in a list object we can extract the one we need using &lt;code&gt;.[[1]]&lt;/code&gt;. The &lt;code&gt;.&lt;/code&gt; acts as a place holder for the previous object passed, in this case the list of tables we scraped. The &lt;code&gt;[[1]]&lt;/code&gt; following that calls for the first object within the list, but in the form of its core class, in this case a &lt;code&gt;class(runners_wiki_alternative)&lt;/code&gt;. If we’d use one square bracket &lt;code&gt;[1]&lt;/code&gt; it would return an object with the original class from which it was drawn, in this case a list which is not good for us here since we anyway want it as a dataframe.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;warngling-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Warngling the Data&lt;/h2&gt;
+&lt;p&gt;Let’s look at our table to see what we have and what we’ll need to do:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(runners_wiki, n = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        Time          Name   Nationality              Date
+## 1 2:55:18.4  Johnny Hayes United States     July 24, 1908
+## 2 2:52:45.4 Robert Fowler United States   January 1, 1909
+## 3 2:46:52.8   James Clark United States February 12, 1909
+##                    Event.Place   Source
+## 1       London, United Kingdom IAAF[53]
+## 2  Yonkers,[nb 5]United States IAAF[53]
+## 3 New York City, United States IAAF[53]
+##                                                                                                                                                                                            Notes
+## 1 Time was officially recorded as 2:55:18 2/5.[54]Italian Dorando Pietri finished in 2:54:46.4, but was disqualified for receiving assistance from race officials near the finish.[55] Note.[56]
+## 2                                                                                                                                                                                      Note.[56]
+## 3                                                                                                                                                                                      Note.[56]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A little messey but that’s OK. What we’ll need to visualize Eliud Kipchoge’s record is the Name, Time and Date of all runners. We’ll start with cleaning our data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_clean &amp;lt;- runners_wiki %&amp;gt;% 
+  clean_names() %&amp;gt;% 
+  select(1,2,4)
+str(runners_clean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;data.frame&amp;#39;:    50 obs. of  3 variables:
+##  $ time: chr  &amp;quot;2:55:18.4&amp;quot; &amp;quot;2:52:45.4&amp;quot; &amp;quot;2:46:52.8&amp;quot; &amp;quot;2:46:04.6&amp;quot; ...
+##  $ name: chr  &amp;quot;Johnny Hayes&amp;quot; &amp;quot;Robert Fowler&amp;quot; &amp;quot;James Clark&amp;quot; &amp;quot;Albert Raines&amp;quot; ...
+##  $ date: chr  &amp;quot;July 24, 1908&amp;quot; &amp;quot;January 1, 1909&amp;quot; &amp;quot;February 12, 1909&amp;quot; &amp;quot;May 8, 1909&amp;quot; ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;clean_names&lt;/code&gt; function cleans the column names making them easier to use. I then picked the columns we’ll need using &lt;code&gt;select&lt;/code&gt;. Lastly, we want to look at the variables structure to see if we they need any manipulations. Yes, it seems both the time and date are not recognized appropriately (In this case they’re characters) - let’s fix that:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate &amp;lt;- runners_clean %&amp;gt;% 
+  add_row(time = &amp;quot;1:59:40&amp;quot;, name = &amp;quot;Eliud Kipchoge&amp;quot;, date = &amp;quot;November 12, 2019&amp;quot;) %&amp;gt;% 
+  mutate(run_period_raw = hms(time),
+         run_duration = as.numeric(run_period_raw, &amp;quot;minutes&amp;quot;),
+         run_year = year(mdy(date))) %&amp;gt;% 
+  select(c(-date,-time))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: 1 failed to parse.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s see what we did here. First I add Eliud Kipchoge’s new unofficial record as an observation into our dataframe. I then turned to the &lt;code&gt;{lubridate}&lt;/code&gt; package where I used the &lt;code&gt;hms&lt;/code&gt; function to mutate the time variable we had into an new variable called ‘r_period_raw’. Although this cleans the variable, &lt;code&gt;hms&lt;/code&gt; transforms it into a a &lt;code&gt;period&lt;/code&gt; object which I found a little difficult to use when we want to plot. What we need is to turn it into a numeric class which we did in our new variable ‘run_duration’. This will help us in plotting but I retained the period class variable as it makes it easier to read in this case.&lt;/p&gt;
+&lt;p&gt;I then turned the date column into a Month-Day-Year variable using the &lt;code&gt;mdy&lt;/code&gt; function, which eventually I only extracted the year using &lt;code&gt;year&lt;/code&gt;. Lastly I discarded the old columns we don’t need anymore. We also recieved a warning sign that one observation didn’t parse. This was because the value in the cell didn’t match the pattern of the &lt;code&gt;hms&lt;/code&gt; fuction. The original pattern looked like this: May 26, 1909[nb 6]. All we want is the specific year so it’s no big deal, but anyway let’s go ahead and manually add it if we decide to use it later:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate[5,4] &amp;lt;- 1909&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This brings us the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(runners_mutate,aes(x = run_year, y = run_duration))+
+  geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Great, that’s a good start. Now we want to make it a little less crowded so we can easily insert an image of runners instead of points and not have it cluttered. In order to do that we’ll look at each several years and lastly at 2019, the current record. First, let’s look at the years we have:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate %&amp;gt;% 
+  pull(run_year)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] 1908 1909 1909 1909 1909 1909 1913 1913 1914 1920 1925 1929 1935 1935 1935
+## [16] 1935 1947 1952 1953 1953 1954 1956 1958 1960 1963 1963 1963 1964 1964 1965
+## [31] 1967 1969 1970 1974 1978 1980 1981 1984 1985 1988 1998 1999 2002 2003 2007
+## [46] 2008 2011 2013 2014 2018 2019&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;pull&lt;/code&gt; function we were able to extract the column we wanted, much similar to using the &lt;code&gt;runners_mutate$column_name&lt;/code&gt; approach. ‘Unfortunately’, we can’t filter exactly by round intervals (for example every exact 10 years) so we’ll create a vector with specific years to filter by. Although it might sound trivial, make sure you’re assigning years that are observed in your data set, otherwise it’ll filter only by the years you do have and not those you don’t.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;year_sub &amp;lt;- c(1908, 1920, 1929, 1947, seq(1960,1980,10), 1999, 2011, 2019)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we created a vector with values for every 15+- years[^1]. Now we can filter our new dataframe according to the years we want:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate &amp;lt;- runners_mutate %&amp;gt;% 
+ filter(run_year %in% year_sub)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;filter&lt;/code&gt; function with &lt;code&gt;%in%&lt;/code&gt; we discard anything from the &lt;code&gt;run_year&lt;/code&gt; column that’s not in the &lt;code&gt;year_sub&lt;/code&gt; vector. I find &lt;code&gt;%in%&lt;/code&gt; facsinating and extremely helpful when you want to look/filter several parameters. Basically, you can read it as “Keep all rows in ‘run_year’ that match values in ‘year_sub’”.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plot&lt;/h2&gt;
+&lt;div id=&#34;ggimage&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ggimage&lt;/h3&gt;
+&lt;p&gt;In order for us to plot a runner icon instead of points we need to load the images into our data frame as values for each observation. To do that we use the &lt;code&gt;{ggimage}&lt;/code&gt; package which we’ll also use for the plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate &amp;lt;- runners_mutate %&amp;gt;% 
+  mutate(run_image = &amp;quot;run.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now let’s look at our new plot:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;g &amp;lt;- ggplot(runners_mutate, aes(x = run_year, y = run_duration))+
+  geom_image(aes(image = run_image), size = 0.05)+
+  theme_ipsum_rc()
+g&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not bad. I like the icons although the whole graph might be a bit misleading if readers perceive that these are the only records there are. However, this is a tutorial and we’ll also add that note into our plot momentarily. You can adjust the size and other parameters of the images we plot, here for example I chose to adjust the size from its default. I also added &lt;code&gt;theme_ipsum_rc&lt;/code&gt; from the &lt;code&gt;{hrbrthemes}&lt;/code&gt; package for a quick aesthetic theme I like.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-aesthetics&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plot Aesthetics&lt;/h3&gt;
+&lt;p&gt;So the plot so far looks nice, but we want it to be aesthetic and also to easily understand the progress of records across years. In order to do that, let’s turn to adjust both the y and x axis, and following that add some information to understand what we’re looking at:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;g1 &amp;lt;-  g +
+    scale_x_continuous(name = &amp;quot;Year&amp;quot;,
+                        limits = c(1900,2025),
+                        breaks = seq(1900,2020,10),
+                        labels = c(&amp;quot;1900&amp;quot;, paste0(&amp;quot;&amp;#39;&amp;quot;, seq(10,90,10)),&amp;quot;2000&amp;quot;,
+&amp;quot;&amp;#39;10&amp;quot;,&amp;quot;&amp;#39;19&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we added some nice x labels in a format that’s both concise and informative. I remember taking this from &lt;a href=&#34;https://github.com/LiamDBailey/TidyTuesday/blob/master/R/17_09_2019.R&#34;&gt;Liam Bailey’s&lt;/a&gt; &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#Tidytuesday&lt;/a&gt; plot a while back when i first made this visualiztion. What we did was teak the &lt;code&gt;scale_x_continuous&lt;/code&gt; by assigning a &lt;code&gt;name&lt;/code&gt; to the axis, expanding its &lt;code&gt;limits&lt;/code&gt;, added specific &lt;code&gt;breaks&lt;/code&gt; and then a &lt;code&gt;label&lt;/code&gt; for each break using &lt;code&gt;paste0&lt;/code&gt;. Note that you must have the same number of labels and breaks for the plot to render so it’s important to have the sequences identical in length; otherwise it’ll return an error. With the &lt;code&gt;paste0&lt;/code&gt; we can add any value or observation and then ‘stick’ to it whatever else we want. Using that we are able to create years in the format of ’10 and so on. It is also possible to use the &lt;code&gt;{glue}&lt;/code&gt; package which I heard is very intuitive, maybe next post I’ll give that a try.&lt;/p&gt;
+&lt;p&gt;Next, let’s change our y duration axis:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;g2 &amp;lt;- 
+  g1 + scale_y_time(name = &amp;quot;Time (hours)&amp;quot;,
+                  limits = c(100,180),
+                  breaks = seq(100,180,10),
+                  labels = c(&amp;quot;1:40&amp;quot;,&amp;quot;1:50&amp;quot;, &amp;quot;2:00&amp;quot;, &amp;quot;2:10&amp;quot;,&amp;quot;2:20&amp;quot;,&amp;quot;2:30&amp;quot;,&amp;quot;2:40&amp;quot;, &amp;quot;2:50&amp;quot;, &amp;quot;3:00&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you recall, we previously mutated the column we read from Wikipedia into a period class and a duration of minutes. using the &lt;code&gt;scale_*_time&lt;/code&gt; (either x or y instead of *) we can work with an &lt;code&gt;hms&lt;/code&gt; object. What we did is add a &lt;code&gt;name&lt;/code&gt;, expand a little the &lt;code&gt;limits&lt;/code&gt;, add &lt;code&gt;breaks&lt;/code&gt; and &lt;code&gt;labels&lt;/code&gt; same as before. This time around we used our breaks as minutes, so every 60 minutes represents an hour. I initially used hours as the numeric value, but then it makes it harder to break every 10 minutes (that’ll mean breaks every 0.166…). For the labels I was having some problems automating it so I comprimised on manually inputting it; I guess sometimes you just have to choose your battles between automating and manualy inserting.&lt;/p&gt;
+&lt;p&gt;Let’s finish up by adding a title, subtitle and integrating last aesthetics to our plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;g3 &amp;lt;- g2 +
+  labs(title = &amp;quot;How does Eliud Kipchoge marathon score compare to previous yearly records?&amp;quot;,
+       subtitle = &amp;quot;Points are world records for every 10-15 years. \nEliud Kipchoge is the first to break the two-hour barrier (unofficially), Great job!&amp;quot;)+
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(colour = &amp;quot;gray75&amp;quot;, size = 0.1, linetype = &amp;quot;dashed&amp;quot;),
+      plot.title = element_text(size = 14),
+      plot.subtitle = element_text(size = 10)
+      )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After adding some labs I tweaked a bit the gridlines using &lt;code&gt;panel.grid&lt;/code&gt; minor or major. You can play around with them to see which minimilize your plot in the perfect way. I chose to leave the major grid lines since I find it easier to read the values with them. Although we defined a theme earlier on we can still tweak it by adding another &lt;code&gt;theme&lt;/code&gt; argument to the previous one as we just did.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-annotation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Final annotation&lt;/h3&gt;
+&lt;p&gt;Lastly, we want the new record to be evident and stand out in a first glance. Here I was somewhat debating between using a regular &lt;code&gt;geom_point&lt;/code&gt; instead of the &lt;code&gt;geom_image&lt;/code&gt; because then we could easily use a vertical line to highlight the 2:00 hour threshold. Since a line in this case will cut right through the icon, let’s use an arrow annotation instead.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;g4 &amp;lt;- g3 +
+  geom_curve(aes(x = 2018, y = 120, xend = 2015, yend = 113),
+             colour = &amp;quot;black&amp;quot;, size = 0.9, curvature = 0.5,
+             arrow = arrow(length = unit(2,&amp;quot;mm&amp;quot;), type = &amp;quot;closed&amp;quot;))+
+  annotate(&amp;quot;text&amp;quot;, x=2010, y= 105, 
+           label = &amp;quot;Eliud Kipchoge\n12.10.2019\n1:59:40&amp;quot;,
+           color = &amp;quot;black&amp;quot;, size = 3, hjust = 0)
+
+g4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;And voila!&lt;/p&gt;
+&lt;p&gt;In our final touches we added both an arrow and text to explain what we’re seeing. I decided to go with a &lt;code&gt;geom_curve&lt;/code&gt; arrow where we can set the start and end of the arrow along with the kind of curve we want. We then set the curve to be &lt;code&gt;arrow&lt;/code&gt; and adjust its length. You can also use a closed head arrow, for more on that read on &lt;code&gt;?arrow&lt;/code&gt; as part of the &lt;code&gt;geom_curve&lt;/code&gt; or &lt;code&gt;geom_segment&lt;/code&gt; you can use here.&lt;/p&gt;
+&lt;p&gt;That’s it, seems like were good to go. &lt;strong&gt;Great job for Elihud Kipchoge&lt;/strong&gt; 👏&lt;br /&gt;
+&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;appendix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Appendix&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;When I initally created this visulization I was just starting with &lt;code&gt;R&lt;/code&gt;. I first created 11 slots, added 1921, the sequence of 1930-2010 and then a 2019 (reminder: When I first created this viz I took a different dataset altogether). Little did I know how to properly use the &lt;code&gt;c()&lt;/code&gt; function that we used in the current post.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;year.sub &amp;lt;- vector (&amp;quot;double&amp;quot;, 11)
+year.sub[1] &amp;lt;- 1921
+year.sub[2:10] &amp;lt;- seq(1930,2010,10)
+year.sub[11] &amp;lt;- 2019&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;a href=&#34;#top&#34;&gt; Back to top&lt;/a&gt;
+&lt;/center&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,14 +1,14 @@
 ---
 title: Mapping bomb shelters in Be'er-Sheva, IL
 author: Amit Levinson
-date: '2019-11-15'
+date: '2020-01-14'
 slug: bomb-shelters
-categories: []
-tags: []
+categories: [R]
+tags: [ggmap]
 subtitle: ''
-summary: ''
+summary: 'While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.'
 authors: []
-lastmod: '2019-11-15T21:55:54+02:00'
+lastmod: '2020-01-15T21:55:54+02:00'
 featured: no
 image:
   caption: ''
@@ -20,9 +20,8 @@ projects: []
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-While rockets were fired towards Israel I decided to take the opportunity and plot Be'er-Sheva's bomb shelters.  
-For a while now I've been wanting to learn how to plot maps. Seeing data frames with longitude and latitude coordinates on various occasions on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) encouraged me to do so.  
-A day before this visualizaiton, I discovered our municupality's open access data [website](https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx). In this website you can find various data sets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.
+I've been wanting to learn how to use maps in R for a while before creating the map in this post. Seeing dataframes with longitude and latitude coordinates on various occasions on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) encouraged me to do so.  
+A day before this visualizaiton, I discovered our municupality's open access data [website](https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx). In this website you can find various datasets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.
 
 Let's begin with the packages we'll need:
 
@@ -68,7 +67,7 @@ Ugh, well the names weren't read well into `R`. While this isn't a big issue to 
 
 ### Retrieving the map
 
-So we have our data frame with long and lat points, let's get our map. I want a map that can be readable in terms of streets and roads, therefore I'll give the `ggmap` package a try[^1]. Google requires you to register in order to recieve an API key to pull maps to plot. Unfortunately I won't cover how to regiser in this blog but I'm sure you can find plenty of tutorials addressing it online.    
+So we have our data frame with long and lat points, let's get our map. I want a map that can be readable in terms of streets and roads, therefore I'll give the `ggmap` package a try[^1]. Google requires you to register in order to recieve an API key to pull maps to plot. Unfortunately I won't cover how to regiser in this blog post but I'm sure you can find plenty of tutorials addressing it online.    
 Let's get Be'er-Sheva's map:
 
 ```{r}
@@ -76,7 +75,7 @@ b7_map <- get_map(location = c(34.7913 , 31.25181),
               zoom = 13, scale = 2, maptype = "roadmap")
 ```
 
-What we did here was use the `get_map` function to pull the map according to the long and lat coordinates I gave it of Be'er-Sheva. In addition you can change other features such as the zoom level, the maptype and more (See `?get_map` for more info).
+What we did here was use the `get_map` function to pull the map according to the long and lat coordinates I gave it of Be'er-Sheva. You should first pass the longitude and then the latitude in the `location` argument. In addition you can change other features such as the zoom level, the maptype and more as we saw here (See `?get_map` for more info). 
 
 ### Plot
 

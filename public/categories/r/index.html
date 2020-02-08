@@ -39,7 +39,7 @@
   
   
   
-  <meta name="theme-color" content="rgb(251, 191, 183)">
+  <meta name="theme-color" content="#3f51b5">
   
 
   
@@ -190,7 +190,7 @@
   
   
   
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
   
 
   
@@ -204,6 +204,42 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156329952-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-156329952-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
   
 
 
@@ -212,8 +248,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu5d9f29cb31e6e15be1372fea0c5a7b82_16888_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu5d9f29cb31e6e15be1372fea0c5a7b82_16888_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_192x192_fill_lanczos_center_2.png">
 
   <link rel="canonical" href="/categories/r/">
 
@@ -234,10 +270,10 @@
   <meta property="og:site_name" content="Amit Levinson">
   <meta property="og:url" content="/categories/r/">
   <meta property="og:title" content="R | Amit Levinson">
-  <meta property="og:description" content="Sociology MA student"><meta property="og:image" content="/images/icon_hu5d9f29cb31e6e15be1372fea0c5a7b82_16888_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="/images/icon_hu5d9f29cb31e6e15be1372fea0c5a7b82_16888_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="Sociology MA student"><meta property="og:image" content="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2015-07-23T21:13:14-05:00">
+    <meta property="og:updated_time" content="2020-02-07T00:00:00&#43;00:00">
   
 
   
@@ -387,35 +423,6 @@
         
         
 
-        
-
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#contact"><span>Contact</span></a>
-        </li>
-
-        
-        
-
       
 
         
@@ -475,12 +482,28 @@
   
   
   <div>
-    <h2><a href="/2015/07/23/hello-r-markdown/">Hello R Markdown</a></h2>
+    <h2><a href="/2020/02/07/eliud-kichoge/">Visualizing Eliud Kichoge&#39;s new marathon record</a></h2>
     <div class="article-style">
       
-      R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.
+      In this post I plot Eliud Kichoge new marathon record using rvest to get data from wikipedia and ggimage for plotting images as points
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/2020/02/03/the-tidytuesday-project/">The Tidytuesday project</a></h2>
+    <div class="article-style">
+      
+      Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/2020/01/14/bomb-shelters/">Mapping bomb shelters in Be&#39;er-Sheva, IL</a></h2>
+    <div class="article-style">
+      
+      While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.
       
     </div>
   </div>
@@ -578,9 +601,10 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
   <p class="powered-by">
     © Amit Levinson 2020 &middot; 
 
-    Powered by the
+    Made in
+    <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i></a> using <a href="https://github.com/rstudio/blogdown" target="_blank" rel="noopener">blogdown</a> package and
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>. Code is publicly availabe <a href="https://github.com/AmitLevinson/amitlevinson.com" target="_blank" rel="noopener"><i class="fas fa-code-branch" style="color:#E13D3D"></i></a>.
 
     
     <span class="float-right" aria-hidden="true">

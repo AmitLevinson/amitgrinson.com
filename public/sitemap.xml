@@ -33,8 +33,38 @@
   </url>
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ggimage/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2020-02-03T17:10:35+02:00</lastmod>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/rvest/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/02/07/eliud-kichoge/</loc>
+    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
   </url>
   
   <url>
@@ -43,8 +73,13 @@
   </url>
   
   <url>
-    <loc>/2019/11/15/bomb-shelters/</loc>
-    <lastmod>2019-11-15T21:55:54+02:00</lastmod>
+    <loc>/tags/ggmap/</loc>
+    <lastmod>2020-01-15T21:55:54+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/01/14/bomb-shelters/</loc>
+    <lastmod>2020-01-15T21:55:54+02:00</lastmod>
   </url>
   
   <url>
@@ -79,11 +114,6 @@
   
   <url>
     <loc>/tags/source-themes/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
   </url>
   
@@ -155,10 +185,6 @@
   <url>
     <loc>/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
   </url>
   
   <url>
