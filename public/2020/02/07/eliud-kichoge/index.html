@@ -615,8 +615,8 @@ Figure 1: <em>Eliud Kipchoge breaks the two-hour marathon barrier. Photo from th
 <div id="background" class="section level2">
 <h2>Background</h2>
 <p>On saturday October 12, 2019, Eliud Kipchoge broke (unofficially) the two-hour marathon barrier 🏆<br />
-I found this amazing and decided to show the marathon record progression throughout the years with this new achivement. In this post I’ll walk through how I obtained the data from a Wikipedia page with <code>{rvest}</code>, wrangled and tidied it and eventually plotted it using <code>{ggimage}</code>.</p>
-<p>When I initally created the plot I mistakenly took the <a href="https://en.wikipedia.org/wiki/Marathon_year_rankings">Marathon year rankings</a> from the Wikipedia webpage. That page showcases The yearly rankings and not the world records in general. In addition, I also changed the method of obtaining the data from first creating the plot to now. When I first did it I copied and pasted the table from Wikipedia into a <code>.csv</code> file and worked with that. For that specific time point, where my experience with <code>R</code> was extremly novice, I think it was adequate. This time around I gave scraping Wikipedia’s webpage a try which also renders a reproducible example.</p>
+I saw <a href="https://twitter.com/neilfws/status/1182958246753009665">Neil Saunders’ Twitter post</a> visualizing the new record and wanted to try and reproduce it with runners instead of points. In this post I’ll walk through how I obtained the data from a Wikipedia page with <code>{rvest}</code>, wrangled and tidied it and eventually plotted it using <code>{ggimage}</code>.</p>
+<p>When I initially created the plot I mistakenly took the <a href="https://en.wikipedia.org/wiki/Marathon_year_rankings">Marathon year rankings</a> from the Wikipedia webpage. That page showcases The yearly rankings and not the world records in general. In addition, I also changed the method of obtaining the data from first creating the plot to now. When I first did it I copied and pasted the table from Wikipedia into a <code>.csv</code> file and worked with that. For that specific time point, where my experience with <code>R</code> was extremly novice, I think it was adequate. This time around I gave scraping Wikipedia’s webpage a try which also renders a reproducible example.</p>
 <p>Let’s start with loading the packages we’ll need:</p>
 <pre class="r"><code>library(tidyverse)
 library(rvest)
@@ -772,7 +772,7 @@ g4</code></pre>
 <div id="appendix" class="section level2">
 <h2>Appendix</h2>
 <ul>
-<li>When I initally created this visulization I was just starting with <code>R</code>. I first created 11 slots, added 1921, the sequence of 1930-2010 and then a 2019 (reminder: When I first created this viz I took a different dataset altogether). Little did I know how to properly use the <code>c()</code> function that we used in the current post.</li>
+<li>When I initially created this visulization I was just starting with <code>R</code>. I first created 11 slots, added 1921, the sequence of 1930-2010 and then a 2019 (reminder: When I first created this viz I took a different dataset altogether). Little did I know how to properly use the <code>c()</code> function that we used in the current post.</li>
 </ul>
 <pre class="r"><code>year.sub &lt;- vector (&quot;double&quot;, 11)
 year.sub[1] &lt;- 1921
