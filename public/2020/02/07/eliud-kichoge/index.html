@@ -635,7 +635,7 @@ library(hrbrthemes)</code></pre>
 Figure 2: <em>Wikipedia page of marathon world records</em>
 </p>
 </div>
-<p>Here we can see that the webpage contains information about Marathon records, where in the screenshot we see the Men section. We only want this table with Men’s records, so let’s get that:</p>
+<p>Here we can see that the webpage contains information about marathon records, where in the screenshot we see the men section. We only want the table with men’s records, so let’s get that:</p>
 <pre class="r"><code>#The Wikipage we&#39;ll need
 wiki_url &lt;- &quot;https://en.wikipedia.org/wiki/Marathon_world_record_progression&quot;
 
@@ -644,13 +644,13 @@ runners_wiki &lt;- wiki_url %&gt;%
   html_nodes(xpath=&#39;//*[@id=&quot;mw-content-text&quot;]/div/table[1]&#39;) %&gt;% 
   html_table(fill = TRUE) %&gt;% 
   as.data.frame()</code></pre>
-<p>Using the <code>{rvest}</code> package we are able to scrape the Wikipedia page for the table we wanted. Frankly, this is the first time I used <code>rvest</code>, but I found a good example from <a href="https://r-tastic.co.uk/post/exploring-london-crime-with-r-heat-maps/">Kasia Kulma’s blog post</a> exploring London crime with R heat maps. I used the <em>SelctorGadget</em> which identified the page’s content as “mw-content-text”. Using that id we looked for the tables (/div/table), specifically the first table <code>[1]</code> of Men world records we saw earlier in figure <a href="#fig:wiki-ss">2</a>. Once we have the table we turn it into a dataframe for us to use.</p>
+<p>Using the <code>{rvest}</code> package we are able to scrape the Wikipedia page for the table we wanted. Frankly, this is the first time I used <code>rvest</code>, but I found a good example from <a href="https://r-tastic.co.uk/post/exploring-london-crime-with-r-heat-maps/">Kasia Kulma’s blog post</a> exploring London crime with R heat maps. I used the <em>SelctorGadget</em> which identified the page’s content as “mw-content-text”. Using that id we looked for the tables (/div/table), specifically the first table <code>[1]</code> of men world records we saw earlier in figure <a href="#fig:wiki-ss">2</a>. Once we have the table we turn it into a dataframe for us to use.</p>
 <p>Alternatively, you can also use the following method to extract a table by extracting all tables from the Wikipedia page and choosing the first one:</p>
 <pre class="r"><code>runners_wiki_alternative &lt;- wiki_url %&gt;% 
   read_html() %&gt;%
   html_table(fill = TRUE) %&gt;%
   .[[1]]</code></pre>
-<p>This option extracts all table from the html page using <code>html_table()</code>. Using this on the whole page parses the html tables into data frames nesting within a list object. Likw before, <code>{rvest}</code> makes it easy for us and if the tables have inconsistent number of values it requires (or demands?) us to fill them. Once we have the tables in a list object we can extract the one we need using <code>.[[1]]</code>. The <code>.</code> acts as a place holder for the previous object passed, in this case the list of tables we scraped. The <code>[[1]]</code> following that calls for the first object within the list, but in the form of its core class, in this case a <code>class(runners_wiki_alternative)</code>. If we’d use one square bracket <code>[1]</code> it would return an object with the original class from which it was drawn, in this case a list which is not good for us here since we anyway want it as a dataframe.</p>
+<p>This option extracts all table from the html page using <code>html_table()</code>. Using this on the whole page parses the html tables into data frames nesting within a list object. Like before, <code>{rvest}</code> makes it easy for us and if the tables have inconsistent number of values it requires (or demands?) us to fill them. Once we have the tables in a list object we can extract the one we need using <code>.[[1]]</code>. The <code>.</code> acts as a place holder for the previous object passed, in this case the list of tables we scraped. The <code>[[1]]</code> following that calls for the first object within the list, but in the form of its core class, in this case a <code>class(runners_wiki_alternative)</code>. If we’d use one square bracket <code>[1]</code> it would return an object with the original class from which it was drawn, in this case a list which is not good for us here since we anyway want it as a dataframe.</p>
 </div>
 <div id="warngling-the-data" class="section level2">
 <h2>Warngling the Data</h2>
