@@ -62,7 +62,7 @@ In order to view the new record in comparison to other world records, We'll turn
 knitr::include_graphics("/img/marath_record/wikipage.png")
 ```
 
-Here we can see that the webpage contains information about Marathon records, where in the screenshot we see the Men section. We only want this table with Men's records, so let's get that:
+Here we can see that the webpage contains information about marathon records, where in the screenshot we see the men section. We only want the table with men's records, so let's get that:
 
 ```{r}
 #The Wikipage we'll need
@@ -75,7 +75,7 @@ runners_wiki <- wiki_url %>%
   as.data.frame()
 ```
 
-Using the `{rvest}` package we are able to scrape the Wikipedia page for the table we wanted. Frankly, this is the first time I used `rvest`, but I found a good example from [Kasia Kulma's blog post](https://r-tastic.co.uk/post/exploring-london-crime-with-r-heat-maps/) exploring London crime with R heat maps. I used the *SelctorGadget* which identified the page's content as "mw-content-text". Using that id we looked for the tables (/div/table), specifically the first table `[1]` of Men world records we saw earlier in figure \@ref(fig:wiki-ss). Once we have the table we turn it into a dataframe for us to use.  
+Using the `{rvest}` package we are able to scrape the Wikipedia page for the table we wanted. Frankly, this is the first time I used `rvest`, but I found a good example from [Kasia Kulma's blog post](https://r-tastic.co.uk/post/exploring-london-crime-with-r-heat-maps/) exploring London crime with R heat maps. I used the *SelctorGadget* which identified the page's content as "mw-content-text". Using that id we looked for the tables (/div/table), specifically the first table `[1]` of men world records we saw earlier in figure \@ref(fig:wiki-ss). Once we have the table we turn it into a dataframe for us to use.  
 
 Alternatively, you can also use the following method to extract a table by extracting all tables from the Wikipedia page and choosing the first one:
 
@@ -86,7 +86,7 @@ runners_wiki_alternative <- wiki_url %>%
   .[[1]]
 ```
 
-This option extracts all table from the html page using `html_table()`. Using this on the whole page parses the html tables into data frames nesting within a list object. Likw before, `{rvest}` makes it easy for us and if the tables have inconsistent number of values it requires (or demands?) us to fill them. Once we have the tables in a list object we can extract the one we need using `.[[1]]`. The `.` acts as a place holder for the previous object passed, in this case the list of tables we scraped. The `[[1]]` following that calls for the first object within the list, but in the form of its core class, in this case a `class(runners_wiki_alternative)`. If we'd use one square bracket `[1]` it would return an object with the original class from which it was drawn, in this case a list which is not good for us here since we anyway want it as a dataframe.
+This option extracts all table from the html page using `html_table()`. Using this on the whole page parses the html tables into data frames nesting within a list object. Like before, `{rvest}` makes it easy for us and if the tables have inconsistent number of values it requires (or demands?) us to fill them. Once we have the tables in a list object we can extract the one we need using `.[[1]]`. The `.` acts as a place holder for the previous object passed, in this case the list of tables we scraped. The `[[1]]` following that calls for the first object within the list, but in the form of its core class, in this case a `class(runners_wiki_alternative)`. If we'd use one square bracket `[1]` it would return an object with the original class from which it was drawn, in this case a list which is not good for us here since we anyway want it as a dataframe.
 
 ## Warngling the Data
 
