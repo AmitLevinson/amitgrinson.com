@@ -1,0 +1,245 @@
+---
+title: Making updating exam grades easy with R
+author: Amit Levinson
+date: '2020-02-15'
+slug: update-exam-grades-easy-with-r
+categories: []
+tags: []
+subtitle: ''
+summary: 'In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams'
+authors: []
+lastmod: '2020-02-15T22:55:14+02:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+draft: true
+header-includes:
+  \usepackage{caption} \captionsetup[table]{labelformat=empty}
+editor_options: 
+  chunk_output_type: console
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<p><strong>TL;DR</strong> Instead of each time searching for an id in the xlsx template the university provides we make our own xlsx and merge between the two. I then run through two options of either saving the new data frame as an <code>.xlsx</code> using the <code>{xlsx}</code> package, and I show another option where I extract the new column I need using <code>write_clip</code> from the <code>{clipr}</code> package.</p>
+<blockquote>
+<p>“Progress isn’t made by early risers. It’s made by lazy men trying to find easier ways to do something.” </br> ― Robert Heinlein</p>
+</blockquote>
+<div id="whats-the-story" class="section level3">
+<h3>What’s the story?</h3>
+<p>The other day I had to update students’ exams into a blank excel file. Every course exam each student gets an exam id. Their id is comprised from a number / number, for example, 26/1; 1/1; 42/15 and so forth. In our course of up to 70 students the left number goes all the way to the number of students in the exam class, and the right number goes up to 15 or 20 and starts again from 1.<br />
+This would make it easy to insert the grade for each id into the excel file that is already organized. However, since this is a new system and I was waiting to get access to download the excel I decided to open a new spreadsheet instead. Also, writing the id instead of looking it up in the excel file each time can save, in my opinion, a little time of searching.<br />
+So we have our spreadsheet which is not sorted, and we have the university’s spreadsheet which is sorted - how are we going to sync between them, considering our id column we wrote is recognized as a <code>character</code> class? I know, let’s turn to <code>R</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+</div>
+<div id="looking-at-our-data" class="section level3">
+<h3>Looking at our data</h3>
+<p>Let’s start off with loading our packages:</p>
+<pre class="r"><code>library(tidyverse)
+# For reading xlsx files
+library(readxl)
+# To nicely display the tables in the following paragraph
+library(kableExtra)
+library(knitr)</code></pre>
+<p>Now let’s read both files: Our spreadsheet with just the id and grade of each student we wrote in, and the other spreadsheet with the students’ id and a numerical vector to sort by that the university provides.</p>
+<pre class="r"><code>messy &lt;- read_excel(&quot;messy_grades.xlsx&quot;)
+clean &lt;- read_excel(&quot;clean.xlsx&quot;)</code></pre>
+<p>This gives us the following tables where on the left we have our <strong>messy</strong> table we wrote and on the right our <strong>clean</strong> table we want to merge to:</p>
+<table class="table" style="width: auto !important; float: left; margin-right: 10px;">
+<thead>
+<tr>
+<th style="text-align:center;">
+id
+</th>
+<th style="text-align:center;">
+grade
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+67/13
+</td>
+<td style="text-align:center;">
+94
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+56/2
+</td>
+<td style="text-align:center;">
+90
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+68/14
+</td>
+<td style="text-align:center;">
+84
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+63/9
+</td>
+<td style="text-align:center;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+55/1
+</td>
+<td style="text-align:center;">
+89
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+62/8
+</td>
+<td style="text-align:center;">
+97
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="width: auto !important; margin-right: 0; margin-left: auto">
+<thead>
+<tr>
+<th style="text-align:center;">
+id
+</th>
+<th style="text-align:center;">
+participated
+</th>
+<th style="text-align:center;">
+number_for_sorting
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1/1
+</td>
+<td style="text-align:center;">
+V
+</td>
+<td style="text-align:center;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2/2
+</td>
+<td style="text-align:center;">
+V
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3/3
+</td>
+<td style="text-align:center;">
+V
+</td>
+<td style="text-align:center;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4/4
+</td>
+<td style="text-align:center;">
+NA
+</td>
+<td style="text-align:center;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5/5
+</td>
+<td style="text-align:center;">
+NA
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6/6
+</td>
+<td style="text-align:center;">
+V
+</td>
+<td style="text-align:center;">
+6
+</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+So we now have several options:</p>
+<ol style="list-style-type: decimal">
+<li>Join between the two tables, save the clean table as a new xlsx and upload it to the University’s exam system.</li>
+<li>Join between the two tables, clip the column with the organized grades and paste it in to the university’s sorted excel file.</li>
+</ol>
+</div>
+<div id="option-1---merge-and-write-to-a-new-excel-file" class="section level3">
+<h3>Option 1 - Merge and write to a new excel file</h3>
+<p>So the first option will be to merge the two tables into the clean one and save that as a new excel file using the <code>{xlsx}</code> package:</p>
+<pre class="r"><code>joined_tables &lt;- messy %&gt;% 
+    right_join(clean)
+
+xlsx::write.xlsx(joined_tables, &quot;010210078-29012020C.xlsx&quot;, showNA = FALSE)</code></pre>
+<p>Below is a screen shot of our new table:</p>
+<p><img src="/img/ta_efficient/xl.png" /></p>
+<p>However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.</p>
+</div>
+<div id="option-2" class="section level3">
+<h3>Option 2</h3>
+<p>This time around I’ll write a function for what we’ll be doing: I want to join the tables but this time around I want to clip the column I need and then manually paste it in the original template excel file:</p>
+<pre class="r"><code>clip_grades &lt;- function(messy, clean){
+  messy %&gt;% 
+    right_join(clean) %&gt;% 
+    pull(grade) %&gt;% 
+    clipr::write_clip()
+}
+
+clip_grades(messy, clean)</code></pre>
+<p>which gives us the following:</p>
+<p><img src="/img/ta_efficient/clipgif.gif" /></p>
+<p>That’s it!</p>
+<p>Well, more or less. We need to delete the ‘NA’ that are copied from the function. Unfortunately I wasn’t able to delete them from within <code>R</code>, so I manually delete them.</p>
+<p>As to which option is better, I think the first option is more efficient as we only need to delete the id column. However, using the <code>{xlsx}</code> package is dependent on <code>{rJava}</code>and having java installed on the computer from what I encountered. Option two can be a little messy and possibly yield mistakes if we copy and paste the new grades and then manually delete the <code>NA</code> - your call.</p>
+<div id="so-what-did-i-learn-here" class="section level4">
+<h4>So what did I learn here?</h4>
+<ul>
+<li>How to read and write an excel file.</li>
+<li>Using the <code>write_clip</code> function which is amazingly easy.</li>
+<li>How to make updating exams easier :muscle:</li>
+</ul>
+<p></br></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For confidentiality and other reasons I only left columns with information that can’t be linked to students (I also changed the grades altogether for this demonstration).<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
