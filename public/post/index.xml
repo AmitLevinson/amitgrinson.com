@@ -193,7 +193,7 @@ V
 So we now have several options:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Join between the two tables, save the clean table as a new xlsx and upload it to the University’s exam system.&lt;/li&gt;
-&lt;li&gt;Join between the two tables, clip the column with the organized grades and paste it in to the university’s sorted excel file.&lt;/li&gt;
+&lt;li&gt;Join between the two tables, clip the column with the organized grades and paste it into the university’s sorted excel file.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div id=&#34;option-1---merge-and-write-to-a-new-excel-file&#34; class=&#34;section level3&#34;&gt;
@@ -207,8 +207,8 @@ xlsx::write.xlsx(joined_tables, &amp;quot;010210078-29012020C.xlsx&amp;quot;, sh
 &lt;p&gt;&lt;img src=&#34;/img/ta_efficient/xl.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;option-2&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Option 2&lt;/h3&gt;
+&lt;div id=&#34;option-2---clip-the-sorted-column-into-the-excel-file&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Option 2 - Clip the sorted column into the excel file&lt;/h3&gt;
 &lt;p&gt;This time around I’ll write a function for what we’ll be doing: I want to join the tables but this time around I want to clip the column I need and then manually paste it in the original template excel file:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clip_grades &amp;lt;- function(messy, clean){
   messy %&amp;gt;% 

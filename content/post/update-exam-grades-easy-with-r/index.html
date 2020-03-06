@@ -197,7 +197,7 @@ V
 So we now have several options:</p>
 <ol style="list-style-type: decimal">
 <li>Join between the two tables, save the clean table as a new xlsx and upload it to the University’s exam system.</li>
-<li>Join between the two tables, clip the column with the organized grades and paste it in to the university’s sorted excel file.</li>
+<li>Join between the two tables, clip the column with the organized grades and paste it into the university’s sorted excel file.</li>
 </ol>
 </div>
 <div id="option-1---merge-and-write-to-a-new-excel-file" class="section level3">
@@ -211,8 +211,8 @@ xlsx::write.xlsx(joined_tables, &quot;010210078-29012020C.xlsx&quot;, showNA = F
 <p><img src="/img/ta_efficient/xl.png" /></p>
 <p>However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.</p>
 </div>
-<div id="option-2" class="section level3">
-<h3>Option 2</h3>
+<div id="option-2---clip-the-sorted-column-into-the-excel-file" class="section level3">
+<h3>Option 2 - Clip the sorted column into the excel file</h3>
 <p>This time around I’ll write a function for what we’ll be doing: I want to join the tables but this time around I want to clip the column I need and then manually paste it in the original template excel file:</p>
 <pre class="r"><code>clip_grades &lt;- function(messy, clean){
   messy %&gt;% 

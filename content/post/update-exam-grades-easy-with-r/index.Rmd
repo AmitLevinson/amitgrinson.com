@@ -71,7 +71,7 @@ Sys.setenv(CLIPR_ALLOW = TRUE)
 So we now have several options:
 
 1. Join between the two tables, save the clean table as a new xlsx and upload it to the University's exam system.
-2. Join between the two tables, clip the column with the organized grades and paste it  in to the university's sorted excel file.
+2. Join between the two tables, clip the column with the organized grades and paste it  into the university's sorted excel file.
 
 
 ### Option 1 - Merge and write to a new excel file
@@ -91,7 +91,7 @@ Below is a screen shot of our new table:
 
 However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.
 
-### Option 2
+### Option 2 - Clip the sorted column into the excel file
 
 This time around I'll write a function for what we'll be doing: I want to join the tables but this time around I want to clip the column I need and then manually paste it in the original template excel file:
 
