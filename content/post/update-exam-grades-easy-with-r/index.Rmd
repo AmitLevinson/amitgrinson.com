@@ -8,7 +8,7 @@ tags: []
 subtitle: ''
 summary: 'In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams'
 authors: []
-lastmod: '2020-02-15T22:55:14+02:00'
+lastmod: '2020-03-06T22:55:14+02:00'
 featured: no
 image:
   caption: ''
