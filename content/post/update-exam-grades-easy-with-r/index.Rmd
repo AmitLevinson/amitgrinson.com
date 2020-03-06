@@ -15,7 +15,7 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
-draft: true
+draft: false
 header-includes:
   \usepackage{caption} \captionsetup[table]{labelformat=empty}
 editor_options: 

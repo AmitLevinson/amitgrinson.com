@@ -18,7 +18,7 @@ subtitle = ""
   count = 0
   
   # Choose how many pages you would like to offset by
-  offset = 0
+  offset = 5
 
   # Page order. Descending (desc) or ascending (asc) date.
   order = "desc"
