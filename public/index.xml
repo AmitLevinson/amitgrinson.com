@@ -106,7 +106,7 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/div&gt;
 &lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;06.03.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd&#34;&gt;Link to code&lt;/a&gt; | &lt;a href=&#34;https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/&#34;&gt;Try the app&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/tt_nhl.gif&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;

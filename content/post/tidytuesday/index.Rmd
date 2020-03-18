@@ -47,7 +47,7 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 </p>
 
 ### **06.03.2020**  
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd)
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd) | [Try the app](https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/)
 
 <p align = "center">
   <img src = "/img/tt/tt_nhl.gif" width = "700">
