@@ -4,7 +4,7 @@ author: Amit Levinson
 date: '2020-02-07'
 slug: eliud-kichoge
 categories: [R]
-tags: [ggimage, rvest, r-blogger]
+tags: [ggimage, rvest]
 subtitle: ''
 summary: 'In this post I plot Eliud Kichoge new marathon record using rvest to get data from wikipedia and ggimage for plotting images as points'
 authors: []
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ```{r echo = FALSE, fig.cap= "_Eliud Kipchoge breaks the two-hour marathon barrier. Photo from the \'New York Times\'. Leonhard Foeger/Reuters _", fig.align= 'center'}
-knitr::include_graphics("/img/marath_record/new_record.jpg")
+knitr::include_graphics("new_record.jpg")
 ```
 
 ### Table of Contents
@@ -59,7 +59,7 @@ We'll use `{tidyverse}` for tidy manipulation and plotting, `{janitor}` for clea
 In order to view the new record in comparison to other world records, We'll turn to Wikipedia and see what we can find there.
 
 ```{r wiki-ss, echo = FALSE, fig.cap= "_Wikipedia page of marathon world records_", fig.align= 'center'}
-knitr::include_graphics("/img/marath_record/wikipage.png")
+knitr::include_graphics("wikipage.png")
 ```
 
 Here we can see that the webpage contains information about marathon records, where in the screenshot we see the men section. We only want the table with men's records, so let's get that:
