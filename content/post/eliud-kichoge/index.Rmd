@@ -4,7 +4,7 @@ author: Amit Levinson
 date: '2020-02-07'
 slug: eliud-kichoge
 categories: [R]
-tags: [ggimage, rvest]
+tags: [ggimage, rvest, r-blogger]
 subtitle: ''
 summary: 'In this post I plot Eliud Kichoge new marathon record using rvest to get data from wikipedia and ggimage for plotting images as points'
 authors: []
