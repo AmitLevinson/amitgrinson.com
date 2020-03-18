@@ -41,12 +41,14 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 
 ### **17.03.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R)
+
 <p align = "center">
  <img src = "/img/tt/tt_schrute.png" width = "700">
 </p>
 
 ### **06.03.2020**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd)
+
 <p align = "center">
   <img src = "/img/tt/tt_nhl.gif" width = "700">
 </p>
@@ -54,12 +56,14 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 
 ### **20.01.2020**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R)
+
 <p align = "center">
   <img src = "/img/tt/spotify.png" width = "700">
 </p>
 
 ### **22.12.2019**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R)  
+
 <p align = "center">
 <img src = "/img/tt/total_breed.png" width = "700">
 </p>  
