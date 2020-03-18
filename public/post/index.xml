@@ -5,12 +5,72 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>Israeli elections on twitter</title>
+      <link>/2020/03/09/israeli-elections-on-twitter/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/03/09/israeli-elections-on-twitter/</guid>
+      <description>
+
+
+&lt;p&gt;Israel just had its 3rd election in a row on March 2, 2020.
+This is because our Knesset (Hebrew term for house of representatives) wasn’t able to form or hold a government after the previous elections. As I won’t get into the politics of why they didn’t succeed thus far (get it? politics 😉), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.&lt;/p&gt;
+&lt;div id=&#34;gathering-the-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Gathering the data &lt;i class=&#34;fab fa-twitter&#34;&gt;&lt;/i&gt;&lt;/h3&gt;
+&lt;p&gt;Twitter’s API only always scraping for free 6-9 days back. therefore I scraped the data already on March 7, 2020 and saved it for later use. To gather the tweets we can use the &lt;code&gt;{rtweet}&lt;/code&gt; package which is amazingly easy to use (&lt;a href=&#34;https://rtweet.info/&#34;&gt;Check out its website&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Let’s start with the packages we’ll use:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(rtweet)
+library(hrbrthemes)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next we’ll gather the tweets we need:&lt;/p&gt;
+&lt;p&gt;As I mentioned earlier I already scraped the data to save it but wrote it here in case you’re wondering how we gather them. I used only one term, which in hebrew is “elections”, and gathered all tweets using that word.&lt;/p&gt;
+&lt;p&gt;Before we begin, I will say this post doesn’t aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussion. this is due for several reasons:&lt;br /&gt;
+1. Twitter isn’t common in Israel at all. I’m not sure what’s the usage rate but it’s definitely not representative of the Israel population.&lt;br /&gt;
+2. I searched for only one word - elections (in Hebrew) - which yielded some 16,000 tweets. This is definitely not a large enough dataset for a representation.&lt;/p&gt;
+&lt;p&gt;With that said, the data gathered provides an opportunity to look at some Twitter data from the elections period.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-begin&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Let’s begin&lt;/h3&gt;
+&lt;p&gt;First, let’s see how the tweets distribute across the time span we searched for. we can create a quick time plot using the &lt;code&gt;ts_plot()&lt;/code&gt; from the &lt;code&gt;{rtweet}&lt;/code&gt; package:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections %&amp;gt;% 
+  ts_plot(&amp;quot;2 hours&amp;quot;)+
+  theme_ipsum_rc()+
+  scale_x_datetime(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%d %b&amp;quot;)+
+    labs(x= NULL, y = NULL,
+       title = &amp;quot;Frequency of tweets throughout the Israeli elections&amp;quot;,
+       subtitle = &amp;quot;Tweets are counts aggregated using a two-hour interval.\nonly tweets with the word &amp;#39;elections&amp;#39; (in Hebrew) were gathered&amp;quot;)+
+  geom_text(aes(x = as.POSIXct(&amp;quot;2020-03-02 22:10:00&amp;quot;), y = 425, label = &amp;quot;10 PM:\nClosing of\npolls&amp;quot;),
+            hjust = 0, size = 3, family=&amp;quot;Courier New&amp;quot;)+
+  geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/2020-03-09-israeli-elections-on-twitter_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Intersting, we see the number of tweets during the closing time is equivalent to that of XXXX.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;USers with most tweets&lt;/h3&gt;
+&lt;p&gt;Next, let’s look at who tweeted the most:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections %&amp;gt;% 
+  count(screen_name, sort = T) %&amp;gt;% 
+  slice(1:15) %&amp;gt;% 
+  mutate(screen_name = reorder(screen_name,n)) %&amp;gt;% 
+  ggplot(aes(x= screen_name, y= n))+
+  geom_col()+
+  coord_flip()+
+  scale_y_continuous(breaks = seq(0,180, 20), labels = seq(0,180,20))+
+  labs(x = &amp;quot;Screen name&amp;quot;, y = &amp;quot;Number of tweets&amp;quot;, title = &amp;quot;Top 15 users tweeting the word &amp;#39;elections&amp;#39; (בחירות)\nduring the 3rd Israeli elections&amp;quot;)+
+  theme_ipsum_rc()+
+  theme(panel.grid = element_blank(),
+        panel.grid.major.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/2020-03-09-israeli-elections-on-twitter_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Making updating exam grades easy with R</title>

@@ -1,0 +1,73 @@
+---
+title: Israeli elections on twitter
+author: Amit Levinson
+date: '2020-03-09'
+slug: israeli-elections-on-twitter
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-03-09T19:29:42+02:00'
+featured: no
+draft: true
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+<p>Israel just had its 3rd election in a row on March 2, 2020.
+This is because our Knesset (Hebrew term for house of representatives) wasn’t able to form or hold a government after the previous elections. As I won’t get into the politics of why they didn’t succeed thus far (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.</p>
+<div id="gathering-the-data" class="section level3">
+<h3>Gathering the data <i class="fab fa-twitter"></i></h3>
+<p>Twitter’s API only always scraping for free 6-9 days back. therefore I scraped the data already on March 7, 2020 and saved it for later use. To gather the tweets we can use the <code>{rtweet}</code> package which is amazingly easy to use (<a href="https://rtweet.info/">Check out its website</a>).</p>
+<p>Let’s start with the packages we’ll use:</p>
+<pre class="r"><code>library(tidyverse)
+library(rtweet)
+library(hrbrthemes)</code></pre>
+<p>Next we’ll gather the tweets we need:</p>
+<p>As I mentioned earlier I already scraped the data to save it but wrote it here in case you’re wondering how we gather them. I used only one term, which in hebrew is “elections”, and gathered all tweets using that word.</p>
+<p>Before we begin, I will say this post doesn’t aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussion. this is due for several reasons:<br />
+1. Twitter isn’t common in Israel at all. I’m not sure what’s the usage rate but it’s definitely not representative of the Israel population.<br />
+2. I searched for only one word - elections (in Hebrew) - which yielded some 16,000 tweets. This is definitely not a large enough dataset for a representation.</p>
+<p>With that said, the data gathered provides an opportunity to look at some Twitter data from the elections period.</p>
+</div>
+<div id="lets-begin" class="section level3">
+<h3>Let’s begin</h3>
+<p>First, let’s see how the tweets distribute across the time span we searched for. we can create a quick time plot using the <code>ts_plot()</code> from the <code>{rtweet}</code> package:</p>
+<pre class="r"><code>elections %&gt;% 
+  ts_plot(&quot;2 hours&quot;)+
+  theme_ipsum_rc()+
+  scale_x_datetime(date_breaks = &quot;1 day&quot;,date_labels = &quot;%d %b&quot;)+
+    labs(x= NULL, y = NULL,
+       title = &quot;Frequency of tweets throughout the Israeli elections&quot;,
+       subtitle = &quot;Tweets are counts aggregated using a two-hour interval.\nonly tweets with the word &#39;elections&#39; (in Hebrew) were gathered&quot;)+
+  geom_text(aes(x = as.POSIXct(&quot;2020-03-02 22:10:00&quot;), y = 425, label = &quot;10 PM:\nClosing of\npolls&quot;),
+            hjust = 0, size = 3, family=&quot;Courier New&quot;)+
+  geom_vline(xintercept = as.POSIXct(&quot;2020-03-02 22:00&quot;),linetype = &quot;dashed&quot;, size = 1)</code></pre>
+<p><img src="/post/elections-twitter/2020-03-09-israeli-elections-on-twitter_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Intersting, we see the number of tweets during the closing time is equivalent to that of XXXX.</p>
+</div>
+<div id="users-with-most-tweets" class="section level3">
+<h3>USers with most tweets</h3>
+<p>Next, let’s look at who tweeted the most:</p>
+<pre class="r"><code>elections %&gt;% 
+  count(screen_name, sort = T) %&gt;% 
+  slice(1:15) %&gt;% 
+  mutate(screen_name = reorder(screen_name,n)) %&gt;% 
+  ggplot(aes(x= screen_name, y= n))+
+  geom_col()+
+  coord_flip()+
+  scale_y_continuous(breaks = seq(0,180, 20), labels = seq(0,180,20))+
+  labs(x = &quot;Screen name&quot;, y = &quot;Number of tweets&quot;, title = &quot;Top 15 users tweeting the word &#39;elections&#39; (בחירות)\nduring the 3rd Israeli elections&quot;)+
+  theme_ipsum_rc()+
+  theme(panel.grid = element_blank(),
+        panel.grid.major.y = element_blank())</code></pre>
+<p><img src="/post/elections-twitter/2020-03-09-israeli-elections-on-twitter_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>

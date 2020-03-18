@@ -20,6 +20,7 @@ projects: []
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
+
 I've been wanting to learn how to use maps in R for a while before creating the map in this post. Seeing dataframes with longitude and latitude coordinates on various occasions on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) encouraged me to do so.  
 A day before this visualizaiton, I discovered our municupality's open access data [website](https://www.beer-sheva.muni.il/OpenData/Pages/default.aspx). In this website you can find various datasets like street light coordinates, bomb shelters spread out in the city and more. A day after discovering it Israel, the country I live in, was fired missiles at. I decided to take the opportunity and map some of the shelters around my house. You know, just in case.
 
