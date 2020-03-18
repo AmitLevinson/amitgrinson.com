@@ -33,12 +33,27 @@
   </url>
   
   <url>
-    <loc>/2020/03/09/israeli-elections-on-twitter/</loc>
-    <lastmod>2020-03-09T19:29:42+02:00</lastmod>
+    <loc>/categories/</loc>
+    <lastmod>2020-03-17T17:10:35+02:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2020-03-17T17:10:35+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-03-17T17:10:35+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/03/17/the-tidytuesday-project/</loc>
+    <lastmod>2020-03-17T17:10:35+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/03/09/israeli-elections-on-twitter/</loc>
     <lastmod>2020-03-09T19:29:42+02:00</lastmod>
   </url>
   
@@ -48,17 +63,7 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/ggimage/</loc>
-    <lastmod>2020-02-07T15:00:21+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
     <lastmod>2020-02-07T15:00:21+02:00</lastmod>
   </url>
   
@@ -75,11 +80,6 @@
   <url>
     <loc>/2020/02/07/eliud-kichoge/</loc>
     <lastmod>2020-02-07T15:00:21+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/02/03/the-tidytuesday-project/</loc>
-    <lastmod>2020-02-03T17:10:35+02:00</lastmod>
   </url>
   
   <url>

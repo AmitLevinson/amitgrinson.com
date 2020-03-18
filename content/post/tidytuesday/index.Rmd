@@ -1,14 +1,14 @@
 ---
 title: The Tidytuesday project
 author: Amit Levinson
-date: '2020-02-03'
+date: '2020-03-17'
 slug: the-tidytuesday-project
 categories: [R]
 tags: []
 subtitle: ''
 summary: 'Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data.'
 authors: []
-lastmod: '2020-02-03T17:10:35+02:00'
+lastmod: '2020-03-17T17:10:35+02:00'
 featured: no
 image:
   caption: ''
@@ -37,6 +37,20 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
+
+
+### **17.03.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R)
+<p align = "center">
+ <img src = "/img/tt/tt_schrute.png" width = "700">
+</p>
+
+### **06.03.2020**  
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd)
+<p align = "center">
+  <img src = "/img/tt/tt_nhl.gif" width = "700">
+</p>
+
 
 ### **20.01.2020**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R)

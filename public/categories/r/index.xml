@@ -5,12 +5,141 @@
     <link>/categories/r/</link>
       <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Tue, 17 Mar 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>R</title>
       <link>/categories/r/</link>
     </image>
+    
+    <item>
+      <title>The Tidytuesday project</title>
+      <link>/2020/03/17/the-tidytuesday-project/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/03/17/the-tidytuesday-project/</guid>
+      <description>
+
+
+&lt;div id=&#34;what-is-tidytuesday&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;What is TidyTuesday?&lt;/strong&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the R for Data Science textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with ggplot2, tidyr, dplyr, and other tools in the tidyverse ecosystem. However, any code-based methodology is welcome - just please remember to share the code used to generate the results.”&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can read more about it &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Basically, every week the R4DS community publishes a &lt;strong&gt;new data set&lt;/strong&gt; where the R community (or any code-based methdogology) is welcome to &lt;strong&gt;analyze&lt;/strong&gt; and &lt;strong&gt;visualize&lt;/strong&gt; the data.
+When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it’s what get me motivated and fascinated with R. Every week you’re challenged with a new data set and get to see how others have analyzed it.&lt;/p&gt;
+&lt;p&gt;Whenever I have some free time I like to join in and give it a go. If you’re looking to get some practice or enjoy analyzing the same data set as others - Join the party, there’s much to learn!&lt;br /&gt;
+&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plots&lt;/h2&gt;
+&lt;p&gt;Below are graphs I made, organized in a descending order by date. Some I’m more proud of than others, but I choose to display all of them in case someone finds anything useful 😄
+&lt;/br&gt;&lt;/p&gt;
+&lt;div id=&#34;section&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;17.03.2020&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/tt_schrute.png&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;06.03.2020&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/tt_nhl.gif&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;20.01.2020&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/spotify.png&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-3&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;22.12.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R&#34;&gt;Link to code&lt;/a&gt;&lt;br /&gt;
+
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/total_breed.png&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-4&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;11.12.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/measles.gif&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-5&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;5.12.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/parking_tickets_hours.png&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-6&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;20.11.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/tt/nz_bird_vote.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-7&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;6.11.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/bikers_and_walkers.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-8&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;31.10.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week44_NYC_Squerrils/Squirrels.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/Central_park_squirrel.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-9&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;22.10.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week43_Horror_Films/Horror_dis.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/horror_movie_length.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-10&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;9.10.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/Max_lift.jpeg&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-11&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;6.10.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R&#34;&gt;Link to code&lt;/a&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/Barstool_rating.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-12&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;28.9.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/Ethnic_div_revised.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-13&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;22.9.2019&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/1_Week38_Number%20of%20Visitors/National%20Parks.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;/img/tt/National_Parks.png&#34; width=&#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;#top&#34;&gt; Back to top&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
@@ -210,121 +339,6 @@ year.sub[11] &amp;lt;- 2019&lt;/code&gt;&lt;/pre&gt;
 &lt;center&gt;
 &lt;a href=&#34;#top&#34;&gt; Back to top&lt;/a&gt;
 &lt;/center&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>The Tidytuesday project</title>
-      <link>/2020/02/03/the-tidytuesday-project/</link>
-      <pubDate>Mon, 03 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>/2020/02/03/the-tidytuesday-project/</guid>
-      <description>
-
-
-&lt;div id=&#34;what-is-tidytuesday&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;What is TidyTuesday?&lt;/strong&gt;&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;“A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the R for Data Science textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with ggplot2, tidyr, dplyr, and other tools in the tidyverse ecosystem. However, any code-based methodology is welcome - just please remember to share the code used to generate the results.”&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;You can read more about it &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Basically, every week the R4DS community publishes a &lt;strong&gt;new data set&lt;/strong&gt; where the R community (or any code-based methdogology) is welcome to &lt;strong&gt;analyze&lt;/strong&gt; and &lt;strong&gt;visualize&lt;/strong&gt; the data.
-When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it’s what get me motivated and fascinated with R. Every week you’re challenged with a new data set and get to see how others have analyzed it.&lt;/p&gt;
-&lt;p&gt;Whenever I have some free time I like to join in and give it a go. If you’re looking to get some practice or enjoy analyzing the same data set as others - Join the party, there’s much to learn!&lt;br /&gt;
-&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plots&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Plots&lt;/h2&gt;
-&lt;p&gt;Below are graphs I made, organized in a descending order by date. Some I’m more proud of than others, but I choose to display all of them in case someone finds anything useful 😄
-&lt;/br&gt;&lt;/p&gt;
-&lt;div id=&#34;section&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;20.01.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/spotify.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R&#34;&gt;Link to code&lt;/a&gt;&lt;br /&gt;
-
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/total_breed.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-2&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;11.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/measles.gif&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-3&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;5.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/parking_tickets_hours.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-4&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;20.11.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/tt/nz_bird_vote.png&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-5&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;6.11.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/bikers_and_walkers.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-6&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;31.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week44_NYC_Squerrils/Squirrels.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Central_park_squirrel.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-7&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week43_Horror_Films/Horror_dis.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/horror_movie_length.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-8&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;9.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Max_lift.jpeg&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-9&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;6.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Barstool_rating.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-10&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;28.9.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Ethnic_div_revised.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-11&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.9.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/1_Week38_Number%20of%20Visitors/National%20Parks.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/National_Parks.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;#top&#34;&gt; Back to top&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 </description>
     </item>
