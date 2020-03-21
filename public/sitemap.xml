@@ -198,16 +198,12 @@
   </url>
   
   <url>
-    <loc>/cv/cv/</loc>
+    <loc>/cv/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/courses/</loc>
-  </url>
-  
-  <url>
-    <loc>/cv/</loc>
   </url>
   
 </urlset>
