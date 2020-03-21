@@ -18,6 +18,7 @@ image:
 projects: []
 editor_options: 
   chunk_output_type: console
+codefolding_show: show
 ---
 
 ```{r setup, include=FALSE, message=FALSE}
@@ -34,8 +35,9 @@ Twitter's API only always scraping for free 6-9 days back. therefore I scraped t
 Let's start with the packages we'll use:
 
 ```{r}
-library(tidyverse)
 library(rtweet)
+library(tidyverse)
+library(tidytext)
 library(hrbrthemes)
 ```
 
@@ -46,8 +48,8 @@ Next we'll gather the tweets we need:
 # elections_raw <- search_tweets(
 #  "בחירות", n = 250000, retryonratelimit = TRUE
 # )
-
 elections <- readRDS("election_tweets.rds")
+# elections <- election_tweets
 ```
 
 As I mentioned earlier I already scraped the data to save it but wrote it here in case you're wondering how we gather them. I used only one term, which in hebrew is "elections", and gathered all tweets using that word.
@@ -76,7 +78,7 @@ elections %>%
 
 Intersting, we see the number of tweets during the closing time is equivalent to that of XXXX. 
 
-### USers with most tweets
+### Users with most tweets
 
 Next, let's look at who tweeted the most:
 ```{r}
@@ -88,9 +90,88 @@ elections %>%
   geom_col()+
   coord_flip()+
   scale_y_continuous(breaks = seq(0,180, 20), labels = seq(0,180,20))+
-  labs(x = "Screen name", y = "Number of tweets", title = "Top 15 users tweeting the word 'elections' (בחירות)\nduring the 3rd Israeli elections")+
+  labs(x = "Screen name", y = "Number of tweets", title = "Top 15 users tweeting the word 'elections' during the 3rd Israeli elections")+
   theme_ipsum_rc()+
   theme(panel.grid = element_blank(),
         panel.grid.major.y = element_blank())
 ```
+
+### Most liked and retweeted
+
+Let's have a look at which tweet was **most liked**. Twitter doesn't have 'likes' but instead 'favorite', or at least in the data that is collected:
+```{r fig.align="center"}
+get_most <- function(var){
+elections %>% 
+  arrange(desc({{var}})) %>% 
+    .[1,] %>% 
+    pull(status_id) %>% 
+  blogdown::shortcode('tweet',.)
+}
+
+get_most(favorite_count)
+```
+
+The tweet is by 'Amit Segal', an Israeli newsreporter. The tweet says: "More than anything, I'm glad there won't be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar :heart_eyes:"
+
+Now let's look at the **most retweeted**:
+
+```{r}
+get_most(retweet_count)
+```
+
+
+## Text Analysis
+
+bla bla
+
+
+```{r include = FALSE}
+Sys.setlocale("LC_ALL", "Hebrew")
+library(wordcloud2)
+```
+
+
+```{r}
+election_token <- elections %>% 
+  unnest_tokens(word, text) %>% 
+  select(word) %>% 
+  count(word, sort = T) %>% 
+  filter(n>= 200, !grepl("([a-z]+)", word))
+
+wordcloud2(election_token, size = 1.5,color = "skyblue", shape = "star")
+```
+
+
+
+library(tidyverse)
+library(rtweet)
+library(tidytext)
+rt <- readRDS("election_tweets.rds")
+
+
+
+
+rt %>% 
+  unnest_tokens(word, text) %>% 
+  select(word) %>% 
+  count(word, sort = T) %>% 
+  filter(!grepl("[a-z]", word), n > 1200) %>%
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(x = word, y = n))+
+  geom_col()+
+  coord_flip()
+
+hebrew_tokens <- read_csv("hebrew_tokens.csv")
+stop_words <- hebrew_tokens %>% 
+  unnest_tokens(word,`X1`) %>% 
+  select(word)
+
+rt_elections_token %>% 
+  filter(n > 600, word != "בחירות") %>% 
+  anti_join(stop_words) %>% 
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(x = word, y = n))+
+  geom_col()+
+  coord_flip()
+  
 

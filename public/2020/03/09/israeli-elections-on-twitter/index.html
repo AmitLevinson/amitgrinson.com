@@ -545,7 +545,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 min read
+    4 min read
   </span>
   
 
@@ -582,6 +582,11 @@
 
     <div class="article-style">
       
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="/rmarkdown-libs/wordcloud2/wordcloud.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/wordcloud2/wordcloud2-all.js"></script>
+<script src="/rmarkdown-libs/wordcloud2/hover.js"></script>
+<script src="/rmarkdown-libs/wordcloud2-binding/wordcloud2.js"></script>
 
 
 <p>Israel just had its 3rd election in a row on March 2, 2020.
@@ -590,8 +595,9 @@ This is because our Knesset (Hebrew term for house of representatives) wasn’t 
 <h3>Gathering the data <i class="fab fa-twitter"></i></h3>
 <p>Twitter’s API only always scraping for free 6-9 days back. therefore I scraped the data already on March 7, 2020 and saved it for later use. To gather the tweets we can use the <code>{rtweet}</code> package which is amazingly easy to use (<a href="https://rtweet.info/">Check out its website</a>).</p>
 <p>Let’s start with the packages we’ll use:</p>
-<pre class="r"><code>library(tidyverse)
-library(rtweet)
+<pre class="r"><code>library(rtweet)
+library(tidyverse)
+library(tidytext)
 library(hrbrthemes)</code></pre>
 <p>Next we’ll gather the tweets we need:</p>
 <p>As I mentioned earlier I already scraped the data to save it but wrote it here in case you’re wondering how we gather them. I used only one term, which in hebrew is “elections”, and gathered all tweets using that word.</p>
@@ -617,7 +623,7 @@ library(hrbrthemes)</code></pre>
 <p>Intersting, we see the number of tweets during the closing time is equivalent to that of XXXX.</p>
 </div>
 <div id="users-with-most-tweets" class="section level3">
-<h3>USers with most tweets</h3>
+<h3>Users with most tweets</h3>
 <p>Next, let’s look at who tweeted the most:</p>
 <pre class="r"><code>elections %&gt;% 
   count(screen_name, sort = T) %&gt;% 
@@ -627,11 +633,70 @@ library(hrbrthemes)</code></pre>
   geom_col()+
   coord_flip()+
   scale_y_continuous(breaks = seq(0,180, 20), labels = seq(0,180,20))+
-  labs(x = &quot;Screen name&quot;, y = &quot;Number of tweets&quot;, title = &quot;Top 15 users tweeting the word &#39;elections&#39; (בחירות)\nduring the 3rd Israeli elections&quot;)+
+  labs(x = &quot;Screen name&quot;, y = &quot;Number of tweets&quot;, title = &quot;Top 15 users tweeting the word &#39;elections&#39; during the 3rd Israeli elections&quot;)+
   theme_ipsum_rc()+
   theme(panel.grid = element_blank(),
         panel.grid.major.y = element_blank())</code></pre>
 <p><img src="/post/elections-twitter/2020-03-09-israeli-elections-on-twitter_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="most-liked-and-retweeted" class="section level3">
+<h3>Most liked and retweeted</h3>
+<p>Let’s have a look at which tweet was <strong>most liked</strong>. Twitter doesn’t have ‘likes’ but instead ‘favorite’, or at least in the data that is collected:</p>
+<pre class="r"><code>get_most &lt;- function(var){
+elections %&gt;% 
+  arrange(desc({{var}})) %&gt;% 
+    .[1,] %&gt;% 
+    pull(status_id) %&gt;% 
+  blogdown::shortcode(&#39;tweet&#39;,.)
+}
+
+get_most(favorite_count)</code></pre>
+<blockquote class="twitter-tweet"><p lang="iw" dir="rtl">יותר מהכל, אני שמח שלא יהיו עוד בחירות בשביל המשפחה שלי שסבלה בגבורה שנה ורבע. רעות עברי וענר 😍</p>&mdash; עמית סגל Amit Segal (@amit_segal) <a href="https://twitter.com/amit_segal/status/1234584864415997952?ref_src=twsrc%5Etfw">March 2, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>The tweet is by ‘Amit Segal’, an Israeli newsreporter. The tweet says: “More than anything, I’m glad there won’t be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar 😍”</p>
+<p>Now let’s look at the <strong>most retweeted</strong>:</p>
+<pre class="r"><code>get_most(retweet_count)</code></pre>
+<blockquote class="twitter-tweet"><p lang="iw" dir="rtl">אם ההקלטה של יועצו של גנץ מבושלת ושקרית (כדברי גנץ עכשיו), אז למה גנץ פיטר אותו?<br><br>יועצו של גנץ פוטר בגלל שאמר את האמת שכולם יודעים: גנץ לא יכול להיות ראש ממשלה. אנחנו כן. עוד 2 מנדטים לליכוד ואנחנו מוציאים את המדינה מהפלונטר, מונעים עוד בחירות ומקימים ממשלה</p>&mdash; Benjamin Netanyahu (@netanyahu) <a href="https://twitter.com/netanyahu/status/1233342393740603394?ref_src=twsrc%5Etfw">February 28, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div>
+<div id="text-analysis" class="section level2">
+<h2>Text Analysis</h2>
+<p>bla bla</p>
+<pre class="r"><code>election_token &lt;- elections %&gt;% 
+  unnest_tokens(word, text) %&gt;% 
+  select(word) %&gt;% 
+  count(word, sort = T) %&gt;% 
+  filter(n&gt;= 200, !grepl(&quot;([a-z]+)&quot;, word))
+
+wordcloud2(election_token, size = 1.5,color = &quot;skyblue&quot;, shape = &quot;star&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"word":["בחירות","לא","את","זה","של","על","עם","אם","הוא","מה","כל","ממשלה","רביעיות","ביבי","אני","רק","או","יש","נתניהו","עוד","גם","אבל","אין","אתה","שלא","אז","גנץ","יהיו","מערכות","לבן","היה","כי","כבר","אחרי","יותר","הם","ולא","הבחירות","לפני","4","ישראל","מי","3","ליברמן","מנדטים","אחד","לי","מערכת","2020","לו","יהיה","כדי","כחול","כמו","צריך","היא","ראש","הימין","ממשלת","לך","הליכוד","היו","שהוא","עכשיו","עד","להיות","למה","כמה","פעם","אותו","אנחנו","המדינה","חוק","הזה","בכל","הממשלה","אתם","שלו","להצביע","זו","איך","יום","להם","רוצה","יכול","אחדות","2","המשותפת","העם","טוב","לנו","כך","שוב","היום","פה","בלי","הכל","זאת","שלך","שיש","החוק","שנה","השמאל","61","לעשות","אפשר","לכם","ב","נגד","אולי","תהיה","שזה","נוספות","להקים","ואז","ימין","רוב","בין","כן","דבר","אומר","בגלל","פשוט","ככה","אף","בבחירות","הכי","אמר","רוצים","אנשים","מאוד","שהם","נראה","יודע","שלי","וגם","הרבה","גוש","קולות","אל","לעוד","ל","ברור","באמת","אחר","שלוש","אחת","כאן","שום","שמאל","תוצאות","נכון","1","כזה","אותנו","ללא","שני","תעמולת","שנים","משהו","בשביל","לבחירות","סבב","וזה","לכל","שלהם","איזה","ממש","עדיין","בן","כולם","הפעם","שאתה","ועוד","שלכם","למנוע","אותם","פחות","הציבור","מחר","אלא","קמפיין","בדיוק","שאני","בישראל","לביבי","הזמן","ביום","בני","שם","כנראה","ה","האמת","ליכוד","חושב","לליכוד","מבין","שביבי","די","אחרת","מדינה","58","מועד","שלנו","אי","הבאות","הערבים","שלישיות","אדם","בכלל","המשפט","שאין","אפילו","בו","לאחר","אחוז","אותך","מיעוט","ואם","מישהו","האם","העבודה","ללכת","המפלגה","לנתניהו","אישום","הכנסת","שנתניהו","לימין","מפלגה","שיהיו","גדול"],"freq":[17465,10136,7171,5101,4848,4279,3024,2445,2373,2277,2175,2096,2080,1955,1895,1847,1826,1802,1786,1727,1704,1560,1521,1403,1379,1300,1254,1229,1198,1176,1159,1152,1149,1106,1073,1062,1050,1045,1001,986,981,962,960,954,920,907,902,891,853,812,806,801,788,778,774,767,764,746,744,727,718,715,674,672,654,653,635,626,626,624,618,612,612,597,591,576,569,569,568,563,560,553,546,543,534,527,526,524,524,518,516,515,508,501,498,493,479,454,452,435,434,430,428,424,424,421,421,411,406,405,403,400,397,395,393,393,389,383,382,379,378,378,373,372,370,369,360,356,353,351,347,346,345,343,341,340,339,338,338,336,333,331,329,328,323,323,318,318,318,316,315,302,299,298,289,287,287,287,285,284,282,282,282,281,280,279,278,277,274,273,271,269,269,267,264,263,262,256,255,253,252,252,251,249,248,247,246,245,245,245,240,237,236,236,235,235,235,235,234,233,232,231,231,231,230,230,229,229,227,227,227,225,223,221,220,219,218,218,215,215,213,212,211,209,209,207,206,206,205,205,204,202],"fontFamily":"Segoe UI","fontWeight":"bold","color":"skyblue","minSize":0,"weightFactor":0.0154594904093902,"backgroundColor":"white","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"star","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+<p>library(tidyverse)
+library(rtweet)
+library(tidytext)
+rt &lt;- readRDS(“election_tweets.rds”)</p>
+<p>rt %&gt;%
+unnest_tokens(word, text) %&gt;%
+select(word) %&gt;%
+count(word, sort = T) %&gt;%
+filter(!grepl(“[a-z]”, word), n &gt; 1200) %&gt;%
+mutate(word = reorder(word, n)) %&gt;%
+ggplot(aes(x = word, y = n))+
+geom_col()+
+coord_flip()</p>
+<p>hebrew_tokens &lt;- read_csv(“hebrew_tokens.csv”)
+stop_words &lt;- hebrew_tokens %&gt;%
+unnest_tokens(word,<code>X1</code>) %&gt;%
+select(word)</p>
+<p>rt_elections_token %&gt;%
+filter(n &gt; 600, word != “בחירות”) %&gt;%
+anti_join(stop_words) %&gt;%
+mutate(word = reorder(word, n)) %&gt;%
+ggplot(aes(x = word, y = n))+
+geom_col()+
+coord_flip()</p>
 </div>
 
     </div>
