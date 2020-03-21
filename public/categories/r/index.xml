@@ -258,7 +258,7 @@ str(runners_clean)&lt;/code&gt;&lt;/pre&gt;
 ## [46] 2008 2011 2013 2014 2018 2019&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Using the &lt;code&gt;pull&lt;/code&gt; function we were able to extract the column we wanted, much similar to using the &lt;code&gt;runners_mutate$column_name&lt;/code&gt; approach. ‘Unfortunately’, we can’t filter exactly by round intervals (for example every exact 10 years) so we’ll create a vector with specific years to filter by. Although it might sound trivial, make sure you’re assigning years that are observed in your data set, otherwise it’ll filter only by the years you do have and not those you don’t.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;year_sub &amp;lt;- c(1908, 1920, 1929, 1947, seq(1960,1980,10), 1999, 2011, 2019)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here we created a vector with values for every 15+- years[^1]. Now we can filter our new dataframe according to the years we want:&lt;/p&gt;
+&lt;p&gt;Here we created a vector with values for every 15+- years. Now we can filter our new dataframe according to the years we want:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate &amp;lt;- runners_mutate %&amp;gt;% 
  filter(run_year %in% year_sub)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Using the &lt;code&gt;filter&lt;/code&gt; function with &lt;code&gt;%in%&lt;/code&gt; we discard anything from the &lt;code&gt;run_year&lt;/code&gt; column that’s not in the &lt;code&gt;year_sub&lt;/code&gt; vector. I find &lt;code&gt;%in%&lt;/code&gt; facsinating and extremely helpful when you want to look/filter several parameters. Basically, you can read it as “Keep all rows in ‘run_year’ that match values in ‘year_sub’”.&lt;/p&gt;
@@ -361,7 +361,7 @@ year.sub[11] &amp;lt;- 2019&lt;/code&gt;&lt;/pre&gt;
 
 &lt;div id=&#34;update-from-march-21-2020&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;&lt;a id=&#34;update&#34;&gt;&lt;/a&gt;&lt;strong&gt;Update from March 21, 2020&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;I’ve been wanting to return to this post and make this map more interactive. As a matter of fact it was easier than I thought, I just never got around to doing it. I won’t be going through the code for the leaflet map below but will it for whoever would like to review it:&lt;/p&gt;
+&lt;p&gt;I’ve been wanting to return to this post and make this map more interactive. As a matter of fact it was easier than I thought, I just never got around to doing it. I won’t be going through the code for the leaflet map below but will leave it for whoever would like to review it:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(leaflet)
 library(magrittr)
 readr::read_csv(&amp;quot;shelters.csv&amp;quot;) %&amp;gt;% 

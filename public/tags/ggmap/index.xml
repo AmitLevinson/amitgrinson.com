@@ -31,7 +31,7 @@
 
 &lt;div id=&#34;update-from-march-21-2020&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;&lt;a id=&#34;update&#34;&gt;&lt;/a&gt;&lt;strong&gt;Update from March 21, 2020&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;I’ve been wanting to return to this post and make this map more interactive. As a matter of fact it was easier than I thought, I just never got around to doing it. I won’t be going through the code for the leaflet map below but will it for whoever would like to review it:&lt;/p&gt;
+&lt;p&gt;I’ve been wanting to return to this post and make this map more interactive. As a matter of fact it was easier than I thought, I just never got around to doing it. I won’t be going through the code for the leaflet map below but will leave it for whoever would like to review it:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(leaflet)
 library(magrittr)
 readr::read_csv(&amp;quot;shelters.csv&amp;quot;) %&amp;gt;% 

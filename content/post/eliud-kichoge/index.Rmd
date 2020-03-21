@@ -144,7 +144,7 @@ Using the `pull` function we were able to extract the column we wanted, much sim
 year_sub <- c(1908, 1920, 1929, 1947, seq(1960,1980,10), 1999, 2011, 2019)
 ```
 
-Here we created a vector with values for every 15+- years[^1]. Now we can filter our new dataframe according to the years we want:
+Here we created a vector with values for every 15+- years. Now we can filter our new dataframe according to the years we want:
 
 ```{r}
 runners_mutate <- runners_mutate %>% 

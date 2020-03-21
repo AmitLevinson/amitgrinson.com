@@ -129,7 +129,7 @@ str(runners_clean)</code></pre>
 ## [46] 2008 2011 2013 2014 2018 2019</code></pre>
 <p>Using the <code>pull</code> function we were able to extract the column we wanted, much similar to using the <code>runners_mutate$column_name</code> approach. ‘Unfortunately’, we can’t filter exactly by round intervals (for example every exact 10 years) so we’ll create a vector with specific years to filter by. Although it might sound trivial, make sure you’re assigning years that are observed in your data set, otherwise it’ll filter only by the years you do have and not those you don’t.</p>
 <pre class="r"><code>year_sub &lt;- c(1908, 1920, 1929, 1947, seq(1960,1980,10), 1999, 2011, 2019)</code></pre>
-<p>Here we created a vector with values for every 15+- years[^1]. Now we can filter our new dataframe according to the years we want:</p>
+<p>Here we created a vector with values for every 15+- years. Now we can filter our new dataframe according to the years we want:</p>
 <pre class="r"><code>runners_mutate &lt;- runners_mutate %&gt;% 
  filter(run_year %in% year_sub)</code></pre>
 <p>Using the <code>filter</code> function with <code>%in%</code> we discard anything from the <code>run_year</code> column that’s not in the <code>year_sub</code> vector. I find <code>%in%</code> facsinating and extremely helpful when you want to look/filter several parameters. Basically, you can read it as “Keep all rows in ‘run_year’ that match values in ‘year_sub’”.</p>
