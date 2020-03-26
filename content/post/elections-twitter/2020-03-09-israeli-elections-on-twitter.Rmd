@@ -48,6 +48,7 @@ Next we'll gather the tweets we need:
 # elections_raw <- search_tweets(
 #  "בחירות", n = 250000, retryonratelimit = TRUE
 # )
+setwd("./content/post/elections-twitter")
 elections <- readRDS("election_tweets.rds")
 # elections <- election_tweets
 ```
@@ -138,15 +139,9 @@ election_token <- elections %>%
   count(word, sort = T) %>% 
   filter(n>= 200, !grepl("([a-z]+)", word))
 
-wordcloud2(election_token, size = 1.5,color = "skyblue", shape = "star")
+wordcloud2(election_token, color = "blue")
 ```
 
-
-
-library(tidyverse)
-library(rtweet)
-library(tidytext)
-rt <- readRDS("election_tweets.rds")
 
 
 
