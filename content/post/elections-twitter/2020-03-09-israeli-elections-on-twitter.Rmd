@@ -48,7 +48,6 @@ Next we'll gather the tweets we need:
 # elections_raw <- search_tweets(
 #  "בחירות", n = 250000, retryonratelimit = TRUE
 # )
-setwd("./content/post/elections-twitter")
 elections <- readRDS("election_tweets.rds")
 # elections <- election_tweets
 ```
