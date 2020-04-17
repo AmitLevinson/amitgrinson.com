@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amit | Amit Levinson</title>
+    <link>/authors/amit/</link>
+      <atom:link href="/authors/amit/index.xml" rel="self" type="application/rss+xml" />
+    <description>Amit</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Tue, 14 Apr 2020 13:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <title>Amit</title>
+      <link>/authors/amit/</link>
+    </image>
+    
+    <item>
+      <title>Wrangling and Visualizing Data in R</title>
+      <link>/talk/israel-2050/</link>
+      <pubDate>Tue, 14 Apr 2020 13:00:00 +0000</pubDate>
+      <guid>/talk/israel-2050/</guid>
+      <description>
+
+
+&lt;p&gt;In this presentation I show how R is an extraordinary tool that can help us prepare and visualize data in an informative and aesthetic way. The slides were given to a group of fellows of the program &lt;a href=&#34;https://israel2050.co.il/&#34;&gt;Israel-2050&lt;/a&gt; which I was a member of. As political activists we want to provide our readers with information that will stay with them in some way or another. To show how we can do this in R, I first outline how I learned to work with data and alternatives for graphic or statistics our out there. The rest of the talk focuses on features I believe are powerful when using R. This is not a hands-on learning session but an exposure to the abilities of R.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

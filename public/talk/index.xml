@@ -5,7 +5,7 @@
     <link>/talk/</link>
       <atom:link href="/talk/index.xml" rel="self" type="application/rss+xml" />
     <description>Recent &amp; Upcoming Talks</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Tue, 14 Apr 2020 13:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>Recent &amp; Upcoming Talks</title>
@@ -13,22 +13,14 @@
     </image>
     
     <item>
-      <title>Example Talk</title>
-      <link>/talk/example/</link>
-      <pubDate>Sat, 01 Jun 2030 13:00:00 +0000</pubDate>
-      <guid>/talk/example/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Click on the &lt;strong&gt;Slides&lt;/strong&gt; button above to view the built-in slides feature.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Slides can be added in a few ways:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Create&lt;/strong&gt; slides using Academic&#39;s &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#create-slides&#34;&gt;&lt;em&gt;Slides&lt;/em&gt;&lt;/a&gt; feature and link using &lt;code&gt;slides&lt;/code&gt; parameter in the front matter of the talk file&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Upload&lt;/strong&gt; an existing slide deck to &lt;code&gt;static/&lt;/code&gt; and link using &lt;code&gt;url_slides&lt;/code&gt; parameter in the front matter of the talk file&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Embed&lt;/strong&gt; your slides (e.g. Google Slides) or presentation video on this page using &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;shortcodes&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Further talk details can easily be added to this page using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+      <title>Wrangling and Visualizing Data in R</title>
+      <link>/talk/israel-2050/</link>
+      <pubDate>Tue, 14 Apr 2020 13:00:00 +0000</pubDate>
+      <guid>/talk/israel-2050/</guid>
+      <description>
+
+
+&lt;p&gt;R is an extraordinary tool that can help us prepare and visualize information. The slides were given to a group of fellows of the program &lt;a href=&#34;https://israel2050.co.il/&#34;&gt;Israel-2050&lt;/a&gt; which I was a member of at 2017. As political activists we want to provide our readers with information that will stay with them in some way or another. To show how we can do this in R, I first outline how I learned to work with data. The rest of the talk focuses on features I believe are powerful when using R such as wrangling and visualizing data. The slide don’t consist of the &lt;code&gt;rmarkdown::render()&lt;/code&gt; live examlpe I did of knitting with parameters. You can find the source code and a rendered pdf example under the folder ‘rmarkdown_eg’ in the &lt;a href=&#34;https://github.com/AmitLevinson/slides-israel-2050&#34;&gt;slide’s repository&lt;/a&gt;. This is not a hands-on learning session but an exposure to the abilities of R.&lt;/p&gt;
 </description>
     </item>
     
