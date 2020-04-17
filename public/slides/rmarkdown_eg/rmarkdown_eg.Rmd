@@ -1,0 +1,129 @@
+---
+title: "Report for `r params$country`"
+author: "Amit Levinson"
+date: '`r format(Sys.Date(), "%d %B, %Y")`'
+output: pdf_document
+params: 
+  continent: "Africa"
+  country: "Morocco"
+  year: 2007
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 5, fig.height = 3)
+```
+
+This an exmaple Rmarkdown file to show how we can easily render reports for many parameters across a variable.
+
+We'll use for the example the dataset `gapminder` which includes information about countries' population, life expectancy and GDP across several years. This is a sample from the original gapminder but will do for the current exmaple.
+
+We'll start with loading our packages:
+
+```{r echo = TRUE}
+library(gapminder)
+library(tidyverse)
+library(glue)
+theme_set(theme_minimal())
+```
+
+```{r echo = FALSE}
+ #unique(gapminder$country)
+# gapminder::gapminder %>% filter(country == "Morocco")
+```
+
+
+Here we can add more text with different features such as:
+
+- *italic*
+
+- **bold**
+
+a list:
+
+1.
+
+2.
+
+
+# H1
+
+## H2
+
+### H3
+
+<hr/>
+
+## Descriptives
+
+We first want to look at some descriptive to understand where our country is located in comparison to others.
+
+
+Therefore let's look at `r params$country` life expectancy across years in comparison to other countries:
+
+```{r fig.cap= "Here we can add a nice caption explaining a little more about the graph", fig.height=2.5}
+ggplot(gapminder, aes(x = year, y= lifeExp, group = country))+
+  geom_line(color = "gray75", alpha = 0.6)+
+  geom_line(data = subset(gapminder, country == params$country), color = "black", alpha = 1, size = 0.6)+
+  geom_text(data = subset(gapminder, country == params$country & year == max(year)), aes(label = country), hjust = 1, vjust = 1.1)+
+  coord_cartesian(clip = "off")+
+  scale_x_continuous(limits = c(1950, 2007))
+```
+
+
+### Or we can look at the average with 1 sd each way:
+
+```{r fig.height = 6, fig.width=5}
+gapminder %>% 
+  filter(continent == params$continent) %>% 
+  group_by(country) %>%
+  summarise_at(vars(gdpPercap, lifeExp, pop), list(mean = mean, sd = sd), na.rm = T) %>% 
+  ungroup() %>%
+  mutate(is_country = ifelse(country == params$country, "y", "n")) %>% 
+  ggplot(aes(x = pop_mean, y = reorder(country, pop_mean), color = is_country))+
+  geom_point()+
+  geom_errorbar(aes(xmin = pop_mean - pop_sd, xmax = pop_mean + pop_sd), width = .2)+
+  scale_x_log10(labels = scales::comma)+
+  labs(x = "Population mean (log scale)", title = glue("Average population from 1952-2007 for {params$continent}"))+
+  scale_color_manual(values = c(y = "black", n = "gray75"))+
+  theme(
+    legend.position = "none"
+  )
+```
+
+
+Another thing we might be interested in is `r params$country`'s life expectancy and GDP per capita for the year `r params$year`:
+
+```{r fig.align='center'}
+gapminder_year <- gapminder %>% 
+  filter(year == params$year)
+  
+ggplot(gapminder_year, aes(x = gdpPercap, y = lifeExp))+
+  geom_point(alpha = 0.6, color = "gray75")+
+  geom_point(data = subset(gapminder_year, country == params$country),
+             alpha = 1, color = "black")+
+  geom_text(data = subset(gapminder_year, country == params$country),
+            label= params$country, vjust = -0.5)+
+  scale_x_log10()+
+  theme_minimal()+
+  labs(title = glue("Relationship between life expectancy and GDP \nper capita for {params$year}"), x = "GDP per capita", y = "Life expectancy")+
+  theme(plot.title =element_text(size = 10))
+```
+
+
+## Regression Analysis
+
+And of course we can easily run a regression and beautifuly print it to a table. Again, we can use the `params$` feature we created in the beginning to chose the country we need and print the table accordingly. Let's take the continent we chose - **`r params$continent`** - and look if there's a statistical relationship between GDP per capita, life expectancy and population.
+
+
+```{r}
+gapminder_continent <- gapminder %>% 
+  filter(continent == params$continent)
+cont_lm <- lm(pop ~ lifeExp + gdpPercap, data = gapminder_continent)
+
+ cont_lm %>% 
+  summary() %>% 
+  xtable::xtable() %>% 
+  knitr::kable("latex")
+```

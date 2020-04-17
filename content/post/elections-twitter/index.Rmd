@@ -25,12 +25,12 @@ codefolding_show: show
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 ```
 
-Israel just had its 3rd election in a row on March 2, 2020.
-This is because our Knesset (Hebrew term for house of representatives) wasn't able to form or hold a government after the previous elections. As I won't get into the politics of why they didn't succeed thus far (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.
+Israel had its 3rd consecutive election on March 2, 2020.
+This is because our Knesset (Hebrew term for house of representatives) wasn't able to form or hold a government after each of the previous elections. As I won't get into the politics of why they didn't succeed thus far (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.
 
 ### Gathering the data <i class="fab fa-twitter"></i>
 
-Twitter's API only always scraping for free 6-9 days back. therefore I scraped the data already on March 7, 2020 and saved it for later use. To gather the tweets we can use the `{rtweet}` package which is amazingly easy to use ([Check out its website](https://rtweet.info/)).  
+Twitter's API only allows scraping for 6-9 days back for free. Therefore, I scraped the data already on March 7, 2020 and saved it for later use. To gather the tweets we can use the `{rtweet}` package which is amazingly easy to use ([Check out its website](https://rtweet.info/)).  
 
 Let's start with the packages we'll use:
 
@@ -44,48 +44,60 @@ library(ggraph)
 library(scales)
 ```
 
-```{r include = FALSE}
-Sys.setlocale("LC_ALL", "Hebrew")
+I could use a consistent theme throughout the post but I'll probably be editing each one a bit. With that said, There are some tweaks that will be consistent acorss several of the plots. Therefore, let's create a theme function as a supplement to all other theme arguments I'll use:
+
+```{r}
+adjust_axis <- function() {
+  theme_classic() +
+  theme(axis.ticks = element_blank(),
+        axis.line = element_blank())}
 ```
 
+
+```{r include = FALSE}
+Sys.setlocale("LC_ALL", "English")
+```
 
 Next we'll gather the tweets we need:
 
-```{r echo = FALSE}
-# Not run
-# elections_raw <- search_tweets(
-#  "בחירות", n = 250000, retryonratelimit = TRUE
-# )
-elections <- readRDS("election_tweets.rds")
-# elections <- election_tweets
+```{r echo = TRUE, eval = FALSE}
+elections_raw <- search_tweets("בחירות", n = 250000, retryonratelimit = TRUE)
 ```
 
-As I mentioned earlier I already scraped the data to save it but wrote it here in case you're wondering how we gather them. I used only one term, which in Hebrew is "elections", and gathered all tweets using that word.
+```{r echo = FALSE}
+elections <- readRDS("election_tweets.rds")
+```
 
-Before we begin, I will say this post doesn't aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussion. this is due for several reasons:  
-1. Twitter isn't common in Israel at all. I'm not sure what's the usage rate but it's definitely not representative of the Israel population.  
-2. I searched for only one word - elections (in Hebrew) - which yielded some 16,000 tweets. This is definitely not a large enough dataset for a representation.
+As I mentioned earlier I already scraped the data but wrote the command here in case you're wondering how to gather it. I used only one term, which in Hebrew is "elections" and rtweet gathered all tweets containing that word.
 
-With that said, the data gathered provides an opportunity to look at some Twitter data from the elections period. 
+Before we begin, I will say this post doesn't aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussion. this is due to two main reasons:    
+1. Twitter isn't common in Israel at all. I'm not sure what's the usage rate but it's definitely not representative of the Israeli population.  
+2. I searched for only one word - elections (in Hebrew) - which yielded some `r nrow(elections)` tweets. This is definitely not a large enough dataset to claim for representation.
 
-### Let's begin
+With that said, the data gathered provides an opportunity to look at some Twitter data from the elections period, so why not give it a go.
 
-First, let's see how the tweets distribute across the time span we searched for. we can create a quick time plot using the `ts_plot()` from the `{rtweet}` package:
+### Tweet frequency
+
+First, let's see how the tweets distribute across the time span we searched for. we can create a quick time plot using the `ts_plot()` from the `{rtweet}` package:  
+
 ```{r}
 elections %>% 
   ts_plot("2 hours")+
-  geom_line(size = 1)+
-  theme_ipsum_rc(plot_title_face = NULL)+
+  geom_line(size = 1, color = "#1DA1F2")+
+  theme_ipsum_rc(plot_title_face = NULL, grid = FALSE)+
   scale_x_datetime(date_breaks = "1 day",date_labels = "%d %b")+
-    labs(x= NULL, y = NULL,
-       title = "Frequency of tweets throughout the Israeli elections",
-       subtitle = "Tweets are counts aggregated using a two-hour interval.\nonly tweets with the word 'elections' (in Hebrew) were gathered")+
-  geom_text(aes(x = as.POSIXct("2020-03-02 22:45:00"), y = 435, label = "10 PM:\nClosing of\npolls"),
+  labs(x= NULL, y = NULL,
+       title = "Frequency of tweets throughout the Israeli elections week",
+       subtitle = "Tweets aggregated by two-hour interval. only tweets with\nthe word 'elections' (in Hebrew) were gathered")+
+  geom_text(aes(x = as.POSIXct("2020-03-02 23:00:00"), y = 435, label = "10 PM:\nClosing of\npolls"),
             hjust = 0, size = 2.5)+
-  geom_vline(xintercept = as.POSIXct("2020-03-02 22:00"),linetype = "dashed", size = 0.75)
+  geom_vline(xintercept = as.POSIXct("2020-03-02 22:00"),linetype = "dashed", size = 0.5, color = "#1DA1F2")+
+  theme(plot.title = element_text(size = 16),
+        plot.subtitle = element_text(color = "gray65"))+
+  adjust_axis()
 ```
 
-Interesting, we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Kind of an interesting anomaly which I can put my finger on, any suggestions?
+Interesting, we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Kind of an interesting anomaly which I can't put my finger on, any suggestions?
 
 ### Users with most tweets
 
@@ -96,17 +108,17 @@ elections %>%
   slice(1:15) %>% 
   mutate(screen_name = reorder(screen_name,n)) %>% 
   ggplot(aes(x= screen_name, y= n))+
-  geom_col(fill = "gray55")+
+  geom_col(fill = "#1DA1F2")+
   coord_flip()+
   scale_y_continuous(breaks = seq(0,180, 30), labels = seq(0,180,30))+
   labs(x = "Screen name", y = "Number of tweets", title = "Top 15 users tweeting the word 'elections' during the 3rd Israeli elections")+
-  theme_classic()+
   theme(text = element_text(family = "Calibri"),
         axis.text = element_text(size = 12),
-        plot.title = element_text(family = "Roboto Condensed"))
+        plot.title = element_text(family = "Roboto Condensed"))+
+  adjust_axis()
 ```
 
-We see that many news companies tweeted a lot using the word elections: 'newisrael13', 'kann_news', 'MaarivOnline', 'RotterNews', 'bahazit_news', 'RotterNet'. I don't פersonnaly recognize the rest, but on the other hand I use Twitter mostly to follow `R` and academic related tweets.
+We see that many news companies tweeted a lot using the word elections: 'newisrael13', 'kann_news', 'MaarivOnline', 'RotterNews', 'bahazit_news', 'RotterNet'. I personnaly don't recognize the rest, but on the other hand I use Twitter mostly to follow `R` and academic related tweets, not necessarily Israeli politics.
 
 ### Common Hashtags
 
@@ -129,15 +141,16 @@ hashtags <- elections %>%
 
 ggplot(data = hashtags, aes(x = Count, y = value))+
   geom_col(aes(fill = iscorona), show.legend = FALSE)+
-  theme_classic()+
   labs(y = NULL, x = "Number of Tweets", title = "Top 20 Hashtags associated with tweets addressing the Israeli elections")+
-  scale_fill_manual(values = c(y = "dodgerblue4", n = "gray55"))+
+  scale_fill_manual(values = c(y = "#1DA1F2", n = "gray75"))+
   theme(text = element_text(family = "Calibri"),
         axis.text = element_text(size = 12),
-        plot.title = element_text(family = "Roboto Condensed"))
+        plot.title = element_text(family = "Roboto Condensed"))+
+  adjust_axis()
+
 ```
 
-The tweets include pretty much the basics with the two leading ones being 'elections' and 'elections2020'. I highlighted in blue an interesting hashtag at the time - <font color="blue"> Corona </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I'm writing this post on April 07,2020 and we're still in quarantine heading to lock down.)
+The tweets include pretty much the basics with the two leading ones being 'elections' and 'elections2020'. I highlighted in blue an interesting hashtag at the time - <font color="#1DA1F2"> Corona </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I'm writing this post on April 07,2020 and we're still in quarantine heading to lock down.)
 
 
 ### Most liked and retweeted
@@ -157,8 +170,8 @@ elections %>%
 
 <center> `r get_most(favorite_count)` </center>
 
-So the tweet is by 'Amit Segal' - an Israeli news reporter- and it says: 
-*"More than anything, I'm glad there won't be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar :heart_eyes:"*
+So the tweet is by 'Amit Segal' - an Israeli news reporter - and it says:   
+> *"More than anything, I'm glad there won't be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar :heart_eyes:"*
 
 Ha, interestingly he wrote it before the end of the elections. However he's right as we see today that a government was indeed formed so we won't have any elections soon (?).
 
@@ -167,28 +180,24 @@ Now let's look at the **most re-tweeted** tweet:
 
 <center> `r get_most(retweet_count)` </center>
 
-The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, that writes:
-*"If the recording of Gantz's advisor is orcherstrated and fabricated (according to Gantz's words just now), so why did Gantz fire him?*
-*Gantz's advisor was fired because he said the truth everyone knows: Gantz can't be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, prevent another election and form a government*
+The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, who writes:  
+> "If the recording of Gantz's advisor is orcherstrated and fabricated (according to Gantz's words just now), so why did Gantz fire him?
+Gantz's advisor was fired because he said the truth everyone knows: Gantz can't be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government
 
-XXXXXXX
+This came after the exposure of a secret recording of Gantz in a closed meeting, A week or so before election day.
 
+## Wordcloud and bigrams
 
-## Text Analysis
-
-We did a little text analysis earlier on looking at some common Hashtags. However, I think we can do a little more than that. We'll look at two things:
+We looked beforehand at some commonly used hashtags, let's have a look at two more things:
 
 1. A word-cloud  
-2. Two-word (bi-gram) relationship
-3. Distribution of words before and after the elections
+2. Distribution of words before and after the elections
+
+We could try out more algorthims but I'll save them for a different post.
 
 ### Wordcloud
 
-In order to tackle the first thing, I'll break up all the tweets into words and filter Hebrew stop-words and any English words:
-
-```{r include = FALSE}
-```
-
+In order to tackle the wordcloud, I'll break up all the tweets into words, filter any Hebrew stop-word and all English words:
 
 ```{r}
 he_stopwords <- read_tsv("https://raw.githubusercontent.com/gidim/HebrewStopWords/master/heb_stopwords.txt", col_names = "word")
@@ -201,21 +210,15 @@ election_token <- elections %>%
   filter(n>= 150, !grepl("([a-z]+)|(בחירות)", word))
 ```
 
-Let's review that for a minute:
-1. I first read in a file containing 500 Hebrew stopwords. As to their validity, you can look at them for yourself [here](https://github.com/gidim/HebrewStopWords/blob/master/heb_stopwords.txt), I found it most suitable.  
-2. I then used the unnest_tokens to break up the 'text' column in our dataframe into single words. We could, as we will do later, break it up into 2 words. Its default is one words which is adequate for in this case.  
-3. I then `select` the only column we need - our new one.  
-4. I use the `anti_join` to filter out *words that match* words in the stopwords dataset.
-5. Using `count` count how many times each word occurs and sort it.
-6. I `filter` any words that occur less than 150 times, the word 'elections' in Hebrew (Reminder: that's the word we searched tweets by so it'll be in all tweets) and any words in English. As to the latter, before I did it it left me with many Twitter usernames which didn't seem valuable.
-
 Now we can look at our wordcloud using `{wordcloud2}`:
+
 <br>
 ```{r}
-wordcloud2::wordcloud2(election_token, color = "blue", shape = "circle")
+wordcloud2::wordcloud2(election_token, color = "#1DA1F2", shape = "circle")
 ```
 
-### Bi-gram of used words
+
+### Bigram of used words
 
 Like we did before, we can break up our text data into two words observations, also known as bi-grams. In order to account for all options, we break up the sentence to fit all possible options. For example, assume we have the following sentence:  
 "Danny went to vote yesterday"  
@@ -253,106 +256,46 @@ ggraph(elec_bigram, layout = "fr")+
 <br>
 
 So what are we looking at?  
-- We have discussions regarding the number of chairs a govenrment will have (62/61/60/58) connected to mentions of the number of political campagins (2/3), discussions of united and limited government and the forming of in general.  
-- We see mentions of individuals such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel" **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd so I ran the analysis again to search for Gantz and found that although he appears in 744 different bigrams, they all include different combinations of him!  
-- We also see parties mentioned such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader. This is inline with why Gantz doesn't appear - although the words appear many times, all combinations are somewhat different from one another.  
-- Mentions of Netanyahu's indicment and the personal law connected to him.  
-- Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Last year", etc.
+* We have discussions regarding the **number of chairs a govenrment will have (62/61/60/58)** connected to mentions of the number of political campaigns (2/3), discussions of united and limited government and the forming of in general.  
+* We see **mentions of individuals** such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel" **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd so I ran the analysis again to search for Gantz and found that although he appears in 744 different bigrams, they all include different combinations of him!  
+* We also see parties mentioned such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader. This is inline with why Gantz doesn't appear - although the words appear many times, all combinations are somewhat different from one another.  
+* Mentions of Netanyahu's indicment and the personal law connected to him.  
+* Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Last year", etc.
 <br>
-Actaully, this turned out more interesting than I thought.
 
-### Words before and After the Elections
+Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud & Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I'll look at one question that troubles me - **Why doesn't Gantz appear in our list** `r emo::ji("shocked")`?
 
-The last thing I'd like to look at is the frequency of words *before* and *after* the closing of polls. The elections were held on March 2nd, 2020, and the polls closed at 10:00 PM. Until 10 o'clock voting day it is prohibited to report and publicize any survey or media polls. Therefore, I imagine that at 10 PM (+- 30 seconds) when the media posts its first polls the discussion might vary a little. To check that we'll give each observation a value of before or after, break it up into words and plot their frequency. Let's have a look:
+#### Benny Gantz's disappearance  
+
+In order to see why Benny Gantz doesn't appear in our bigram plot I'll do the following: I'll break the text into bigrams and filter only to the bigrams containing the word Gantz. Once we have that we can see why doesn't he appear in our bigram plot despite appearing in our wordcloud. Before I run the analysis and give you the answer think for a moment - What was the process of coming up with the bigram? If I chose only the 50 most frequent bigrams, why would a word that appears many times in our text not appear in our bigram list? Maybe even give the previous chunk another glance before I answer it.  
+<br>
+Let's have a look:
 
 ```{r}
-election_freq <- elections %>% 
-  mutate(tweet_time = ifelse(created_at < "2020-03-02 22:00:30", "before", "after")) %>% 
-  select(text, created_at, tweet_time) %>% 
-  unnest_tokens(word, text) %>% 
-  filter(!grepl("([a-z])|בחירות", word),
-         !word %in% he_stopwords$word) %>%
-  count(tweet_time,word) %>% 
-  group_by(tweet_time) %>% 
-  mutate(proportion = n/sum(n)) %>% 
-  select(-n) %>%
-  pivot_wider(names_from = tweet_time, values_from = proportion)
-
-ggplot(election_freq, aes(x = before, y = after, color = abs(before-after)))+
-  geom_abline(color = "gray40", lty = 2)+
-  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5)+
-  scale_x_log10(labels = percent_format())+
-  scale_y_log10(labels = percent_format())+
-  scale_color_gradient(limits = c(0, 0.001), low = "gray100", high = "gray25")+
-  labs(title = "Frequency of words before and after the election polls",
-       x = "Before", y = "After")+
-  theme_classic()+
-  theme(text = element_text(size = rel(4),family = "Calibri"),
-        plot.title = element_text(family = "Roboto Condensed", size = 18),
-        legend.position = "none",
-        panel.grid = element_blank(),
-        axis.ticks = element_blank(),
-        axis.line = element_line(color = "gray"))
+gantz <-elections %>%
+  select(text) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+  separate(bigram, into = c("word1", "word2"), sep = " ", remove = FALSE) %>% 
+  filter(word1 %in% "גנץ" |
+         word2 %in% "גנץ",
+         !grepl("[a-z]|בחירות", bigram))
 ```
-<br>
-<br>
 
-All in all words seem extremely similar, let's run a correlation test to see how it looks:
+The code is similar to what we did earlier only this time we left **bigrams that match the word we want** and not those that don't match like stop-words. Now that we have our list of bigrams, let's count how many distinct bigrams include the word גנץ ('Gantz') we have:
+
 ```{r}
-cor.test(election_freq$after, election_freq$before)
+gantz %>% 
+  count(bigram, sort = T)
 ```
 
-That's a pretty high correlation, in our case meaning that there are no extreme anomalies in using words. In other words, there isn't much of a difference in terms of words used before and after elections. We could run a term frequency inverse document frequency (tf-idf) instead of the above, but I'll leave that for another post altogether where I'll learn the algorithm.
+**AHA!** Now I see what happened. The first bigram is a stop-word and the word Gantz ('Of Gantz'). The second bigram should have been included as it is Gantz's full name - Benny Gantz, which appears 138 times.   
+So, why has it been filtered? This is a great question which we can answer if we look at our stop-words we initially used. Let's see if it has the word בני ('benny' in Hebrew):
 
-
-```{r eval = FALSE}
-candidates <- rtweet::get_timeline(c("netanyahu", "gantzbe"), n = 3200)
-
-candidates %>%
-  group_by(screen_name) %>% 
-  rtweet::ts_plot(by= "1 week") +
-  theme_minimal(base_family = "Roboto Condensed", base_size = 14)+
-  scale_color_manual(values=c(gantzbe = "#56B4E9",netanyahu = "#E69F00"))+
-  labs(title = "Tweet frequency for <span style='color:#E69F00'> Benjamin Netanyahu</span> and <span style='color:#56B4E9'> Benny Gantz </span> by week", x = NULL, y= NULL)+
-  theme(
-    plot.title = element_markdown(hjust = -0.2),
-    panel.grid.major = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    legend.position = "none"
-  )
-
-freq_candidate <- candidates %>% 
-  select(text, screen_name) %>% 
-  unnest_tokens(word, text) %>% 
-  filter(!grepl("([a-z])", word),
-         !word %in% he_stopwords$word) %>%
-  count(screen_name,word) %>% 
-  group_by(screen_name) %>% 
-  mutate(proportion = n/sum(n)) %>% 
-  select(-n) %>%
-  pivot_wider(names_from = screen_name, values_from = proportion)
-
-
-ggplot(freq_candidate, aes(x = gantzbe, y = netanyahu, color = abs(netanyahu-gantzbe)))+
-  geom_abline(color = "gray40", lty = 2)+
-  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5)+
-  scale_x_log10(labels = percent_format())+
-  scale_y_log10(labels = percent_format())+
-  scale_color_gradient(limits = c(0, 0.001), low = "gray100", high = "gray25")+
-  labs(title = "Frequency of words before and after the election polls",
-       x = "Gantz", y = "Netanyahu")+
-  theme_classic()+
-  theme(text = element_text(size = rel(4),family = "Calibri"),
-        plot.title = element_text(family = "Roboto Condensed", size = 18),
-        legend.position = "none",
-        panel.grid = element_blank(),
-        axis.ticks = element_blank(),
-        axis.line = element_line(color = "gray"))
-
-library(ggtext)
-
-
-
-cor.test(freq_candidate$netanyahu, freq_candidate$gantzbe)
+```{r}
+he_stopwords %>% 
+  filter(word == "בני")
 ```
 
+Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop-words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop-words. In a different context the specific word could have been invaluable, but here it didn't make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word benny means my son, which I wouldn't describe as a stop-word but whoever made the dataset I guess did.
+
+Let's look at a last attempt of bigram, only this time with a different stop word dataset:

@@ -1,7 +1,7 @@
 ---
 title: The Tidytuesday project
 author: Amit Levinson
-date: '2020-03-17'
+date: '2020-04-16'
 slug: the-tidytuesday-project
 categories: [R]
 tags: []
@@ -38,12 +38,18 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+### **16.04.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R)
+
+<p align = "center">
+<img src = "/img/tt/rap_points.png" width = "700">
+</p>
 
 ### **17.03.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R)
 
 <p align = "center">
- <img src = "/img/tt/tt_schrute.png" width = "700">
+<img src = "/img/tt/tt_schrute.png" width = "700">
 </p>
 
 ### **06.03.2020**  

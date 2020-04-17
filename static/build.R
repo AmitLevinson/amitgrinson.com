@@ -1,0 +1,1 @@
+bloddown::build_dir('static')
