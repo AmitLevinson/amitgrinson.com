@@ -18,7 +18,6 @@ image:
 projects: []
 editor_options: 
   chunk_output_type: console
-codefolding_show: show
 ---
 
 ```{r setup, include=FALSE, message=FALSE}
@@ -64,11 +63,6 @@ mini_theme <- function(family = "Roboto Condensed", tsize = 14) {
         plot.title = element_text(size = tsize))}
 ```
 
-
-```{r include = FALSE}
-Sys.setlocale("LC_ALL", "English")
-```
-
 Next we'll gather the tweets we need:
 
 ```{r echo = TRUE, eval = FALSE}
@@ -77,7 +71,7 @@ elections_raw <- search_tweets("בחירות", n = 250000, retryonratelimit = TR
 
 ```{r echo = FALSE}
 elections <- readRDS("election_tweets.rds")
-setwd("C:/Users/amitl/R_code/amitlevinson.com/content/post/elections-twitter")
+# setwd("C:/Users/amitl/R_code/amitlevinson.com/content/post/elections-twitter")
 ```
 
 To gather the tweets we can use the `{rtweet}` package which is amazing for collecting Twitter data ([Check out its website](https://rtweet.info/)). As I mentioned earlier, I already scraped the data a few days after the elections. I wrote the command here in case you're wondering how to gather tweets. I used only one term, which in Hebrew is "elections" and rtweet gathered all tweets containing that word.
@@ -131,7 +125,7 @@ elections %>%
   slice(1:15) %>% 
   mutate(screen_name = reorder(screen_name,n)) %>% 
   ggplot(aes(x= screen_name, y= n))+
-  geom_col(fill = "gray75")+
+  geom_col(fill = "gray70")+
   coord_flip()+
   scale_y_continuous(breaks = seq(0,180, 30), labels = seq(0,180,30))+
   labs(x = "Screen name", y = "Number of tweets", title = "Top 15 users tweeting the word 'elections' during the 3rd Israeli elections")+
@@ -150,6 +144,12 @@ According to [Wikipedia](https://en.wikipedia.org/wiki/Hashtag), a 'Hashtag' "is
 
 OK then, let's see what we have:
 
+
+```{r echo = FALSE}
+Sys.setlocale("LC_ALL", "Hebrew")
+```
+
+
 ```{r}
 hashtags <- elections %>% 
   select(hashtags) %>% 
@@ -163,7 +163,7 @@ hashtags <- elections %>%
 
 ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
   geom_col(show.legend = FALSE)+
-  scale_fill_manual(values = c(y = "#1DA1F2", n = "gray75"))+
+  scale_fill_manual(values = c(y = "#1DA1F2", n = "gray70"))+
   labs(y = NULL, x = "Number of Tweets", title = "Top 20 Hashtags associated with tweets addressing the Israeli elections")+
   mini_theme()+
   theme(text = element_text(family = "Calibri"),
@@ -218,7 +218,7 @@ We could try out more algorthims but I'll save them for a different post.
 
 In order to tackle the wordcloud, I'll break up all the tweets into **single words**, filter any Hebrew stop-words and all English words. We'll use a Hebrew stop words file I found online:
 
-```{r eval = FALSE}
+```{r}
 he_stopwords <- read_tsv("https://raw.githubusercontent.com/gidim/HebrewStopWords/master/heb_stopwords.txt", col_names = "word")
 
 election_token <- elections %>% 
@@ -226,10 +226,10 @@ election_token <- elections %>%
   select(word) %>%
   anti_join(he_stopwords) %>% 
   count(word, sort = T) %>%
-  filter(!str_detect(word, "([a-z]+)|(בחירות)"), n>= 150)
+  filter(!grepl("([a-z]+|בחירות)", word), n>= 150)
 ```
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = FALSE}
 he_stopwords <- read_tsv("https://raw.githubusercontent.com/gidim/HebrewStopWords/master/heb_stopwords.txt", col_names = "word")
 election_token <- readRDS("election_token.rds")
 ```
@@ -248,20 +248,20 @@ Like we did before, we can break up our text data into **two word** observations
 "Danny went to vote yesterday"  
 Using the `unnest_tokens` we'll break the sentence into the following bi-grams:  
 1. Danny went  
-2. went to
-3. to vote
-4. vote yesterday
+2. went to  
+3. to vote  
+4. vote yesterday  
 
 Which gives us all possible options. We will also include two columns consisting of the bi-gram broken up into single words. This will help in filtering out bi-grams containing Hebrew stop words. I'll not run through the following code but instead will point you to [David Ronbinson](http://varianceexplained.org/) & [Julia Silge](https://juliasilge.com/) fantastic ['Text Mining with R' Book](https://www.tidytextmining.com/).
 
-```{r eval = FALSE}
+```{r, fig.cap="Graph excludes Hebrew stop words and the word 'elections'"}
 elec_bigram <- elections %>%
   select(text) %>% 
   unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
   separate(bigram, into = c("word1", "word2"), sep = " ", remove = FALSE) %>% 
   filter(!word1 %in% he_stopwords$word,
          !word2 %in% he_stopwords$word,
-         !grepl("[a-z]|בחירות", bigram)) %>% 
+         !grepl("([a-z]+|בחירות)", bigram)) %>% 
   count(word1, word2, sort = T) %>% 
   slice(1:45) %>%
   graph_from_data_frame()
@@ -278,7 +278,7 @@ ggraph(elec_bigram, layout = "fr")+
         plot.title = element_text(hjust = 0.5 , face = "bold", size = 18))
 ```
 
-```{r echo = FALSE, fig.cap="Graph excludes Hebrew stop words and the word 'elections'"}
+```{r eval = FALSE, echo = FALSE}
 elec_bigram <- readRDS("elec_bigram.rds")
 
 p_arrow <- arrow(type = "closed", length = unit(.1, "inches"))
@@ -300,7 +300,7 @@ First off, We see here only the 45 most common bi-grams (out of 100,000+). Every
 
 What does this all mean?  
 - We have discussions regarding the **number of chairs a govenrment will have (62/61/60/58)** connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.  
-* We see **mentions of individuals** such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel", **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd, but more on that in a minute.  
+- We see **mentions of individuals** such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel", **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd, but more on that in a minute.  
 - We also see mentions of political parties such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of the two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader.   
 - Mentions of Netanyahu's indicment and the personal law connected to him.  
 - Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Last year", etc.

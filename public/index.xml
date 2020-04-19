@@ -145,7 +145,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;)+
   theme(plot.title = element_text(size = 16),
         plot.subtitle = element_text(color = &amp;quot;gray75&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Interesting, we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Most of the votes were counted by th end of the day March 3rd, so I can’t really put my finger on why this jump. After all, I collected tweets containing a specific word so it could have been that many people tweeted that day using the word we selected by. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to offer suggestions.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
@@ -156,14 +156,14 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   slice(1:15) %&amp;gt;% 
   mutate(screen_name = reorder(screen_name,n)) %&amp;gt;% 
   ggplot(aes(x= screen_name, y= n))+
-  geom_col(fill = &amp;quot;gray75&amp;quot;)+
+  geom_col(fill = &amp;quot;gray70&amp;quot;)+
   coord_flip()+
   scale_y_continuous(breaks = seq(0,180, 30), labels = seq(0,180,30))+
   labs(x = &amp;quot;Screen name&amp;quot;, y = &amp;quot;Number of tweets&amp;quot;, title = &amp;quot;Top 15 users tweeting the word &amp;#39;elections&amp;#39; during the 3rd Israeli elections&amp;quot;)+
   mini_theme()+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;We see that many news companies tweeted a lot using the word ‘elections’: ‘newisrael13’, ‘kann_news’, ‘MaarivOnline’, ‘RotterNews’, ‘bahazit_news’, ‘RotterNet’. I personnaly don’t recognize the rest, but on the other hand I use Twitter mostly to follow &lt;code&gt;R&lt;/code&gt; and academic related tweets, not necessarily Israeli politics.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;common-hashtags&#34; class=&#34;section level3&#34;&gt;
@@ -171,6 +171,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When using the &lt;code&gt;{rtweet}&lt;/code&gt; package to gather twitter data, one of the variables collected is the hashtags used in tweets. Although it doesn’t require too many lines of code to extract hashtags out of text, I think this is an amazing feature that shows the effort and details &lt;a href=&#34;https://mikewk.com/&#34;&gt;Michael W. Kearney&lt;/a&gt; put into the package.&lt;/p&gt;
 &lt;p&gt;According to &lt;a href=&#34;https://en.wikipedia.org/wiki/Hashtag&#34;&gt;Wikipedia&lt;/a&gt;, a ‘Hashtag’ “is a type of metadata tag used on social networks such as Twitter and other microblogging services.”, that basically tags the message with a specific theme. This helps to see trends and themes in a macro level.&lt;/p&gt;
 &lt;p&gt;OK then, let’s see what we have:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;LC_COLLATE=Hebrew_Israel.1255;LC_CTYPE=Hebrew_Israel.1255;LC_MONETARY=Hebrew_Israel.1255;LC_NUMERIC=C;LC_TIME=Hebrew_Israel.1255&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hashtags &amp;lt;- elections %&amp;gt;% 
   select(hashtags) %&amp;gt;% 
   unlist() %&amp;gt;% 
@@ -183,7 +184,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
 
 ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
   geom_col(show.legend = FALSE)+
-  scale_fill_manual(values = c(y = &amp;quot;#1DA1F2&amp;quot;, n = &amp;quot;gray75&amp;quot;))+
+  scale_fill_manual(values = c(y = &amp;quot;#1DA1F2&amp;quot;, n = &amp;quot;gray70&amp;quot;))+
   labs(y = NULL, x = &amp;quot;Number of Tweets&amp;quot;, title = &amp;quot;Top 20 Hashtags associated with tweets addressing the Israeli elections&amp;quot;)+
   mini_theme()+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
@@ -241,12 +242,12 @@ election_token &amp;lt;- elections %&amp;gt;%
   select(word) %&amp;gt;%
   anti_join(he_stopwords) %&amp;gt;% 
   count(word, sort = T) %&amp;gt;%
-  filter(!str_detect(word, &amp;quot;([a-z]+)|(בחירות)&amp;quot;), n&amp;gt;= 150)&lt;/code&gt;&lt;/pre&gt;
+  filter(!grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, word), n&amp;gt;= 150)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now we can look at our wordcloud using &lt;code&gt;{wordcloud2}&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud2::wordcloud2(election_token, color = &amp;quot;#1DA1F2&amp;quot;, shape = &amp;quot;circle&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;wordcloud2 html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;word&#34;:[&#34;ממשלה&#34;,&#34;רביעיות&#34;,&#34;ביבי&#34;,&#34;נתניהו&#34;,&#34;גנץ&#34;,&#34;מערכות&#34;,&#34;4&#34;,&#34;3&#34;,&#34;ליברמן&#34;,&#34;מנדטים&#34;,&#34;מערכת&#34;,&#34;2020&#34;,&#34;כחול&#34;,&#34;הימין&#34;,&#34;ממשלת&#34;,&#34;הליכוד&#34;,&#34;המדינה&#34;,&#34;חוק&#34;,&#34;הממשלה&#34;,&#34;להצביע&#34;,&#34;אחדות&#34;,&#34;2&#34;,&#34;המשותפת&#34;,&#34;העם&#34;,&#34;החוק&#34;,&#34;השמאל&#34;,&#34;61&#34;,&#34;נוספות&#34;,&#34;להקים&#34;,&#34;ימין&#34;,&#34;גוש&#34;,&#34;קולות&#34;,&#34;לעוד&#34;,&#34;שלוש&#34;,&#34;שמאל&#34;,&#34;תוצאות&#34;,&#34;1&#34;,&#34;אותנו&#34;,&#34;תעמולת&#34;,&#34;סבב&#34;,&#34;הפעם&#34;,&#34;למנוע&#34;,&#34;הציבור&#34;,&#34;מחר&#34;,&#34;קמפיין&#34;,&#34;בישראל&#34;,&#34;לביבי&#34;,&#34;ליכוד&#34;,&#34;לליכוד&#34;,&#34;מבין&#34;,&#34;שביבי&#34;,&#34;מדינה&#34;,&#34;מועד&#34;,&#34;58&#34;,&#34;הבאות&#34;,&#34;הערבים&#34;,&#34;שלישיות&#34;,&#34;המשפט&#34;,&#34;אחוז&#34;,&#34;מיעוט&#34;,&#34;העבודה&#34;,&#34;המפלגה&#34;,&#34;לנתניהו&#34;,&#34;אישום&#34;,&#34;הכנסת&#34;,&#34;שנתניהו&#34;,&#34;לימין&#34;,&#34;מפלגה&#34;,&#34;שיהיו&#34;,&#34;לפיד&#34;,&#34;מצביעים&#34;,&#34;להרכיב&#34;,&#34;ניצח&#34;,&#34;הצבעה&#34;,&#34;בפעם&#34;,&#34;הבטחת&#34;,&#34;ההצבעה&#34;,&#34;5&#34;,&#34;טיבי&#34;,&#34;קורונה&#34;,&#34;חדשות&#34;,&#34;תוך&#34;,&#34;מפלגת&#34;,&#34;הרשימה&#34;,&#34;מנדט&#34;,&#34;62&#34;,&#34;יודעים&#34;,&#34;שלישית&#34;,&#34;10&#34;,&#34;הרי&#34;,&#34;הדמוקרטיה&#34;,&#34;60&#34;,&#34;יאללה&#34;,&#34;יהודית&#34;,&#34;חייבים&#34;,&#34;לגוש&#34;,&#34;לנצח&#34;,&#34;שתי&#34;,&#34;יקרה&#34;,&#34;לממשלה&#34;,&#34;גביר&#34;,&#34;הקורונה&#34;,&#34;ימינה&#34;,&#34;כתב&#34;,&#34;במערכת&#34;,&#34;דמוקרטיה&#34;,&#34;בכנסת&#34;,&#34;בקלפי&#34;,&#34;לגנץ&#34;,&#34;חודשים&#34;,&#34;שר&#34;,&#34;פרץ&#34;],&#34;freq&#34;:[2096,2080,1955,1786,1254,1198,986,960,954,920,891,853,788,746,744,718,612,612,576,568,527,526,524,524,434,428,424,397,395,393,338,338,333,323,316,315,299,289,287,282,269,263,255,253,252,248,247,236,235,235,235,232,231,231,230,229,229,227,219,218,212,209,209,207,206,206,205,205,204,198,194,193,192,191,189,188,186,181,180,180,179,179,178,176,176,175,172,172,172,169,167,167,166,166,164,164,164,164,163,161,160,160,160,158,157,156,155,154,153,152,152,151],&#34;fontFamily&#34;:&#34;Segoe UI&#34;,&#34;fontWeight&#34;:&#34;bold&#34;,&#34;color&#34;:&#34;#1DA1F2&#34;,&#34;minSize&#34;:0,&#34;weightFactor&#34;:0.0858778625954199,&#34;backgroundColor&#34;:&#34;white&#34;,&#34;gridSize&#34;:0,&#34;minRotation&#34;:-0.785398163397448,&#34;maxRotation&#34;:0.785398163397448,&#34;shuffle&#34;:true,&#34;rotateRatio&#34;:0.4,&#34;shape&#34;:&#34;circle&#34;,&#34;ellipticity&#34;:0.65,&#34;figBase64&#34;:null,&#34;hover&#34;:null},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;word&#34;:[&#34;ממשלה&#34;,&#34;רביעיות&#34;,&#34;ביבי&#34;,&#34;נתניהו&#34;,&#34;גנץ&#34;,&#34;מערכות&#34;,&#34;4&#34;,&#34;3&#34;,&#34;ליברמן&#34;,&#34;מנדטים&#34;,&#34;מערכת&#34;,&#34;2020&#34;,&#34;כחול&#34;,&#34;הימין&#34;,&#34;ממשלת&#34;,&#34;הליכוד&#34;,&#34;המדינה&#34;,&#34;חוק&#34;,&#34;הממשלה&#34;,&#34;להצביע&#34;,&#34;אחדות&#34;,&#34;2&#34;,&#34;המשותפת&#34;,&#34;העם&#34;,&#34;החוק&#34;,&#34;השמאל&#34;,&#34;61&#34;,&#34;נוספות&#34;,&#34;להקים&#34;,&#34;ימין&#34;,&#34;גוש&#34;,&#34;קולות&#34;,&#34;לעוד&#34;,&#34;שלוש&#34;,&#34;שמאל&#34;,&#34;תוצאות&#34;,&#34;1&#34;,&#34;אותנו&#34;,&#34;תעמולת&#34;,&#34;סבב&#34;,&#34;הפעם&#34;,&#34;למנוע&#34;,&#34;הציבור&#34;,&#34;מחר&#34;,&#34;קמפיין&#34;,&#34;בישראל&#34;,&#34;לביבי&#34;,&#34;ליכוד&#34;,&#34;לליכוד&#34;,&#34;מבין&#34;,&#34;שביבי&#34;,&#34;מדינה&#34;,&#34;58&#34;,&#34;מועד&#34;,&#34;הבאות&#34;,&#34;הערבים&#34;,&#34;שלישיות&#34;,&#34;המשפט&#34;,&#34;אחוז&#34;,&#34;מיעוט&#34;,&#34;העבודה&#34;,&#34;המפלגה&#34;,&#34;לנתניהו&#34;,&#34;אישום&#34;,&#34;הכנסת&#34;,&#34;שנתניהו&#34;,&#34;לימין&#34;,&#34;מפלגה&#34;,&#34;שיהיו&#34;,&#34;לפיד&#34;,&#34;מצביעים&#34;,&#34;להרכיב&#34;,&#34;ניצח&#34;,&#34;הצבעה&#34;,&#34;בפעם&#34;,&#34;הבטחת&#34;,&#34;ההצבעה&#34;,&#34;5&#34;,&#34;טיבי&#34;,&#34;קורונה&#34;,&#34;חדשות&#34;,&#34;תוך&#34;,&#34;מפלגת&#34;,&#34;הרשימה&#34;,&#34;מנדט&#34;,&#34;62&#34;,&#34;10&#34;,&#34;יודעים&#34;,&#34;שלישית&#34;,&#34;הרי&#34;,&#34;60&#34;,&#34;הדמוקרטיה&#34;,&#34;יאללה&#34;,&#34;יהודית&#34;,&#34;חייבים&#34;,&#34;לגוש&#34;,&#34;לנצח&#34;,&#34;שתי&#34;,&#34;יקרה&#34;,&#34;לממשלה&#34;,&#34;גביר&#34;,&#34;הקורונה&#34;,&#34;ימינה&#34;,&#34;כתב&#34;,&#34;במערכת&#34;,&#34;דמוקרטיה&#34;,&#34;בכנסת&#34;,&#34;בקלפי&#34;,&#34;לגנץ&#34;,&#34;חודשים&#34;,&#34;שר&#34;,&#34;פרץ&#34;],&#34;freq&#34;:[2096,2080,1955,1786,1254,1198,986,960,954,920,891,853,788,746,744,718,612,612,576,568,527,526,524,524,434,428,424,397,395,393,338,338,333,323,316,315,299,289,287,282,269,263,255,253,252,248,247,236,235,235,235,232,231,231,230,229,229,227,219,218,212,209,209,207,206,206,205,205,204,198,194,193,192,191,189,188,186,181,180,180,179,179,178,176,176,175,172,172,172,169,167,167,166,166,164,164,164,164,163,161,160,160,160,158,157,156,155,154,153,152,152,151],&#34;fontFamily&#34;:&#34;Segoe UI&#34;,&#34;fontWeight&#34;:&#34;bold&#34;,&#34;color&#34;:&#34;#1DA1F2&#34;,&#34;minSize&#34;:0,&#34;weightFactor&#34;:0.0858778625954199,&#34;backgroundColor&#34;:&#34;white&#34;,&#34;gridSize&#34;:0,&#34;minRotation&#34;:-0.785398163397448,&#34;maxRotation&#34;:0.785398163397448,&#34;shuffle&#34;:true,&#34;rotateRatio&#34;:0.4,&#34;shape&#34;:&#34;circle&#34;,&#34;ellipticity&#34;:0.65,&#34;figBase64&#34;:null,&#34;hover&#34;:null},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;/div&gt;
 &lt;div id=&#34;bigram-of-used-words&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Bigram of used words&lt;/h3&gt;
@@ -254,8 +255,8 @@ election_token &amp;lt;- elections %&amp;gt;%
 “Danny went to vote yesterday”&lt;br /&gt;
 Using the &lt;code&gt;unnest_tokens&lt;/code&gt; we’ll break the sentence into the following bi-grams:&lt;br /&gt;
 1. Danny went&lt;br /&gt;
-2. went to
-3. to vote
+2. went to&lt;br /&gt;
+3. to vote&lt;br /&gt;
 4. vote yesterday&lt;/p&gt;
 &lt;p&gt;Which gives us all possible options. We will also include two columns consisting of the bi-gram broken up into single words. This will help in filtering out bi-grams containing Hebrew stop words. I’ll not run through the following code but instead will point you to &lt;a href=&#34;http://varianceexplained.org/&#34;&gt;David Ronbinson&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://juliasilge.com/&#34;&gt;Julia Silge&lt;/a&gt; fantastic &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;‘Text Mining with R’ Book&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elec_bigram &amp;lt;- elections %&amp;gt;%
@@ -264,7 +265,7 @@ Using the &lt;code&gt;unnest_tokens&lt;/code&gt; we’ll break the sentence into
   separate(bigram, into = c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;, remove = FALSE) %&amp;gt;% 
   filter(!word1 %in% he_stopwords$word,
          !word2 %in% he_stopwords$word,
-         !grepl(&amp;quot;[a-z]|בחירות&amp;quot;, bigram)) %&amp;gt;% 
+         !grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, bigram)) %&amp;gt;% 
   count(word1, word2, sort = T) %&amp;gt;% 
   slice(1:45) %&amp;gt;%
   graph_from_data_frame()
@@ -279,8 +280,8 @@ ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
   labs(title = &amp;quot;Bigram from Twitter data&amp;quot;)+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Graph excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-14&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-14-1.png&#34; alt=&#34;Graph excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Graph excludes Hebrew stop words and the word ‘elections’
 &lt;/p&gt;
@@ -290,12 +291,12 @@ Figure 1: Graph excludes Hebrew stop words and the word ‘elections’
 First off, We see here only the 45 most common bi-grams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direciton. The direction to which the arrow points is the way to read that bi-gram. In addition, bolder lines represent a higher frequency of that bi-gram throughout all our text.&lt;/p&gt;
 &lt;p&gt;What does this all mean?&lt;br /&gt;
 - We have discussions regarding the &lt;strong&gt;number of chairs a govenrment will have (62/61/60/58)&lt;/strong&gt; connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.&lt;br /&gt;
-* We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as ‘Yair Lapid’, “Amir peretz”, “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
+- We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as ‘Yair Lapid’, “Amir peretz”, “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
 - We also see mentions of political parties such as “Meretz”, “Gesher” and “Labor” who ran together this time around, “Otzma Yehudit”, “United Torah Judaism”, and the “Joint List”. &lt;strong&gt;There’s no mention of the two leading parties - “Kahol Lavan” &amp;amp; “The Likkud”.&lt;/strong&gt;, despite the mentioning of the latter’s leader.&lt;br /&gt;
 - Mentions of Netanyahu’s indicment and the personal law connected to him.&lt;br /&gt;
 - Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 &lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😲?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😱?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bi-gram plot I’ll do the following: I’ll break the text into bigrams and filter only to the bigrams containing the word Gantz. Once we have that we can see why doesn’t he appear in our bigram plot despite appearing in our wordcloud. Before I run the analysis and give you the answer think for a moment - What was the process of coming up with the bigram? If I chose only the 50 most frequent bigrams, why would a word that appears many times in our text not appear in our bigram list? Alternatively, did we filter anything along the way? Maybe even give the previous chunk another glance before I answer it.&lt;br /&gt;
@@ -311,14 +312,28 @@ Let’s have a look:&lt;/p&gt;
 &lt;p&gt;The code is similar to what we did earlier only this time we left &lt;strong&gt;bigrams that match the word we want&lt;/strong&gt; and not those that don’t match like stop-words. Now that we have our list of bigrams, let’s count how many distinct bigrams include the word גנץ (‘Gantz’) we have:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gantz %&amp;gt;% 
   count(bigram, sort = T)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 0 x 2
-## # ... with 2 variables: bigram &amp;lt;chr&amp;gt;, n &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 978 x 2
+##    bigram         n
+##    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;
+##  1 של גנץ       160
+##  2 בני גנץ      138
+##  3 גנץ לא        90
+##  4 על גנץ        70
+##  5 את גנץ        69
+##  6 עם גנץ        61
+##  7 אם גנץ        41
+##  8 גנץ היה       25
+##  9 גנץ או        19
+## 10 גנץ ליברמן    19
+## # ... with 968 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;AHA!&lt;/strong&gt; Now I see what happened. The first bigram is a stop-word and the word Gantz (‘Of Gantz’). The second bigram should have been included as it is Gantz’s full name - Benny Gantz, which appears 138 times.&lt;br /&gt;
 So, why has it been filtered? This is a great question which we can answer if we look at our stop-words we initially used. Let’s see if it has the word בני (‘benny’ in Hebrew):&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;he_stopwords %&amp;gt;% 
   filter(word == &amp;quot;בני&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 0 x 1
-## # ... with 1 variable: word &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 1
+##   word 
+##   &amp;lt;chr&amp;gt;
+## 1 בני&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop-words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop-words. In a different context the specific word could have been invaluable, but here it didn’t make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word benny means my son, which I wouldn’t describe as a stop-word but whoever made the dataset I guess did.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;
 Well then, that’s all for now folks! And remember, make sure to validate your stop-words!&lt;/p&gt;
