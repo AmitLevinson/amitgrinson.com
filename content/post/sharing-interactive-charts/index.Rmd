@@ -1,0 +1,36 @@
+---
+title: Sharing your interactive charts
+author: Amit Levinson
+date: '2020-04-30'
+slug: sharing-interactive-charts
+categories: []
+tags: []
+subtitle: ''
+summary: "A walkthrough for sharing your interactive visualizations with non R users"
+authors: []
+lastmod: '2020-03-06T22:55:14+02:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+draft: true
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+### Background
+A few weeks ago I gave my first talk about [analyzing and visualizing data in R](https://amitlevinson.com/talk/israel-2050/). I shared with the political activists participants many of R's abilities, one of them being 'interactive visulizations'. I believe these kind of graphs can sometimes add the-extra-edge a static graph has. For example, you can record a gif reviewing the graph, post the gif on Facebook and invite users to engage with the graph.
+
+**Also as R users** we sometimes want to share our interactive graphs. When I work on a visualization for TidyTuesday I sometimes challenge myself and make something I've never done before. If I made an interactive visualizaiton I wasn't sure what do with it so I'd record a gif and upload that with a link to the source code. *But what if I wanted to share my #Tidytuesday interactive graph with non R users?*
+
+<a href="https://imgflip.com/i/3x71ek"><img src="https://i.imgflip.com/3x71ek.jpg" title="made at imgflip.com"/></a>
+
+### Share away
+
+
