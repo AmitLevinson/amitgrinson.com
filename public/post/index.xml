@@ -47,12 +47,14 @@
 
 &lt;p&gt;Israel had its 3rd consecutive elections on March 2, 2020.
 This was because our Knesset (Hebrew term for house of representatives) wasn’t able to form or hold a government after each of the previous elections. As I won’t get into the politics of why they didn’t succeed in forming one (get it? politics 😉), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.&lt;/p&gt;
-&lt;p&gt;In this post I’ll answer the following questions from our dataset:&lt;br /&gt;
-1. What was the frequency of tweets associated with the word ‘elections’?&lt;br /&gt;
-2. Who tweeted the most?&lt;br /&gt;
-3. What was the common #Hashtag tweeted?&lt;br /&gt;
-4. Which tweet was most liked and which was retweeted the most?&lt;br /&gt;
-5. What were the most common words and common bigram - two words (excluding stop-words)?&lt;/p&gt;
+&lt;p&gt;In this post I’ll answer the following questions from our dataset:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;What was the frequency of tweets associated with the word ‘elections’?&lt;/li&gt;
+&lt;li&gt;Who tweeted the most?&lt;/li&gt;
+&lt;li&gt;What was the common #Hashtag tweeted?&lt;/li&gt;
+&lt;li&gt;Which tweet was most liked and which was retweeted the most?&lt;/li&gt;
+&lt;li&gt;What were the most common words and bigram (two words)?&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div id=&#34;gathering-the-data&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Gathering the data &lt;i class=&#34;fab fa-twitter&#34;&gt;&lt;/i&gt;&lt;/h3&gt;
 &lt;p&gt;Twitter’s API allows scraping &lt;strong&gt;6-9 days back for free&lt;/strong&gt;. Therefore, I scraped the data already on March 7, 2020 and saved it for later use. Unfortunately due to COVID19 and a suprise talk I gave, I only now am able to finally look and analyzie the data.&lt;/p&gt;
@@ -148,7 +150,7 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;The tweets include pretty much the basics with the two leading ones being ‘elections’ and ‘elections2020’. I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt; Corona &lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18,2020 and only now we’re starting to get back to routine. Slowly.)&lt;/p&gt;
+&lt;p&gt;The tweets include pretty much the basics with the two leading ones being ‘elections’ and ‘elections2020’. I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt; &lt;strong&gt;Corona&lt;/strong&gt; &lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18,2020 and only now we’re starting to get back to routine. Slowly.)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;most-liked-and-retweeted&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Most liked and retweeted&lt;/h3&gt;
@@ -167,8 +169,10 @@ elections %&amp;gt;%
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 &lt;/center&gt;
-&lt;p&gt;So the tweet is by ‘Amit Segal’ - an Israeli news reporter - and it says:&lt;br /&gt;
-&amp;gt; “More than anything, I’m glad there won’t be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar 😍”&lt;/p&gt;
+&lt;p&gt;So the tweet is by ‘Amit Segal’ - an Israeli news reporter - and it says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“More than anything, I’m glad there won’t be anymore elections for my family that suffered in honors a year and a quarter. Reut, Ivri and Inbar 😍”&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Ha, interestingly he wrote it before the end of the elections. Hopefully he’s right as it doesn’t seem optimistic at this time.&lt;/p&gt;
 &lt;p&gt;Now let’s look at the &lt;strong&gt;most re-tweeted&lt;/strong&gt; tweet:&lt;/p&gt;
 &lt;center&gt;
@@ -176,9 +180,10 @@ elections %&amp;gt;%
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 &lt;/center&gt;
-&lt;p&gt;The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, who writes:&lt;br /&gt;
-&amp;gt; &#34;If the recording of Gantz’s advisor is orcherstrated and fabricated (according to Gantz’s words just now), so why did Gantz fire him?
-Gantz’s advisor was fired because he said the truth everyone knows: Gantz can’t be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government&lt;/p&gt;
+&lt;p&gt;The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, who writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“If the recording of Gantz’s advisor is orcherstrated and fabricated (according to Gantz’s words just now), so why did Gantz fire him? Gantz’s advisor was fired because he said the truth everyone knows: Gantz can’t be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government”&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;This came after the exposure of a secret recording of Gantz in a closed meeting, A week or so before elections day.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;wordcloud-and-bigrams&#34; class=&#34;section level2&#34;&gt;
@@ -187,7 +192,7 @@ Gantz’s advisor was fired because he said the truth everyone knows: Gantz can�
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;A word-cloud&lt;br /&gt;
 &lt;/li&gt;
-&lt;li&gt;A bigram (two-words) of our text&lt;/li&gt;
+&lt;li&gt;Bigrams (two-words) from our text&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;We could try out more algorthims but I’ll save them for a different post.&lt;/p&gt;
 &lt;div id=&#34;wordcloud&#34; class=&#34;section level3&#34;&gt;
@@ -247,13 +252,16 @@ Figure 1: Graph excludes Hebrew stop words and the word ‘elections’
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;How to read this graph?&lt;br /&gt;
 First off, We see here only the 45 most common bi-grams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direciton. The direction to which the arrow points is the way to read that bi-gram. In addition, bolder lines represent a higher frequency of that bi-gram throughout all our text.&lt;/p&gt;
-&lt;p&gt;What does this all mean?&lt;br /&gt;
-- We have discussions regarding the &lt;strong&gt;number of chairs a govenrment will have (62/61/60/58)&lt;/strong&gt; connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.&lt;br /&gt;
-- We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as ‘Yair Lapid’, “Amir peretz”, “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
-- We also see mentions of political parties such as “Meretz”, “Gesher” and “Labor” who ran together this time around, “Otzma Yehudit”, “United Torah Judaism”, and the “Joint List”. &lt;strong&gt;There’s no mention of the two leading parties - “Kahol Lavan” &amp;amp; “The Likkud”.&lt;/strong&gt;, despite the mentioning of the latter’s leader.&lt;br /&gt;
-- Mentions of Netanyahu’s indicment and the personal law connected to him.&lt;br /&gt;
-- Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
-&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;What does this all mean?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We have discussions regarding the &lt;strong&gt;number of chairs a govenrment will have (62/61/60/58)&lt;/strong&gt; connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as ‘Yair Lapid’, “Amir peretz”, “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We also see mentions of political parties such as “Meretz”, “Gesher” and “Labor” who ran together this time around, “Otzma Yehudit”, “United Torah Judaism”, and the “Joint List”. &lt;strong&gt;There’s no mention of the two leading parties - “Kahol Lavan” &amp;amp; “The Likkud”.&lt;/strong&gt;, despite the mentioning of the latter’s leader.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mentions of Netanyahu’s indicment and the personal law connected to him.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
+&lt;br&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😱?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;

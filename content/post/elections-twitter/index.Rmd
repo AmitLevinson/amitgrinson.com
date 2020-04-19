@@ -28,11 +28,12 @@ Israel had its 3rd consecutive elections on March 2, 2020.
 This was because our Knesset (Hebrew term for house of representatives) wasn't able to form or hold a government after each of the previous elections. As I won't get into the politics of why they didn't succeed in forming one (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.  
 
 In this post I'll answer the following questions from our dataset:  
-1. What was the frequency of tweets associated with the word 'elections'?  
-2. Who tweeted the most?    
-3. What was the common #Hashtag tweeted?  
-4. Which tweet was most liked and which was retweeted the most?  
-5. What were the most common words and common bigram - two words (excluding stop-words)?  
+
+1. What was the frequency of tweets associated with the word 'elections'?
+2. Who tweeted the most?
+3. What was the common #Hashtag tweeted?
+4. Which tweet was most liked and which was retweeted the most?
+5. What were the most common words and bigram (two words)?  
 
 
 ### Gathering the data <i class="fab fa-twitter"></i>
@@ -170,7 +171,7 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
         axis.text = element_text(size = 12))
 ```
 
-The tweets include pretty much the basics with the two leading ones being 'elections' and 'elections2020'. I highlighted in blue an interesting hashtag at the time - <font color="#1DA1F2"> Corona </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I'm finalzing this post on April 18,2020 and only now we're starting to get back to routine. Slowly.)
+The tweets include pretty much the basics with the two leading ones being 'elections' and 'elections2020'. I highlighted in blue an interesting hashtag at the time - <font color="#1DA1F2"> **Corona** </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I'm finalzing this post on April 18,2020 and only now we're starting to get back to routine. Slowly.)
 
 
 ### Most liked and retweeted
@@ -191,7 +192,8 @@ elections %>%
 <center> `r get_most(favorite_count)` </center>
 
 So the tweet is by 'Amit Segal' - an Israeli news reporter - and it says:  
-> "More than anything, I'm glad there won't be anymore elections for my family that suffered in honors a year and a quarter, Reut, Ivri and Inbar :heart_eyes:"
+
+> "More than anything, I'm glad there won't be anymore elections for my family that suffered in honors a year and a quarter.  Reut, Ivri and Inbar :heart_eyes:"
 
 Ha, interestingly he wrote it before the end of the elections. Hopefully he's right as it doesn't seem optimistic at this time.  
 
@@ -200,8 +202,8 @@ Now let's look at the **most re-tweeted** tweet:
 <center> `r get_most(retweet_count)` </center>
 
 The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, who writes:  
-> "If the recording of Gantz's advisor is orcherstrated and fabricated (according to Gantz's words just now), so why did Gantz fire him?
-Gantz's advisor was fired because he said the truth everyone knows: Gantz can't be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government
+
+> "If the recording of Gantz's advisor is orcherstrated and fabricated (according to Gantz's words just now), so why did Gantz fire him? Gantz's advisor was fired because he said the truth everyone knows: Gantz can't be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government"
 
 This came after the exposure of a secret recording of Gantz in a closed meeting, A week or so before elections day.
 
@@ -210,7 +212,7 @@ This came after the exposure of a secret recording of Gantz in a closed meeting,
 We looked beforehand at some commonly used hashtags, let's have a look at two more things:
 
 1. A word-cloud  
-2. A bigram (two-words) of our text
+2. Bigrams (two-words) from our text
 
 We could try out more algorthims but I'll save them for a different post.
 
@@ -299,10 +301,12 @@ How to read this graph?
 First off, We see here only the 45 most common bi-grams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direciton. The direction to which the arrow points is the way to read that bi-gram. In addition, bolder lines represent a higher frequency of that bi-gram throughout all our text.  
 
 What does this all mean?  
+
 - We have discussions regarding the **number of chairs a govenrment will have (62/61/60/58)** connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.  
+
 - We see **mentions of individuals** such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel", **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd, but more on that in a minute.  
-- We also see mentions of political parties such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of the two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader.   
-- Mentions of Netanyahu's indicment and the personal law connected to him.  
+- We also see mentions of political parties such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of the two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader.
+- Mentions of Netanyahu's indicment and the personal law connected to him.
 - Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Last year", etc.
 <br>
 
