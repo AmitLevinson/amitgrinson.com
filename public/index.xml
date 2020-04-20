@@ -84,7 +84,7 @@
 
 &lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;Israel had its 3rd consecutive election (in a year!) on March 2, 2020, because our Knesset - Hebrew term for house of representatives - wasn’t able to form or hold a government after each of the previous elections. As I won’t get into the politics of why they didn’t succeed in forming one (get it? politics 😉), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.&lt;br /&gt;
+&lt;p&gt;Israel had its 3rd consecutive election on March 2, 2020, basically a 3rd time in one year! This is because our Knesset - Hebrew term for house of representatives - wasn’t able to form or hold a government after each of the previous elections. As I won’t get into the politics of why they didn’t succeed in forming one (get it? politics 😉), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.&lt;br /&gt;
 When we think of a data aggregating tweets, many questions arise - who, what, when, where and more about our data. Namely, with the collected data I want to answer the following questions:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;What was the frequency of tweets associated with the word ‘elections’?&lt;/li&gt;
@@ -171,7 +171,6 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When using the &lt;code&gt;{rtweet}&lt;/code&gt; package to gather twitter data, one of the variables collected is the hashtags used in tweets. Although it doesn’t require too many lines of code to extract hashtags out of text, I think this is an amazing feature that shows the effort and details &lt;a href=&#34;https://mikewk.com/&#34;&gt;Michael W. Kearney&lt;/a&gt; and contributors put into the package.&lt;/p&gt;
 &lt;p&gt;According to &lt;a href=&#34;https://en.wikipedia.org/wiki/Hashtag&#34;&gt;Wikipedia&lt;/a&gt;, a ‘Hashtag’ “is a type of metadata tag used on social networks such as Twitter and other microblogging services.”, that basically tags the message with a specific theme. This helps to see trends and themes in a macro level.&lt;/p&gt;
 &lt;p&gt;OK then, let’s see what we have:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;LC_COLLATE=Hebrew_Israel.1255;LC_CTYPE=Hebrew_Israel.1255;LC_MONETARY=Hebrew_Israel.1255;LC_NUMERIC=C;LC_TIME=Hebrew_Israel.1255&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hashtags &amp;lt;- elections %&amp;gt;% 
   select(hashtags) %&amp;gt;% 
   unlist() %&amp;gt;% 
@@ -179,7 +178,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   mutate(value = tolower(value)) %&amp;gt;% 
   count(value, name = &amp;quot;Count&amp;quot;, sort = T) %&amp;gt;%
   mutate(value = reorder(value, Count),
-         iscorona = ifelse(value == &amp;quot;קורונה&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;n&amp;quot;)) %&amp;gt;% 
+         iscorona = ifelse(value == &amp;quot;קורונה&amp;quot; | value == &amp;quot;coronavirus&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;n&amp;quot;)) %&amp;gt;% 
   filter(!is.na(value)) %&amp;gt;% 
   slice(1:20)
 
@@ -192,7 +191,7 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
         axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being ‘elections’ and ‘elections2020’. We also see a peculiar hashtag ‘right_following_right_people’, and others such as ‘Netanyahu’ (the Prime minister at the time), ‘Israel’ and others.&lt;br /&gt;
-I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt; &lt;strong&gt;Corona&lt;/strong&gt; &lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18, 2020, and only now we’re starting to get back to routine. Slowly)&lt;/p&gt;
+I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;Corona&lt;/strong&gt;&lt;/font&gt; (in hebrew) and &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;coronavirus&lt;/strong&gt;&lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18, 2020, and only now we’re starting to get back to routine. Slowly)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;most-liked-and-retweeted&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Most liked and retweeted&lt;/h3&gt;
@@ -311,7 +310,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😨?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 🤯?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
