@@ -1,12 +1,12 @@
 ---
-title: Israeli elections on twitter
+title: Israeli elections on Twitter
 author: Amit Levinson
 date: '2020-04-20'
 slug: israeli-elections-on-twitter
 categories: []
 tags: []
 subtitle: ''
-summary: 'Analyzing several thousands tweets during the Israeli elections'
+summary: 'Analyzing tweets from the the Israeli elections week'
 authors: []
 lastmod: '2020-04-20T09:29:42+02:00'
 featured: no
@@ -14,7 +14,7 @@ draft: false
 image:
   caption: ''
   focal_point: ''
-  preview_only: yes
+  preview_only: no
 projects: []
 editor_options: 
   chunk_output_type: console
@@ -26,15 +26,14 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.align = '
 
 ### Introduction
 
-Israel had its 3rd consecutive election on March 2, 2020, because our Knesset (Hebrew term for house of representatives) wasn't able to form or hold a government after each of the previous elections. As I won't get into the politics of why they didn't succeed in forming one (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.  
-
-In this post I'll answer the following questions from our dataset:  
+Israel had its 3rd consecutive election (in a year!) on March 2, 2020, because our Knesset - Hebrew term for house of representatives - wasn't able to form or hold a government after each of the previous elections. As I won't get into the politics of why they didn't succeed in forming one (get it? politics :wink:), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.  
+When we think of a data aggregating tweets, many questions arise - who, what, when, where and more about our data. Namely, with the collected data I want to answer the following questions:  
 
 1. What was the frequency of tweets associated with the word 'elections'?
 2. Who tweeted the most?
-3. What was the common #Hashtag tweeted?
+3. What was the most common #Hashtag tweeted?
 4. Which tweet was most liked and which was retweeted the most?
-5. What were the most common words and bigram (two words)?  
+5. What were the most common words and bigrams (two words) in tweets?  
 
 
 ### Gathering the data <i class="fab fa-twitter"></i>
@@ -50,7 +49,6 @@ library(tidytext)
 library(igraph)
 library(hrbrthemes)
 library(ggraph)
-library(scales)
 library(extrafont)
 ```
 
@@ -68,15 +66,15 @@ mini_theme <- function(family = "Roboto Condensed", tsize = 16) {
 Next we'll gather the tweets we need:
 
 ```{r echo = TRUE, eval = FALSE}
-elections_raw <- search_tweets("בחירות", n = 250000, retryonratelimit = TRUE)
+elections_raw <- search_tweets("בחירות", n = 18000, retryonratelimit = TRUE)
 ```
 
 ```{r echo = FALSE}
 elections <- readRDS("election_tweets.rds")
-# setwd("C:/Users/amitl/R_code/amitlevinson.com/content/post/elections-twitter")
+#setwd("C:/Users/amitl/R_code/amitlevinson.com/content/post/elections-twitter")
 ```
 
-To gather the tweets we can use the `{rtweet}` package which is amazing for collecting Twitter data ([Check out its website](https://rtweet.info/)). As I mentioned earlier, I already scraped the data a few days after the elections but left the command here to show what we did and how easy it is to do it. I seareched only one term, 'elections' in Hebrew, and rtweet gathered all tweets containing that word.
+To gather the tweets we can use the `{rtweet}` package which is amazing for collecting Twitter data ([Check out its website](https://rtweet.info/)). As I mentioned earlier, I already scraped the data a few days after the elections but left the command here to show what we did and how easy it is to do it. I searched only one term, 'elections' in Hebrew, and rtweet gathered all tweets containing that word.
 
 What did our search query yield? Let's have a look:
 
@@ -84,11 +82,12 @@ What did our search query yield? Let's have a look:
 dim(elections)
 ```
 
-16,560 rows and 90 columns! As we see, the `{rtweet}` package brings back a lot of information! 
+16,560 rows and 90 columns! As we can see, the `{rtweet}` package brings back a lot of information (You can also download the data at the bottom of the post)!  
+
 
 #### Some Caveats:
 
-Before we begin, I will say this post doesn't aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the election or twitter discussions. this is due to two main reasons:
+Before we begin, I will say this post doesn't aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussions surrounding the elections. this is due to two main reasons:
 
 1. Twitter isn't common in Israel at all. I'm not sure what's the usage rate but it's definitely not representative of the Israeli population.
 
@@ -115,7 +114,7 @@ elections %>%
   theme(plot.subtitle = element_text(color = "gray75"))
 ```
 
-Interesting, we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Most of the votes were counted by the end of March 3rd, so I can't really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn't able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.  
+Interesting - we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Most of the votes were counted by the end of March 3rd, so I can't really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn't able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.  
 
 ### Users with most tweets
 
@@ -174,8 +173,8 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
         axis.text = element_text(size = 12))
 ```
 
-The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being 'elections' and 'elections2020'. We also see a peculiar hashtag 'right_following_right_people', and others such as 'Netanyahu' (the Prime minister at the time), Israel and others.  
-I highlighted in blue an interesting hashtag at the time - <font color="#1DA1F2"> **Corona** </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how will it affect us (I'm finalzing this post on April 18, 2020, and only now we're starting to get back to routine. Slowly)
+The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being 'elections' and 'elections2020'. We also see a peculiar hashtag 'right_following_right_people', and others such as 'Netanyahu' (the Prime minister at the time), 'Israel' and others.  
+I highlighted in blue an interesting hashtag at the time - <font color="#1DA1F2"> **Corona** </font>. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I'm finalzing this post on April 18, 2020, and only now we're starting to get back to routine. Slowly)
 
 
 ### Most liked and retweeted
@@ -242,8 +241,8 @@ he_stopwords <- read_tsv("https://raw.githubusercontent.com/gidim/HebrewStopWord
 election_token <- readRDS("election_token.rds")
 ```
 
-Now we can create a wordcloud of words appearing more than 150 times using `{wordcloud2}` package[^1]:
-[^1]: The function `wordcloud2` we wrote wasn't actually run because it renders an html object which distorts the post. Instead I used the webshot of our rendered html file, read more about that [here](https://www.r-graph-gallery.com/196-the-wordcloud2-library.html).
+Now we can create a wordcloud of words appearing more than 150 times using `{wordcloud2}` package^[The function `wordcloud2` we wrote wasn't actually run because it renders an html object which distorts the post. Instead I used the webshot of our rendered html file, read more about that [here](https://www.r-graph-gallery.com/196-the-wordcloud2-library.html).]:  
+
 <br>
 ```{r eval = FALSE}
 wordcloud2::wordcloud2(election_token, color = "#1DA1F2", shape = "circle")
@@ -253,7 +252,7 @@ wordcloud2::wordcloud2(election_token, color = "#1DA1F2", shape = "circle")
 
 
 
-What can see is many of the words we'd expect: Political candidates, Government, fourth (in the context of fourth elections), partis' names and more. I'll provide a more thorough discussion of the combinations of word in following our bigram plot below.
+What we can see is many of the words we'd expect: Political candidates, government, fourth (in the context of fourth elections), partis' names and more. I'll provide a more thorough discussion following our bigram plot below, as I believe it addresses many of the same words.
 
 
 ```{r eval = FALSE, echo = FALSE}
@@ -321,9 +320,10 @@ ggraph(elec_bigram, layout = "fr")+
 
 <br>
 
-**How to read this graph?**  
+**How should we read this graph?**  
 
-First off, We see here only the 45 most common bigrams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direciton. The direction to which the arrow points is the way to read that bigram. In addition, bolder lines represent a higher frequency of that bigram throughout all our text.  
+First off, We only plotted the 45 most common bigrams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direction. The direction to which the arrow points is the way to read that bigram. In addition, bolder lines represent a higher frequency of that bigram throughout all our text.  
+For example, on the bottom of our graph we see the number '2' connected to the words 'mandates' and 'campagin'. The direction of the arrow signals that we should read the bigram as '2 mandates' and '2 campagins'.
 
 **What does this all mean?**  
 
@@ -372,4 +372,25 @@ he_stopwords %>%
 Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop words. In a different context the specific bigram wouldn't have got me thinking, but here it didn't make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word Benny also means my son, which I wouldn't describe as a stop word but whoever made the dataset I guess did (my because of the my + son combination).  
 
 <br>
-Well then, that's all for now folks! And remember, make sure to validate your stop words dataset!
+Well then, that's all for now folks!   
+
+If you wish to give it a try yourself, you can find the `.rds` file in my [github repository](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/elections-twitter/election_tweets.rds) or download a smaller `.csv` file here (excludes list columns):  
+
+```{r echo = FALSE}
+library(downloadthis)
+elections %>% 
+  select_if(~!is.list(.)) %>% 
+  download_this(
+    output_name = "twitter election",
+    output_extension = ".csv",
+    button_label = "Download data as csv",
+    button_type = "success",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+```
+
+
+**And remember, make sure to validate your stop words dataset!**
+<br>
+<br>
