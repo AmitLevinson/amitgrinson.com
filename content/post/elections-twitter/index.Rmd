@@ -82,7 +82,7 @@ What did our search query yield? Let's have a look:
 dim(elections)
 ```
 
-16,560 rows and 90 columns! As we can see, the `{rtweet}` package brings back a lot of information (You can also download the data at the bottom of the post)!  
+16,560 rows and 90 columns! As we can see, the `{rtweet}` package brings back a lot of information (check out the `.rds` file [here](https://github.com/AmitLevinson/amitlevinson.com/tree/master/content/post/elections-twitter))!  
 
 
 #### Some Caveats:
@@ -373,23 +373,6 @@ Yes it does. At the time of writing this blog post it leaves me in a dilemma - S
 
 <br>
 Well then, that's all for now folks!   
-
-If you wish to give it a try yourself, you can find the `.rds` file in my [github repository](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/elections-twitter/election_tweets.rds) or download a smaller `.csv` file here (excludes list columns):  
-
-```{r echo = FALSE}
-library(downloadthis)
-elections %>% 
-  select_if(~!is.list(.)) %>% 
-  download_this(
-    output_name = "twitter election",
-    output_extension = ".csv",
-    button_label = "Download data as csv",
-    button_type = "success",
-    has_icon = TRUE,
-    icon = "fa fa-save"
-  )
-```
-
 
 **And remember, make sure to validate your stop words dataset!**
 <br>
