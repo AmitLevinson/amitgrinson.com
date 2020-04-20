@@ -247,7 +247,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 <li><p>Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 <br></p></li>
 </ul>
-<p>Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - <strong>Why doesn’t Gantz appear in our list</strong> 😱?</p>
+<p>Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - <strong>Why doesn’t Gantz appear in our list</strong> 😨?</p>
 <div id="benny-gantzs-disappearance" class="section level4">
 <h4>Benny Gantz’s disappearance</h4>
 <p>In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to <strong>have only the bigrams containing the word Gantz</strong>. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.<br />
@@ -286,10 +286,9 @@ So, why has it been filtered? This is a great question which we can answer if we
 ##   word 
 ##   &lt;chr&gt;
 ## 1 בני</code></pre>
-<p>Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop words. In a different context the specific bigram wouldn’t have got me thinking, but here it didn’t make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word Benny also means my son, which I wouldn’t describe as a stop word but whoever made the dataset I guess did (my because of the my + son combination).</p>
+<p>Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop words. In a different context the specific bigram wouldn’t have got me thinking, but here it didn’t make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word Benny also means ‘my son’, which I wouldn’t describe as a stop word but whoever made the dataset I guess did.</p>
 <p><br>
-Well then, that’s all for now folks!</p>
-<p><strong>And remember, make sure to validate your stop words dataset!</strong>
+Well then, that’s all for now folks! <strong>And remember, make sure to validate your stop words dataset!</strong>
 <br>
 <br></p>
 </div>
