@@ -371,6 +371,24 @@ he_stopwords %>%
 
 Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop words. In a different context the specific bigram wouldn't have got me thinking, but here it didn't make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word Benny also means 'my son', which I wouldn't describe as a stop word but whoever made the dataset I guess did.  
 
+If you wish to give it a try yourself, you can find the `.rds` file in my [github repository](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/elections-twitter/election_tweets.rds) or download a smaller `.csv` file here (excludes list columns):  
+
+```{r}
+library(downloadthis)
+download_file <- elections %>% 
+  select_if(~!is.list(.))
+
+download_file %>%
+  download_this(
+    output_name = "twitter election",
+    output_extension = ".csv",
+    button_label = "Download data as csv",
+    button_type = "success",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+```
+
 <br>
 Well then, that's all for now folks! **And remember, make sure to validate your stop words dataset!**
 <br>
