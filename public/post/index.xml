@@ -96,12 +96,12 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   mini_theme()+
   scale_x_datetime(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%d %b&amp;quot;)+
   labs(x= NULL, y = NULL,
-       title = &amp;quot;Frequency of tweets throughout the Israeli elections week&amp;quot;,
-       subtitle = &amp;quot;Tweets aggregated by two-hour interval. only tweets with\nthe word &amp;#39;elections&amp;#39; (in Hebrew) were gathered&amp;quot;)+
-  geom_text(aes(x = as.POSIXct(&amp;quot;2020-03-02 23:00:00&amp;quot;), y = 435, label = &amp;quot;10 PM:\nClosing of\npolls&amp;quot;),
+       title = &amp;quot;Tweet frequency throughout the Israeli elections week&amp;quot;,
+       subtitle = &amp;quot;Tweets aggregated by two-hour interval. Only tweets containing the word &amp;#39;elections&amp;#39;\nin Hebrew were gathered&amp;quot;)+
+  geom_text(aes(x = as.POSIXct(&amp;quot;2020-03-02 23:00:00&amp;quot;), y = 435, label = &amp;quot;10 PM:\nPolls close&amp;quot;),
             hjust = 0, size = 3, family = &amp;quot;Roboto Condensed&amp;quot;)+
-  geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;)+
-  theme(plot.subtitle = element_text(color = &amp;quot;gray75&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+  geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;, alpha = 5/10)+
+  theme(plot.subtitle = element_text(color = &amp;quot;gray70&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
 &lt;/div&gt;
@@ -207,13 +207,18 @@ election_token &amp;lt;- elections %&amp;gt;%
   count(word, sort = T) %&amp;gt;%
   filter(!grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, word), n&amp;gt;= 150)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now we can create a wordcloud of words appearing more than 150 times using &lt;code&gt;{wordcloud2}&lt;/code&gt; package&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud2::wordcloud2(election_token, color = &amp;quot;#1DA1F2&amp;quot;, shape = &amp;quot;circle&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/img/elections-twitter/wc.png&#34; /&gt;&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;wc.png&#34; alt=&#34;_Wordcloud excludes Hebrew stop words and the word &#39;elections&#39;_&#34; width=&#34;550&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: &lt;em&gt;Wordcloud excludes Hebrew stop words and the word ‘elections’&lt;/em&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;What we can see is many of the words we’d expect: Political candidates, government, fourth (in the context of fourth elections), partis’ names and more. I’ll provide a more thorough discussion following our bigram plot below, as I believe it addresses many of the same words.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;bigram-of-used-words&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Bigram of used words&lt;/h3&gt;
+&lt;div id=&#34;common-bigrams&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Common Bigrams&lt;/h3&gt;
 &lt;p&gt;Like we did before, we can break up our text data into &lt;strong&gt;two word&lt;/strong&gt; observations, also known as bigrams. In order to account for all combinations, we break up the sentence to fit all possible options. For example, assume we have the following sentence:&lt;/p&gt;
 &lt;p&gt;“Danny went to vote yesterday”&lt;/p&gt;
 &lt;p&gt;Using the &lt;code&gt;unnest_tokens&lt;/code&gt; we’ll break the sentence into the following bigrams:&lt;/p&gt;
@@ -245,13 +250,13 @@ ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
   geom_node_point(color = &amp;quot;lightblue&amp;quot;, size = 3)+
   geom_node_text(aes(label = name), vjust = 1, hjust = 1, family = &amp;quot;Calibri&amp;quot;)+
   theme_void()+
-  labs(title = &amp;quot;Bigram from Twitter data&amp;quot;)+
+  labs(title = &amp;quot;Twitter text bigram&amp;quot;)+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Graph excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;_Bigram raph excludes Hebrew stop words and the word &#39;elections&#39;_&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
-Figure 1: Graph excludes Hebrew stop words and the word ‘elections’
+Figure 2: &lt;em&gt;Bigram raph excludes Hebrew stop words and the word ‘elections’&lt;/em&gt;
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -268,7 +273,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😲?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 🤯?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
