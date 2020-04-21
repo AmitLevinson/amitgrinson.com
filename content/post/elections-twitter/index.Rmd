@@ -76,7 +76,7 @@ elections <- readRDS("election_tweets.rds")
 
 To gather the tweets we can use the `{rtweet}` package which is amazing for collecting Twitter data ([Check out its website](https://rtweet.info/)). As I mentioned earlier, I already scraped the data a few days after the elections but left the command here to show what we did and how easy it is to do it. I searched only one term, 'elections' in Hebrew, and rtweet gathered all tweets containing that word.
 
-What did our search query yield? Let's have a look:
+What did our search yield? Let's have a look:
 
 ```{r}
 dim(elections)

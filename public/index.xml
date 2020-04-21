@@ -115,7 +115,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Next we’ll gather the tweets we need:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections_raw &amp;lt;- search_tweets(&amp;quot;בחירות&amp;quot;, n = 18000, retryonratelimit = TRUE)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To gather the tweets we can use the &lt;code&gt;{rtweet}&lt;/code&gt; package which is amazing for collecting Twitter data (&lt;a href=&#34;https://rtweet.info/&#34;&gt;Check out its website&lt;/a&gt;). As I mentioned earlier, I already scraped the data a few days after the elections but left the command here to show what we did and how easy it is to do it. I searched only one term, ‘elections’ in Hebrew, and rtweet gathered all tweets containing that word.&lt;/p&gt;
-&lt;p&gt;What did our search query yield? Let’s have a look:&lt;/p&gt;
+&lt;p&gt;What did our search yield? Let’s have a look:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(elections)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 16560    90&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;16,560 rows and 90 columns! As we can see, the &lt;code&gt;{rtweet}&lt;/code&gt; package brings back a lot of information (check out the &lt;code&gt;.rds&lt;/code&gt; file &lt;a href=&#34;https://github.com/AmitLevinson/amitlevinson.com/tree/master/content/post/elections-twitter&#34;&gt;here&lt;/a&gt;)!&lt;/p&gt;
@@ -310,7 +310,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😱?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😨?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
