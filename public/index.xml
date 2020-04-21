@@ -141,11 +141,11 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
        title = &amp;quot;Frequency of tweets throughout the Israeli elections week&amp;quot;,
        subtitle = &amp;quot;Tweets aggregated by two-hour interval. only tweets with\nthe word &amp;#39;elections&amp;#39; (in Hebrew) were gathered&amp;quot;)+
   geom_text(aes(x = as.POSIXct(&amp;quot;2020-03-02 23:00:00&amp;quot;), y = 435, label = &amp;quot;10 PM:\nClosing of\npolls&amp;quot;),
-            hjust = 0, size = 2.5, family = &amp;quot;Roboto Condensed&amp;quot;)+
+            hjust = 0, size = 3, family = &amp;quot;Roboto Condensed&amp;quot;)+
   geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;)+
   theme(plot.subtitle = element_text(color = &amp;quot;gray75&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
+&lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Users with most tweets&lt;/h3&gt;
@@ -310,7 +310,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 🤯?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😨?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;

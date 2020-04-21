@@ -109,12 +109,12 @@ elections %>%
        title = "Frequency of tweets throughout the Israeli elections week",
        subtitle = "Tweets aggregated by two-hour interval. only tweets with\nthe word 'elections' (in Hebrew) were gathered")+
   geom_text(aes(x = as.POSIXct("2020-03-02 23:00:00"), y = 435, label = "10 PM:\nClosing of\npolls"),
-            hjust = 0, size = 2.5, family = "Roboto Condensed")+
+            hjust = 0, size = 3, family = "Roboto Condensed")+
   geom_vline(xintercept = as.POSIXct("2020-03-02 22:00"),linetype = "dashed", size = 0.5, color = "black")+
   theme(plot.subtitle = element_text(color = "gray75"))
 ```
 
-Interesting - we see the number of tweets during the closing time is equivalent to that of March 4th early in the morning. Most of the votes were counted by the end of March 3rd, so I can't really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn't able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.  
+Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can't really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn't able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.  
 
 ### Users with most tweets
 
