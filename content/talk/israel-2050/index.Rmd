@@ -22,11 +22,11 @@ links:
 - icon: images
   icon_pack: fas
   name: slides
-  url: https://amitlevinson.github.io/slides-israel-2050/index.html#1
+  url: https://amitlevinson.github.io/slides-israel-2050/index.html#1/
 - icon: github
   icon_pack: fab
   name: code
-  url: https://github.com/AmitLevinson/slides-israel-2050
+  url: https://github.com/AmitLevinson/slides-israel-2050/
 ---
 
 R is an amazing tool for preparing and visualizing data. As political activists we want to provide our readers with information that will influence and motivate them to act. The talk outlines how I believe R can empower individuals to work with data in an efficient and aesthetic way.   

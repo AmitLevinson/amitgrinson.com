@@ -65,7 +65,6 @@ custom_css = ["codefolding.css"]
 	      latexDashes = true
   extensions = ["backslashLineBreak"]
 
-
 [imaging]
   resampleFilter = "lanczos"
   quality = 90
