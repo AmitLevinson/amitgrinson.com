@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="A walkthrough for sharing your interactive visualizations with non R users">
+  <meta name="description" content="Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/2020/04/30/sharing-interactive-charts/">
+  <link rel="alternate" hreflang="en-us" href="/2020/04/22/the-tidytuesday-project/">
 
   
 
@@ -249,7 +249,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/2020/04/30/sharing-interactive-charts/">
+  <link rel="canonical" href="/2020/04/22/the-tidytuesday-project/">
 
   
   
@@ -257,24 +257,23 @@
   
   
     
-    
   
   
-  <meta property="twitter:card" content="summary">
+  <meta property="twitter:card" content="summary_large_image">
   
   <meta property="twitter:site" content="@Amit_Levinson">
   <meta property="twitter:creator" content="@Amit_Levinson">
   
   <meta property="og:site_name" content="Amit Levinson">
-  <meta property="og:url" content="/2020/04/30/sharing-interactive-charts/">
-  <meta property="og:title" content="Sharing your interactive charts | Amit Levinson">
-  <meta property="og:description" content="A walkthrough for sharing your interactive visualizations with non R users"><meta property="og:image" content="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="/2020/04/22/the-tidytuesday-project/">
+  <meta property="og:title" content="The Tidytuesday project | Amit Levinson">
+  <meta property="og:description" content="Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data."><meta property="og:image" content="/2020/04/22/the-tidytuesday-project/featured.png">
+  <meta property="twitter:image" content="/2020/04/22/the-tidytuesday-project/featured.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-04-30T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-04-22T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-03-06T22:55:14&#43;02:00">
+    <meta property="article:modified_time" content="2020-04-22T17:10:35&#43;02:00">
   
 
   
@@ -300,12 +299,16 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/2020/04/30/sharing-interactive-charts/"
+    "@id": "/2020/04/22/the-tidytuesday-project/"
   },
-  "headline": "Sharing your interactive charts",
+  "headline": "The Tidytuesday project",
   
-  "datePublished": "2020-04-30T00:00:00Z",
-  "dateModified": "2020-03-06T22:55:14+02:00",
+  "image": [
+    "/2020/04/22/the-tidytuesday-project/featured.png"
+  ],
+  
+  "datePublished": "2020-04-22T00:00:00Z",
+  "dateModified": "2020-04-22T17:10:35+02:00",
   
   "author": {
     "@type": "Person",
@@ -320,7 +323,7 @@
       "url": "img//"
     }
   },
-  "description": "A walkthrough for sharing your interactive visualizations with non R users"
+  "description": "Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data."
 }
 </script>
 
@@ -338,7 +341,7 @@
 
 
 
-  <title>Sharing your interactive charts | Amit Levinson</title>
+  <title>The Tidytuesday project | Amit Levinson</title>
 
 </head>
 
@@ -544,7 +547,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Sharing your interactive charts</h1>
+  <h1>The Tidytuesday project</h1>
 
   
 
@@ -565,7 +568,7 @@
           Last updated on
       
     
-    Mar 6, 2020
+    Apr 22, 2020
   </span>
   
 
@@ -574,7 +577,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    2 min read
   </span>
   
 
@@ -583,6 +586,10 @@
   
 
   
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a></span>
   
 
 </div>
@@ -613,46 +620,142 @@
       
 
 
-<p>The TL;DR for those who already have a ready .html file:</p>
-<ol style="list-style-type: decimal">
-<li><p>Go into your github repository where the .html file is located.</p></li>
-<li><p>On the top right click <code>Settings</code> -&gt;Scroll down to <code>Github Pages</code> section -&gt; instead of <code>None</code> choose <code>master branch</code></p></li>
-<li><p>That’s it!</p></li>
-</ol>
-<p>You can now find your .html widget under username.github.io/repo-name/file.html!</p>
-<div id="background" class="section level3">
-<h3>Background</h3>
-<p>A few weeks ago I gave my first talk about <a href="https://amitlevinson.com/talk/israel-2050/">analyzing and visualizing data in R</a>. I shared with participants - political activists - many of R’s abilities, one of them being ‘interactive visulizations’ which I very much like. I believe interactive graphs provide some edge a static graph has, of course when used properly. For political activists posting on Facebook they can post a gif showing the interactivity in the Graph and provide users a follow link to explore it themselves. If you have your own website you can host it there. However, when I first started with R I didn’t have a website and today I sometimes just want to share the specific .html without hosting it on my web page.</p>
-<div id="why-host-it-online-altogether" class="section level4">
-<h4>Why host it online altogether?</h4>
-<ul>
-<li><p>Sending .html files with your new interactive graph can be cumbersome. Imagine you send it, edit it, send it again and so on 😢</p></li>
-<li><p>You participated on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> and want to share your graph for others to explore. Here I also reccommend recording a gif where you interact with it along with a link, don’t only refer others to the link.</p></li>
-</ul>
-<p><a href="https://imgflip.com/i/3x71ek"><img src="https://i.imgflip.com/3x71ek.jpg" title="made at imgflip.com"/></a></p>
-<p>Actually, one of the answers came to me as I was trying to host my talk slides on my github account. There are many useful tutorials for hosting slides and static files online that you can find <a href="https://community.rstudio.com/t/deploy-xaringan-slides-to-github-pages/16459">here</a>, <a href="https://github.com/tcgriffith/xaringan_gh">here</a>, and <a href="https://annaken.github.io/hosting-revealjs-presentation-github-pages/">here</a>.</p>
-<p>I found these very useful for hosting my slides and wanted to share that same tutorial aimed at hosting <code>.html</code> files. The format is easy as we’ll see, but I remember when starting off with R I didn’t know how.</p>
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+<div id="what-is-tidytuesday" class="section level3">
+<h3><strong>What is TidyTuesday?</strong></h3>
+<blockquote>
+<p><em>“A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the R for Data Science textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with ggplot2, tidyr, dplyr, and other tools in the tidyverse ecosystem. However, any code-based methodology is welcome - just please remember to share the code used to generate the results.”</em></p>
+</blockquote>
+<p>You can read more about it <a href="https://github.com/rfordatascience/tidytuesday">here</a>.</p>
+<p>Basically, every week the R4DS community publishes a <strong>new data set</strong> where the R community (or any code-based methdogology) is welcome to <strong>analyze</strong> and <strong>visualize</strong> the data.
+When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it’s what get me motivated and fascinated with R. Every week you’re challenged with a new data set and get to see how others have analyzed it.</p>
+<p>Whenever I have some free time I like to join in and give it a go. If you’re looking to get some practice or enjoy analyzing the same data set as others - Join the party, there’s much to learn!<br />
+</br></p>
 </div>
+<div id="plots" class="section level2">
+<h2>Plots</h2>
+<p>Below are graphs I made, organized in a descending order by date. Some I’m more proud of than others, but I choose to display all of them in case someone finds anything useful 😄
+</br></p>
+<div id="section" class="section level3">
+<h3><strong>22.04.2020</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R">Link to code</a></p>
+<p align="center">
+<iframe width="95%" height="475px" name="iframe" src="/img/tt/hc_gdpr.html">
+</iframe>
+</p>
 </div>
-<div id="creating-your-.html-file" class="section level3">
-<h3>Creating your .html file</h3>
-<p>Saving an interactive plot - such as a {leafly} or {highcharter} map, {plotly} - can be done with various packages, I recommend using the {XXXX} package since it nicely fits the browers page. Of course you can also try others and see what suits you (for e.g. {XXXX})</p>
-<p>Let’s take a #Tidytuesday dataset I used to create a <code>{highcharter}</code> map of median GDPR fines, where you can find the code for it <a href="XXXX">here</a>.</p>
-<p>So we have our map ready and can interact with it within R, as we can see in the gif below:</p>
-<p>—— gif of trying the map in Rstudio ——-</p>
-<p>Now we want to export it (or in your case any interactive graph you made) to .html. Make sure to save your graph into an object, and now we can export it to an html file with the following code:</p>
-<pre class="r"><code># code for saving as html</code></pre>
-<p>Great, we have a new html file containing our graph. Next thing we want to do is push it to our github repository. If you’re not familiar with pushing your files to github through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting everything up to synch. You can either open a new repository for hosting your .html file, or if it’s a #Tidytuesday one you can just push it along with your <code>R</code> code file. Make sure to push the html file, hosting the code itself isn’t requisite for html file to run.</p>
-<p>—- image of hosted file —-</p>
-<p>Now that we have our file hosted, either on our #Tidytuesday repo or a designated repository for html files, we can assign our Github page.</p>
-<p>In your repository main page, Click on <code>Settings</code> on the top right. From there you want to scroll down until you reach the GitHub Pages section. There you want to enable the GitHub pages by changing the deafult None to <code>master-branch</code>.
-That’s it! you can find your hosted html file at username.github.io/repo-name/file.html!</p>
-<p>As I said earlier, I’m not too familiar with GitHub pages so act with caution. If you don’t want to take chances you can always create a designated repo for hosting files online. I used my TidyTuesday repo because then it helps me aggregate both the code and the html file. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a>.</p>
-<p>Enjoy!</p>
+<div id="section-1" class="section level3">
+<h3><strong>16.04.2020</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/rap_points.png" width = "700">
+</p>
 </div>
-<div id="github-pages" class="section level3">
-<h3>Github pages</h3>
-<p>My recommended way is sharing your html files with Github pages. This is extremely efficient and I like it the most because it keeps your github username turning it into the following link: username.github.io/repo-name/file.html. If your username adequately represents your real name all the better!</p>
+<div id="section-2" class="section level3">
+<h3><strong>17.03.2020</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/tt_schrute.png" width = "700">
+</p>
+</div>
+<div id="section-3" class="section level3">
+<h3><strong>06.03.2020</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd">Link to code</a> | <a href="https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/">Try the app</a></p>
+<p align="center">
+<img src = "/img/tt/tt_nhl.gif" width = "700">
+</p>
+</div>
+<div id="section-4" class="section level3">
+<h3><strong>20.01.2020</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/spotify.png" width = "700">
+</p>
+</div>
+<div id="section-5" class="section level3">
+<h3><strong>22.12.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/total_breed.png" width = "700">
+</p>
+</div>
+<div id="section-6" class="section level3">
+<h3><strong>11.12.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/measles.gif" width = "700">
+</p>
+</div>
+<div id="section-7" class="section level3">
+<h3><strong>5.12.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R">Link to code</a></p>
+<p align="center">
+<img src = "/img/tt/parking_tickets_hours.png" width = "700">
+</p>
+</div>
+<div id="section-8" class="section level3">
+<h3><strong>20.11.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd">Link to code</a></p>
+<p><img src="/img/tt/nz_bird_vote.png" /></p>
+</div>
+<div id="section-9" class="section level3">
+<h3><strong>6.11.2019</strong></h3>
+<a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd">Link to code</a>
+<p align="center">
+<img src="/img/tt/bikers_and_walkers.png" width="700">
+</p>
+</div>
+<div id="section-10" class="section level3">
+<h3><strong>31.10.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week44_NYC_Squerrils/Squirrels.Rmd">Link to code</a></p>
+<p align="center">
+<img src="/img/tt/Central_park_squirrel.png" width="700">
+</p>
+</div>
+<div id="section-11" class="section level3">
+<h3><strong>22.10.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week43_Horror_Films/Horror_dis.R">Link to code</a></p>
+<p align="center">
+<img src="/img/tt/horror_movie_length.png" width="700">
+</p>
+<p></br></p>
+</div>
+<div id="section-12" class="section level3">
+<h3><strong>9.10.2019</strong></h3>
+<a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R">Link to code</a>
+<p align="center">
+<img src="/img/tt/Max_lift.jpeg" width="700">
+</p>
+<p></br></p>
+</div>
+<div id="section-13" class="section level3">
+<h3><strong>6.10.2019</strong></h3>
+<a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R">Link to code</a>
+<p align="center">
+<img src="/img/tt/Barstool_rating.png" width="700">
+</p>
+<p></br></p>
+</div>
+<div id="section-14" class="section level3">
+<h3><strong>28.9.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R">Link to code</a></p>
+<p align="center">
+<img src="/img/tt/Ethnic_div_revised.png" width="700">
+</p>
+<p></br></p>
+</div>
+<div id="section-15" class="section level3">
+<h3><strong>22.9.2019</strong></h3>
+<p><a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/1_Week38_Number%20of%20Visitors/National%20Parks.R">Link to code</a></p>
+<p align="center">
+<img src="/img/tt/National_Parks.png" width="700">
+</p>
+<p><a href="#top"> Back to top</a></p>
+</div>
 </div>
 
     </div>
@@ -676,7 +779,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/2020/04/30/sharing-interactive-charts/&amp;text=Sharing%20your%20interactive%20charts" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/2020/04/22/the-tidytuesday-project/&amp;text=The%20Tidytuesday%20project" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -689,7 +792,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/2020/04/30/sharing-interactive-charts/&amp;t=Sharing%20your%20interactive%20charts" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/2020/04/22/the-tidytuesday-project/&amp;t=The%20Tidytuesday%20project" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -702,7 +805,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="mailto:?subject=Sharing%20your%20interactive%20charts&amp;body=/2020/04/30/sharing-interactive-charts/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=The%20Tidytuesday%20project&amp;body=/2020/04/22/the-tidytuesday-project/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -715,7 +818,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/2020/04/30/sharing-interactive-charts/&amp;title=Sharing%20your%20interactive%20charts" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/2020/04/22/the-tidytuesday-project/&amp;title=The%20Tidytuesday%20project" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -728,7 +831,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Sharing%20your%20interactive%20charts%20/2020/04/30/sharing-interactive-charts/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=The%20Tidytuesday%20project%20/2020/04/22/the-tidytuesday-project/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -741,7 +844,7 @@ That’s it! you can find your hosted html file at username.github.io/repo-name/
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/2020/04/30/sharing-interactive-charts/&amp;title=Sharing%20your%20interactive%20charts" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/2020/04/22/the-tidytuesday-project/&amp;title=The%20Tidytuesday%20project" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

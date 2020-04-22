@@ -16,6 +16,11 @@ image:
   preview_only: yes
 projects: []
 ---
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
@@ -37,6 +42,14 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
+
+### **22.04.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R)
+
+<p align = "center">
+<iframe width ="95%" height="475px" name ="iframe" src="/img/tt/hc_gdpr.html"></iframe>
+</p>
+
 
 ### **16.04.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R)
