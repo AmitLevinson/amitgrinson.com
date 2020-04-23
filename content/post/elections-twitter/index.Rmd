@@ -241,7 +241,7 @@ Now we can create a wordcloud of words appearing more than 150 times using `{wor
 wordcloud2::wordcloud2(election_token, color = "#1DA1F2", shape = "circle")
 ```
 
-```{r echo = FALSE, fig.cap= "_Wordcloud excludes Hebrew stop words and the word 'elections'_", fig.align= 'center'}
+```{r echo = FALSE, fig.cap= "Wordcloud excludes Hebrew stop words and the word 'elections'", fig.align= 'center'}
 knitr::include_graphics("wc.png")
 ```
 
@@ -274,7 +274,7 @@ Using the `unnest_tokens` we'll break the sentence into the following bigrams:
 
 Which gives us all possible options. We will also include two columns consisting of the bigram broken up into single words. This will help in filtering out bigrams containing Hebrew stop words or English words. I'll not run through the following code but instead will point you to [David Ronbinson](http://varianceexplained.org/) & [Julia Silge](https://juliasilge.com/) ['Text Mining with R' Book](https://www.tidytextmining.com/) for further reading.
 
-```{r, fig.cap="_Bigram raph excludes Hebrew stop words and the word 'elections'_", fig.aling = 'center'}
+```{r, fig.cap="Word bigram excludes Hebrew stop words and the word 'elections'", fig.aling = 'center'}
 elec_bigram <- elections %>%
   select(text) %>% 
   unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
@@ -309,10 +309,10 @@ For example, on the bottom of our graph we see the number '2' connected to the w
 
 - We have discussions regarding the **number of chairs a govenrment will have (62/61/60/58)** connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.  
 
-- We see **mentions of individuals** such as 'Yair Lapid', "Amir peretz", "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel", **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd, but more on that in a minute.  
+- We see **mentions of individuals** such as "Benjamin Netanyahu", "Amit Segal" (Both we discussed earlier), "Natan Eshel", **but no mention of the main candidate running against Netanyahu - "Benny Gantz"**. That's actually kind of odd, but more on that in a minute.  
 - We also see mentions of political parties such as "Meretz", "Gesher" and "Labor" who ran together this time around, "Otzma Yehudit", "United Torah Judaism", and the "Joint List". **There's no mention of the two leading parties - "Kahol Lavan" & "The Likkud".**, despite the mentioning of the latter's leader.
-- Mentions of Netanyahu's indicment and the personal law connected to him.
-- Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Last year", etc.
+- Mentions of Netanyahu's indicment and the personal law associated him.
+- Mentions I'd categorize as 'other' such as "Terrorist supporters", "Will of the people", "Fake news", "Go vote', etc.
 <br>
 
 Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud & Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I'll look at one question that troubles me - **Why doesn't Gantz appear in our list** `r emo::ji("shocked")`?

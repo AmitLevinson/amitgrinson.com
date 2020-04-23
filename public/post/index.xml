@@ -241,9 +241,9 @@ election_token &amp;lt;- elections %&amp;gt;%
 &lt;p&gt;Now we can create a wordcloud of words appearing more than 150 times using &lt;code&gt;{wordcloud2}&lt;/code&gt; package&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud2::wordcloud2(election_token, color = &amp;quot;#1DA1F2&amp;quot;, shape = &amp;quot;circle&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;wc.png&#34; alt=&#34;_Wordcloud excludes Hebrew stop words and the word &#39;elections&#39;_&#34; width=&#34;550&#34; /&gt;
+&lt;img src=&#34;wc.png&#34; alt=&#34;Wordcloud excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;550&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
-Figure 1: &lt;em&gt;Wordcloud excludes Hebrew stop words and the word ‘elections’&lt;/em&gt;
+Figure 1: Wordcloud excludes Hebrew stop words and the word ‘elections’
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -286,9 +286,9 @@ ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;_Bigram raph excludes Hebrew stop words and the word &#39;elections&#39;_&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
-Figure 2: &lt;em&gt;Bigram raph excludes Hebrew stop words and the word ‘elections’&lt;/em&gt;
+Figure 2: Word bigram excludes Hebrew stop words and the word ‘elections’
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -298,14 +298,14 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;p&gt;&lt;strong&gt;What does this all mean?&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;We have discussions regarding the &lt;strong&gt;number of chairs a govenrment will have (62/61/60/58)&lt;/strong&gt; connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as ‘Yair Lapid’, “Amir peretz”, “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
+&lt;li&gt;&lt;p&gt;We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
 &lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;We also see mentions of political parties such as “Meretz”, “Gesher” and “Labor” who ran together this time around, “Otzma Yehudit”, “United Torah Judaism”, and the “Joint List”. &lt;strong&gt;There’s no mention of the two leading parties - “Kahol Lavan” &amp;amp; “The Likkud”.&lt;/strong&gt;, despite the mentioning of the latter’s leader.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Mentions of Netanyahu’s indicment and the personal law connected to him.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, “Last year”, etc.
+&lt;li&gt;&lt;p&gt;Mentions of Netanyahu’s indicment and the personal law associated him.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, &#34;Go vote’, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 🤯?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😱?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
