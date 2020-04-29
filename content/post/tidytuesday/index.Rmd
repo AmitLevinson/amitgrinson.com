@@ -43,6 +43,14 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+### **29.04.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week18_broadway/broadway.R)
+
+<p align = "center">
+<img src = "/img/tt/broadway.gif" width = "700">
+</p>
+
+
 ### **22.04.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R)
 

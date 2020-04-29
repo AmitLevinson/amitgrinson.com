@@ -13,6 +13,18 @@
     </image>
     
     <item>
+      <title>Learning TFDIDF with cannabis effects</title>
+      <link>/2020/04/30/tfidf-cannabis-type/</link>
+      <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/04/30/tfidf-cannabis-type/</guid>
+      <description>
+
+
+
+</description>
+    </item>
+    
+    <item>
       <title>Sharing your interactive charts</title>
       <link>/2020/04/30/sharing-interactive-charts/</link>
       <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
@@ -20,46 +32,69 @@
       <description>
 
 
-&lt;p&gt;The TL;DR for those who already have a ready .html file:&lt;/p&gt;
+&lt;p&gt;The TL;DR for those who already have a ready html file:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Go into your github repository where the .html file is located.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;On the top right click &lt;code&gt;Settings&lt;/code&gt; -&amp;gt;Scroll down to &lt;code&gt;Github Pages&lt;/code&gt; section -&amp;gt; instead of &lt;code&gt;None&lt;/code&gt; choose &lt;code&gt;master branch&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;That’s it!&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;Go into your github repository where the html file is located.&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;On the top right click &lt;code&gt;Settings&lt;/code&gt; &lt;i class=&#34;fas fa-arrow-right&#34;&gt;&lt;/i&gt; Scroll down to &lt;code&gt;Github Pages&lt;/code&gt; section &lt;i class=&#34;fas fa-arrow-right&#34;&gt;&lt;/i&gt; instead of &lt;code&gt;none&lt;/code&gt; choose &lt;code&gt;master branch&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;You can now find your .html widget under username.github.io/repo-name/file.html!&lt;/p&gt;
+&lt;p&gt;That’s it! You can now find your html widget under username.github.io/repo-name/file.html.&lt;/p&gt;
 &lt;div id=&#34;background&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Background&lt;/h3&gt;
 &lt;p&gt;A few weeks ago I gave my first talk about &lt;a href=&#34;https://amitlevinson.com/talk/israel-2050/&#34;&gt;analyzing and visualizing data in R&lt;/a&gt;. I shared with participants - political activists - many of R’s abilities, one of them being ‘interactive visulizations’ which I very much like. I believe interactive graphs provide some edge a static graph has, of course when used properly. For political activists posting on Facebook they can post a gif showing the interactivity in the Graph and provide users a follow link to explore it themselves. If you have your own website you can host it there. However, when I first started with R I didn’t have a website and today I sometimes just want to share the specific .html without hosting it on my web page.&lt;/p&gt;
 &lt;div id=&#34;why-host-it-online-altogether&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Why host it online altogether?&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Sending .html files with your new interactive graph can be cumbersome. Imagine you send it, edit it, send it again and so on 😢&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;You participated on &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#Tidytuesday&lt;/a&gt; and want to share your graph for others to explore. Here I also reccommend recording a gif where you interact with it along with a link, don’t only refer others to the link.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sending html files with your new interactive graph can be cumbersome, especailly if it’s a work and progress with updated versions you keep sending 😭.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;You participated on &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#Tidytuesday&lt;/a&gt; and want to share your graph for others to explore themselves. If so, Here I also reccommend recording a gif or video where you interact with it along with a link for exploring, don’t only refer others to the link.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Because once you set up your GitHub repository, it’s just 2 more lines of code for facilitating an online interactive version.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href=&#34;https://imgflip.com/i/3x71ek&#34;&gt;&lt;img src=&#34;https://i.imgflip.com/3x71ek.jpg&#34; title=&#34;made at imgflip.com&#34;/&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Actually, one of the answers came to me as I was trying to host my talk slides on my github account. There are many useful tutorials for hosting slides and static files online that you can find &lt;a href=&#34;https://community.rstudio.com/t/deploy-xaringan-slides-to-github-pages/16459&#34;&gt;here&lt;/a&gt;, &lt;a href=&#34;https://github.com/tcgriffith/xaringan_gh&#34;&gt;here&lt;/a&gt;, and &lt;a href=&#34;https://annaken.github.io/hosting-revealjs-presentation-github-pages/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I found these very useful for hosting my slides and wanted to share that same tutorial aimed at hosting &lt;code&gt;.html&lt;/code&gt; files. The format is easy as we’ll see, but I remember when starting off with R I didn’t know how.&lt;/p&gt;
+&lt;p&gt;I found these very useful for hosting my slides and wanted to share that same tutorial aimed at hosting &lt;code&gt;html&lt;/code&gt; files. The format is easy as we’ll see, but I remember when starting off with R I didn’t know how. Actually, I was naive and pushed my html file to GitHub thinking once it’s there I can interact with it. Although it’s pretty much that, we need to first turn our GitHub repository into a GitHub page, let’s go ahead and begin.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;creating-your-.html-file&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Creating your .html file&lt;/h3&gt;
-&lt;p&gt;Saving an interactive plot - such as a {leafly} or {highcharter} map, {plotly} - can be done with various packages, I recommend using the {XXXX} package since it nicely fits the browers page. Of course you can also try others and see what suits you (for e.g. {XXXX})&lt;/p&gt;
+&lt;div id=&#34;saving-an-html-file&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Saving an html file&lt;/h3&gt;
+&lt;p&gt;Saving an interactive plot - such as a {leafly} or {highcharter} map, {plotly} - can be done with various packages, I recommend using the &lt;code&gt;{htmlwidgets}&lt;/code&gt; package since it nicely fits the browser page, but of course you can try out others and see what suits you (for e.g. &lt;code&gt;{htmltools}&lt;/code&gt;)&lt;/p&gt;
 &lt;p&gt;Let’s take a #Tidytuesday dataset I used to create a &lt;code&gt;{highcharter}&lt;/code&gt; map of median GDPR fines, where you can find the code for it &lt;a href=&#34;XXXX&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;So we have our map ready and can interact with it within R, as we can see in the gif below:&lt;/p&gt;
-&lt;p&gt;—— gif of trying the map in Rstudio ——-&lt;/p&gt;
-&lt;p&gt;Now we want to export it (or in your case any interactive graph you made) to .html. Make sure to save your graph into an object, and now we can export it to an html file with the following code:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# code for saving as html&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Great, we have a new html file containing our graph. Next thing we want to do is push it to our github repository. If you’re not familiar with pushing your files to github through R I recommend following &lt;a href=&#34;https://happygitwithr.com/&#34;&gt;happygitwithr&lt;/a&gt; tutorial for getting everything up to synch. You can either open a new repository for hosting your .html file, or if it’s a #Tidytuesday one you can just push it along with your &lt;code&gt;R&lt;/code&gt; code file. Make sure to push the html file, hosting the code itself isn’t requisite for html file to run.&lt;/p&gt;
-&lt;p&gt;—- image of hosted file —-&lt;/p&gt;
-&lt;p&gt;Now that we have our file hosted, either on our #Tidytuesday repo or a designated repository for html files, we can assign our Github page.&lt;/p&gt;
-&lt;p&gt;In your repository main page, Click on &lt;code&gt;Settings&lt;/code&gt; on the top right. From there you want to scroll down until you reach the GitHub Pages section. There you want to enable the GitHub pages by changing the deafult None to &lt;code&gt;master-branch&lt;/code&gt;.
-That’s it! you can find your hosted html file at username.github.io/repo-name/file.html!&lt;/p&gt;
-&lt;p&gt;As I said earlier, I’m not too familiar with GitHub pages so act with caution. If you don’t want to take chances you can always create a designated repo for hosting files online. I used my TidyTuesday repo because then it helps me aggregate both the code and the html file. If you want to learn more about adding a theme to GitHub pages check out &lt;a href=&#34;https://resources.github.com/whitepapers/github-and-rstudio/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;interactive-in-r.gif&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-1&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;interactive-in-r.gif&#34; alt=&#34;Our interactive graph is all set on R, What&#39;s next?&#34; width=&#34;80%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Our interactive graph is all set on R, What’s next?
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now we want to export it to .html. Make sure to save your graph into an object, let’s say for this example the object is called ‘hc_gdpr’, and now we can export it to an html file with the following code. but before we do that, &lt;code&gt;htmlwidget::saveWidget&lt;/code&gt; argument expands the object to fit the whole html page. If you’d like to adjust it’s width and height parameters, you can add them to the html object, which is basically a list:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc_gdpro$width &amp;lt;- &amp;quot;1400px&amp;quot;
+hc_gdpro$width &amp;lt;- &amp;quot;700px&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now we can save our file where the knitrOptions takes our height and width configuration. Play around with it untill it satisfactory to you, depends for what I need it but I found the default setting (seems like 100% width and height) adequate.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;saveWidget(hc-gdpr, &amp;quot;hc-gdpr.html&amp;quot;, selfcontained = TRUE, knitrOptions = list())&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;github-pages&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Github pages&lt;/h3&gt;
-&lt;p&gt;My recommended way is sharing your html files with Github pages. This is extremely efficient and I like it the most because it keeps your github username turning it into the following link: username.github.io/repo-name/file.html. If your username adequately represents your real name all the better!&lt;/p&gt;
+&lt;h3&gt;GitHub pages&lt;/h3&gt;
+&lt;p&gt;Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your comuter. Next thing we want to do is host it online so others can interact with it. We’ll be using GitHub pages approach, so if you’re not familiar with hosting your files to github through R I recommend following &lt;a href=&#34;https://happygitwithr.com/&#34;&gt;happygitwithr&lt;/a&gt; tutorial for getting your account set up.&lt;br /&gt;
+You can either open a new repository for hosting your .html files, or if it’s a #Tidytuesday like mine sometimes are you can just push it along with your &lt;code&gt;R&lt;/code&gt; code file for that week. Make sure to include the html file, hosting only the code (.R / .Rmd) won’t render it interactive, but you can also host only the html without the code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;hosted.jpg&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-4&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;hosted.jpg&#34; alt=&#34;Once you Rendered your html object, push it to a Github repository&#34; width=&#34;698&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Once you Rendered your html object, push it to a Github repository
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now that we have our file hosted, either on our #Tidytuesday repo or a designated repository for html files, we can assign our Github page.&lt;/p&gt;
+&lt;p&gt;Choose a repository you want to turn into a Github page (you can do several) and enter it. Click on &lt;code&gt;Settings&lt;/code&gt; on the top right and scroll down until you reach the GitHub Pages section. There you want to enable the GitHub pages by changing the deafult None to &lt;code&gt;master-branch&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;github-pages.jpg&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-5&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;github-pages.jpg&#34; alt=&#34;After pushing your file, turn your Github repository into a Github page&#34; width=&#34;616&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: After pushing your file, turn your Github repository into a Github page
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;That’s it! you can find your hosted html file at &lt;code&gt;username.github.io/repo-name/file.html&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;As I said earlier, I’m not too familiar with GitHub pages so act with caution. If you don’t want to take chances you can always create a designated repo for hosting files online. I used my TidyTuesday repo because then it helps me aggregate both the code and the html file. If you want to learn more about adding a theme to GitHub pages check out &lt;a href=&#34;https://resources.github.com/whitepapers/github-and-rstudio/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -305,7 +340,7 @@ For example, on the bottom of our graph we see the number ‘2’ connected to t
 &lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, &#34;Go vote’, etc.
 &lt;br&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😱?&lt;/p&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😨?&lt;/p&gt;
 &lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
 &lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
@@ -389,6 +424,13 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;p&gt;Below are graphs I made, organized in a descending order by date. Some I’m more proud of than others, but I choose to display all of them in case someone finds anything useful 😄
 &lt;/br&gt;&lt;/p&gt;
 &lt;div id=&#34;section&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;strong&gt;29.04.2020&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week18_broadway/broadway.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src = &#34;/img/tt/broadway.gif&#34; width = &#34;700&#34;&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;22.04.2020&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
@@ -396,75 +438,75 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/iframe&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-2&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;16.04.2020&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/rap_points.png&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-2&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-3&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;17.03.2020&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/tt_schrute.png&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-3&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-4&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;06.03.2020&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd&#34;&gt;Link to code&lt;/a&gt; | &lt;a href=&#34;https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/&#34;&gt;Try the app&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/tt_nhl.gif&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-4&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-5&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;20.01.2020&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/spotify.png&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-5&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-6&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;22.12.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/total_breed.png&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-6&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-7&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;11.12.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/measles.gif&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-7&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-8&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;5.12.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src = &#34;/img/tt/parking_tickets_hours.png&#34; width = &#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-8&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-9&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;20.11.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/tt/nz_bird_vote.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-9&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-10&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;6.11.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd&#34;&gt;Link to code&lt;/a&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src=&#34;/img/tt/bikers_and_walkers.png&#34; width=&#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-10&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-11&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;31.10.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week44_NYC_Squerrils/Squirrels.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;img src=&#34;/img/tt/Central_park_squirrel.png&#34; width=&#34;700&#34;&gt;
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-11&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-12&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;22.10.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week43_Horror_Films/Horror_dis.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
@@ -472,7 +514,7 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/p&gt;
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-12&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-13&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;9.10.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R&#34;&gt;Link to code&lt;/a&gt;
 &lt;p align=&#34;center&#34;&gt;
@@ -480,7 +522,7 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/p&gt;
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-13&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-14&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;6.10.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R&#34;&gt;Link to code&lt;/a&gt;
 &lt;p align=&#34;center&#34;&gt;
@@ -488,7 +530,7 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/p&gt;
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-14&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-15&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;28.9.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
@@ -496,7 +538,7 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/p&gt;
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;section-15&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;section-16&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;strong&gt;22.9.2019&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/1_Week38_Number%20of%20Visitors/National%20Parks.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
