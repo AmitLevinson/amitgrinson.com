@@ -6,7 +6,7 @@ slug: sharing-interactive-charts
 categories: []
 tags: []
 subtitle: ''
-summary: "A walkthrough for sharing your interactive visualizations with non R users"
+summary: "A walkthrough for sharing your interactive visualizations on GitHub pages"
 authors: []
 lastmod: '2020-03-06T22:55:14+02:00'
 featured: no
@@ -15,40 +15,42 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
-draft: true
+draft: false
 editor_options:
   chunk_output_type: console
 ---
 
 
 
-<p>The TL;DR for those who already have a ready html file:</p>
+<div id="background" class="section level3">
+<h3>Background</h3>
+<p>A few weeks ago I gave my first talk about <a href="https://amitlevinson.com/talk/israel-2050/">analyzing and visualizing data in R</a>. I shared with participants - political activists - many of R’s abilities, one of them creating ‘interactive visulizations’ which I very much like. I believe interactive graphs provide some edge to a static graph, of course when used properly. The first time I created an interactive graph for <a href="https://github.com/rfordatascience/tidytuesday">#TidyTuesday</a>, I was left with the question <strong>how to provide others the ability to interact with it?</strong></p>
+</div>
+<div id="tldr" class="section level3">
+<h3>TL;DR</h3>
+<p>For those who already have a ready html file:</p>
 <ol style="list-style-type: decimal">
 <li>Go into your github repository where the html file is located.<br />
 </li>
 <li>On the top right click <code>Settings</code> <i class="fas fa-arrow-right"></i> Scroll down to <code>Github Pages</code> section <i class="fas fa-arrow-right"></i> instead of <code>none</code> choose <code>master branch</code></li>
 </ol>
 <p>That’s it! You can now find your html widget under username.github.io/repo-name/file.html.</p>
-<div id="background" class="section level3">
-<h3>Background</h3>
-<p>A few weeks ago I gave my first talk about <a href="https://amitlevinson.com/talk/israel-2050/">analyzing and visualizing data in R</a>. I shared with participants - political activists - many of R’s abilities, one of them being ‘interactive visulizations’ which I very much like. I believe interactive graphs provide some edge a static graph has, of course when used properly. For political activists posting on Facebook they can post a gif showing the interactivity in the Graph and provide users a follow link to explore it themselves. If you have your own website you can host it there. However, when I first started with R I didn’t have a website and today I sometimes just want to share the specific .html without hosting it on my web page.</p>
-<div id="why-host-it-online-altogether" class="section level4">
-<h4>Why host it online altogether?</h4>
-<ul>
-<li><p>Sending html files with your new interactive graph can be cumbersome, especailly if it’s a work and progress with updated versions you keep sending 😭.</p></li>
-<li><p>You participated on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> and want to share your graph for others to explore themselves. If so, Here I also recommend recording a gif or video where you interact with it along with a link for exploring, don’t only refer others to the link.</p></li>
-<li><p>Because once you set up your GitHub repository, it’s just 2 more lines of code for facilitating an online interactive version.</p></li>
-</ul>
-<p><a href="https://imgflip.com/i/3x71ek"><img src="https://i.imgflip.com/3x71ek.jpg" title="made at imgflip.com"/></a></p>
-<p>Actually, one of the answers came to me as I was trying to host my talk slides on my github account. There are many useful tutorials for hosting slides and static files online that you can find <a href="https://community.rstudio.com/t/deploy-xaringan-slides-to-github-pages/16459">here</a>, <a href="https://github.com/tcgriffith/xaringan_gh">here</a>, and <a href="https://annaken.github.io/hosting-revealjs-presentation-github-pages/">here</a>.</p>
-<p>I found these very useful for hosting my slides and wanted to share that same tutorial aimed at hosting <code>html</code> files. The format is easy as we’ll see, but I remember when starting off with R I didn’t know how. Actually, I was naive and pushed my html file to GitHub thinking once it’s there I can interact with it. Although it’s pretty much that, we need to first turn our GitHub repository into a GitHub page, let’s go ahead and begin.</p>
 </div>
+<div id="why-host-it-online" class="section level3">
+<h3>Why host it online?</h3>
+<ul>
+<li><p>Sending html files with your new interactive graph can be cumbersome, especailly if it’s a work in progress with updated versions you keep sending 🙍. Enough with those <code>html_4_final</code> names!</p></li>
+<li><p>You participated on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> and want to share your graph for others to explore themselves. In this case I recommend recording a gif or video where you interact with the graph and host it online for others to explore.</p></li>
+<li><p>Because once you set up your GitHub page up, it’s just 2 more lines of code saving it as a file and pushing it to your repository.</p></li>
+</ul>
+<p><a href="https://imgflip.com/i/3z9x4s"><img src="https://i.imgflip.com/3z9x4s.jpg" title="made at imgflip.com"/></a></p>
+<p>There are many useful tutorials for hosting slides and static files online that you can find <a href="https://community.rstudio.com/t/deploy-xaringan-slides-to-github-pages/16459">here</a>, <a href="https://github.com/tcgriffith/xaringan_gh">here</a>, and <a href="https://annaken.github.io/hosting-revealjs-presentation-github-pages/">here</a>. I found these very useful for hosting slides from the talk I gave and wanted to share that same tutorial aimed at hosting <code>html</code> graphs, technically the same file (html). The format is identical, but I remember when starting off with R I didn’t know how. I was naive and just pushed my html file to GitHub thinking once it’s there I can interact with it. Although it’s pretty much that, we first need to turn our GitHub repository into a GitHub page.</p>
 </div>
 <div id="saving-an-html-file" class="section level3">
 <h3>Saving an html file</h3>
-<p>Saving an interactive plot - such as a {leafly} or {highcharter} map, {plotly} - can be done with various packages, I recommend using the <code>{htmlwidgets}</code> package since it nicely fits the browser page, but of course you can try out others and see what suits you (for e.g. <code>{htmltools}</code>)</p>
+<p>Saving an interactive plot - such as a {leafly}, {highcharter}, {plotly} or any other interactive object - can be done with various packages. Here I’ll use the <code>{htmlwidgets}</code> package since it nicely fits the browser page, but of course you can try out others and see what suits you (for e.g. <code>{htmltools}</code>)</p>
 <p>Let’s take a #Tidytuesday dataset I used to create a <code>{highcharter}</code> map of median GDPR fines, where you can find the code for it <a href="XXXX">here</a>.</p>
-<p>So we have our map ready and can interact with it within R, as we can see in the gif below:</p>
+<p>So, we have our map ready and can interact with it within R, as we can see in the gif below:</p>
 <pre class="r"><code>knitr::include_graphics(&quot;interactive-in-r.gif&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
 <img src="interactive-in-r.gif" alt="Our interactive graph is all set on R, What's next?" width="80%" />
@@ -56,33 +58,34 @@ editor_options:
 Figure 1: Our interactive graph is all set on R, What’s next?
 </p>
 </div>
-<p>Now we want to export it to .html. Make sure to save your graph into an object, let’s say for this example the object is called ‘hc_gdpr’, and now we can export it to an html file with the following code. but before we do that, <code>htmlwidget::saveWidget</code> argument expands the object to fit the whole html page. If you’d like to adjust it’s width and height parameters, you can add them to the html object, which is basically a list:</p>
+<p>Now we want to save it on our computer. Make sure to save your graph into an object, let’s say for this example our object is called ‘hc_gdpr’. Before we save it using <code>htmlwidget::saveWidget</code>, we can define how the graph will render on an html page. If you’d like to adjust it’s width and height parameters, you can add them to the html object which is saved as a list:</p>
 <pre class="r"><code>hc_gdpro$width &lt;- &quot;1400px&quot;
 hc_gdpro$width &lt;- &quot;700px&quot;</code></pre>
-<p>And now we can save our file where the knitrOptions takes our height and width configuration. Play around with it untill it satisfactory to you, depends for what I need it but I found the default setting (seems like 100% width and height) adequate.</p>
+<p>And now we can write our file, when the <code>knitrOptions</code> takes our height and width configuration. Play around with it untill it satisfactory for you. Depends for what I need it but I found the default setting (seems like 100% width and height) adequate.</p>
 <pre class="r"><code>saveWidget(hc-gdpr, &quot;hc-gdpr.html&quot;, selfcontained = TRUE, knitrOptions = list())</code></pre>
 </div>
 <div id="github-pages" class="section level3">
 <h3>GitHub pages</h3>
-<p>Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your comuter. Next thing we want to do is host it online so others can interact with it. We’ll be using GitHub pages approach, so if you’re not familiar with hosting your files to github through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting your account set up.<br />
-You can either open a new repository for hosting your .html files, or if it’s a #Tidytuesday like mine sometimes are you can just push it along with your <code>R</code> code file for that week. Make sure to include the html file, hosting only the code (.R / .Rmd) won’t render it interactive, but you can also host only the html without the code.</p>
+<p>Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your local copmuter. Next thing we want to do is host it online so others can interact with it too.<br />
+We’ll be hosting it on GitHub pages, so if you’re not familiar with hosting your files to github through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting your account set up.<br />
+You can open a new repository for hosting your html files, but I think using the one where you host your source code is better. For example if it’s a #Tidytuesday graph like mine, I just push it along with my <code>R</code> source code for that week. Make sure to include the html file, hosting only the code (.R / .Rmd) won’t render it interactive; You can also host the html without the code.</p>
 <pre class="r"><code>knitr::include_graphics(&quot;hosted.jpg&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="hosted.jpg" alt="Once you Rendered your html object, push it to a Github repository" width="698" />
+<img src="hosted.jpg" alt="After writing your html object, push it to a Github repository" width="698" />
 <p class="caption">
-Figure 2: Once you Rendered your html object, push it to a Github repository
+Figure 2: After writing your html object, push it to a Github repository
 </p>
 </div>
-<p>Now that we have our file hosted, either on our #Tidytuesday repo or a designated repository for html files, we can assign our Github page.</p>
-<p>Choose a repository you want to turn into a Github page (you can do several) and enter it. Click on <code>Settings</code> on the top right and scroll down until you reach the GitHub Pages section. There you want to enable the GitHub pages by changing the deafult None to <code>master-branch</code>.</p>
+<p>Now that we have our file hosted we can assign our Github page: In the repository your html is hosted, click on <code>Settings</code> on the top right and scroll down until you reach the ‘GitHub Pages’ section. There you want to enable the GitHub pages by changing the deafult ‘None’ to <code>master-branch</code>.</p>
 <pre class="r"><code>knitr::include_graphics(&quot;github-pages.jpg&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="github-pages.jpg" alt="After pushing your file, turn your Github repository into a Github page" width="616" />
+<img src="github-pages.jpg" alt="Turn your Github repository into a Github page" width="616" />
 <p class="caption">
-Figure 3: After pushing your file, turn your Github repository into a Github page
+Figure 3: Turn your Github repository into a Github page
 </p>
 </div>
 <p>That’s it! you can find your hosted html file at <code>username.github.io/repo-name/file.html</code></p>
-<p>As I said earlier, I’m not too familiar with GitHub pages so act with caution. If you don’t want to take chances you can always create a designated repo for hosting files online. I used my TidyTuesday repo because then it helps me aggregate both the code and the html file. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a>.</p>
+<p>Of course once you have a GitHub page you can do so much more with it (personal website for e.g.), but that’s for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a>.</p>
+<p>Another option to host your html file would be on <a href="https://rpubs.com/">Rpubs</a>, but I find the GitHub page option more than adequate for my needs.</p>
 <p>Enjoy!</p>
 </div>
