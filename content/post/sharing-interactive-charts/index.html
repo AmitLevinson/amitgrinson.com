@@ -6,7 +6,7 @@ slug: sharing-interactive-charts
 categories: []
 tags: []
 subtitle: ''
-summary: "A walkthrough for sharing your interactive visualizations on GitHub pages"
+summary: "A walk through for sharing your interactive visualizations on GitHub pages"
 authors: []
 lastmod: '2020-03-06T22:55:14+02:00'
 featured: no
@@ -24,22 +24,22 @@ editor_options:
 
 <div id="background" class="section level3">
 <h3>Background</h3>
-<p>A few weeks ago I gave my first talk about <a href="https://amitlevinson.com/talk/israel-2050/">analyzing and visualizing data in R</a>. I shared with participants - political activists - many of R’s abilities, one of them creating ‘interactive visulizations’ which I very much like. I believe interactive graphs provide some edge to a static graph, of course when used properly. The first time I created an interactive graph for <a href="https://github.com/rfordatascience/tidytuesday">#TidyTuesday</a>, I was left with the question <strong>how to provide others the ability to interact with it?</strong></p>
+<p>A few weeks ago I gave my first talk about <a href="https://amitlevinson.com/talk/israel-2050/">analyzing and visualizing data in R</a>. I shared with participants - political activists - many of R’s abilities, one of them creating ‘interactive visualizations’ which I very much like. I believe interactive graphs provide some edge to a static graph, of course when used properly. The first time I created an interactive graph for <a href="https://github.com/rfordatascience/tidytuesday">#TidyTuesday</a>, I was left with the question <strong>how to provide others the ability to interact with it?</strong></p>
 </div>
 <div id="tldr" class="section level3">
 <h3>TL;DR</h3>
 <p>For those who already have a ready html file:</p>
 <ol style="list-style-type: decimal">
-<li>Go into your github repository where the html file is located.<br />
+<li>Go into your GitHub repository where the html file is located.<br />
 </li>
 <li>On the top right click <code>Settings</code> <i class="fas fa-arrow-right"></i> Scroll down to <code>Github Pages</code> section <i class="fas fa-arrow-right"></i> instead of <code>none</code> choose <code>master branch</code></li>
 </ol>
-<p>That’s it! You can now find your html widget under username.github.io/repo-name/file.html.</p>
+<p>That’s it! You can now find your html widget under username.GitHub.io/repo-name/file.html.</p>
 </div>
 <div id="why-host-it-online" class="section level3">
 <h3>Why host it online?</h3>
 <ul>
-<li><p>Sending html files with your new interactive graph can be cumbersome, especailly if it’s a work in progress with updated versions you keep sending 🙍. Enough with those <code>html_4_final</code> names!</p></li>
+<li><p>Sending html files with your new interactive graph can be cumbersome, especially if it’s a work in progress with updated versions you keep sending 😢. Enough with those <code>html_4_final</code> names!</p></li>
 <li><p>You participated on <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> and want to share your graph for others to explore themselves. In this case I recommend recording a gif or video where you interact with the graph and host it online for others to explore.</p></li>
 <li><p>Because once you set up your GitHub page up, it’s just 2 more lines of code saving it as a file and pushing it to your repository.</p></li>
 </ul>
@@ -66,8 +66,8 @@ hc_gdpro$width &lt;- &quot;700px&quot;</code></pre>
 </div>
 <div id="github-pages" class="section level3">
 <h3>GitHub pages</h3>
-<p>Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your local copmuter. Next thing we want to do is host it online so others can interact with it too.<br />
-We’ll be hosting it on GitHub pages, so if you’re not familiar with hosting your files to github through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting your account set up.<br />
+<p>Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your local computer. Next thing we want to do is host it online so others can interact with it too.<br />
+We’ll be hosting it on GitHub pages, so if you’re not familiar with hosting your files to GitHub through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting your account set up.<br />
 You can open a new repository for hosting your html files, but I think using the one where you host your source code is better. For example if it’s a #Tidytuesday graph like mine, I just push it along with my <code>R</code> source code for that week. Make sure to include the html file, hosting only the code (.R / .Rmd) won’t render it interactive; You can also host the html without the code.</p>
 <pre class="r"><code>knitr::include_graphics(&quot;hosted.jpg&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
@@ -76,10 +76,10 @@ You can open a new repository for hosting your html files, but I think using the
 Figure 2: After writing your html object, push it to a Github repository
 </p>
 </div>
-<p>Now that we have our file hosted we can assign our Github page: In the repository your html is hosted, click on <code>Settings</code> on the top right and scroll down until you reach the ‘GitHub Pages’ section. There you want to enable the GitHub pages by changing the deafult ‘None’ to <code>master-branch</code>.</p>
-<pre class="r"><code>knitr::include_graphics(&quot;github-pages.jpg&quot;)</code></pre>
+<p>Now that we have our file hosted we can assign our GitHub page: In the repository your html is hosted, click on <code>Settings</code> on the top right and scroll down until you reach the ‘GitHub Pages’ section. There you want to enable the GitHub pages by changing the default ‘None’ to <code>master-branch</code>.</p>
+<pre class="r"><code>knitr::include_graphics(&quot;GitHub-pages.jpg&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="github-pages.jpg" alt="Turn your Github repository into a Github page" width="616" />
+<img src="GitHub-pages.jpg" alt="Turn your Github repository into a Github page" width="616" />
 <p class="caption">
 Figure 3: Turn your Github repository into a Github page
 </p>

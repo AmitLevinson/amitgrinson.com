@@ -6,7 +6,7 @@ slug: sharing-interactive-charts
 categories: []
 tags: []
 subtitle: ''
-summary: "A walkthrough for sharing your interactive visualizations on GitHub pages"
+summary: "A walk through for sharing your interactive visualizations on GitHub pages"
 authors: []
 lastmod: '2020-03-06T22:55:14+02:00'
 featured: no
@@ -26,21 +26,21 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align =
 
 
 ### Background
-A few weeks ago I gave my first talk about [analyzing and visualizing data in R](https://amitlevinson.com/talk/israel-2050/). I shared with participants - political activists - many of R's abilities, one of them creating 'interactive visulizations' which I very much like. I believe interactive graphs provide some edge to a static graph, of course when used properly. The first time I created an interactive graph for [#TidyTuesday](https://github.com/rfordatascience/tidytuesday), I was left with the question **how to provide others the ability to interact with it?**
+A few weeks ago I gave my first talk about [analyzing and visualizing data in R](https://amitlevinson.com/talk/israel-2050/). I shared with participants - political activists - many of R's abilities, one of them creating 'interactive visualizations' which I very much like. I believe interactive graphs provide some edge to a static graph, of course when used properly. The first time I created an interactive graph for [#TidyTuesday](https://github.com/rfordatascience/tidytuesday), I was left with the question **how to provide others the ability to interact with it?**
 
 ### TL;DR
 
 For those who already have a ready html file:  
 
-1. Go into your github repository where the html file is located.  
+1. Go into your GitHub repository where the html file is located.  
 2. On the top right click `Settings` <i class="fas fa-arrow-right"></i> Scroll down to `Github Pages` section <i class="fas fa-arrow-right"></i> instead of `none` choose `master branch`
 
-That's it! You can now find your html widget under username.github.io/repo-name/file.html.  
+That's it! You can now find your html widget under username.GitHub.io/repo-name/file.html.  
 
 
 ### Why host it online?
 
-- Sending html files with your new interactive graph can be cumbersome, especailly if it's a work in progress with updated versions you keep sending `r emo::ji("sad")`. Enough with those `html_4_final` names!
+- Sending html files with your new interactive graph can be cumbersome, especially if it's a work in progress with updated versions you keep sending `r emo::ji("sad")`. Enough with those `html_4_final` names!
 
 - You participated on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) and want to share your graph for others to explore themselves. In this case I recommend recording a gif or video where you interact with the graph and host it online for others to explore.
 
@@ -80,8 +80,8 @@ saveWidget(hc-gdpr, "hc-gdpr.html", selfcontained = TRUE, knitrOptions = list())
 
 ### GitHub pages
 
-Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it's doing so on your local copmuter. Next thing we want to do is host it online so others can interact with it too.  
-We'll be hosting it on GitHub pages, so if you're not familiar with hosting your files to github through R I recommend following [happygitwithr](https://happygitwithr.com/) tutorial for getting your account set up.   
+Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it's doing so on your local computer. Next thing we want to do is host it online so others can interact with it too.  
+We'll be hosting it on GitHub pages, so if you're not familiar with hosting your files to GitHub through R I recommend following [happygitwithr](https://happygitwithr.com/) tutorial for getting your account set up.   
 You can open a new repository for hosting your html files, but I think using the one where you host your source code is better. For example if it's a #Tidytuesday graph like mine, I just push it along with my `R` source code for that week. Make sure to include the html file, hosting only the code (.R / .Rmd) won't render it interactive; You can also host the html without the code.  
 
 ```{r, fig.cap="After writing your html object, push it to a Github repository"}
@@ -89,10 +89,10 @@ knitr::include_graphics("hosted.jpg")
 ```
 
 
-Now that we have our file hosted we can assign our Github page: In the repository your html is hosted, click on `Settings` on the top right and scroll down until you reach the 'GitHub Pages' section. There you want to enable the GitHub pages by changing the deafult 'None' to `master-branch`.
+Now that we have our file hosted we can assign our GitHub page: In the repository your html is hosted, click on `Settings` on the top right and scroll down until you reach the 'GitHub Pages' section. There you want to enable the GitHub pages by changing the default 'None' to `master-branch`.
 
 ```{r, fig.cap="Turn your Github repository into a Github page"}
-knitr::include_graphics("github-pages.jpg")
+knitr::include_graphics("GitHub-pages.jpg")
 ```
 
 That's it! you can find your hosted html file at `username.github.io/repo-name/file.html`
