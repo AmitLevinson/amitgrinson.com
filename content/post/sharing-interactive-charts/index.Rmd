@@ -39,7 +39,7 @@ A few weeks ago I gave my first talk about [analyzing and visualizing data in R]
 
 - Sending html files with your new interactive graph can be cumbersome, especailly if it's a work and progress with updated versions you keep sending `r emo::ji("sad")`.
 
-- You participated on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) and want to share your graph for others to explore themselves. If so, Here I also reccommend recording a gif or video where you interact with it along with a link for exploring, don't only refer others to the link.
+- You participated on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) and want to share your graph for others to explore themselves. If so, Here I also recommend recording a gif or video where you interact with it along with a link for exploring, don't only refer others to the link.
 
 - Because once you set up your GitHub repository, it's just 2 more lines of code for facilitating an online interactive version.
 
