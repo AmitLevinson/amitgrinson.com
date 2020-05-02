@@ -615,7 +615,7 @@
 
 <style>
 p.caption {
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 </style>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
@@ -664,9 +664,8 @@ Figure 2: Our interactive graph is all set in R, What’s next?
 <p>First, we want to render it into an html file. Make sure to save your graph into an object, let’s say for this example our object is called ‘hc_gdpr’. Before we save it using <code>htmlwidget::saveWidget</code>, we can define how the graph will render on the webpage. If you’d like to adjust it’s width and height parameters, you can add them to the html object which is saved as a list, for e.g.:</p>
 <pre class="r"><code>hc_gdpro$width &lt;- &quot;1400px&quot;
 hc_gdpro$height &lt;- &quot;700px&quot;</code></pre>
-<p>And now we can write our file to our current working directory. The <code>knitrOptions</code> takes our height and width configuration - Play around with it until it’s satisfactory for you; depends for what I need it but I find the default settings (seems like 100% width and 100% height) adequate for my needs. If you choose to go with the deafult, you don’t need to set the height, width or the <code>KnitrOptions</code> in the following argument.</p>
+<p>And now we can write our file to our current working directory. The <code>knitrOptions</code> takes our height and width configuration - Play around with it until it’s satisfactory for you; depends for what I need it but I find the default settings - seems like 100% width and 100% height- adequate for my needs:</p>
 <pre class="r"><code>saveWidget(hc-gdpr, &quot;hc-gdpr.html&quot;, selfcontained = TRUE, knitrOptions = list())</code></pre>
-<p><br></p>
 </div>
 <div id="github-pages" class="section level3">
 <h3>GitHub pages <i class="fab fa-github"></i></h3>
@@ -686,8 +685,9 @@ Figure 3: After writing your html object, push it to a GitHub repository
 Figure 4: Turn your Github repository into a Github page
 </p>
 </div>
-<p>That’s it! you can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the exmaple I used for this blogpost can be found here: <a href="https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html">https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html</a></p>
-<p>Once you have a GitHub page you can do so much more with it (For e.g. host a personal website), but that’s for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a> by GitHub.</p>
+<p><strong>That’s it!</strong><br />
+You can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the exmaple I used for this blogpost can be found here: <a href="https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html">https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html</a></p>
+<p>Once you have a GitHub page you can do so much more with it (such as host a personal website), but that’s for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a> by GitHub.</p>
 <p>Another option to host your html file would be on <a href="https://rpubs.com/">Rpubs</a>, but I find the GitHub page option more than adequate for my needs.</p>
 <p>Enjoy!</p>
 </div>

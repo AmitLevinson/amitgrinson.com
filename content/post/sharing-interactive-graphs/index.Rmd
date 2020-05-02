@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align =
 
 <style>
 p.caption {
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 </style>
 
@@ -82,12 +82,12 @@ hc_gdpro$width <- "1400px"
 hc_gdpro$height <- "700px"
 ```
 
-And now we can write our file to our current working directory. The `knitrOptions` takes our height and width configuration - Play around with it until it's satisfactory for you; depends for what I need it but I find the default settings (seems like 100% width and 100% height) adequate for my needs. If you choose to go with the deafult, you don't need to set the height, width or the `KnitrOptions` in the following argument.
+And now we can write our file to our current working directory. The `knitrOptions` takes our height and width configuration - Play around with it until it's satisfactory for you; depends for what I need it but I find the default settings - seems like 100% width and 100% height-  adequate for my needs:
 
 ```{r eval = FALSE}
 saveWidget(hc-gdpr, "hc-gdpr.html", selfcontained = TRUE, knitrOptions = list())
 ```
-<br>
+
 
 ### GitHub pages <i class="fab fa-github"></i>
 
@@ -106,9 +106,10 @@ Now that we have our file hosted we can assign our GitHub page: In the repositor
 knitr::include_graphics("GitHub-pages.jpg")
 ```
 
-That's it! you can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the exmaple I used for this blogpost can be found here: [https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html](https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html)
+**That's it!**  
+You can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the exmaple I used for this blogpost can be found here: [https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html](https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html)
 
-Once you have a GitHub page you can do so much more with it (For e.g. host a personal website), but that's for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out [this post](https://resources.github.com/whitepapers/github-and-rstudio/) by GitHub.
+Once you have a GitHub page you can do so much more with it (such as host a personal website), but that's for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out [this post](https://resources.github.com/whitepapers/github-and-rstudio/) by GitHub.
 
 Another option to host your html file would be on [Rpubs](https://rpubs.com/), but I find the GitHub page option more than adequate for my needs.
 
