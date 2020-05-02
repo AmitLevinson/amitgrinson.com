@@ -93,7 +93,7 @@ Figure 4: Turn your Github repository into a Github page
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;That’s it!&lt;/strong&gt;&lt;br /&gt;
-You can find your hosted html file at &lt;span style=&#34;color:RoyalBlue;&#34;&gt;username.github.io/repo-name/file.html&lt;/span&gt;. For instance, the example I used for this blog post can be found here: &lt;a href=&#34;https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html&#34; class=&#34;uri&#34;&gt;https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html&lt;/a&gt;.&lt;/p&gt;
+You can find your hosted html file at &lt;span style=&#34;color:RoyalBlue;&#34;&gt;username.github.io/repo-name/file.html&lt;/span&gt;. For instance, the example I used for this blog post can be found &lt;a href=&#34;https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Once you have a GitHub page you can do so much more with it (such as host a personal website), but that’s for a different post altogether. If you want to learn more about adding a theme to GitHub Pages check out &lt;a href=&#34;https://resources.github.com/whitepapers/github-and-rstudio/&#34;&gt;this post&lt;/a&gt; by GitHub.&lt;/p&gt;
 &lt;p&gt;Another option to host your html file would be on &lt;a href=&#34;https://rpubs.com/&#34;&gt;Rpubs&lt;/a&gt;, but I find the GitHub page option more than adequate for my needs.&lt;/p&gt;
 &lt;p&gt;Enjoy!&lt;/p&gt;
