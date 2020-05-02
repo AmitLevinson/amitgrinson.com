@@ -52,7 +52,7 @@ That's it! You can now find your html widget under <span style="color:RoyalBlue;
 
 ### Why host it online?
 
-- Sending html **files** of your new interactive graph can be cumbersome, especially if it's a work in progress with updated versions you keep sending. no more `html_4_final_final` kind of files - Seriously, not cool.
+- Sending html **files** of your new interactive graph can be cumbersome, especially if it's a work in progress with updated versions you keep sending. Enough with those `html_4_final_final` kind of files - Seriously, not cool.
 
 - You participated on [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) and want to share your graph for others to explore themselves. In this case I recommend recording a gif or video where you interact with the graph and also host the file online for others to explore.
 
@@ -62,6 +62,7 @@ There are many great tutorials for hosting slides and static files online that y
 
 
 <a href="https://imgflip.com/i/3z9x4s"><img src="https://i.imgflip.com/3z9x4s.jpg" title="made at imgflip.com"/></a>
+
 
 ### Saving an html file
 

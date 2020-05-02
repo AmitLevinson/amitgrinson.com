@@ -50,7 +50,7 @@ Figure 1: No more sending html files - Host your interactive graphs online with 
 &lt;div id=&#34;why-host-it-online&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Why host it online?&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Sending html &lt;strong&gt;files&lt;/strong&gt; of your new interactive graph can be cumbersome, especially if it’s a work in progress with updated versions you keep sending. no more &lt;code&gt;html_4_final_final&lt;/code&gt; kind of files - Seriously, not cool.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sending html &lt;strong&gt;files&lt;/strong&gt; of your new interactive graph can be cumbersome, especially if it’s a work in progress with updated versions you keep sending. Enough with those &lt;code&gt;html_4_final_final&lt;/code&gt; kind of files - Seriously, not cool.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;You participated on &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#Tidytuesday&lt;/a&gt; and want to share your graph for others to explore themselves. In this case I recommend recording a gif or video where you interact with the graph and also host the file online for others to explore.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Because once you set up your GitHub page up, it’s just 2 more lines of code saving it as a file and pushing it to your repository.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
