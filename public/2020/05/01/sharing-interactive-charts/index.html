@@ -653,7 +653,7 @@ Figure 1: No more sending html files - Host your interactive graphs online with 
 <div id="saving-an-html-file" class="section level3">
 <h3>Saving an html file</h3>
 <p>Saving an interactive graph - such as a <code>{leafly}</code>, <code>{highcharter}</code>, <code>{plotly}</code> or any other interactive object - can be done with various packages. Here I’ll use the <code>{htmlwidgets}</code> package since, in my opinion, its default settings nicely fit the browser page. You can also try out other packages and see what suits you (for e.g. <code>{htmltools}</code>).</p>
-<p>Let’s take a #Tidytuesday dataset I used to create a <code>{highcharter}</code> map of median GDPR fines. I won’t be running through the code for creating the graph, but you can find it <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R">here</a> if you’re interested in it.</p>
+<p>Let’s take a #TidyTuesday dataset I used to create a <code>{highcharter}</code> map of median GDPR fines. I won’t be running through the code for creating the graph, but you can find it <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R">here</a> if you’re interested in it.</p>
 <p>We have our map ready and can interact with it <strong>within R</strong>, as we can see in the gif below:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
 <img src="interactive-in-r.gif" alt="Our interactive graph is all set in R, What's next?" width="80%" />
@@ -671,7 +671,7 @@ hc_gdpro$height &lt;- &quot;700px&quot;</code></pre>
 <h3>GitHub pages <i class="fab fa-github"></i></h3>
 <p>Great, we now have a new html file containing our graph saved in our working directory. If you open it up it should run smoothly, only notice it’s doing so on your local computer. If you send the file as is, it will work on someone else’s computer if even if they don’t have <code>R</code>. But what if we update our graph such as fix a typo? That’s where hosting it online comes in.</p>
 <p>We’ll be hosting the html file on GitHub pages, so if you’re not familiar with Git or working with GitHub through R I recommend following <a href="https://happygitwithr.com/">happygitwithr</a> tutorial for getting your account set up.<br />
-You can open a new repository for hosting your html files, but I think using the one where you host your source code is better. For example, if it’s a #Tidytuesday graph like the example here, I just push it along with my <code>R</code> source code for that week. Make sure to include the html file, hosting only the code file (.R / .Rmd) won’t render it interactive; of course you can also host the html without the code (but hey, sharing is caring when it comes to open source).</p>
+You can open a new repository for hosting your html files, but I think using the one where you host your source code is better. For example, if it’s a #TidyTuesday graph like the example here, I just push it along with my <code>R</code> source code for that week. Make sure to include the html file, hosting only the code file (.R / .Rmd) won’t render it interactive; of course you can also host the html without the code (but hey, sharing is caring when it comes to open source).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="hosted.jpg" alt="After writing your html object, push it to a GitHub repository" width="80%" />
 <p class="caption">
@@ -686,7 +686,7 @@ Figure 4: Turn your Github repository into a Github page
 </p>
 </div>
 <p><strong>That’s it!</strong><br />
-You can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the exmaple I used for this blogpost can be found here: <a href="https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html">https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html</a></p>
+You can find your hosted html file at <span style="color:RoyalBlue;">username.github.io/repo-name/file.html</span>. For instance, the example I used for this blog post can be found here: <a href="https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html">https://amitlevinson.github.io/TidyTuesday/2020/week17_gdpr/hc_gdpr.html</a></p>
 <p>Once you have a GitHub page you can do so much more with it (such as host a personal website), but that’s for a different post altogether. If you want to learn more about adding a theme to GitHub pages check out <a href="https://resources.github.com/whitepapers/github-and-rstudio/">this post</a> by GitHub.</p>
 <p>Another option to host your html file would be on <a href="https://rpubs.com/">Rpubs</a>, but I find the GitHub page option more than adequate for my needs.</p>
 <p>Enjoy!</p>
