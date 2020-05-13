@@ -29,10 +29,10 @@
   {{ $avatar := (.Resources.ByType "image").GetMatch "*avatar*" }}
   <div class="media author-card content-widget-hr">
     {{ if and site.Params.gravatar .Params.email }}
-      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/{{ md5 .Params.email }}?s=200')" alt="Avatar">
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/{{ md5 .Params.email }}?s=200')" alt="Photo of Amit Levinson">
     {{ else if $avatar }}
       {{ $avatar_image := $avatar.Fill "250x250 Center" }}
-      <img class="portrait mr-3" src="{{ $avatar_image.RelPermalink }}" alt="Avatar">
+      <img class="portrait mr-3" src="{{ $avatar_image.RelPermalink }}" alt="Photo of Amit Levinson">
     {{ end }}
 
     <div class="media-body">
