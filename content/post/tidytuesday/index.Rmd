@@ -43,6 +43,23 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+
+### **14.05.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R)
+<p align = "center">
+<img alt = 'Tidytuesday volcano eruption' src = "/img/tt/vc.png" width = "700">
+</p>
+
+
+
+### **06.05.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week19_ac/week10-ac.Rmd)
+
+<p align = "center">
+<img alt = 'Animal Crossing sentiment analysis' src = '/img/tt/animal_cross.png' width = "700">
+</p>
+
+
 ### **29.04.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week18_broadway/broadway.R)
 
@@ -63,21 +80,21 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R)
 
 <p align = "center">
-<img src = "/img/tt/rap_points.png" width = "700">
+<img alt = 'tidytuesday rap artists' src = "/img/tt/rap_points.png" width = "700">
 </p>
 
 ### **17.03.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R)
 
 <p align = "center">
-<img src = "/img/tt/tt_schrute.png" width = "700">
+<img alt = 'The Office bigram' src = "/img/tt/tt_schrute.png" width = "700">
 </p>
 
 ### **06.03.2020**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd) | [Try the app](https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/)
 
 <p align = "center">
-  <img src = "/img/tt/tt_nhl.gif" width = "700">
+  <img alt = 'tidytuesday NHL shinyapp' src = "/img/tt/tt_nhl.gif" width = "700">
 </p>
 
 
@@ -85,7 +102,7 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R)
 
 <p align = "center">
-  <img src = "/img/tt/spotify.png" width = "700">
+  <img alt = 'sentiment analysis spotify titles' src = "/img/tt/spotify.png" width = "700">
 </p>
 
 ### **22.12.2019**  
@@ -112,7 +129,7 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 ### **20.11.2019**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd)
   
-![](/img/tt/nz_bird_vote.png)
+![New zealand birds](/img/tt/nz_bird_vote.png)
 
 ### **6.11.2019**
 
