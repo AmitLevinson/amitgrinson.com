@@ -6,10 +6,554 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
-    <lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Israeli elections on Twitter</title>
+      <link>/2020/04/20/israeli-elections-on-twitter/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/04/20/israeli-elections-on-twitter/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Israel had its 3rd election within 12 months on March 2, 2020. This is because our Knesset - Hebrew term for house of representatives - wasn’t able to form or hold a government after each of the previous elections. As I won’t get into the politics of why they didn’t succeed in forming one (get it? politics 😉), I do want to take the opportunity and analyze some tweets posted in the time before and after the elections.&lt;br /&gt;
+When we think of a data aggregating tweets, many questions arise - who, what, when, where and more about our data. Namely, with the collected data I want to answer the following questions:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;What was the frequency of tweets associated with the word ‘elections’?&lt;/li&gt;
+&lt;li&gt;Who tweeted the most?&lt;/li&gt;
+&lt;li&gt;What was the most common #Hashtag tweeted?&lt;/li&gt;
+&lt;li&gt;Which tweet was most liked and which was retweeted the most?&lt;/li&gt;
+&lt;li&gt;What were the most common words and bigrams (two words) in tweets?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gathering-the-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Gathering the data &lt;i class=&#34;fab fa-twitter&#34;&gt;&lt;/i&gt;&lt;/h3&gt;
+&lt;p&gt;Twitter’s API allows scraping &lt;strong&gt;6-9 days back for free&lt;/strong&gt;. Therefore, I scraped the data already on March 7, 2020 and saved it for later use.&lt;/p&gt;
+&lt;p&gt;Let’s start with the packages we’ll use:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rtweet)
+library(tidyverse)
+library(tidytext)
+library(igraph)
+library(hrbrthemes)
+library(ggraph)
+library(extrafont)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I could use a consistent plot theme throughout the post but I’ll probably be editing each one a bit, while also some are not our regular graphs. With that said, There are some tweaks that will be consistent acorss several of the plots. Therefore, let’s create a theme function as a supplement to all other theme arguments I’ll use that will save a few lines of code:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mini_theme &amp;lt;- function(family = &amp;quot;Roboto Condensed&amp;quot;, tsize = 16) {
+  theme_classic() +
+  theme(text = element_text(family = family),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        plot.title = element_text(size = tsize))}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next we’ll gather the tweets we need:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections_raw &amp;lt;- search_tweets(&amp;quot;בחירות&amp;quot;, n = 18000, retryonratelimit = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To gather the tweets we can use the &lt;a href=&#34;https://rtweet.info/&#34;&gt;{rtweet}&lt;/a&gt; package which is amazing for collecting Twitter data. As I mentioned earlier, I already scraped the data a few days after the elections but left the command here to show what we did and how easy it is to do it. I searched only one term, ‘elections’ in Hebrew, and rtweet gathered all tweets containing that word.&lt;/p&gt;
+&lt;p&gt;What did our search yield? Let’s have a look:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(elections)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 16560    90&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;16,560 rows and 90 columns! As we can see, the &lt;code&gt;{rtweet}&lt;/code&gt; package brings back a lot of information!&lt;/p&gt;
+&lt;div id=&#34;some-caveats&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Some Caveats:&lt;/h4&gt;
+&lt;p&gt;Before we begin, I will say this post doesn’t aim to be representative of the discussions that were held during the election period. As a matter of fact, nor does it aim to be representative of the twitter discussions surrounding the elections. this is due to two main reasons:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;Twitter isn’t common in Israel at all. I’m not sure what’s the usage rate but it’s definitely not representative of the Israeli population.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I searched for only one word - elections (in Hebrew) - which yielded some 16560 tweets. This is definitely not a large enough pool of tweets to claim for representation.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With that said, the data gathered provides an opportunity to look at some Twitter data from the election period and motivate others to use the &lt;code&gt;{rtweet}&lt;/code&gt; package, so why not give it a go.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tweet-frequency&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tweet frequency&lt;/h3&gt;
+&lt;p&gt;First, let’s see how the tweets distribute across the time span we searched for. we can create a quick time plot using the &lt;code&gt;ts_plot()&lt;/code&gt; argument from the &lt;code&gt;{rtweet}&lt;/code&gt; package:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections %&amp;gt;% 
+  ts_plot(&amp;quot;2 hours&amp;quot;)+
+  geom_line(size = 1, color = &amp;quot;black&amp;quot;)+
+  mini_theme()+
+  scale_x_datetime(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%d %b&amp;quot;)+
+  labs(x= NULL, y = NULL,
+       title = &amp;quot;Tweet frequency throughout the Israeli elections week&amp;quot;,
+       subtitle = &amp;quot;Tweets aggregated by two-hour interval. Only tweets containing the word &amp;#39;elections&amp;#39;\nin Hebrew were gathered&amp;quot;)+
+  geom_text(aes(x = as.POSIXct(&amp;quot;2020-03-02 23:00:00&amp;quot;), y = 435, label = &amp;quot;10 PM:\nPolls close&amp;quot;),
+            hjust = 0, size = 3, family = &amp;quot;Roboto Condensed&amp;quot;)+
+  geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;, alpha = 5/10)+
+  theme(plot.subtitle = element_text(color = &amp;quot;gray70&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Users with most tweets&lt;/h3&gt;
+&lt;p&gt;Next, let’s look at who tweeted the most:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elections %&amp;gt;% 
+  count(screen_name, sort = T) %&amp;gt;% 
+  slice(1:15) %&amp;gt;% 
+  mutate(screen_name = reorder(screen_name,n)) %&amp;gt;% 
+  ggplot(aes(x= screen_name, y= n))+
+  geom_col(fill = &amp;quot;gray70&amp;quot;)+
+  coord_flip()+
+  scale_y_continuous(breaks = seq(0,180, 30), labels = seq(0,180,30))+
+  labs(x = &amp;quot;Screen name&amp;quot;, y = &amp;quot;Number of tweets&amp;quot;, title = &amp;quot;Top 15 users tweeting the word &amp;#39;elections&amp;#39;&amp;quot;)+
+  mini_theme()+
+  theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
+        axis.text = element_text(size = 12),
+        axis.title.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We see that many news companies tweeted a lot using the word ‘elections’: ‘newisrael13’, ‘kann_news’, ‘MaarivOnline’, ‘RotterNews’, ‘bahazit_news’, ‘RotterNet’. I personnaly don’t recognize the rest, but on the other hand I use Twitter mostly to follow &lt;code&gt;R&lt;/code&gt; and academic related tweets, not necessarily Israeli politics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-hashtags&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Common Hashtags&lt;/h3&gt;
+&lt;p&gt;When using the &lt;code&gt;{rtweet}&lt;/code&gt; package to gather twitter data, one of the variables collected is the hashtags used in tweets. Although it doesn’t require too many lines of code to extract hashtags out of text, I think this is an amazing feature that shows the effort and details &lt;a href=&#34;https://mikewk.com/&#34;&gt;Michael W. Kearney&lt;/a&gt; and contributors put into the package.&lt;/p&gt;
+&lt;p&gt;According to &lt;a href=&#34;https://en.wikipedia.org/wiki/Hashtag&#34;&gt;Wikipedia&lt;/a&gt;, a ‘Hashtag’ “is a type of metadata tag used on social networks such as Twitter and other microblogging services.”, that basically tags the message with a specific theme. This helps to see trends and themes in a macro level.&lt;/p&gt;
+&lt;p&gt;OK then, let’s see what we have:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hashtags &amp;lt;- elections %&amp;gt;% 
+  select(hashtags) %&amp;gt;% 
+  unlist() %&amp;gt;% 
+  as.tibble() %&amp;gt;% 
+  mutate(value = tolower(value)) %&amp;gt;% 
+  count(value, name = &amp;quot;Count&amp;quot;, sort = T) %&amp;gt;%
+  mutate(value = reorder(value, Count),
+         iscorona = ifelse(value == &amp;quot;קורונה&amp;quot; | value == &amp;quot;coronavirus&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;n&amp;quot;)) %&amp;gt;% 
+  filter(!is.na(value)) %&amp;gt;% 
+  slice(1:20)
+
+ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
+  geom_col(show.legend = FALSE)+
+  scale_fill_manual(values = c(y = &amp;quot;#1DA1F2&amp;quot;, n = &amp;quot;gray70&amp;quot;))+
+  labs(y = NULL, x = &amp;quot;Number of Tweets&amp;quot;, title = &amp;quot;Top 20 Hashtags addressing the Israeli elections&amp;quot;)+
+  mini_theme()+
+  theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
+        axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being ‘elections’ and ‘elections2020’. We also see a peculiar hashtag ‘right_following_right_people’, and others such as ‘Netanyahu’ (the Prime minister at the time), ‘Israel’ and others.&lt;br /&gt;
+I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;Corona&lt;/strong&gt;&lt;/font&gt; (in hebrew) and &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;coronavirus&lt;/strong&gt;&lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18, 2020, and only now we’re starting to get back to routine. Slowly)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;most-liked-and-retweeted&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Most liked and retweeted&lt;/h3&gt;
+&lt;p&gt;Let’s have a look at which tweet was &lt;strong&gt;most liked&lt;/strong&gt;. Twitter doesn’t define it as ‘likes’ but as ‘favorite’, or at least in the data that is collected through the &lt;code&gt;{rtweet}&lt;/code&gt; package. Since I will want to gather the most of something - both favorite and later retweeted - I’ll create a function that will minimize re-writing the code.&lt;br /&gt;
+&lt;br&gt;
+The function takes in a variable, reorders our dataset according to the variable we declared, extracts the first row and then pulls (extracts) the status id of that tweet. Lastly, the &lt;code&gt;blogdown::shortcode&lt;/code&gt; enables to embed tweets, youtube videos and more into a blogdown post such as this, so we end the function by inserting our status id into that. For those just getting into functions notice that within the &lt;code&gt;arrange&lt;/code&gt; argument we insert our variable in two curly brackets {{}}. This is a powerful feature of &lt;code&gt;{rlang}&lt;/code&gt; when you want to manipulate a variable in a dataframe within a function. You can read more about that &lt;a href=&#34;https://www.tidyverse.org/blog/2019/06/rlang-0-4-0/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_most &amp;lt;- function(var){
+elections %&amp;gt;% 
+  arrange(desc({{var}})) %&amp;gt;% 
+  .[1,] %&amp;gt;% 
+  pull(status_id) %&amp;gt;% 
+  blogdown::shortcode(&amp;#39;tweet&amp;#39;,.)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now Let’s see which tweet was &lt;strong&gt;most liked&lt;/strong&gt; during that week:&lt;/p&gt;
+&lt;center&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;iw&#34; dir=&#34;rtl&#34;&gt;יותר מהכל, אני שמח שלא יהיו עוד בחירות בשביל המשפחה שלי שסבלה בגבורה שנה ורבע. רעות עברי וענר 😍&lt;/p&gt;&amp;mdash; עמית סגל Amit Segal (@amit_segal) &lt;a href=&#34;https://twitter.com/amit_segal/status/1234584864415997952?ref_src=twsrc%5Etfw&#34;&gt;March 2, 2020&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;/center&gt;
+&lt;p&gt;The tweet is by ‘Amit Segal’ - an Israeli news reporter - and it says (my translation):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“More than anything, I’m glad there won’t be another elections for my family that suffered in honors a year and a quarter. Reut, Ivri and Aner 😍”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ha, interestingly he wrote it before the end of the elections, hopefully he’s right!&lt;/p&gt;
+&lt;p&gt;Now let’s look at the &lt;strong&gt;most re-tweeted&lt;/strong&gt; tweet:&lt;/p&gt;
+&lt;center&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;iw&#34; dir=&#34;rtl&#34;&gt;אם ההקלטה של יועצו של גנץ מבושלת ושקרית (כדברי גנץ עכשיו), אז למה גנץ פיטר אותו?&lt;br&gt;&lt;br&gt;יועצו של גנץ פוטר בגלל שאמר את האמת שכולם יודעים: גנץ לא יכול להיות ראש ממשלה. אנחנו כן. עוד 2 מנדטים לליכוד ואנחנו מוציאים את המדינה מהפלונטר, מונעים עוד בחירות ומקימים ממשלה&lt;/p&gt;&amp;mdash; Benjamin Netanyahu (@netanyahu) &lt;a href=&#34;https://twitter.com/netanyahu/status/1233342393740603394?ref_src=twsrc%5Etfw&#34;&gt;February 28, 2020&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;/center&gt;
+&lt;p&gt;The tweet is by Benjamin Netanyahu, at the time the prime minister of Israel, who writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“If the recording of Gantz’s advisor is orcherstrated and fabricated (according to Gantz’s words just now), why did Gantz fire him? Gantz’s advisor was fired because he said the truth everyone knows: Gantz can’t be a prime minister. We can. 2 more mandates to the Likkud and we are taking the country out of the plonter, preventing another election and form a government”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This came after the exposure of a secret recording of Gantz in a closed meeting, A few days before election day.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wordcloud-and-bigrams&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Wordcloud and bigrams&lt;/h2&gt;
+&lt;p&gt;Let’s have a look at two more text-related analyses:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;A word-cloud&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;Bigrams (two-words) from our text&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We could try out more algorthims but I’ll save them for a different post (feel free to try on your own).&lt;/p&gt;
+&lt;div id=&#34;wordcloud&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Wordcloud&lt;/h3&gt;
+&lt;p&gt;In order to tackle the wordcloud, I’ll break up all the tweets into &lt;strong&gt;single words&lt;/strong&gt;, filter any Hebrew stop words (file found online) and all English words. The decision to filter English words is mainly because I’m interested in the Hebrew sentences, but also because most the common English words used in our data are those of Twitter user names cited when replying to a tweet:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;he_stopwords &amp;lt;- read_tsv(&amp;quot;https://raw.githubusercontent.com/gidim/HebrewStopWords/master/heb_stopwords.txt&amp;quot;, col_names = &amp;quot;word&amp;quot;)
+
+election_token &amp;lt;- elections %&amp;gt;% 
+  unnest_tokens(word, text) %&amp;gt;% 
+  select(word) %&amp;gt;%
+  anti_join(he_stopwords) %&amp;gt;% 
+  count(word, sort = T) %&amp;gt;%
+  filter(!grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, word), n&amp;gt;= 150)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can create a wordcloud of words appearing more than 150 times using &lt;code&gt;{wordcloud2}&lt;/code&gt; package&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud2::wordcloud2(election_token, color = &amp;quot;#1DA1F2&amp;quot;, shape = &amp;quot;circle&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;wc.png&#34; alt=&#34;Wordcloud excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;550&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Wordcloud excludes Hebrew stop words and the word ‘elections’
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;What we can see is many of the words we’d expect: Political candidates, government, fourth (in the context of fourth elections), partis’ names and more. I’ll provide a more thorough discussion following our bigram plot below, as I believe it addresses many of the same words.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-bigrams&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Common Bigrams&lt;/h3&gt;
+&lt;p&gt;Like we did before, we can break up our text data into &lt;strong&gt;two word&lt;/strong&gt; observations, also known as bigrams. In order to account for all combinations, we break up the sentence to fit all possible options. For example, assume we have the following sentence:&lt;/p&gt;
+&lt;p&gt;“Danny went to vote yesterday”&lt;/p&gt;
+&lt;p&gt;Using the &lt;code&gt;unnest_tokens&lt;/code&gt; we’ll break the sentence into the following bigrams:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Danny went&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;went to&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;to vote&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;vote yesterday&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Which gives us all possible options. We will also include two columns consisting of the bigram broken up into single words. This will help in filtering out bigrams containing Hebrew stop words or English words. I’ll not run through the following code but instead will point you to &lt;a href=&#34;http://varianceexplained.org/&#34;&gt;David Ronbinson&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://juliasilge.com/&#34;&gt;Julia Silge&lt;/a&gt; &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;‘Text Mining with R’ Book&lt;/a&gt; for further reading.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;elec_bigram &amp;lt;- elections %&amp;gt;%
+  select(text) %&amp;gt;% 
+  unnest_tokens(bigram, text, token = &amp;quot;ngrams&amp;quot;, n = 2) %&amp;gt;%
+  separate(bigram, into = c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;, remove = FALSE) %&amp;gt;% 
+  filter(!word1 %in% he_stopwords$word,
+         !word2 %in% he_stopwords$word,
+         !grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, bigram)) %&amp;gt;% 
+  count(word1, word2, sort = T) %&amp;gt;% 
+  slice(1:45) %&amp;gt;%
+  graph_from_data_frame()
+
+p_arrow &amp;lt;- arrow(type = &amp;quot;closed&amp;quot;, length = unit(.1, &amp;quot;inches&amp;quot;))
+
+ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
+  geom_edge_link(aes(edge_alpha = n), arrow = p_arrow, end_cap = circle(.04, &amp;quot;inches&amp;quot;), show.legend = FALSE)+
+  geom_node_point(color = &amp;quot;lightblue&amp;quot;, size = 3)+
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, family = &amp;quot;Calibri&amp;quot;)+
+  theme_void()+
+  labs(title = &amp;quot;Twitter text bigram&amp;quot;)+
+  theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
+        plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Word bigram excludes Hebrew stop words and the word ‘elections’
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How should we read this graph?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First off, We only plotted the 45 most common bigrams (out of 100,000+). Every word is connected to another word with an arrow pointing to a given direction. The direction to which the arrow points is the way to read that bigram. In addition, bolder lines represent a higher frequency of that bigram throughout all our text.&lt;br /&gt;
+For example, on the bottom of our graph we see the number ‘2’ connected to the words ‘mandates’ and ‘campagin’. The direction of the arrow signals that we should read the bigram as ‘2 mandates’ and ‘2 campagins’.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What does this all mean?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We have discussions regarding the &lt;strong&gt;number of chairs a govenrment will have (62/61/60/58)&lt;/strong&gt; connected to mentions of the number of election campaigns (2/3) we had, discussions of a united and/or minimal government and the forming of one in general.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We see &lt;strong&gt;mentions of individuals&lt;/strong&gt; such as “Benjamin Netanyahu”, “Amit Segal” (Both we discussed earlier), “Natan Eshel”, &lt;strong&gt;but no mention of the main candidate running against Netanyahu - “Benny Gantz”&lt;/strong&gt;. That’s actually kind of odd, but more on that in a minute.&lt;br /&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We also see mentions of political parties such as “Meretz”, “Gesher” and “Labor” who ran together this time around, “Otzma Yehudit”, “United Torah Judaism”, and the “Joint List”. &lt;strong&gt;There’s no mention of the two leading parties - “Kahol Lavan” &amp;amp; “The Likkud”.&lt;/strong&gt;, despite the mentioning of the latter’s leader.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mentions of Netanyahu’s indicment and the personal law associated him.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mentions I’d categorize as ‘other’ such as “Terrorist supporters”, “Will of the people”, “Fake news”, &#34;Go vote’, etc.
+&lt;br&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Actaully, this turned out more interesting than I thought. Several questions arose while looking at it: Several words are missing such as the main parties names (Likkud &amp;amp; Kahol-Lavan), The leading oponent running against Benjamin Netanyahu - Benny Gantz - and other questions such as with whom are specific terms associated. Before we close up I’ll look at one question that troubles me - &lt;strong&gt;Why doesn’t Gantz appear in our list&lt;/strong&gt; 😲?&lt;/p&gt;
+&lt;div id=&#34;benny-gantzs-disappearance&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Benny Gantz’s disappearance&lt;/h4&gt;
+&lt;p&gt;In order to see why Benny Gantz doesn’t appear in our bigram plot I’ll do the following: I’ll break the text into bigrams and filter to &lt;strong&gt;have only the bigrams containing the word Gantz&lt;/strong&gt;. Once we have that we can see why he doesn’t appear in our bigram plot despite appearing in our wordcloud.&lt;br /&gt;
+Before I run the analysis and give you the answer think for a moment - What was the process of coming up with the bigram? If I chose only the 50 most frequent bigrams, why would a word that appears many times in our text not appear in our bigram list? Alternatively, did we filter anything along the way? Maybe even give the previous chunk another glance before I answer it.&lt;br /&gt;
+&lt;br&gt;
+Let’s have a look:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gantz &amp;lt;-elections %&amp;gt;%
+  select(text) %&amp;gt;% 
+  unnest_tokens(bigram, text, token = &amp;quot;ngrams&amp;quot;, n = 2) %&amp;gt;%
+  separate(bigram, into = c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;, remove = FALSE) %&amp;gt;% 
+  filter(word1 %in% &amp;quot;גנץ&amp;quot; |
+         word2 %in% &amp;quot;גנץ&amp;quot;,
+         !grepl(&amp;quot;([a-z]+|בחירות)&amp;quot;, bigram))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The code is similar to what we did earlier only this time we left &lt;strong&gt;bigrams that match the word we want&lt;/strong&gt; - bigrams containing the word Gantz. Now that we have our list of bigrams, let’s look at the count of bigrams containing the word גנץ (‘Gantz’):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gantz %&amp;gt;% 
+  count(bigram, sort = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 978 x 2
+##    bigram         n
+##    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;
+##  1 של גנץ       160
+##  2 בני גנץ      138
+##  3 גנץ לא        90
+##  4 על גנץ        70
+##  5 את גנץ        69
+##  6 עם גנץ        61
+##  7 אם גנץ        41
+##  8 גנץ היה       25
+##  9 גנץ או        19
+## 10 גנץ ליברמן    19
+## # ... with 968 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;AHA!&lt;/strong&gt; Now I see what happened. The first bigram is a stop word and the word Gantz (‘Of Gantz’). The second bigram should have been included as it is Gantz’s full name - Benny Gantz, which appears 138 times.&lt;br /&gt;
+So, why has it been filtered? This is a great question which we can answer if we look at our stop words we initially used. Let’s see if it has the word בני (‘benny’ in Hebrew):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;he_stopwords %&amp;gt;% 
+  filter(word == &amp;quot;בני&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 1
+##   word 
+##   &amp;lt;chr&amp;gt;
+## 1 בני&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yes it does. At the time of writing this blog post it leaves me in a dilemma - Should I change the stop words file I used to a different one or maybe create my own? Or should I continue as is? I think leaving it will teach me (and hopefully whoever read this far) a valuable lesson of always checking your stop words. In a different context the specific bigram wouldn’t have got me thinking, but here it didn’t make sense that our leading candidate was filtered, thus my inquire into what happened. In hebrew the word Benny also means ‘my son’, which I wouldn’t describe as a stop word but whoever made the dataset I guess did.&lt;/p&gt;
+&lt;p&gt;If you wish to give it a try yourself, you can find the data in the form of an &lt;code&gt;.rds&lt;/code&gt; or smaller &lt;code&gt;.csv&lt;/code&gt; (excludes list columns) in my &lt;a href=&#34;https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/elections-twitter&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Well then, that’s all for now folks! &lt;strong&gt;And remember, make sure to validate your stop words dataset!&lt;/strong&gt;
+&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;The function &lt;code&gt;wordcloud2&lt;/code&gt; we wrote wasn’t actually run because it renders an html object which distorts the post. Instead I used the webshot of our rendered html file, read more about that &lt;a href=&#34;https://www.r-graph-gallery.com/196-the-wordcloud2-library.html&#34;&gt;here&lt;/a&gt;.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>rtweet</category>
+      
+            <category>tidytext</category>
+      
+      
+            <category>R</category>
+      
+    </item>
+    
+    <item>
+      <title>Making updating exam grades easy with R</title>
+      <link>/2020/02/15/update-exam-grades-easy-with-r/</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/02/15/update-exam-grades-easy-with-r/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; Instead of each time searching for an id in the xlsx template the university provides we make our own xlsx and merge between the two. I then run through two options of either saving the new data frame as an &lt;code&gt;.xlsx&lt;/code&gt; using the &lt;code&gt;{xlsx}&lt;/code&gt; package, and I show another option where I extract the new column I need using &lt;code&gt;write_clip&lt;/code&gt; from the &lt;code&gt;{clipr}&lt;/code&gt; package.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Progress isn’t made by early risers. It’s made by lazy men trying to find easier ways to do something.” &lt;/br&gt; ― Robert Heinlein&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div id=&#34;whats-the-story&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;What’s the story?&lt;/h3&gt;
+&lt;p&gt;The other day I had to update students’ exams into a blank excel file. Every course exam each student gets an exam id. Their id is comprised from a number / number, for example, 26/1; 1/1; 42/15 and so forth. In our course of up to 70 students the left number goes all the way to the number of students in the exam class, and the right number goes up to 15 or 20 and starts again from 1.&lt;br /&gt;
+This would make it easy to insert the grade for each id into the excel file that is already organized. However, since this is a new system and I was waiting to get access to download the excel I decided to open a new spreadsheet instead. Also, writing the id instead of looking it up in the excel file each time can save, in my opinion, a little time of searching.&lt;br /&gt;
+So we have our spreadsheet which is not sorted, and we have the university’s spreadsheet which is sorted - how are we going to sync between them, considering our id column we wrote is recognized as a &lt;code&gt;character&lt;/code&gt; class? I know, let’s turn to &lt;code&gt;R&lt;/code&gt;&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;looking-at-our-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Looking at our data&lt;/h3&gt;
+&lt;p&gt;Let’s start off with loading our packages:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+# For reading xlsx files
+library(readxl)
+# To nicely display the tables in the following paragraph
+library(kableExtra)
+library(knitr)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let’s read both files: Our spreadsheet with just the id and grade of each student we wrote in, and the other spreadsheet with the students’ id and a numerical vector to sort by that the university provides.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;messy &amp;lt;- read_excel(&amp;quot;messy_grades.xlsx&amp;quot;)
+clean &amp;lt;- read_excel(&amp;quot;clean.xlsx&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This gives us the following tables where on the left we have our &lt;strong&gt;messy&lt;/strong&gt; table we wrote and on the right our &lt;strong&gt;clean&lt;/strong&gt; table we want to merge to:&lt;/p&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; float: left; margin-right: 10px;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+id
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+grade
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+67/13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+56/2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+90
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+68/14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+63/9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+100
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+55/1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+89
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+62/8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-right: 0; margin-left: auto&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+id
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+participated
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+number_for_sorting
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1/1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+V
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+2/2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+V
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+3/3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+V
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+4/4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+5/5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6/6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+V
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;
+So we now have several options:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Join between the two tables, save the clean table as a new xlsx and upload it to the University’s exam system.&lt;/li&gt;
+&lt;li&gt;Join between the two tables, clip the column with the organized grades and paste it into the university’s sorted excel file.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;option-1---merge-and-write-to-a-new-excel-file&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Option 1 - Merge and write to a new excel file&lt;/h3&gt;
+&lt;p&gt;So the first option will be to merge the two tables into the clean one and save that as a new excel file using the &lt;code&gt;{xlsx}&lt;/code&gt; package:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;joined_tables &amp;lt;- messy %&amp;gt;% 
+    right_join(clean)
+
+xlsx::write.xlsx(joined_tables, &amp;quot;010210078-29012020C.xlsx&amp;quot;, showNA = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below is a screen shot of our new table:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/ta_efficient/xl.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;option-2---clip-the-sorted-column-into-the-excel-file&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Option 2 - Clip the sorted column into the excel file&lt;/h3&gt;
+&lt;p&gt;This time around I’ll write a function for what we’ll be doing: I want to join the tables but this time around I want to clip the column I need and then manually paste it in the original template excel file:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clip_grades &amp;lt;- function(messy, clean){
+  messy %&amp;gt;% 
+    right_join(clean) %&amp;gt;% 
+    pull(grade) %&amp;gt;% 
+    clipr::write_clip()
+}
+
+clip_grades(messy, clean)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which gives us the following:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/ta_efficient/clipgif.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;That’s it!&lt;/p&gt;
+&lt;p&gt;Well, more or less. We need to delete the ‘NA’ that are copied from the function. Unfortunately I wasn’t able to delete them from within &lt;code&gt;R&lt;/code&gt;, so I manually delete them.&lt;/p&gt;
+&lt;p&gt;As to which option is better, I think the first option is more efficient as we only need to delete the id column. However, using the &lt;code&gt;{xlsx}&lt;/code&gt; package is dependent on &lt;code&gt;{rJava}&lt;/code&gt;and having java installed on the computer from what I encountered. Option two can be a little messy and possibly yield mistakes if we copy and paste the new grades and then manually delete the &lt;code&gt;NA&lt;/code&gt; - your call.&lt;/p&gt;
+&lt;div id=&#34;so-what-did-i-learn-here&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;So what did I learn here?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;How to read and write an excel file.&lt;/li&gt;
+&lt;li&gt;Using the &lt;code&gt;write_clip&lt;/code&gt; function which is amazingly easy.&lt;/li&gt;
+&lt;li&gt;How to make updating exams easier 💪&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;For confidentiality and other reasons I only left columns with information that can’t be linked to students (I also changed the grades altogether for this demonstration).&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>xlsx</category>
+      
+            <category>clipr</category>
+      
+      
+            <category>R</category>
+      
+    </item>
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
@@ -351,182 +895,7 @@ p&lt;/code&gt;&lt;/pre&gt;
       
             <category>ggmap</category>
       
-      
-            <category>R</category>
-      
-    </item>
-    
-    <item>
-      <title>The Tidytuesday project</title>
-      <link>/1/01/01/the-tidytuesday-project/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/the-tidytuesday-project/</guid>
-      <description>
-
-
-&lt;script&gt;
-  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + &#39;px&#39;;
-  }
-&lt;/script&gt;
-&lt;div id=&#34;what-is-tidytuesday&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;What is TidyTuesday?&lt;/strong&gt;&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;“A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the R for Data Science textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with ggplot2, tidyr, dplyr, and other tools in the tidyverse ecosystem. However, any code-based methodology is welcome - just please remember to share the code used to generate the results.”&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;You can read more about it &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Basically, every week the R4DS community publishes a &lt;strong&gt;new data set&lt;/strong&gt; where the R community (or any code-based methdogology) is welcome to &lt;strong&gt;analyze&lt;/strong&gt; and &lt;strong&gt;visualize&lt;/strong&gt; the data.
-When I started learning R I saw it as a great opportunity to practice plotting and analzying various datasets; it’s what get me motivated and fascinated with R. Every week you’re challenged with a new data set and get to see how others have analyzed it.&lt;/p&gt;
-&lt;p&gt;Whenever I have some free time I like to join in and give it a go. If you’re looking to get some practice or enjoy analyzing the same data set as others - Join the party, there’s much to learn!&lt;br /&gt;
-&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plots&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Plots&lt;/h2&gt;
-&lt;p&gt;Below are graphs I made, organized in a descending order by date. Some I’m more proud of than others, but I choose to display all of them in case someone finds anything useful 😄
-&lt;/br&gt;&lt;/p&gt;
-&lt;div id=&#34;section&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;14.05.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;Tidytuesday volcano eruption&#39; src = &#34;/img/tt/vc.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-1&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;06.05.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week19_ac/week10-ac.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;Animal Crossing sentiment analysis&#39; src = &#39;/img/tt/animal_cross.png&#39; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-2&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;29.04.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week18_broadway/broadway.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/broadway.gif&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-3&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.04.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week17_gdpr/gdpr.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;iframe width=&#34;95%&#34; height=&#34;475px&#34; name=&#34;iframe&#34; src=&#34;/img/tt/hc_gdpr.html&#34;&gt;
-&lt;/iframe&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-4&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;16.04.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;tidytuesday rap artists&#39; src = &#34;/img/tt/rap_points.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-5&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;17.03.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week12_theoffice/the_office.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;The Office bigram&#39; src = &#34;/img/tt/tt_schrute.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-6&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;06.03.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd&#34;&gt;Link to code&lt;/a&gt; | &lt;a href=&#34;https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/&#34;&gt;Try the app&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;tidytuesday NHL shinyapp&#39; src = &#34;/img/tt/tt_nhl.gif&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-7&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;20.01.2020&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img alt = &#39;sentiment analysis spotify titles&#39; src = &#34;/img/tt/spotify.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-8&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/total_breed.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-9&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;11.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/measles.gif&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-10&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;5.12.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src = &#34;/img/tt/parking_tickets_hours.png&#34; width = &#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-11&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;20.11.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/tt/nz_bird_vote.png&#34; alt=&#34;New zealand birds&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;New zealand birds&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-12&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;6.11.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week45_bike_walk/bike_walk.Rmd&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/bikers_and_walkers.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-13&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;31.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week44_NYC_Squerrils/Squirrels.Rmd&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Central_park_squirrel.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-14&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week43_Horror_Films/Horror_dis.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/horror_movie_length.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-15&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;9.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Max_lift.jpeg&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-16&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;6.10.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R&#34;&gt;Link to code&lt;/a&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Barstool_rating.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-17&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;28.9.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/Ethnic_div_revised.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;section-18&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;&lt;strong&gt;22.9.2019&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/AmitLevinson/TidyTuesday/blob/master/1_Week38_Number%20of%20Visitors/National%20Parks.R&#34;&gt;Link to code&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;
-&lt;img src=&#34;/img/tt/National_Parks.png&#34; width=&#34;700&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;#top&#34;&gt; Back to top&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
+            <category>rvest</category>
       
       
             <category>R</category>

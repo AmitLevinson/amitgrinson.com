@@ -4,7 +4,7 @@ author: Amit Levinson
 date: '2020-01-14'
 slug: bomb-shelters
 categories: [R]
-tags: [ggmap]
+tags: [ggmap, rvest]
 subtitle: ''
 summary: 'While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.'
 authors: []

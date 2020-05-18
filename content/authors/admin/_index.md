@@ -36,9 +36,9 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/in/amit-levinson-b23851150
-# - icon: linkedin
-#   icon_pack = "ai"
-#   link = "https://www.linkedin.com/in/amit-levinson-b23851150"
+- icon: "cv"
+  icon_pack: "ai"
+  link: https://amitlevinson.com/cv/
 superuser: true
 user_groups:
 - Researchers
@@ -47,4 +47,4 @@ user_groups:
 
 Hi, I'm Amit Levinson, I'm an MA student for [sociology & anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Be'er Sheva, southern Israel. My interests include my thesis topic, drug markets and technology, other fields such as political participation, statistics and *`R`*. I'm currently working as a research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the [Department of politics and government](https://in.bgu.ac.il/en/humsos/politics/Pages/default.aspx) researching online and offline political participation. You can also find my full CV [here](https://amitlevinson.com/cv/).
 
-I opened this website so that I can have a reason to blog and challenge myself with new R analysis and visulizations; and to share what and how I analyze for others to use. Enjoy!
+I opened this website so that I can share what I learn throughout my journey in R. Make sure to check out posts shared on [R-bloggers](https://www.r-bloggers.com/). Enjoy!

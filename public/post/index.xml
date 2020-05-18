@@ -39,6 +39,10 @@
       <guid>/2020/04/20/israeli-elections-on-twitter/</guid>
       <description>Analyzing tweets from the the Israeli elections week</description>
       
+            <category>rtweet</category>
+      
+            <category>tidytext</category>
+      
     </item>
     
     <item>
@@ -48,6 +52,10 @@
       
       <guid>/2020/02/15/update-exam-grades-easy-with-r/</guid>
       <description>In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams</description>
+      
+            <category>xlsx</category>
+      
+            <category>clipr</category>
       
     </item>
     
@@ -74,6 +82,8 @@
       <description>While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.</description>
       
             <category>ggmap</category>
+      
+            <category>rvest</category>
       
     </item>
     

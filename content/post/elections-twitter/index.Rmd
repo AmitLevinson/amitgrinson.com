@@ -3,8 +3,8 @@ title: Israeli elections on Twitter
 author: Amit Levinson
 date: '2020-04-20'
 slug: israeli-elections-on-twitter
-categories: []
-tags: []
+categories: [R]
+tags: [rtweet, tidytext]
 subtitle: ''
 summary: 'Analyzing tweets from the the Israeli elections week'
 authors: []

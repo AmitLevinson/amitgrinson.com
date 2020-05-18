@@ -3,8 +3,8 @@ title: Making updating exam grades easy with R
 author: Amit Levinson
 date: '2020-02-15'
 slug: update-exam-grades-easy-with-r
-categories: []
-tags: []
+categories: [R]
+tags: [xlsx, clipr]
 subtitle: ''
 summary: 'In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams'
 authors: []
