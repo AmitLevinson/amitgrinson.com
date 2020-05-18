@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R | Amit Levinson</title>
+    <title>R on Amit Levinson</title>
     <link>/categories/r/</link>
-      <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
-    <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
-    <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
-      <title>R</title>
-      <link>/categories/r/</link>
-    </image>
+    <description>Recent content in R on Amit Levinson</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Amit Levinson {year}</copyright>
+    <lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
       <link>/2020/02/07/eliud-kichoge/</link>
       <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
       <guid>/2020/02/07/eliud-kichoge/</guid>
       <description>
 
@@ -212,12 +212,21 @@ year.sub[11] &amp;lt;- 2019&lt;/code&gt;&lt;/pre&gt;
 &lt;/center&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>ggimage</category>
+      
+            <category>rvest</category>
+      
+      
+            <category>R</category>
+      
     </item>
     
     <item>
       <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
       <link>/2020/01/14/bomb-shelters/</link>
       <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
+      
       <guid>/2020/01/14/bomb-shelters/</guid>
       <description>
 &lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
@@ -339,12 +348,19 @@ p&lt;/code&gt;&lt;/pre&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>ggmap</category>
+      
+      
+            <category>R</category>
+      
     </item>
     
     <item>
       <title>The Tidytuesday project</title>
       <link>/1/01/01/the-tidytuesday-project/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
       <guid>/1/01/01/the-tidytuesday-project/</guid>
       <description>
 
@@ -511,6 +527,10 @@ When I started learning R I saw it as a great opportunity to practice plotting a
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
+      
+      
+            <category>R</category>
+      
     </item>
     
   </channel>
