@@ -7,7 +7,7 @@
 # Title of your site
 title = "Amit Levinson"
 
-description = "Amit Levinson's R blog visulization"
+description = "Amit Levinson's blog about R analysis and visualization"
 # The URL of your site.
 # End your URL with a `/` trailing slash, e.g. `https://example.com/`.
 baseurl = "https://amitlevinson.com/"
