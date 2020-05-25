@@ -44,4 +44,4 @@ user_groups:
 
 Hi, I'm Amit Levinson, I'm an MA student for [Sociology & Anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Be'er Sheva, southern Israel. My interests include my thesis topic, privacy and trust in the online cannabis market, other fields such as political participation, statistics and *`R`*. I'm currently working as a research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the [Department of Politics and Government](https://in.bgu.ac.il/en/humsos/politics/Pages/default.aspx) researching online and offline political participation.
 
-I opened this website so that I can share what I learn throughout my journey in R. Make sure to visit [R-bloggers](https://www.r-bloggers.com/) to explore many more tutorials. Enjoy!
+I opened this website so that I can share what I learn throughout my journey in R. Make sure to visit [R-bloggers](https://www.r-bloggers.com/) to explore many more  tutorials. Enjoy!
