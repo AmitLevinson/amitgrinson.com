@@ -44,6 +44,9 @@
 
   
   
+  
+  <script src="/js/mathjax-config.js"></script>
+  
 
   
   
@@ -172,9 +175,9 @@
 
       
       
-        
-      
 
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
       
     
       
@@ -333,8 +336,8 @@
 
 
   
-
-
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="/css/codefolding.css" />
 
 
 
@@ -411,35 +414,6 @@
 
       
       <ul class="navbar-nav d-md-inline-flex">
-        
-
-        
-
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#about"><span>About</span></a>
-        </li>
-
-        
         
 
         
@@ -549,6 +523,21 @@
   
 
   
+    
+
+<div id="code-folding-buttons" class="dropdown btn-group pull-right">
+  <a class="btn btn-light btn-sm dropdown-toggle" href="#" role="button" id="allCodeToggleButton"
+     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Code
+  </a>
+  <div class="dropdown-menu" aria-labelledby="allCodeToggleButton">
+    <a id="rmd-show-all-code" class="dropdown-item small" href="#">Show all</a>
+    <a id="rmd-hide-all-code" class="dropdown-item small" href="#">Hide all</a>
+  </div>
+</div>
+
+
+
     
 
 
@@ -972,7 +961,7 @@ clip_grades(messy, clean)</code></pre>
     <div class="media-body">
       <h5 class="card-title"><a href="/">Amit Levinson</a></h5>
       <h6 class="card-subtitle">Sociology MA student</h6>
-      <p class="card-text">I&rsquo;m a R beginner and enthusiast interested in R analysis, drug markets and political participation.</p>
+      <p class="card-text">I&rsquo;m an avid R user and interested in R analysis, drug markets and political participation.</p>
       <ul class="network-icon" aria-hidden="true">
   
     
@@ -1159,11 +1148,24 @@ clip_grades(messy, clean)</code></pre>
     
   </p>
   
+  
+  
+   
+  <script>
+  $(document).ready(function () {
+    window.initializeCodeFolding("show" === "show");
+  });
+  </script>
+  <script src="/js/codefolding.js"></script>
+
+
 
   <p class="powered-by">
     © Amit Levinson 2020 &middot; 
 
-    Made in <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i></a> with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a><a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener"> Academic theme</a> &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-Bloggers</a>
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
 
     
     <span class="float-right" aria-hidden="true">

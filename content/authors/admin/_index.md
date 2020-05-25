@@ -1,15 +1,12 @@
 ---
 authors:
 - admin
-bio: I'm a R beginner and enthusiast interested in R analysis, drug markets and political participation.
+bio: I'm an avid R user and interested in R analysis, drug markets and political participation.
 education:
   courses:
-#  - course: PhD in Artificial Intelligence
-#    institution: Stanford University
-#    year: 2012
   - course: MA in Sociology & Anthropology
     institution: Ben-Gurion University
-    year: 2020 (expected)
+    year: 2018-Present
   - course: BA in Sociology, Anthropology & Political Science
     institution: Ben-Gurion University
     year: 2018
@@ -45,6 +42,6 @@ user_groups:
 - Visitors
 ---
 
-Hi, I'm Amit Levinson, I'm an MA student for [Sociology & Anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Be'er Sheva, southern Israel. My interests include my thesis topic, drug markets and technology, other fields such as political participation, statistics and *`R`*. I'm currently working as a research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the [Department of Politics and Government](https://in.bgu.ac.il/en/humsos/politics/Pages/default.aspx) researching online and offline political participation.
+Hi, I'm Amit Levinson, I'm an MA student for [Sociology & Anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Be'er Sheva, southern Israel. My interests include my thesis topic, privacy and trust in the online cannabis market, other fields such as political participation, statistics and *`R`*. I'm currently working as a research assistant for [Dr. Jennifer Oser](https://www.jenniferoser.com/) from the [Department of Politics and Government](https://in.bgu.ac.il/en/humsos/politics/Pages/default.aspx) researching online and offline political participation.
 
-I opened this website so that I can share what I learn throughout my journey in R. Be sure to check out additional posts on [R-bloggers](https://www.r-bloggers.com/). Enjoy!
+I opened this website so that I can share what I learn throughout my journey in R. Make sure to visit [R-bloggers](https://www.r-bloggers.com/) to explore many more tutorials. Enjoy!

@@ -58,7 +58,7 @@ highlight_style = "zenburn"  # For supported styles, see https://cdnjs.com/libra
 
 # Enable LaTeX math rendering? true/false
 #   If false, you can enable math on a per page basis as needed.
-math = false
+math = true
 
 # Enable diagram rendering? true/false
 #   If false, you can enable diagrams on a per page basis as needed.
@@ -72,6 +72,21 @@ privacy_pack = false
 # Enable visitors to edit pages?
 #   `repo` defines the repository URL. `editable` defines which page types can be edited.
 edit_page = {repo_url = "https://github.com/gcushen/hugo-academic", content_dir = "", repo_branch = "master", editable = {docs = true, page = false, post = false}}
+
+
+
+############################
+## Code folding
+############################
+
+# Set to true to disable code folding
+disable_codefolding = false
+# Set to "hide" or "show" all codes by default
+codefolding_show = "show"
+# Set to true to exclude the "Show/hide all" button
+codefolding_nobutton = false
+
+
 
 ############################
 ## Contact details
@@ -136,6 +151,17 @@ time_format = "3:04 PM"
 address_format = "en-us"
 
 ############################
+## Plugins                ##
+############################
+
+# Load CSS and JS plugins
+#   E.g. To load `/assets/css/custom.css`, set `plugins_css = ["custom"]`.
+#   E.g. To load `/assets/js/custom.js`, set `plugins_js = ["custom"]`.
+plugin_css = []
+plugins_js  = []
+
+
+############################
 ## Advanced
 ############################
 
@@ -161,9 +187,7 @@ sharing = true
 # Link authors to their profile page? (true/false)
 link_authors = true
 
-# Load JS plugins
-#   E.g. To load `/assets/js/custom.js`, set `plugins_js = ["custom"]`.
-plugins_js  = []
+
 
 # Available address formats.
 [address_formats]

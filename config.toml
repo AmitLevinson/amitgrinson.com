@@ -3,6 +3,7 @@
 #
 # This file is formatted using TOML syntax - learn more at https://learnxinyminutes.com/docs/toml/
 # Each configuration section is defined by a name in square brackets (e.g. `[outputs]`).
+font = "amit"
 
 # Title of your site
 title = "Amit Levinson"
@@ -17,6 +18,8 @@ baseurl = "https://amitlevinson.com/"
 copyright = "&copy; Amit Levinson {year}"
 
 GoogleAnalytics = "UA-156329952-1"
+
+
 ############################
 ## Advanced options below ##
 ############################
