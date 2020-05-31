@@ -7,8 +7,6 @@ categories: [R]
 tags: [tidytext]
 subtitle: ''
 summary: 'Learning tf-idf through political theorists.'
-authors: []
-lastmod: '2020-05-31T18:21:48+03:00'
 featured: yes
 draft: false
 image:
