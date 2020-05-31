@@ -54,7 +54,7 @@ Learning `R` for the past nine months or so has enabled me to explore new topics
 
 Following the explanation we'll implement the method on four great philosophers' books: 'Republic' (Plato), 'The Prince' (Machiavelli), 'Leviathan' (Hobbes) and lastly, one of my favorite books - 'On Liberty' (Mill) `r emo::ji("heart_eyes")`. Lastly, we'll see how tf-idf compares to a Bag of Words analysis (word count) and how using both can benefit your exploring of text.
 
-**The post is aimed for anyone exploring text-analysis** and wants to learn about tf-idf. **I will be using `R` to analyze our data but won't be explaining the different functions**, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my [github repository]().  
+**The post is aimed for anyone exploring text-analysis** and wants to learn about tf-idf. **I will be using `R` to analyze our data but won't be explaining the different functions**, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my [github repository](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/learning-tfidf-with-political-theorists/index.Rmd).  
 
 
 ### Term frequency  
@@ -65,7 +65,7 @@ $$tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Tota
 
 Also written as $tf(t,d)$ where $t$ is the number of times a term appears out of all words in document $d$. Using the above method we'll have the **proportion** of each word in our document, a value ranging from 0 to 1, where common words will have higher values.   
 
-While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? **How do we find <ins>unique</ins> words for each document?** This brings us to *idf*.
+While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? How do we find <ins>unique</ins> words for each document? This brings us to *idf*.
 
 ### Inverse document frequency
 
@@ -307,7 +307,7 @@ ggplot(data = bow_books, aes(x = reorder(word_with_color,n), y = n, fill = autho
 
 **The above plot amplifies, in my opinion, tf-idf’s contribution in finding unique words for each document.** While many of the words are similar to those we found in the previous tf-idf analysis, we also draw words that are common across documents. For example, we see the frequency of ‘Time’, ‘People’ and ‘Nature’ twice in different books and words such as ‘True’ and ‘Truth’ with similar meanings do so too (however this could have happened in tf-idf too).  
 
-However, the **Bag of Words also provided new words we didn’t see earlier.** Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.
+**However, the Bag of Words also provided new words we didn’t see earlier.** Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.
 
 
 

@@ -39,7 +39,7 @@ p.caption {
 <p>tf-idf gauges a word’s value according to two parameters: The first parameter is the <strong>term-frequency of a word: How common is a word in a given document</strong> (Bag of Words analysis); one method to calculate term frequency of a word is just to count the total number of times each words appears. Another method - which we’ll use in the tf-idf - is, after summing the total number of times a word appears, we’ll divide it by the total number of words in that document, <strong>describing term frequency as such:</strong></p>
 <p><span class="math display">\[tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Total number of words in that document}}\]</span></p>
 <p>Also written as <span class="math inline">\(tf(t,d)\)</span> where <span class="math inline">\(t\)</span> is the number of times a term appears out of all words in document <span class="math inline">\(d\)</span>. Using the above method we’ll have the <strong>proportion</strong> of each word in our document, a value ranging from 0 to 1, where common words will have higher values.</p>
-<p>While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? <strong>How do we find <ins>unique</ins> words for each document?</strong> This brings us to <em>idf</em>.</p>
+<p>While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? How do we find <ins>unique</ins> words for each document? This brings us to <em>idf</em>.</p>
 </div>
 <div id="inverse-document-frequency" class="section level3">
 <h3>Inverse document frequency</h3>
@@ -303,7 +303,7 @@ Figure 2: Term frequency plot with words that are common across documents in bol
 </p>
 </div>
 <p><strong>The above plot amplifies, in my opinion, tf-idf’s contribution in finding unique words for each document.</strong> While many of the words are similar to those we found in the previous tf-idf analysis, we also draw words that are common across documents. For example, we see the frequency of ‘Time’, ‘People’ and ‘Nature’ twice in different books and words such as ‘True’ and ‘Truth’ with similar meanings do so too (however this could have happened in tf-idf too).</p>
-<p>However, the <strong>Bag of Words also provided new words we didn’t see earlier.</strong> Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.</p>
+<p><strong>However, the Bag of Words also provided new words we didn’t see earlier.</strong> Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.</p>
 </div>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
