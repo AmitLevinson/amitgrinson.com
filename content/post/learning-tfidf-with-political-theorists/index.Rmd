@@ -43,10 +43,9 @@ theme_post <- theme_minimal(base_size = 12, base_family = "Roboto Condensed")+
 ```
 
 
+Thanks to [Almog Simchon](https://almogsi.com/) for insightful comments on a first draft of this post.
 
 ### Introduction  
-
-Thanks to [Almog Simchon](https://almogsi.com/) for insightful comments on a first draft of this post.
 
 Learning `R` for the past nine months or so has enabled me to explore new topics that are of interest to me, one of them being text analysis. In this post I'll explain what is Term-Frequency Inverse Document Frequency (tf-idf) and how it can help us explore important words for a document within a corpus of documents[^1]. The analysis helps in finding words that are common in a given document but are rare across all other documents.
 

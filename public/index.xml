@@ -68,9 +68,9 @@ p.caption {
   font-size: 0.9em;
 }
 &lt;/style&gt;
+&lt;p&gt;Thanks to &lt;a href=&#34;https://almogsi.com/&#34;&gt;Almog Simchon&lt;/a&gt; for insightful comments on a first draft of this post.&lt;/p&gt;
 &lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;Thanks to &lt;a href=&#34;https://almogsi.com/&#34;&gt;Almog Simchon&lt;/a&gt; for insightful comments on a first draft of this post.&lt;/p&gt;
 &lt;p&gt;Learning &lt;code&gt;R&lt;/code&gt; for the past nine months or so has enabled me to explore new topics that are of interest to me, one of them being text analysis. In this post I’ll explain what is Term-Frequency Inverse Document Frequency (tf-idf) and how it can help us explore important words for a document within a corpus of documents&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. The analysis helps in finding words that are common in a given document but are rare across all other documents.&lt;/p&gt;
 &lt;p&gt;Following the explanation we’ll implement the method on four great philosophers’ books: ‘Republic’ (Plato), ‘The Prince’ (Machiavelli), ‘Leviathan’ (Hobbes) and lastly, one of my favorite books - ‘On Liberty’ (Mill) 😍. Lastly, we’ll see how tf-idf compares to a Bag of Words analysis (word count) and how using both can benefit your exploring of text.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;The post is aimed for anyone exploring text-analysis&lt;/strong&gt; and wants to learn about tf-idf. &lt;strong&gt;I will be using &lt;code&gt;R&lt;/code&gt; to analyze our data but won’t be explaining the different functions&lt;/strong&gt;, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my &lt;a href=&#34;https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/learning-tfidf-with-political-theorists/index.Rmd&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
