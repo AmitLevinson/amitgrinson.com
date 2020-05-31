@@ -59,9 +59,9 @@ Following the explanation we'll implement the method on four great philosophers'
 
 ### Term frequency  
 
-tf-idf gauges a word's value according to two parameters: The first parameter is the **term-frequency of a word: How common is a word in a given document** (Bag of Words analysis); one method to calculate term frequency of a word is just to count the total number of times each words appears. Another method - which we'll use in the tf-idf - is, after summing the total number of times a word appears, we'll divide it by the total number of words in that document, **describing term frequency as such:**
+tf-idf gauges a word's value according to two parameters: The first parameter is the **term-frequency of a word: How common is a word in a given document** (Bag of Words analysis); one method to calculate term frequency of a word is just to count the total number of times each words appears. Another method - which we'll use in the tf-idf - is, after summing the total number of times a word appears, we'll divide it by the total number of words in that document, **describing term frequency as such:**  
 
-$$tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Total number of words in that document}}$$
+$$tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Total number of words in that document}}$$  
 
 Also written as $tf(t,d)$ where $t$ is the number of times a term appears out of all words in document $d$. Using the above method we'll have the **proportion** of each word in our document, a value ranging from 0 to 1, where common words will have higher values.   
 
