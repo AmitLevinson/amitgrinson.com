@@ -85,5 +85,5 @@ custom_css = ["codefolding.css"]
   dateFormat = "January, 2, 2006"
   
 [permalinks]
-    post = "/:year/:month/:day/:slug/"
+    post = "post/:slug/"
     talks = "/talk/:year-:slug/"

@@ -5,7 +5,7 @@
     <link>/tags/tidytext/</link>
       <atom:link href="/tags/tidytext/index.xml" rel="self" type="application/rss+xml" />
     <description>tidytext</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>tidytext</title>
@@ -14,9 +14,9 @@
     
     <item>
       <title>Learning Tfidf with Political Theorists</title>
-      <link>/2020/05/30/learning-tfidf-with-political-theorists/</link>
-      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
-      <guid>/2020/05/30/learning-tfidf-with-political-theorists/</guid>
+      <link>/post/learning-tfidf-with-political-theorists/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      <guid>/post/learning-tfidf-with-political-theorists/</guid>
       <description>
 &lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
@@ -31,14 +31,14 @@ p.caption {
 &lt;p&gt;Thanks to &lt;a href=&#34;https://almogsi.com/&#34;&gt;Almog Simchon&lt;/a&gt; for insightful comments on a first draft of this post.&lt;/p&gt;
 &lt;p&gt;Learning &lt;code&gt;R&lt;/code&gt; for the past nine months or so has enabled me to explore new topics that are of interest to me, one of them being text analysis. In this post I’ll explain what is Term-Frequency Inverse Document Frequency (tf-idf) and how it can help us explore important words for a document within a corpus of documents&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. The analysis helps in finding words that are common in a given document but are rare across all other documents.&lt;/p&gt;
 &lt;p&gt;Following the explanation we’ll implement the method on four great philosophers’ books: ‘Republic’ (Plato), ‘The Prince’ (Machiavelli), ‘Leviathan’ (Hobbes) and lastly, one of my favorite books - ‘On Liberty’ (Mill) 😍. Lastly, we’ll see how tf-idf compares to a Bag of Words analysis (word count) and how using both can benefit your exploring of text.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;The post is aimed for anyone exploring text-analysis&lt;/strong&gt; and wants to learn about tf-idf. &lt;strong&gt;I will be using &lt;code&gt;R&lt;/code&gt; to analyze our data but won’t be explaining the different functions&lt;/strong&gt;, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my &lt;a href=&#34;&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The post is aimed for anyone exploring text-analysis&lt;/strong&gt; and wants to learn about tf-idf. &lt;strong&gt;I will be using &lt;code&gt;R&lt;/code&gt; to analyze our data but won’t be explaining the different functions&lt;/strong&gt;, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my &lt;a href=&#34;https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/learning-tfidf-with-political-theorists/index.Rmd&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;term-frequency&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Term frequency&lt;/h3&gt;
 &lt;p&gt;tf-idf gauges a word’s value according to two parameters: The first parameter is the &lt;strong&gt;term-frequency of a word: How common is a word in a given document&lt;/strong&gt; (Bag of Words analysis); one method to calculate term frequency of a word is just to count the total number of times each words appears. Another method - which we’ll use in the tf-idf - is, after summing the total number of times a word appears, we’ll divide it by the total number of words in that document, &lt;strong&gt;describing term frequency as such:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Total number of words in that document}}\]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Also written as &lt;span class=&#34;math inline&#34;&gt;\(tf(t,d)\)&lt;/span&gt; where &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; is the number of times a term appears out of all words in document &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;. Using the above method we’ll have the &lt;strong&gt;proportion&lt;/strong&gt; of each word in our document, a value ranging from 0 to 1, where common words will have higher values.&lt;/p&gt;
-&lt;p&gt;While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? &lt;strong&gt;How do we find &lt;ins&gt;unique&lt;/ins&gt; words for each document?&lt;/strong&gt; This brings us to &lt;em&gt;idf&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? How do we find &lt;ins&gt;unique&lt;/ins&gt; words for each document? This brings us to &lt;em&gt;idf&lt;/em&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;inverse-document-frequency&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Inverse document frequency&lt;/h3&gt;
@@ -63,7 +63,7 @@ Figure 1: Using tf-idf we can calculate how common a word is within a document a
 &lt;div id=&#34;tf-idf-on-political-theorists.&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;TF-IDF on political theorists.&lt;/h3&gt;
 &lt;p&gt;I’m a big fan of political theory. I have a small collection at home and always like to read and learn more about it. Except for Mill, we read Plato, Machiavelli and Hobbes in our BA first semester course in political theory. While some of the theorists overlap to some degree, over-all they discuss different topics. tf-idf will help us distinguish important words specific to each book, in a comparison across all books.&lt;/p&gt;
-&lt;p&gt;Before we conduct our tf-idf we’d like to explore it a bit. The following exploratory analysis is inspired from Julia Silge’s blog post &lt;a href=&#34;(https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)&#34;&gt;‘Term Frequency and tf-idf Using Tidy Data Principles’&lt;/a&gt;, a fantastic read.&lt;/p&gt;
+&lt;p&gt;Before we conduct our tf-idf we’d like to explore our text a bit. The following exploratory analysis is inspired from Julia Silge’s blog post &lt;a href=&#34;(https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)&#34;&gt;‘Term Frequency and tf-idf Using Tidy Data Principles’&lt;/a&gt;, a fantastic read.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;data-collection-analysis&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Data collection &amp;amp; Analysis&lt;/h3&gt;
@@ -302,7 +302,7 @@ Figure 2: Term frequency plot with words that are common across documents in bol
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;The above plot amplifies, in my opinion, tf-idf’s contribution in finding unique words for each document.&lt;/strong&gt; While many of the words are similar to those we found in the previous tf-idf analysis, we also draw words that are common across documents. For example, we see the frequency of ‘Time’, ‘People’ and ‘Nature’ twice in different books and words such as ‘True’ and ‘Truth’ with similar meanings do so too (however this could have happened in tf-idf too).&lt;/p&gt;
-&lt;p&gt;However, the &lt;strong&gt;Bag of Words also provided new words we didn’t see earlier.&lt;/strong&gt; Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;However, the Bag of Words also provided new words we didn’t see earlier.&lt;/strong&gt; Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;closing-remarks&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Closing remarks&lt;/h3&gt;
@@ -334,9 +334,9 @@ The definition of ‘important’ here also highlights tf-idf heuristic quantify
     
     <item>
       <title>Israeli elections on Twitter</title>
-      <link>/2020/04/20/israeli-elections-on-twitter/</link>
+      <link>/post/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/2020/04/20/israeli-elections-on-twitter/</guid>
+      <guid>/post/israeli-elections-on-twitter/</guid>
       <description>
 
 

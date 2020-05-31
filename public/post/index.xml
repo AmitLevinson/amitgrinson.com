@@ -6,17 +6,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
-    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Learning Tfidf with Political Theorists</title>
-      <link>/2020/05/30/learning-tfidf-with-political-theorists/</link>
-      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      <link>/post/learning-tfidf-with-political-theorists/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/05/30/learning-tfidf-with-political-theorists/</guid>
+      <guid>/post/learning-tfidf-with-political-theorists/</guid>
       <description>Learning tf-idf through political theorists.</description>
       
             <category>tidytext</category>
@@ -25,20 +25,20 @@
     
     <item>
       <title>Hosting interactive graphs online</title>
-      <link>/2020/05/01/sharing-interactive-charts/</link>
+      <link>/post/sharing-interactive-charts/</link>
       <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/05/01/sharing-interactive-charts/</guid>
+      <guid>/post/sharing-interactive-charts/</guid>
       <description>A walk through for sharing your interactive visualizations on GitHub Pages</description>
       
     </item>
     
     <item>
       <title>Israeli elections on Twitter</title>
-      <link>/2020/04/20/israeli-elections-on-twitter/</link>
+      <link>/post/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/04/20/israeli-elections-on-twitter/</guid>
+      <guid>/post/israeli-elections-on-twitter/</guid>
       <description>Analyzing tweets from the the Israeli elections week</description>
       
             <category>rtweet</category>
@@ -49,10 +49,10 @@
     
     <item>
       <title>Making updating exam grades easy with R</title>
-      <link>/2020/02/15/update-exam-grades-easy-with-r/</link>
+      <link>/post/update-exam-grades-easy-with-r/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/02/15/update-exam-grades-easy-with-r/</guid>
+      <guid>/post/update-exam-grades-easy-with-r/</guid>
       <description>In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams</description>
       
             <category>xlsx</category>
@@ -63,10 +63,10 @@
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
-      <link>/2020/02/07/eliud-kichoge/</link>
+      <link>/post/eliud-kichoge/</link>
       <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/02/07/eliud-kichoge/</guid>
+      <guid>/post/eliud-kichoge/</guid>
       <description>In this post I plot Eliud Kichoge new marathon record using rvest to get data from wikipedia and ggimage for plotting images as points</description>
       
             <category>ggimage</category>
@@ -77,10 +77,10 @@
     
     <item>
       <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
-      <link>/2020/01/14/bomb-shelters/</link>
+      <link>/post/bomb-shelters/</link>
       <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/14/bomb-shelters/</guid>
+      <guid>/post/bomb-shelters/</guid>
       <description>While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.</description>
       
             <category>ggmap</category>
@@ -91,10 +91,10 @@
     
     <item>
       <title>The Tidytuesday project</title>
-      <link>/1/01/01/the-tidytuesday-project/</link>
+      <link>/post/the-tidytuesday-project/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/1/01/01/the-tidytuesday-project/</guid>
+      <guid>/post/the-tidytuesday-project/</guid>
       <description>Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data.</description>
       
     </item>
