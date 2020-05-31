@@ -191,7 +191,7 @@ ggplot(tidy_books, aes(n/sum_words, fill = author)) +
         geom_histogram(alpha = 0.8, show.legend = FALSE, bins = 30) +
         xlim(NA, 0.0009)+
         labs(title = "Term frequency distribution",
-             subtitle = "Word frequency for 'On Liberty' (Mill), 'The Leviathan (Hobbes)', 'Republic' (Plato) and 'The Prince' (Machiavelli)",
+             subtitle = "Word frequency for 'On Liberty' (Mill), 'The Leviathan (Hobbes)', 'The Prince' (Machiavelli) and 'Republic' (Plato)",
              y = "Count", x = "Proportion") +
         facet_wrap(~author, ncol = 2, scales = "free_y")+
         scale_fill_manual(values = plot_colors)+
