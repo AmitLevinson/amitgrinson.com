@@ -1,14 +1,14 @@
 ---
 title: Learning Tfidf with Political Theorists
 author: Amit Levinson
-date: '2020-05-30'
+date: '2020-05-31'
 slug: learning-tfidf-with-political-theorists
 categories: [R]
 tags: [tidytext]
 subtitle: ''
 summary: 'Learning tf-idf through political theorists.'
 authors: []
-lastmod: '2020-05-30T18:21:48+03:00'
+lastmod: '2020-05-31T18:21:48+03:00'
 featured: yes
 draft: false
 image:
@@ -120,7 +120,7 @@ Now that we have some background as to how tf-idf works, let's dive in to our ca
 
 I'm a big fan of political theory. I have a small collection at home and always like to read and learn more about it. Except for Mill, we read Plato, Machiavelli and Hobbes in our BA first semester course in political theory. While some of the theorists overlap to some degree, over-all they discuss different topics. tf-idf will help us distinguish important words specific to each book, in a comparison across all books.
 
-Before we conduct our tf-idf we'd like to explore it a bit. The following exploratory analysis is inspired from Julia Silge's blog post ['Term Frequency and tf-idf Using Tidy Data Principles']((https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)), a fantastic read.  
+Before we conduct our tf-idf we'd like to explore our text a bit. The following exploratory analysis is inspired from Julia Silge's blog post ['Term Frequency and tf-idf Using Tidy Data Principles']((https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)), a fantastic read.  
 
 ### Data collection & Analysis
 
