@@ -80,7 +80,7 @@ edit_page = {repo_url = "https://github.com/gcushen/hugo-academic", content_dir 
 ############################
 
 # Set to true to disable code folding
-disable_codefolding = false
+disable_codefolding = true
 # Set to "hide" or "show" all codes by default
 codefolding_show = "show"
 # Set to true to exclude the "Show/hide all" button

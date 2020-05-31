@@ -5,12 +5,332 @@
     <link>/tags/tidytext/</link>
       <atom:link href="/tags/tidytext/index.xml" rel="self" type="application/rss+xml" />
     <description>tidytext</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>tidytext</title>
       <link>/tags/tidytext/</link>
     </image>
+    
+    <item>
+      <title>Learning Tfidf with Political Theorists</title>
+      <link>/2020/05/30/learning-tfidf-with-political-theorists/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/05/30/learning-tfidf-with-political-theorists/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;style&gt;
+p.caption {
+  font-size: 0.9em;
+}
+&lt;/style&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Thanks to &lt;a href=&#34;https://almogsi.com/&#34;&gt;Almog Simchon&lt;/a&gt; for insightful comments on a first draft of this post.&lt;/p&gt;
+&lt;p&gt;Learning &lt;code&gt;R&lt;/code&gt; for the past nine months or so has enabled me to explore new topics that are of interest to me, one of them being text analysis. In this post I’ll explain what is Term-Frequency Inverse Document Frequency (tf-idf) and how it can help us explore important words for a document within a corpus of documents&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. The analysis helps in finding words that are common in a given document but are rare across all other documents.&lt;/p&gt;
+&lt;p&gt;Following the explanation we’ll implement the method on four great philosophers’ books: ‘Republic’ (Plato), ‘The Prince’ (Machiavelli), ‘Leviathan’ (Hobbes) and lastly, one of my favorite books - ‘On Liberty’ (Mill) 😍. Lastly, we’ll see how tf-idf compares to a Bag of Words analysis (word count) and how using both can benefit your exploring of text.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The post is aimed for anyone exploring text-analysis&lt;/strong&gt; and wants to learn about tf-idf. &lt;strong&gt;I will be using &lt;code&gt;R&lt;/code&gt; to analyze our data but won’t be explaining the different functions&lt;/strong&gt;, as this post focuses on the tf-idf analysis. If you wish to see the code, feel free to download or explore the .Rmd source code on my &lt;a href=&#34;&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;term-frequency&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Term frequency&lt;/h3&gt;
+&lt;p&gt;tf-idf gauges a word’s value according to two parameters: The first parameter is the &lt;strong&gt;term-frequency of a word: How common is a word in a given document&lt;/strong&gt; (Bag of Words analysis); one method to calculate term frequency of a word is just to count the total number of times each words appears. Another method - which we’ll use in the tf-idf - is, after summing the total number of times a word appears, we’ll divide it by the total number of words in that document, &lt;strong&gt;describing term frequency as such:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[tf = \frac{\textrm{Number of times a word appears in a document}}{\textrm{Total number of words in that document}}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Also written as &lt;span class=&#34;math inline&#34;&gt;\(tf(t,d)\)&lt;/span&gt; where &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; is the number of times a term appears out of all words in document &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;. Using the above method we’ll have the &lt;strong&gt;proportion&lt;/strong&gt; of each word in our document, a value ranging from 0 to 1, where common words will have higher values.&lt;/p&gt;
+&lt;p&gt;While this gives us a value gauging how common a word is in a document, what happens when we have many words across many documents? &lt;strong&gt;How do we find &lt;ins&gt;unique&lt;/ins&gt; words for each document?&lt;/strong&gt; This brings us to &lt;em&gt;idf&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inverse-document-frequency&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Inverse document frequency&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Inverse document frequency accounts for the occurrence of a word across all documents, thereby giving a higher value to words appearing in less documents.&lt;/strong&gt; In this case, for each term we will calculate the log ratio&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; of all documents divided by the number of documents that word appears in. This gives us the following:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ idf = \log {\frac{\textrm{N documents in corpus}}{\textrm{n documents containing the term}}}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Also written as &lt;span class=&#34;math inline&#34;&gt;\(idf = \log{\frac{N}{n(t)}}\)&lt;/span&gt; Where &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; is the total number of documents in our corpus and &lt;span class=&#34;math inline&#34;&gt;\(n(t)\)&lt;/span&gt; is the number of documents the word appears within our corpus of documents.&lt;/p&gt;
+&lt;p&gt;To those unfamiliar, a logarithmic transformation helps in reducing wide-ranged numbers to smaller scopes. In this case, if we have 7 documents, and our term appears in all 7 documents, we’ll have following idf value: &lt;span class=&#34;math inline&#34;&gt;\(log_e(\frac{7}{7}) = 0\)&lt;/span&gt;. What if we have a term that appears in only 1 document out of all 7 documents? We’ll have the following: &lt;span class=&#34;math inline&#34;&gt;\(log_e(\frac{7}{1}) = 1.945\)&lt;/span&gt;. Even if a word appears in only 1 document out of 100, a logarithmic transformation will reduce its high value to mitigate bias when we multiply it with its &lt;span class=&#34;math inline&#34;&gt;\(tf\)&lt;/span&gt; value.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;So what do we understand from the idf?&lt;/strong&gt; Since our numerate always remains the same (N documents in corpus), the &lt;em&gt;idf&lt;/em&gt; of a word is contingent upon how common it is &lt;em&gt;across&lt;/em&gt; documents. Words that appear in a small number of documents will have a higher &lt;em&gt;idf&lt;/em&gt;, while words that are common across documents will have a lower &lt;em&gt;idf&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;term-frequency-inverse-document-frequency-tfidf&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Term-Frequency Inverse Document Frequency (tfidf)&lt;/h3&gt;
+&lt;p&gt;Once we have the term frequency and inverse document frequency for each word we can calculate the tf-idf by multiplying the two: &lt;span class=&#34;math inline&#34;&gt;\(tf(t,d) \cdot idf(t,D)\)&lt;/span&gt; where &lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt; is our corpus of documents.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;To summarize our explanation:&lt;/strong&gt; The two paramteres used to calculate the tf-idf provide each word with a value for its importance to that document in that corpus of text. Ideally We take &lt;strong&gt;words that are &lt;u&gt;common within a document&lt;/u&gt; and that are &lt;u&gt;rare across documents&lt;/u&gt;&lt;/strong&gt;. I write ideally because as we’ll see soon, we might have words that are extremely common in one document but are filtered out because they’re evident in all documents (can happen in a small corpus of documents). This also highlights the question as to what is &lt;em&gt;important&lt;/em&gt;; I define important as contributing to understanding a document in comparison to all other documents.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-2&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-2-1.png&#34; alt=&#34;Using tf-idf we can calculate how common a word is within a document and how rare is it across documents&#34; width=&#34;85%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Using tf-idf we can calculate how common a word is within a document and how rare is it across documents
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now that we have some background as to how tf-idf works, let’s dive in to our case study.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tf-idf-on-political-theorists.&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;TF-IDF on political theorists.&lt;/h3&gt;
+&lt;p&gt;I’m a big fan of political theory. I have a small collection at home and always like to read and learn more about it. Except for Mill, we read Plato, Machiavelli and Hobbes in our BA first semester course in political theory. While some of the theorists overlap to some degree, over-all they discuss different topics. tf-idf will help us distinguish important words specific to each book, in a comparison across all books.&lt;/p&gt;
+&lt;p&gt;Before we conduct our tf-idf we’d like to explore it a bit. The following exploratory analysis is inspired from Julia Silge’s blog post &lt;a href=&#34;(https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)&#34;&gt;‘Term Frequency and tf-idf Using Tidy Data Principles’&lt;/a&gt;, a fantastic read.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-collection-analysis&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data collection &amp;amp; Analysis&lt;/h3&gt;
+&lt;p&gt;The package we’ll use to gather the data is the &lt;code&gt;{gutenbergr}&lt;/code&gt; package. It enables us to access the &lt;a href=&#34;https://www.gutenberg.org/&#34;&gt;Project Gutenberg&lt;/a&gt; free books, a library of over 60,000 free books. As many other amazing things in &lt;code&gt;R&lt;/code&gt; someone, in this case David Robinson, created a package for it. All we need to do is download them to our computer.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Mill &amp;lt;- gutenberg_download(34901)
+Hobbes &amp;lt;- gutenberg_download(3207)
+Machiavelli &amp;lt;- gutenberg_download(1232)
+Plato &amp;lt;- gutenberg_download(150)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Several of the books contain sections at the beginning or at the end that aren’t relevant for our analysis. For example long introductions from contemporary scholars; another whole different book at the end, etc. These can confound our analysis and therefore we’ll exclude them. In order to conduct our analysis we also need all the books we collected in one object.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Once we are able to clean the books, this is what our text looks like:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;remove_text &amp;lt;- function(book, low_id, top_id = max(rowid), author = deparse(substitute(book))){
+  book %&amp;gt;%
+  mutate(author = as.factor(author)) %&amp;gt;% 
+  rowid_to_column() %&amp;gt;% 
+  filter(rowid &amp;gt;= {{low_id}}, rowid &amp;lt;= {{top_id}}) %&amp;gt;% 
+  select(author, text, -c(rowid, gutenberg_id))}
+
+books &amp;lt;- rbind(
+  remove_text(Mill, 454),
+  remove_text(Hobbes, 360, 22317),
+  remove_text(Machiavelli, 464, 3790),
+  remove_text(Plato, 606))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 45,490 x 2
+##    author text                                                                  
+##    &amp;lt;fct&amp;gt;  &amp;lt;chr&amp;gt;                                                                 
+##  1 Mill   &amp;quot;&amp;quot;                                                                    
+##  2 Mill   &amp;quot;&amp;quot;                                                                    
+##  3 Mill   &amp;quot;CHAPTER I.&amp;quot;                                                          
+##  4 Mill   &amp;quot;&amp;quot;                                                                    
+##  5 Mill   &amp;quot;INTRODUCTORY.&amp;quot;                                                       
+##  6 Mill   &amp;quot;&amp;quot;                                                                    
+##  7 Mill   &amp;quot;&amp;quot;                                                                    
+##  8 Mill   &amp;quot;The subject of this Essay is not the so-called Liberty of the Will, ~
+##  9 Mill   &amp;quot;unfortunately opposed to the misnamed doctrine of Philosophical&amp;quot;     
+## 10 Mill   &amp;quot;Necessity; but Civil, or Social Liberty: the nature and limits of th~
+## # ... with 45,480 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each row is some text with chapters separated by headings and a column referencing who is the author. Our data frame consists of ~45,000 rows with the filtered text from our four books. Tf-idf can also be done on any n-grams we choose (number of consequent words). We could calculate the tf-idf for each bigram of words (two-words), trigram, etc. I find a unigram an appropriate approach both for tf-idf and especially now when we want to learn more about it. &lt;strong&gt;We just saw that our text is in the form of sentences, so let’s break it into single words.&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 12 x 4
+## # Groups:   author [4]
+##    author      word      n sum_words
+##    &amp;lt;fct&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;     &amp;lt;int&amp;gt;
+##  1 Hobbes      the   14536    207849
+##  2 Hobbes      of    10523    207849
+##  3 Hobbes      and    7113    207849
+##  4 Plato       the    7054    118639
+##  5 Plato       and    5746    118639
+##  6 Plato       of     4640    118639
+##  7 Mill        the    3019     48006
+##  8 Mill        of     2461     48006
+##  9 Machiavelli the    2006     34821
+## 10 Mill        to     1765     48006
+## 11 Machiavelli to     1468     34821
+## 12 Machiavelli and    1333     34821&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see that stop-words dominant the frequency of occurrences. That makes sense as they are commonly used, but they’re not usually helpful for learning about a text, specifically here. &lt;strong&gt;We’ll start by exploring how the word frequencies occur within a text:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The plot above shows the frequency of terms across documents. We see some words that appear frequently (higher proportion = right side of the x-axis) and many words that are rarer (low proportion). Actually, I had to limit the x-axis or otherwise it would distort the plot with words that are extremely common.&lt;/p&gt;
+&lt;p&gt;To help find useful words with the highest tf-idf from each book, we’ll remove stop words before we extract the words with a high tf-idf value:&lt;/p&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Author
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Word
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+n
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Sum words
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Term Frequency
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+IDF
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+TF-IDF
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Mill
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+opinion
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+150
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+48006
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0094132
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Hobbes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+god
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1047
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+207849
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0149024
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Machiavelli
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+prince
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+185
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+34821
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0172704
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.2876821
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0049684
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Plato
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+true
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+485
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+118639
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0152953
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.0000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border: 0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; Random sample of words and their corresponding tf-idf values
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;p&gt;Above we have our tf-idf for a given word from each document. I removed stop-words and calculated the tf-idf for each word in each book. For Hobbes the word ‘God’ appears 1047 times, thus has a &lt;span class=&#34;math inline&#34;&gt;\(tf\)&lt;/span&gt; of &lt;span class=&#34;math inline&#34;&gt;\(\frac {1047} {207849}\)&lt;/span&gt; and an idf of 0 (since it appears in all documents), so it’ll have a tf-idf of 0.&lt;/p&gt;
+&lt;p&gt;With Machiavelli the word prince appears 185 times, with a &lt;span class=&#34;math inline&#34;&gt;\(tf\)&lt;/span&gt; of &lt;span class=&#34;math inline&#34;&gt;\(\frac {185} {34821}\)&lt;/span&gt;, resulting in a proportion of 0.0173. The word prince has an idf of 0.288 &lt;span class=&#34;math inline&#34;&gt;\((log_e(\frac 4 {3}))\)&lt;/span&gt;, as there are 4 documents and it appears in 3 of them, so a total tf-idf value of &lt;span class=&#34;math inline&#34;&gt;\(0.0173 \cdot 0.288\)&lt;/span&gt; = &lt;span class=&#34;math inline&#34;&gt;\(0.00497\)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tf-idf-plot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tf-idf plot&lt;/h3&gt;
+&lt;p&gt;As we wrap up our tf-idf analysis, &lt;strong&gt;We don’t want to see all words and their tf-idf, but only words with the highest tf-idf value&lt;/strong&gt; for each author, indicating the importance of a word to a given document. We can look at these words by plotting the top 10 highest valued tf-idf words for each author:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; ggplot(data = books_for_plot, aes(x = word, y = tf_idf, fill = author))+
+  geom_col(show.legend = FALSE)+
+  labs(x = NULL, y = &amp;quot;tf-idf&amp;quot;)+
+  coord_flip()+
+  scale_x_reordered()+
+  facet_wrap(~ author, scales = &amp;quot;free_y&amp;quot;, ncol = 2)+
+  labs(title = &amp;quot;&amp;lt;b&amp;gt;Term Frequency Inverse Document Frequency&amp;lt;/b&amp;gt; - Political theorists&amp;quot;,
+       subtitle = &amp;quot;tf-idf for The Leviathan (Hobbes), On Liberty (Mill), The Prince (Machiavelli)\nand Republic (Plato)&amp;quot;)+
+  scale_fill_manual(values = plot_colors)+
+  theme_post+
+  theme(plot.title = element_markdown())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lovely!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let’s review each book and see what we can learn from our tf-idf analysis. My memory of these books is kind of rusty but I’ll try my best:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Hobbes:&lt;/strong&gt; Hobbes in his book describes the &lt;em&gt;natural&lt;/em&gt; state of human beings and how they can leave it by revoking many of their right to the &lt;em&gt;sovereign&lt;/em&gt; who will facilitate order. In his book he describes the soveragin (note the ‘a’) as needed to be strict, rigorous and &lt;em&gt;hath&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Machiavelli:&lt;/strong&gt; Machiavelli provides a leader with a guide on how to rule his country. He prefaces his book with an introduction letter to the &lt;em&gt;Duke&lt;/em&gt;, the recipient of his work. Machiavelli throughout the book conveys his message with examples of many &lt;em&gt;princes&lt;/em&gt;, &lt;em&gt;Alexander&lt;/em&gt; the great, the &lt;em&gt;Orsini&lt;/em&gt; brothers and more. Several of his examples include mentioning of Italy (where he resides), specifically &lt;em&gt;Venetians&lt;/em&gt; and &lt;em&gt;Milan&lt;/em&gt;.&lt;br /&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Mill:&lt;/strong&gt; Mill in his book ‘On Liberty’ describes the importance of freedom and liberty for individuals. He does so by describing the relation between people and their &lt;em&gt;society&lt;/em&gt; and other relations with the &lt;em&gt;social&lt;/em&gt;. He highlights in his discussion on liberty a &lt;em&gt;person’s&lt;/em&gt; belonging; these can be &lt;em&gt;Feelings&lt;/em&gt; or basically anything &lt;em&gt;personal&lt;/em&gt;. Protecting the personal is important for the &lt;em&gt;development&lt;/em&gt; of both society and that of the individual.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Plato:&lt;/strong&gt; Plato’s book consists of 10 chapters and it is by far the longest compared to the others. The book is written in the form of a dialogue with &lt;em&gt;replies&lt;/em&gt; between Socrate and his discussants. Along Socrate’s journey to finding out what is the meaning of justice he talks to many people, among them &lt;em&gt;Glaucon&lt;/em&gt;, &lt;em&gt;Thrasymachus&lt;/em&gt; and &lt;em&gt;Adeimantus&lt;/em&gt;. In one section Socrates describes a just society with distinct &lt;em&gt;classes&lt;/em&gt; such as the &lt;em&gt;guardians&lt;/em&gt;. The classes should receive appropriate education, for e.g. &lt;em&gt;gymnastics&lt;/em&gt; for the guardians.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the above analysis we were able to explore uniqueness of words for each book across all books. &lt;strong&gt;Some words provided us with great insights while others didn’t necessarily help us despite their uniqeness&lt;/strong&gt;, for example, the names of discussants with Socrate. Tf-idf gauges them as important (as to how I defined importance here) to distinguish between Plato’s book and the others, but I’m sure they’re not the first words that come to mind when someone talks about the Republic.&lt;/p&gt;
+&lt;p&gt;The analysis also shows this methodology’s value addition is not in just applying tf-idf - or any other statistical analysis – rather its power lies in its explanatory abilities. In other words, &lt;strong&gt;tf-idf provides us with a value indicating the importance of a word to a given document within a corpus, it is our job to take that extra step interpreting and contextualizing the output.&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;comparing-to-bag-of-words-bog&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Comparing to Bag Of Words (BOG)&lt;/h3&gt;
+&lt;p&gt;A common text analysis is a word count I discussed earlier, also known as Bag of Words (BoW). This is an easy to understand method that can be done easily when exploring text. However, relying only on a bag of words method to draw insights can limit its usefulness if other analytic methods are not also included. The BoW relies only on the frequency of a word, so if a word is common across all documents, it might show up in all of them and not contribute to finding &lt;em&gt;unique words&lt;/em&gt; for each document.&lt;/p&gt;
+&lt;p&gt;Now that we have our books we can also explore the raw occurrence of each word to compare it to our above tf-idf analysis:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = bow_books, aes(x = reorder(word_with_color,n), y = n, fill = author))+
+  geom_col(show.legend = FALSE)+
+  labs(x = NULL, y = &amp;quot;Word Frequency&amp;quot;)+
+  coord_flip()+
+  scale_x_reordered()+
+  facet_wrap(~ author, scales = &amp;quot;free&amp;quot;, ncol = 2)+
+  labs(title = &amp;quot;&amp;lt;b&amp;gt;Term Frequency&amp;lt;/b&amp;gt; - Political theorists&amp;quot;)+
+  scale_fill_manual(values = plot_colors)+
+  theme_post+
+  theme(axis.text.y = element_markdown(),
+        plot.title = element_markdown(),
+        strip.text = element_text(color = &amp;quot;grey50&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-13-1.png&#34; alt=&#34;Term frequency plot with words that are common across documents in bold&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Term frequency plot with words that are common across documents in bold
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;The above plot amplifies, in my opinion, tf-idf’s contribution in finding unique words for each document.&lt;/strong&gt; While many of the words are similar to those we found in the previous tf-idf analysis, we also draw words that are common across documents. For example, we see the frequency of ‘Time’, ‘People’ and ‘Nature’ twice in different books and words such as ‘True’ and ‘Truth’ with similar meanings do so too (however this could have happened in tf-idf too).&lt;/p&gt;
+&lt;p&gt;However, the &lt;strong&gt;Bag of Words also provided new words we didn’t see earlier.&lt;/strong&gt; Here we can learn on new words like Power in Hobbes, Opinions in Mill and more. With the bag of words we get words that are common without controlling for other texts, while the tf-idf searches for words that are common within but are rare across.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;closing-remarks&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Closing remarks&lt;/h3&gt;
+&lt;p&gt;In this post we learned the term frequency inverse document frequency (tf-idf) analysis and implemented it on four great political theorists. We finished by exploring tfidf in comparison to a bag of words analysis and showed the benefits of each. This also emphasizes how we define &lt;em&gt;important&lt;/em&gt;: Important to a document by itself or important to a document compared to other documents.
+The definition of ‘important’ here also highlights tf-idf heuristic quantifying approach (&lt;a href=&#34;https://en.wikipedia.org/wiki/Tf%E2%80%93idf&#34;&gt;specifically the idf&lt;/a&gt;) and thus should be used with caution. If you are aware of theoretical development of it I’d be glad to read more about it.&lt;/p&gt;
+&lt;p&gt;By now you should be equipped to give tf-idf a try yourself on a corpus of documents you find appropriate.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;where-to-next&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Where to next&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Further reading about text analysis - If you want to read more on text mining with R, I highly recommend the Julia Silge &amp;amp; David Robinson’s &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;text mining with R book&lt;/a&gt;and/or exploring the &lt;a href=&#34;https://quanteda.io/&#34;&gt;&lt;code&gt;{quanteda}&lt;/code&gt;&lt;/a&gt; package.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Text datasets - As to finding text data, you can try the &lt;code&gt;{gutenbergr}&lt;/code&gt; package that gives access to thousands of books, a &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;#TidyTuesday&lt;/a&gt; data set or collect tweets from Twitter using the &lt;code&gt;{rtweet}&lt;/code&gt; package.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Other posts of mine - If you’re interested in other posts of mine where I explore some text you can read my &lt;a href=&#34;https://amitlevinson.com/2020/04/20/israeli-elections-on-twitter/&#34;&gt;Israeli elections Twitter tweets analysis&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That’s it for now. Feel free to contact me for any and all comments!&lt;/p&gt;
+&lt;div id=&#34;notes&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;A single document can be a book, chapter, paragraph or sentence, it all depends on your research and what you define as an ‘entity’ within a corpus of text.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;&lt;strong&gt;What’s log ratio?&lt;/strong&gt;: Considering I was only exposed to &lt;span class=&#34;math inline&#34;&gt;\(log\)&lt;/span&gt; (short for logarithm) late in my academic studies, I thought I might as well briefly explain it to those unfamiliar with it: In general, and for the purpose of the tf-idf, a logarithm transformation helps in reducing wide ranged numbers to smaller scopes. Assuming we have the following &lt;span class=&#34;math inline&#34;&gt;\(\log _{2}(16) = x\)&lt;/span&gt;, we ask ourselves (and calculate) 2 in the power of what (x) will give us 16. so in this case 2^3 will give us 16, which is basically written as &lt;span class=&#34;math inline&#34;&gt;\(\log _{2}(16) = 3\)&lt;/span&gt;. In order to generalize it, &lt;span class=&#34;math inline&#34;&gt;\(\log _{b}(x) = y\)&lt;/span&gt;, means b is the base we will raise to the power of y to reach x. Therefore written oppositely as &lt;span class=&#34;math inline&#34;&gt;\(b^y = x\)&lt;/span&gt;. The common uses of log are &lt;span class=&#34;math inline&#34;&gt;\(\log_2\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(\log_{10}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(log_e\)&lt;/span&gt;, also written as plain log.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Israeli elections on Twitter</title>

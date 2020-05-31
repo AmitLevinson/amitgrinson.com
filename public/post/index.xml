@@ -6,10 +6,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
-    <lastBuildDate>Fri, 01 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Learning Tfidf with Political Theorists</title>
+      <link>/2020/05/30/learning-tfidf-with-political-theorists/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/05/30/learning-tfidf-with-political-theorists/</guid>
+      <description>Learning tf-idf through political theorists.</description>
+      
+            <category>tidytext</category>
+      
+    </item>
     
     <item>
       <title>Hosting interactive graphs online</title>
@@ -18,16 +30,6 @@
       
       <guid>/2020/05/01/sharing-interactive-charts/</guid>
       <description>A walk through for sharing your interactive visualizations on GitHub Pages</description>
-      
-    </item>
-    
-    <item>
-      <title>Learning TFDIDF with cannabis effects</title>
-      <link>/2020/04/30/tfidf-cannabis-type/</link>
-      <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/2020/04/30/tfidf-cannabis-type/</guid>
-      <description></description>
       
     </item>
     
