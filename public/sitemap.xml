@@ -18,12 +18,22 @@
   </url>
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-05-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/learning-tfidf-with-political-theorists/</loc>
     <lastmod>2020-05-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2020-05-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
     <lastmod>2020-05-31T00:00:00+00:00</lastmod>
   </url>
   
@@ -59,6 +69,11 @@
   
   <url>
     <loc>/tags/talk/</loc>
+    <lastmod>2019-06-17T18:00:01-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/talk/</loc>
     <lastmod>2019-06-17T18:00:01-07:00</lastmod>
   </url>
   
