@@ -44,6 +44,13 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 </br>
 
 
+### **02.06.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week23_marble-races/marble-races.Rmd)
+
+<p align = "center">
+<img alt = 'Animal Crossing sentiment analysis' src = '/img/tt/mr.png' width = "700">
+</p>
+
 ### **14.05.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R)
 <p align = "center">

@@ -63,7 +63,7 @@ Figure 1: Using tf-idf we can calculate how common a word is within a document a
 &lt;div id=&#34;tf-idf-on-political-theorists.&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;TF-IDF on political theorists.&lt;/h3&gt;
 &lt;p&gt;I’m a big fan of political theory. I have a small collection at home and always like to read and learn more about it. Except for Mill, we read Plato, Machiavelli and Hobbes in our BA first semester course in political theory. While some of the theorists overlap to some degree, over-all they discuss different topics. tf-idf will help us distinguish important words specific to each book, in a comparison across all books.&lt;/p&gt;
-&lt;p&gt;Before we conduct our tf-idf we’d like to explore our text a bit. The following exploratory analysis is inspired from Julia Silge’s blog post &lt;a href=&#34;(https://www.r-bloggers.com/term-frequency-and-tf-idf-using-tidy-data-principles/)&#34;&gt;‘Term Frequency and tf-idf Using Tidy Data Principles’&lt;/a&gt;, a fantastic read.&lt;/p&gt;
+&lt;p&gt;Before we conduct our tf-idf we’d like to explore our text a bit. The following exploratory analysis is inspired from Julia Silge’s blog post &lt;a href=&#34;https://juliasilge.com/blog/term-frequency-tf-idf/&#34;&gt;‘Term Frequency and tf-idf Using Tidy Data Principles’&lt;/a&gt;, a fantastic read.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;data-collection-analysis&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Data collection &amp;amp; Analysis&lt;/h3&gt;
