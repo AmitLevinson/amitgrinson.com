@@ -157,8 +157,8 @@ address_format = "en-us"
 # Load CSS and JS plugins
 #   E.g. To load `/assets/css/custom.css`, set `plugins_css = ["custom"]`.
 #   E.g. To load `/assets/js/custom.js`, set `plugins_js = ["custom"]`.
-plugin_css = []
-plugins_js  = []
+#plugin_css = []
+#plugins_js  = []
 
 
 ############################

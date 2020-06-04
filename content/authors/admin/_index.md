@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I'm an avid R user and interested in R analysis, drug markets and political participation.
+bio: I'm an avid R user interested in R analysis, visualizations, drug markets and political participation.
 education:
   courses:
   - course: MA in Sociology & Anthropology
