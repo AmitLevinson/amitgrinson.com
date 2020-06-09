@@ -9,15 +9,13 @@ The website was built with the following:
 * `R` programming language + `{blogdown}` package and [book](https://bookdown.org/yihui/blogdown/)  
 
 * [`Hugo` Framework](https://gohugo.io/) + [Academic theme](https://themes.gohugo.io/academic/)  
+<br>
 
-**Please feel free to fork, copy and use whatever you like**
+**Please feel free to fork, copy and use whatever you'd like!**  
 
-Here's how it looks on the phone (left) and on a computer screen (right):
+<br>
 
-<p align = "center">
-<img src="static/img/readme-page/phone.png" width = "250"/> <img src="static/img/readme-page/computer.png" width = "450"/> 
-</p>
+### Here's how the website looks on a computer screen:  
 
-
-
-
+<br>
+![screenshot-of-website-on-computer](static/img/readme-page/computer.png)
