@@ -13,8 +13,6 @@ The website was built with the following:
 * Files are stored on GitHub (in this repository) and the site is deployed through [Netlify](https://www.netlify.com/) for free 
 <br>
 
-**Please feel free to fork, copy and use whatever you'd like!**  
-
 
 ### Here's how the website looks on a computer screen:  
 
