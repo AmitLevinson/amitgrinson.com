@@ -18,4 +18,5 @@ The website was built with the following:
 ### Here's how the website looks on a computer screen:  
 
 <br>
+
 ![screenshot-of-website-on-computer](static/img/readme-page/computer.png)
