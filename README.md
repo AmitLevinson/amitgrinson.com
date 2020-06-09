@@ -2,18 +2,19 @@
 
 Hey there!
 
-Welcome to the repository of my website [www.amitlevinson.com](www.amitlevinson.com).   
+Welcome to the repository of my website [www.amitlevinson.com](https://amitlevinson.com/)   
 
 The website was built with the following:  
 
 * `R` programming language + `{blogdown}` package and [book](https://bookdown.org/yihui/blogdown/)  
 
-* [`Hugo` Framework](https://gohugo.io/) + [Academic theme](https://themes.gohugo.io/academic/)  
+* Using the [Hugo Framework](https://gohugo.io/) and the [Academic theme](https://themes.gohugo.io/academic/)  
+
+* Files are stored on GitHub (in this repository) and the site is deployed through [Netlify](https://www.netlify.com/) for free 
 <br>
 
 **Please feel free to fork, copy and use whatever you'd like!**  
 
-<br>
 
 ### Here's how the website looks on a computer screen:  
 
