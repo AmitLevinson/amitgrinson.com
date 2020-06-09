@@ -10,11 +10,15 @@ The website was built with the following:
 
 * Using the [Hugo Framework](https://gohugo.io/) and the [Academic theme](https://themes.gohugo.io/academic/)  
 
-* Files are stored on GitHub (in this repository) and the site is deployed through [Netlify](https://www.netlify.com/) for free 
+* Files are stored on GitHub (in this repository) and the site is deployed through [Netlify](https://www.netlify.com/) for free  
+
 <br>
 
+### Hope you find something useful!
 
-### Here's how the website looks on a computer screen:  
+<br>
+
+**Here's how the website looks on a computer screen:**
 
 <br>
 
