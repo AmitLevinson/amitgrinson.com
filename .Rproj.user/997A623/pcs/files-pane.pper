@@ -1,9 +1,9 @@
 {
-    "path" : "~/amitlevinson.com",
-    "sortOrder" : [
+    "path": "~/amitlevinson.com",
+    "sortOrder": [
         {
-            "ascending" : false,
-            "columnIndex" : 2
+            "ascending": false,
+            "columnIndex": 2
         }
     ]
 }
