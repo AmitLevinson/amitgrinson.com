@@ -43,6 +43,31 @@
 &lt;p&gt;Therefore, the probability of winning the lottery is &lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(p = \frac{1}{8136744}\)&lt;/span&gt;.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Wow! that’s a very low probability. How low? Let’s try and visualize it.&lt;/p&gt;
 &lt;p&gt;Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+library(dplyr)
+library(scattermore)
+library(extrafont)
+library(ggtext)
+
+set.seed(123)
+
+df_viz &amp;lt;- data.frame(x = rnorm(8136743, mean = 1000, sd = 1000),y = rnorm(8136743))
+point_highlight &amp;lt;- data.frame(x = -1811.674, y = -2.268505588)
+
+lot_p &amp;lt;- ggplot()+
+  geom_scattermost(df_viz, pointsize = 0.1, pixels = c(2000,2000))+
+  geom_point(data = point_highlight, aes(x = x, y = y), size = 0.3, color = &amp;quot;red&amp;quot;)+
+  annotate(geom = &amp;quot;curve&amp;quot;, x = -2750, xend = -1860, y = -3.10, yend = -2.29,
+    curvature = -.2, color = &amp;quot;grey25&amp;quot;, size = 0.75, arrow = arrow(length = unit(1.5, &amp;quot;mm&amp;quot;)))+
+  annotate(&amp;quot;text&amp;quot; ,x = -2750, y = -3.30, label = &amp;quot;Winner&amp;quot;, family = &amp;quot;Roboto Condensed&amp;quot;, size = 3)+
+  labs(title = &amp;quot;Winning the Israeli lottery&amp;quot;, subtitle = &amp;quot;To win, imagine trying to randomly choose a &amp;lt;b&amp;gt;&amp;lt;span style=&amp;#39;color:red&amp;#39;&amp;gt;specific ball&amp;lt;/span&amp;gt;&amp;lt;/b&amp;gt; out of 8,136,744 balls&amp;quot;)+
+  theme_void()+
+  theme(text = element_text(family = &amp;quot;Roboto Condensed&amp;quot;),
+        plot.title.position = &amp;quot;plot&amp;quot;,
+        plot.title = element_text(size = 16, face= &amp;quot;bold&amp;quot;),
+        plot.subtitle = element_markdown(family = &amp;quot;Roboto Condensed&amp;quot;,size = 12))
+
+lot_p&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Not easy is it?&lt;/p&gt;
 &lt;p&gt;Now that we know the probability of winning at each attempt, let’s see how it manifests across multiple attempts.&lt;/p&gt;

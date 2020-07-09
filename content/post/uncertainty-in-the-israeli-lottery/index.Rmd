@@ -57,14 +57,14 @@ Wow! that's a very low probability. How low? Let's try and visualize it.
 
 Sometimes when we receive a probability it's hard to grasp the odds and numbers thrown at us. Therefore, I'll try to visualize it for us. Imagine there's a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:
 
-```{r, fig.align='center'}
-set.seed(123)
-
+```{r, fig.align='center', echo = TRUE}
 library(ggplot2)
 library(dplyr)
 library(scattermore)
 library(extrafont)
 library(ggtext)
+
+set.seed(123)
 
 df_viz <- data.frame(x = rnorm(8136743, mean = 1000, sd = 1000),y = rnorm(8136743))
 point_highlight <- data.frame(x = -1811.674, y = -2.268505588)

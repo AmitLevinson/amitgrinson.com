@@ -528,7 +528,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    15 min read
+    16 min read
   </span>
   
 
@@ -590,6 +590,31 @@
 <p>Therefore, the probability of winning the lottery is <strong><span class="math inline">\(p = \frac{1}{8136744}\)</span>.</strong></p>
 <p>Wow! that’s a very low probability. How low? Let’s try and visualize it.</p>
 <p>Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+library(scattermore)
+library(extrafont)
+library(ggtext)
+
+set.seed(123)
+
+df_viz &lt;- data.frame(x = rnorm(8136743, mean = 1000, sd = 1000),y = rnorm(8136743))
+point_highlight &lt;- data.frame(x = -1811.674, y = -2.268505588)
+
+lot_p &lt;- ggplot()+
+  geom_scattermost(df_viz, pointsize = 0.1, pixels = c(2000,2000))+
+  geom_point(data = point_highlight, aes(x = x, y = y), size = 0.3, color = &quot;red&quot;)+
+  annotate(geom = &quot;curve&quot;, x = -2750, xend = -1860, y = -3.10, yend = -2.29,
+    curvature = -.2, color = &quot;grey25&quot;, size = 0.75, arrow = arrow(length = unit(1.5, &quot;mm&quot;)))+
+  annotate(&quot;text&quot; ,x = -2750, y = -3.30, label = &quot;Winner&quot;, family = &quot;Roboto Condensed&quot;, size = 3)+
+  labs(title = &quot;Winning the Israeli lottery&quot;, subtitle = &quot;To win, imagine trying to randomly choose a &lt;b&gt;&lt;span style=&#39;color:red&#39;&gt;specific ball&lt;/span&gt;&lt;/b&gt; out of 8,136,744 balls&quot;)+
+  theme_void()+
+  theme(text = element_text(family = &quot;Roboto Condensed&quot;),
+        plot.title.position = &quot;plot&quot;,
+        plot.title = element_text(size = 16, face= &quot;bold&quot;),
+        plot.subtitle = element_markdown(family = &quot;Roboto Condensed&quot;,size = 12))
+
+lot_p</code></pre>
 <p><img src="/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Not easy is it?</p>
 <p>Now that we know the probability of winning at each attempt, let’s see how it manifests across multiple attempts.</p>
