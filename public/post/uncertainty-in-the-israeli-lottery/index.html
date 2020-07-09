@@ -269,7 +269,7 @@
   
   <meta property="og:site_name" content="Amit Levinson">
   <meta property="og:url" content="/post/uncertainty-in-the-israeli-lottery/">
-  <meta property="og:title" content="Grasping uncertainty in the Israeli lottery | Amit Levinson">
+  <meta property="og:title" content="Defining uncertainty in the Israeli lottery | Amit Levinson">
   <meta property="og:description" content="Exploring the probability of winning the lottery at and by a given trial with the Geometric distribution"><meta property="og:image" content="/post/uncertainty-in-the-israeli-lottery/featured.jpg">
   <meta property="twitter:image" content="/post/uncertainty-in-the-israeli-lottery/featured.jpg"><meta property="og:locale" content="en-us">
   
@@ -304,7 +304,7 @@
     "@type": "WebPage",
     "@id": "/post/uncertainty-in-the-israeli-lottery/"
   },
-  "headline": "Grasping uncertainty in the Israeli lottery",
+  "headline": "Defining uncertainty in the Israeli lottery",
   
   "image": [
     "/post/uncertainty-in-the-israeli-lottery/featured.jpg"
@@ -341,7 +341,7 @@
   
 
 
-  <title>Grasping uncertainty in the Israeli lottery | Amit Levinson</title>
+  <title>Defining uncertainty in the Israeli lottery | Amit Levinson</title>
 
 </head>
 
@@ -498,7 +498,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Grasping uncertainty in the Israeli lottery</h1>
+  <h1>Defining uncertainty in the Israeli lottery</h1>
 
   
 
@@ -631,7 +631,7 @@ lot_p</code></pre>
 <div id="winning-at-a-given-trial" class="section level4">
 <h4>Winning <strong>at</strong> a given trial</h4>
 <p>We can denote the probability of winning as <span class="math inline">\(p\)</span>, which in the case of a lottery game is equal to <span class="math inline">\(p = \frac{1}{8136744}\)</span>. What if we wanted to know the probability of winning the lottery on the third try? That means we need two failures and then a success. If the probability of success - guessing the correct numbers - is <span class="math inline">\(p = \frac{1}{8136744}\)</span>, so the probability of a failure is <span class="math inline">\(q = 1 - p\)</span>, in this case <span class="math inline">\(q = \frac{8136743}{8136744}\)</span>. In order to win the lottery on the third try, this means getting two failures and then a success, resulting in a total of <span class="math inline">\(k = 3\)</span> attempts. Thus, the probability of winning on the third attempt is as follows:</p>
-<p><span class="math inline">\(P(X = 3) = (\frac{8136743}{8136744})\cdot(\frac{8136743}{8136744})\cdot (\frac{1}{8136744})\)</span>, equaling <span class="math inline">\(p = 0.0000001228993\)</span>. In other words there’s a ~0.0000123% chance we’ll win the lottery <em>exactly</em> on the third try.</p>
+<p><span class="math inline">\(p(3) = (\frac{8136743}{8136744})\cdot(\frac{8136743}{8136744})\cdot(\frac{1}{8136744})\)</span>, equaling <span class="math inline">\(p = 0.0000001228993\)</span>. In other words there’s a ~0.0000123% chance we’ll win the lottery <em>exactly</em> on the third try.</p>
 <p><strong>Generalizing, the probability distribution of the number of Bernoulli trials needed to get one success on the <span class="math inline">\(k\)</span> th trial is: <span class="math inline">\(P(X = k) = (1 - p)^{(k-1)} \cdot p\)</span>.</strong> We can break this up according to our previous example:</p>
 <ul>
 <li><p><span class="math inline">\(P\)</span> stands for the probability of getting our value <span class="math inline">\(X\)</span> on the <span class="math inline">\(k\)</span> attempt. Meaning, we want to win the lottery only on the third attempt.</p></li>
@@ -642,7 +642,7 @@ lot_p</code></pre>
 </div>
 <div id="winning-by-a-given-trial" class="section level4">
 <h4>Winning <strong>by</strong> a given trial</h4>
-<p>We don’t necessarily want to win the lottery on on a specific <span class="math inline">\(X\)</span> attempt, but explore the probabilities of winning <em>by</em> the <span class="math inline">\(k\)</span>th attempt. Reframing our previous question we can ask <em>“what is the probability of winning the lottery on the first 3 attempts?”</em>, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that <span class="math inline">\(X\)</span> will take a value less than or equal to <span class="math inline">\(k\)</span> (in our case representing the number of attempts).</p>
+<p>We don’t necessarily want to win the lottery on on a specific <span class="math inline">\(X\)</span> attempt, but explore the probabilities of winning <em>by</em> the <span class="math inline">\(k\)</span>th attempt. Reframing our previous question we can ask <strong>“what is the probability of winning the lottery on the first 3 attempts?”</strong>, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that <span class="math inline">\(X\)</span> will take a value less than or equal to <span class="math inline">\(k\)</span> (in our case representing the number of attempts).</p>
 <p><strong>How does this question change our calculation?</strong></p>
 <p>Let’s assume we’re still talking about 3 attempts. Our new framed question means we want to win the lottery either on the first attempt, the second or the third. In other words, we want to add the probability of success when <span class="math inline">\(P(X = 1)\)</span> + <span class="math inline">\(P(X = 2)\)</span> + <span class="math inline">\(P(X = 3)\)</span>. Given that our probability of failure is <span class="math inline">\(q = 1 - p\)</span>, we can write the argument as follows: <span class="math inline">\(P(X \leq 3) = q^0\cdot p + q^1 \cdot p + q^2 \cdot p\)</span>, inputting our values of <span class="math inline">\({(\frac{8136743}{8136744}})^0 \cdot p \cdot({\frac{8136743}{8136744}})^1\cdot p, ...\)</span>, resulting in the probability of winning in one of the first three attempts <span class="math inline">\(P(X \leq 3) = 0.000000368\)</span>, also written as a 0.0000368% chance.</p>
 <p>But if we want to look at the first 50 attempts? we’ll have to sum each individual PMF?</p>
@@ -1189,7 +1189,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/uncertainty-in-the-israeli-lottery/&amp;text=Grasping%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/uncertainty-in-the-israeli-lottery/&amp;text=Defining%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1202,7 +1202,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/uncertainty-in-the-israeli-lottery/&amp;t=Grasping%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/uncertainty-in-the-israeli-lottery/&amp;t=Defining%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1215,7 +1215,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="mailto:?subject=Grasping%20uncertainty%20in%20the%20Israeli%20lottery&amp;body=/post/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Defining%20uncertainty%20in%20the%20Israeli%20lottery&amp;body=/post/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1228,7 +1228,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/uncertainty-in-the-israeli-lottery/&amp;title=Grasping%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/uncertainty-in-the-israeli-lottery/&amp;title=Defining%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1241,7 +1241,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Grasping%20uncertainty%20in%20the%20Israeli%20lottery%20/post/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Defining%20uncertainty%20in%20the%20Israeli%20lottery%20/post/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1254,7 +1254,7 @@ head(df_prob)</code></pre>
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/uncertainty-in-the-israeli-lottery/&amp;title=Grasping%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/uncertainty-in-the-israeli-lottery/&amp;title=Defining%20uncertainty%20in%20the%20Israeli%20lottery" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

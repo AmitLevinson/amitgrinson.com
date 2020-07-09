@@ -1,5 +1,5 @@
 ---
-title: Grasping uncertainty in the Israeli lottery
+title: Defining uncertainty in the Israeli lottery
 author: Amit Levinson
 date: '2020-07-08'
 slug: uncertainty-in-the-israeli-lottery
@@ -111,7 +111,7 @@ Now that we got the technicalities out of the way we can start exploring some of
 
 We can denote the probability of winning as $p$, which in the case of a lottery game is equal to $p = \frac{1}{8136744}$. What if we wanted to know the probability of winning the lottery on the third try? That means we need two failures and then a success. If the probability of success - guessing the correct numbers - is $p = \frac{1}{8136744}$, so the probability of a failure is $q = 1 - p$, in this case $q = \frac{8136743}{8136744}$. In order to win the lottery on the third try, this means getting two failures and then a success, resulting in a total of $k = 3$ attempts. Thus, the probability of winning on the third attempt is as follows:  
 
-$P(X = 3) = (\frac{8136743}{8136744})\cdot(\frac{8136743}{8136744})\cdot (\frac{1}{8136744})$, equaling $p = 0.0000001228993$. In other words there's a ~0.0000123% chance we'll win the lottery *exactly* on the third try.  
+$p(3) = (\frac{8136743}{8136744})\cdot(\frac{8136743}{8136744})\cdot(\frac{1}{8136744})$, equaling $p = 0.0000001228993$. In other words there's a ~0.0000123% chance we'll win the lottery *exactly* on the third try.  
 
 **Generalizing, the probability distribution of the number of Bernoulli trials needed to get one success on the $k$ th trial is: $P(X = k) = (1 - p)^{(k-1)} \cdot p$.** We can break this up according to our previous example:   
 
@@ -126,7 +126,7 @@ The probability we just discussed is also known as the probability mass function
 
 #### Winning **by** a given trial
 
-We don't necessarily want to win the lottery on on a specific $X$ attempt, but explore the probabilities of winning *by* the $k$th attempt. Reframing our previous question we can ask *"what is the probability of winning the lottery on the first 3 attempts?"*, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that $X$ will take a value less than or equal to $k$ (in our case representing the number of attempts).   
+We don't necessarily want to win the lottery on on a specific $X$ attempt, but explore the probabilities of winning *by* the $k$th attempt. Reframing our previous question we can ask **"what is the probability of winning the lottery on the first 3 attempts?"**, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that $X$ will take a value less than or equal to $k$ (in our case representing the number of attempts).   
 
 **How does this question change our calculation?**  
 
