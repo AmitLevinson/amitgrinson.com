@@ -33,13 +33,13 @@
 &lt;/div&gt;
 &lt;div id=&#34;the-odds&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;The odds&lt;/h3&gt;
-&lt;p&gt;To understand the lottery probabilities, we need to calculate the probability of &lt;strong&gt;guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.&lt;/strong&gt; In order to do this, we can turn to combinations:&lt;/p&gt;
+&lt;p&gt;To understand the lottery probabilities, we need to calculate &lt;strong&gt;the probability of guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.&lt;/strong&gt; In order to do this, we can turn to combinations:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;In mathematics, a combination is a selection of items from a collection, such that (unlike permutations) the order of selection does not matter. &lt;/br&gt; ― &lt;a href=&#34;https://en.wikipedia.org/wiki/Combination&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;That’s exactly what we need. We want to calculate the probability of randomly guessing six numbers regardless of their order; If the order was important we’d want to look at permutations. In addition, each number is drawn without replacement, and therefore there can’t be repetition of the same number.&lt;/p&gt;
 &lt;p&gt;The formula to calculate combinations is as follows: &lt;span class=&#34;math inline&#34;&gt;\(C(n,k) = \frac{n!}{k!(n-k)!}\)&lt;/span&gt; Where &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; is the number of options to choose from and &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; is the number of choices we make.&lt;/p&gt;
-&lt;p&gt;Inputting our numbers we get &lt;span class=&#34;math inline&#34;&gt;\(C(37,6) = \frac{37!}{6!(37-6)!}\)&lt;/span&gt;, and now we just calculate away. However, don’t forget we also need to guess another number out of 7 possible numbers (the strong one), so we’ll multiply our outcome by &lt;span class=&#34;math inline&#34;&gt;\(\frac1 7\)&lt;/span&gt;, yielding a probability of &lt;span class=&#34;math inline&#34;&gt;\(p = \frac{1}{16273488}\)&lt;/span&gt;. ‘Luckily’ we are able to choose two sets of numbers in a given ticket, so we multiply the probability by 2.&lt;/p&gt;
+&lt;p&gt;Inputting our numbers we get &lt;span class=&#34;math inline&#34;&gt;\(C(37,6) = \frac{37!}{6!(37-6)!}\)&lt;/span&gt;, and now we just calculate away. However, don’t forget we also need to guess another number out of 7 possible numbers (the strong one), so we’ll multiply our outcome by &lt;span class=&#34;math inline&#34;&gt;\(\frac1 7\)&lt;/span&gt;, yielding a probability of &lt;span class=&#34;math inline&#34;&gt;\(p = \frac{1}{16273488}\)&lt;/span&gt;. ‘Luckily’ we choose two sets of numbers in a given ticket, so we multiply the probability by 2.&lt;/p&gt;
 &lt;p&gt;Therefore, the probability of winning the lottery is &lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(p = \frac{1}{8136744}\)&lt;/span&gt;.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Wow! that’s a very low probability. How low? Let’s try and visualize it.&lt;/p&gt;
 &lt;p&gt;Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:&lt;/p&gt;
@@ -103,7 +103,7 @@ head(df_prob)&lt;/code&gt;&lt;/pre&gt;
 ## 6     6 0.000000737        34.8&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Looks good!&lt;/p&gt;
 &lt;p&gt;We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at &lt;em&gt;any&lt;/em&gt; trial is constant (&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;), so it’ll be redundant to add that in here.&lt;/p&gt;
-&lt;p&gt;Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000.$…$500,000; 1,000,000, 10,000,000; 50,000,000:&lt;/p&gt;
+&lt;p&gt;Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000 &lt;span class=&#34;math inline&#34;&gt;\(...\)&lt;/span&gt; 1,000,000, 10,000,000; 50,000,000:&lt;/p&gt;
 &lt;style&gt;html {
   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
 }

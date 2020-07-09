@@ -31,13 +31,13 @@ projects: []
 </div>
 <div id="the-odds" class="section level3">
 <h3>The odds</h3>
-<p>To understand the lottery probabilities, we need to calculate the probability of <strong>guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.</strong> In order to do this, we can turn to combinations:</p>
+<p>To understand the lottery probabilities, we need to calculate <strong>the probability of guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.</strong> In order to do this, we can turn to combinations:</p>
 <blockquote>
 <p>In mathematics, a combination is a selection of items from a collection, such that (unlike permutations) the order of selection does not matter. </br> ― <a href="https://en.wikipedia.org/wiki/Combination">Wikipedia</a></p>
 </blockquote>
 <p>That’s exactly what we need. We want to calculate the probability of randomly guessing six numbers regardless of their order; If the order was important we’d want to look at permutations. In addition, each number is drawn without replacement, and therefore there can’t be repetition of the same number.</p>
 <p>The formula to calculate combinations is as follows: <span class="math inline">\(C(n,k) = \frac{n!}{k!(n-k)!}\)</span> Where <span class="math inline">\(n\)</span> is the number of options to choose from and <span class="math inline">\(k\)</span> is the number of choices we make.</p>
-<p>Inputting our numbers we get <span class="math inline">\(C(37,6) = \frac{37!}{6!(37-6)!}\)</span>, and now we just calculate away. However, don’t forget we also need to guess another number out of 7 possible numbers (the strong one), so we’ll multiply our outcome by <span class="math inline">\(\frac1 7\)</span>, yielding a probability of <span class="math inline">\(p = \frac{1}{16273488}\)</span>. ‘Luckily’ we are able to choose two sets of numbers in a given ticket, so we multiply the probability by 2.</p>
+<p>Inputting our numbers we get <span class="math inline">\(C(37,6) = \frac{37!}{6!(37-6)!}\)</span>, and now we just calculate away. However, don’t forget we also need to guess another number out of 7 possible numbers (the strong one), so we’ll multiply our outcome by <span class="math inline">\(\frac1 7\)</span>, yielding a probability of <span class="math inline">\(p = \frac{1}{16273488}\)</span>. ‘Luckily’ we choose two sets of numbers in a given ticket, so we multiply the probability by 2.</p>
 <p>Therefore, the probability of winning the lottery is <strong><span class="math inline">\(p = \frac{1}{8136744}\)</span>.</strong></p>
 <p>Wow! that’s a very low probability. How low? Let’s try and visualize it.</p>
 <p>Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:</p>
@@ -101,7 +101,7 @@ head(df_prob)</code></pre>
 ## 6     6 0.000000737        34.8</code></pre>
 <p>Looks good!</p>
 <p>We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at <em>any</em> trial is constant (<span class="math inline">\(p\)</span>), so it’ll be redundant to add that in here.</p>
-<p>Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000.$…$500,000; 1,000,000, 10,000,000; 50,000,000:</p>
+<p>Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000 <span class="math inline">\(...\)</span> 1,000,000, 10,000,000; 50,000,000:</p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }

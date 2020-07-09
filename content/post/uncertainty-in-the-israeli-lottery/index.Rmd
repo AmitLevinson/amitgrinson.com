@@ -41,7 +41,7 @@ Another 'luck' in our favor is that in each lottery ticket we have the option to
 
 ### The odds
 
-To understand the lottery probabilities, we need to calculate the probability of **guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.** In order to do this, we can turn to combinations:   
+To understand the lottery probabilities, we need to calculate **the probability of guessing a combination of 6 numbers out of 37 options along with one strong number out of 7 possible numbers.** In order to do this, we can turn to combinations:   
 
 > In mathematics, a combination is a selection of items from a collection, such that (unlike permutations) the order of selection does not matter. </br> ― [Wikipedia](https://en.wikipedia.org/wiki/Combination)
 
@@ -49,7 +49,7 @@ That's exactly what we need. We want to calculate the probability of randomly gu
 
 The formula to calculate combinations is as follows: $C(n,k) = \frac{n!}{k!(n-k)!}$ Where $n$ is the number of options to choose from and $k$ is the number of choices we make.   
 
-Inputting our numbers we get $C(37,6) = \frac{37!}{6!(37-6)!}$, and now we just calculate away. However, don't forget we also need to guess another number out of 7 possible numbers (the strong one), so we'll multiply our outcome by $\frac1 7$, yielding a probability of $p = \frac{1}{16273488}$. 'Luckily' we are able to choose two sets of numbers in a given ticket, so we multiply the probability by 2.
+Inputting our numbers we get $C(37,6) = \frac{37!}{6!(37-6)!}$, and now we just calculate away. However, don't forget we also need to guess another number out of 7 possible numbers (the strong one), so we'll multiply our outcome by $\frac1 7$, yielding a probability of $p = \frac{1}{16273488}$. 'Luckily' we choose two sets of numbers in a given ticket, so we multiply the probability by 2.
 
 Therefore, the probability of winning the lottery is **$p = \frac{1}{8136744}$.**  
 
@@ -173,7 +173,7 @@ Looks good!
 
 We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at *any* trial is constant ($p$), so it'll be redundant to add that in here.
 
-Now let's look at specific points along our data frame and see how much money is spent reaching there. More specifically, let's look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000.$...$500,000; 1,000,000, 10,000,000; 50,000,000:
+Now let's look at specific points along our data frame and see how much money is spent reaching there. More specifically, let's look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000 $...$ 1,000,000, 10,000,000; 50,000,000:
 
 ```{r}
 trials_we_want <- c(1,10,100,500,1000,2500,5000,10000,25000,100000,250000,500000,1000000,1e7, 5e7)
