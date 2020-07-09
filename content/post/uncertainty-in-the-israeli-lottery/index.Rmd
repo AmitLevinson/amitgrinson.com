@@ -173,7 +173,7 @@ Looks good!
 
 We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at *any* trial is constant ($p$), so it'll be redundant to add that in here.
 
-Now let's look at specific points along our data frame and see how much money is spent reaching there. More specifically, let's look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000 $...$ 1,000,000, 10,000,000; 50,000,000:
+Now let's look at specific points along our data frame and see how much money is spent reaching there. More specifically, let's look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000, $...$, 1,000,000, 10,000,000; 50,000,000:
 
 ```{r}
 trials_we_want <- c(1,10,100,500,1000,2500,5000,10000,25000,100000,250000,500000,1000000,1e7, 5e7)

@@ -128,7 +128,7 @@ head(df_prob)&lt;/code&gt;&lt;/pre&gt;
 ## 6     6 0.000000737        34.8&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Looks good!&lt;/p&gt;
 &lt;p&gt;We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at &lt;em&gt;any&lt;/em&gt; trial is constant (&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;), so it’ll be redundant to add that in here.&lt;/p&gt;
-&lt;p&gt;Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000 &lt;span class=&#34;math inline&#34;&gt;\(...\)&lt;/span&gt; 1,000,000, 10,000,000; 50,000,000:&lt;/p&gt;
+&lt;p&gt;Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000, &lt;span class=&#34;math inline&#34;&gt;\(...\)&lt;/span&gt;, 1,000,000, 10,000,000; 50,000,000:&lt;/p&gt;
 &lt;style&gt;html {
   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
 }
