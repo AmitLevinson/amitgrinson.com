@@ -80,7 +80,8 @@ lot_p <- ggplot()+
   theme(text = element_text(family = "Roboto Condensed"),
         plot.title.position = "plot",
         plot.title = element_text(size = 16, face= "bold"),
-        plot.subtitle = element_markdown(family = "Roboto Condensed",size = 12))
+        plot.subtitle = element_markdown(family = "Roboto Condensed",size = 12),
+        plot.margin = margin(4,2,2,4, unit = "mm"))
 
 lot_p
 ```

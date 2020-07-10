@@ -65,7 +65,8 @@ lot_p &amp;lt;- ggplot()+
   theme(text = element_text(family = &amp;quot;Roboto Condensed&amp;quot;),
         plot.title.position = &amp;quot;plot&amp;quot;,
         plot.title = element_text(size = 16, face= &amp;quot;bold&amp;quot;),
-        plot.subtitle = element_markdown(family = &amp;quot;Roboto Condensed&amp;quot;,size = 12))
+        plot.subtitle = element_markdown(family = &amp;quot;Roboto Condensed&amp;quot;,size = 12),
+        plot.margin = margin(4,2,2,4, unit = &amp;quot;mm&amp;quot;))
 
 lot_p&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
