@@ -1,7 +1,7 @@
 ---
 title: Defining uncertainty in the Israeli lottery
 author: Amit Levinson
-date: '2020-07-08'
+date: '2020-07-09'
 slug: uncertainty-in-the-israeli-lottery
 categories: []
 tags: [probability]
@@ -162,7 +162,7 @@ Once we have that we can calculate both the probability of winning up to a speci
 
 ```{r echo = TRUE}
 df_prob <- df_prob %>% 
-  mutate(cdf = 1 - (1 - p)^trial,
+  mutate(cdf = 1 - (q)^trial,
          money_spent = trial * 5.8)
 
 head(df_prob)

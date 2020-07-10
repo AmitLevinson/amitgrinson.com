@@ -1,7 +1,7 @@
 ---
 title: Defining uncertainty in the Israeli lottery
 author: Amit Levinson
-date: '2020-07-08'
+date: '2020-07-09'
 slug: uncertainty-in-the-israeli-lottery
 categories: []
 tags: [probability]
@@ -111,7 +111,7 @@ lot_p</code></pre>
 <pre class="r"><code>df_prob &lt;- tibble(trial = c(1:50000, seq(50000, 1e8, 500)))</code></pre>
 <p>Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there:</p>
 <pre class="r"><code>df_prob &lt;- df_prob %&gt;% 
-  mutate(cdf = 1 - (1 - p)^trial,
+  mutate(cdf = 1 - (q)^trial,
          money_spent = trial * 5.8)
 
 head(df_prob)</code></pre>

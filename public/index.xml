@@ -15,7 +15,7 @@
     <item>
       <title>Defining uncertainty in the Israeli lottery</title>
       <link>/post/uncertainty-in-the-israeli-lottery/</link>
-      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate>
       <guid>/post/uncertainty-in-the-israeli-lottery/</guid>
       <description>
 
@@ -113,7 +113,7 @@ lot_p&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_prob &amp;lt;- tibble(trial = c(1:50000, seq(50000, 1e8, 500)))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_prob &amp;lt;- df_prob %&amp;gt;% 
-  mutate(cdf = 1 - (1 - p)^trial,
+  mutate(cdf = 1 - (q)^trial,
          money_spent = trial * 5.8)
 
 head(df_prob)&lt;/code&gt;&lt;/pre&gt;
