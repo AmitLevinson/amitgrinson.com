@@ -31,9 +31,9 @@ knitr::include_graphics("hunger.jpg")
 
 ### The rules
 
-We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. Pais holds their lotteries twice a week with the regular prize of 5 million New Israeli Shekels (NIS), equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
+We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. The ticket we'll be discussing costs 5.8 New Israeli Shekels (NIS), approximately ~\$1.6. Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
 
-When filling out a lottery form you choose 6 numbers in the range of 1&ndash;37 and a 'strong' number in the range of 1–7[^1]. In order to win first place you have to ~~get~~ guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn't matter therefore if you wrote $6,12...n$ or $12,6,...n$ your good on both (Also known as combinations, more on that in a minute).   
+When filling out a lottery form you choose 6 numbers in the range of 1&ndash;37 and a 'strong' number in the range of 1–7[^1]. In order to win first place you have to ~~get~~ guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn't matter therefore if you wrote $6,12...n$ or $12,6,...n$ you're good on both (Also known as combinations, more on that in a minute).   
 
 [^1]: An amusing anecdote is that the Pais organization offers information about 'Hot' numbers and the [frequency of appearance for each number](https://www.pais.co.il/lotto/statistics.aspx). Considering that the lottery is random I wouldn't rely on such a pattern... 
 
@@ -127,7 +127,7 @@ The probability we just discussed is also known as the probability mass function
 
 #### Winning **by** a given trial
 
-We don't necessarily want to win the lottery on on a specific $X$ attempt, but explore the probabilities of winning *by* the $k$th attempt. Reframing our previous question we can ask **"what is the probability of winning the lottery on the first 3 attempts?"**, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that $X$ will take a value less than or equal to $k$ (in our case representing the number of attempts).   
+We don't necessarily want to win the lottery on on a specific $X$ attempt, but explore the probabilities of winning *by* the $k$th attempt. Reframing our previous question we can ask **"what is the probability of winning the lottery on at least one of the first 3 attempts?"**, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that $X$ will take a value less than or equal to $k$ (in our case representing the number of attempts).   
 
 **How does this question change our calculation?**  
 
@@ -159,7 +159,7 @@ Now we can create a data frame to account for some 250,000 attempts. We don't ne
 df_prob <- tibble(trial = c(1:50000, seq(50000, 1e8, 500)))
 ```
 
-Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there:
+Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there (according to a price ticket of NIS 5.8):
 
 ```{r echo = TRUE}
 df_prob <- df_prob %>% 
@@ -240,7 +240,7 @@ mean(rgeom(2e6, p))
 
 Pretty close to our expected value!  
 
-So what does the $E(X)$ mean in terms of the lottery? **On average, you'd have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (1.42M dollars)!**
+So what does the $E(X)$ mean in terms of the lottery? **On average, you'd have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!**
 
 ### Conclusion
 

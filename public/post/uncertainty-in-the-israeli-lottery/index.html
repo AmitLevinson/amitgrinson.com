@@ -574,8 +574,8 @@
 <p><img src="hunger.jpg" width="85%" height="85%" /></p>
 <div id="the-rules" class="section level3">
 <h3>The rules</h3>
-<p>We’ll be exploring the probability of winning the Israeli lottery held by the <a href="https://www.pais.co.il/">Pais organization</a>, a well-known lottery enterprise in Israel. Pais holds their lotteries twice a week with the regular prize of 5 million New Israeli Shekels (NIS), equivalent to $1,420,000. If there’s no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I’ll only discuss winning a first place prize (be the only winner). In addition I won’t be discussing the effect of prize increase on when to participate.</p>
-<p>When filling out a lottery form you choose 6 numbers in the range of 1–37 and a ‘strong’ number in the range of 1–7<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. In order to win first place you have to <del>get</del> guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn’t matter therefore if you wrote <span class="math inline">\(6,12...n\)</span> or <span class="math inline">\(12,6,...n\)</span> your good on both (Also known as combinations, more on that in a minute).</p>
+<p>We’ll be exploring the probability of winning the Israeli lottery held by the <a href="https://www.pais.co.il/">Pais organization</a>, a well-known lottery enterprise in Israel. The ticket we’ll be discussing costs 5.8 New Israeli Shekels (NIS), approximately ~$1.6. Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there’s no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I’ll only discuss winning a first place prize (be the only winner). In addition I won’t be discussing the effect of prize increase on when to participate.</p>
+<p>When filling out a lottery form you choose 6 numbers in the range of 1–37 and a ‘strong’ number in the range of 1–7<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. In order to win first place you have to <del>get</del> guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn’t matter therefore if you wrote <span class="math inline">\(6,12...n\)</span> or <span class="math inline">\(12,6,...n\)</span> you’re good on both (Also known as combinations, more on that in a minute).</p>
 <p>Another ‘luck’ in our favor is that in each lottery ticket we have the option to fill out two sets of numbers, therefore doubling our odds of winning. I’m assuming we’re on the same page and you won’t use both of your attempts to guess the same sets of numbers, so that somewhat increases our odds of winning. Speaking of odds, let’s have a look at them.</p>
 </div>
 <div id="the-odds" class="section level3">
@@ -643,7 +643,7 @@ lot_p</code></pre>
 </div>
 <div id="winning-by-a-given-trial" class="section level4">
 <h4>Winning <strong>by</strong> a given trial</h4>
-<p>We don’t necessarily want to win the lottery on on a specific <span class="math inline">\(X\)</span> attempt, but explore the probabilities of winning <em>by</em> the <span class="math inline">\(k\)</span>th attempt. Reframing our previous question we can ask <strong>“what is the probability of winning the lottery on the first 3 attempts?”</strong>, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that <span class="math inline">\(X\)</span> will take a value less than or equal to <span class="math inline">\(k\)</span> (in our case representing the number of attempts).</p>
+<p>We don’t necessarily want to win the lottery on on a specific <span class="math inline">\(X\)</span> attempt, but explore the probabilities of winning <em>by</em> the <span class="math inline">\(k\)</span>th attempt. Reframing our previous question we can ask <strong>“what is the probability of winning the lottery on at least one of the first 3 attempts?”</strong>, bringing us to the Cumulative distribution function (CDF). In a cumulative distribution we calculate the probability that <span class="math inline">\(X\)</span> will take a value less than or equal to <span class="math inline">\(k\)</span> (in our case representing the number of attempts).</p>
 <p><strong>How does this question change our calculation?</strong></p>
 <p>Let’s assume we’re still talking about 3 attempts. Our new framed question means we want to win the lottery either on the first attempt, the second or the third. In other words, we want to add the probability of success when <span class="math inline">\(P(X = 1)\)</span> + <span class="math inline">\(P(X = 2)\)</span> + <span class="math inline">\(P(X = 3)\)</span>. Given that our probability of failure is <span class="math inline">\(q = 1 - p\)</span>, we can write the argument as follows: <span class="math inline">\(P(X \leq 3) = q^0\cdot p + q^1 \cdot p + q^2 \cdot p\)</span>, inputting our values of <span class="math inline">\({(\frac{8136743}{8136744}})^0 \cdot p \cdot({\frac{8136743}{8136744}})^1\cdot p, ...\)</span>, resulting in the probability of winning in one of the first three attempts <span class="math inline">\(P(X \leq 3) = 0.000000368\)</span>, also written as a 0.0000368% chance.</p>
 <p>But if we want to look at the first 50 attempts? we’ll have to sum each individual PMF?</p>
@@ -659,7 +659,7 @@ lot_p</code></pre>
 <pre class="r"><code>q &lt;- 1 - p</code></pre>
 <p>Now we can create a data frame to account for some 250,000 attempts. We don’t need each attempt so we’ll simulate data for the first 50,000 and then have points spread out in a 500 interval jump all the way to the 100,000,000 attempt.</p>
 <pre class="r"><code>df_prob &lt;- tibble(trial = c(1:50000, seq(50000, 1e8, 500)))</code></pre>
-<p>Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there:</p>
+<p>Once we have that we can calculate both the probability of winning up to a specific attempt and the cumulative amount of money spent reaching there (according to a price ticket of NIS 5.8):</p>
 <pre class="r"><code>df_prob &lt;- df_prob %&gt;% 
   mutate(cdf = 1 - (q)^trial,
          money_spent = trial * 5.8)
@@ -1136,7 +1136,7 @@ head(df_prob)</code></pre>
 <pre class="r"><code>mean(rgeom(2e6, p))</code></pre>
 <pre><code>## [1] 8129065</code></pre>
 <p>Pretty close to our expected value!</p>
-<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>On average, you’d have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (1.42M dollars)!</strong></p>
+<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>On average, you’d have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!</strong></p>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
