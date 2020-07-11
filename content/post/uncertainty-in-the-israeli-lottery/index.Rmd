@@ -31,7 +31,9 @@ knitr::include_graphics("hunger.jpg")
 
 ### The rules
 
-We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. The ticket we'll be discussing costs 5.8 New Israeli Shekels (NIS), approximately ~\$1.6. Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
+We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. The ticket we'll be discussing costs is applicable to the main lottery called 'Loto' and costs 5.8 New Israeli Shekels (NIS), approximately ~1.6 dollars.  
+
+Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
 
 When filling out a lottery form you choose 6 numbers in the range of 1&ndash;37 and a 'strong' number in the range of 1–7[^1]. In order to win first place you have to ~~get~~ guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn't matter therefore if you wrote $6,12...n$ or $12,6,...n$ you're good on both (Also known as combinations, more on that in a minute).   
 
