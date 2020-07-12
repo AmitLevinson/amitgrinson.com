@@ -14,6 +14,8 @@ image:
   focal_point: ''
   preview_only: yes
 projects: []
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -224,7 +226,7 @@ knitr::include_graphics("dumber.jpg")
 
 ### Average number of attempts
 
-An interesting feature of the geometric distribution is that we can calculate the mean and variance of the distribution. The mean in the discussed cumulative distribution is $E(X) = \frac{1}{p}$ and a variance of $var(X) = \frac{1-p}{p^2}$. The mean is basically the expected value for the number of independent trials needed to get the first success. So in our lottery example the expected number of attempts to reach a success is $E(X) = \frac{1}{\frac{1}{8136744}}$, resulting in 8,136,744 attempts.
+An interesting feature of the geometric distribution is that we can calculate the expected number of attempts and variance of the distribution. The expected number of attempts in the discussed geometric cumulative distribution is $E(X) = \frac{1}{p}$ with a variance of $var(X) = \frac{1-p}{p^2}$. $E(X)$ is basically the expected value for the number of independent trials needed to get the first success (Think of it as an average, only theoretically). So in our lottery example the expected number of attempts to reach a success is $E(X) = \frac{1}{\frac{1}{8136744}}$, resulting in 8,136,744 attempts.
 
 R has built in functions for working with the geometric distribution such as `pgeom`, `rgeom`, `qgeom` and `dgeom` which you can explore more [here](https://www.statology.org/dgeom-pgeom-qgeom-rgeom-r/). For the purpose of exploring the mean we can use the `rgeom` function which generates a value representing the number of failures before a success occurred. For example, let's see how many failures we're required to reach one success:
 
@@ -242,7 +244,7 @@ mean(rgeom(2e6, p))
 
 Pretty close to our expected value!  
 
-So what does the $E(X)$ mean in terms of the lottery? **On average, you'd have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!**
+So what does the $E(X)$ mean in terms of the lottery? **You'd have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!**
 
 ### Conclusion
 

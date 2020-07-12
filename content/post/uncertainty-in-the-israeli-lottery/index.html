@@ -14,6 +14,8 @@ image:
   focal_point: ''
   preview_only: yes
 projects: []
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -579,7 +581,7 @@ head(df_prob)</code></pre>
 </div>
 <div id="average-number-of-attempts" class="section level3">
 <h3>Average number of attempts</h3>
-<p>An interesting feature of the geometric distribution is that we can calculate the mean and variance of the distribution. The mean in the discussed cumulative distribution is <span class="math inline">\(E(X) = \frac{1}{p}\)</span> and a variance of <span class="math inline">\(var(X) = \frac{1-p}{p^2}\)</span>. The mean is basically the expected value for the number of independent trials needed to get the first success. So in our lottery example the expected number of attempts to reach a success is <span class="math inline">\(E(X) = \frac{1}{\frac{1}{8136744}}\)</span>, resulting in 8,136,744 attempts.</p>
+<p>An interesting feature of the geometric distribution is that we can calculate the expected number of attempts and variance of the distribution. The expected number of attempts in the discussed geometric cumulative distribution is <span class="math inline">\(E(X) = \frac{1}{p}\)</span> with a variance of <span class="math inline">\(var(X) = \frac{1-p}{p^2}\)</span>. <span class="math inline">\(E(X)\)</span> is basically the expected value for the number of independent trials needed to get the first success (Think of it as an average, only theoretically). So in our lottery example the expected number of attempts to reach a success is <span class="math inline">\(E(X) = \frac{1}{\frac{1}{8136744}}\)</span>, resulting in 8,136,744 attempts.</p>
 <p>R has built in functions for working with the geometric distribution such as <code>pgeom</code>, <code>rgeom</code>, <code>qgeom</code> and <code>dgeom</code> which you can explore more <a href="https://www.statology.org/dgeom-pgeom-qgeom-rgeom-r/">here</a>. For the purpose of exploring the mean we can use the <code>rgeom</code> function which generates a value representing the number of failures before a success occurred. For example, let’s see how many failures we’re required to reach one success:</p>
 <pre class="r"><code>rgeom(n = 1,p = p)</code></pre>
 <pre><code>## [1] 30687199</code></pre>
@@ -588,7 +590,7 @@ head(df_prob)</code></pre>
 <pre class="r"><code>mean(rgeom(2e6, p))</code></pre>
 <pre><code>## [1] 8129065</code></pre>
 <p>Pretty close to our expected value!</p>
-<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>On average, you’d have to play 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!</strong></p>
+<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>You’d have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!</strong></p>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
