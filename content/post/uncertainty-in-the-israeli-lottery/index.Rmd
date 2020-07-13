@@ -3,7 +3,7 @@ title: Defining uncertainty in the Israeli lottery
 author: Amit Levinson
 date: '2020-07-09'
 slug: uncertainty-in-the-israeli-lottery
-categories: []
+categories: [R]
 tags: [probability]
 subtitle: ''
 summary: 'Exploring the probability of winning the lottery at and by a given trial with the Geometric distribution'
