@@ -41,15 +41,6 @@ enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
-# Set to true to disable code folding
-disable_codefolding = false
-# Set to "hide" or "show" all codes by default
-codefolding_show = "show"
-# Set to true to exclude the "Show/hide all" button
-codefolding_nobutton = false
-
-custom_css = ["codefolding.css"]
-
 [outputs]
   home = [ "HTML", "RSS", "JSON", "WebAppManifest" ]
   section = [ "HTML", "RSS" ]
