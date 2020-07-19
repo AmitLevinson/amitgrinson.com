@@ -209,7 +209,7 @@ df_sample <- sample_trials %>%
     cdf_perc = "% winning by then"
   ) %>% 
     tab_footnote (
-    footnote = "Money spent corresponds to the cumulative number of attempts played",
+    footnote = "Money spent (rounded up) corresponds to the cumulative number of attempts played",
     locations = cells_column_labels(
       columns = vars(money_spent)))
 ```
