@@ -1029,6 +1029,30 @@ You can find your hosted html file at &lt;span style=&#34;color:RoyalBlue;&#34;&
     </item>
     
     <item>
+      <title>Nicely Printing Categorical Variables with KableExtra</title>
+      <link>/post/sharing-interactive-charts/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      <guid>/post/sharing-interactive-charts/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(kableExtra)&lt;/code&gt;&lt;/pre&gt;
+&lt;style&gt;
+p.caption {
+  font-size: 0.8em;
+}
+&lt;/style&gt;
+&lt;p&gt;This post is somewhat of a ~love post~ tribute to both the iteration abilities in R combined with the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&#34;&gt;&lt;code&gt;KableExtra&lt;/code&gt;&lt;/a&gt; package. I set myself several goals for my thesis, one of them was doing my survey analysis in something other than SPSS. This post is not to rant about SPSS, but to cut it short - I want to finish my Masters with some broader knowledge of statistical programs. I started learning R 10 months ago so that when the time comes - When my pilot and survey results come in (come in is a sugar coated for me collecting respsones) - I can analyse it all in R.&lt;/p&gt;
+&lt;p&gt;The time came and I started to analyse the data in R. However, the problem was, That I wasn’t going to do an OK job. After discovering much of R’s abilities, I wasn’t going to let myself copy+paste. So I wrote a few functions, maniuplated some of the work and then it was time to get out the big guns.&lt;/p&gt;
+&lt;div id=&#34;the-problem&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The Problem&lt;/h3&gt;
+&lt;p&gt;In my pilot survey I had several questions (~20) that were categorical, ordinal and were simple constructs that didn’t require a more thorough analysis such as reliability of the scale. I wanted to nicely print all of these variables in one table.&lt;/p&gt;
+&lt;p&gt;Coming from an SPSS background, but with some broader knowledge of programming, I&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Israeli elections on Twitter</title>
       <link>/post/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
