@@ -8,6 +8,10 @@ body {
   min-height: 100px !important;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.025em;
+}
+
 /* links */
 
 a:active, 
@@ -75,7 +79,7 @@ a.nav-link:hover:after {
 }
 
 #about .col-12.col-lg-8 {
-  padding-top: 30px !important;
+  padding-top: 10px !important;
 }
 
 .network-icon li:hover {
