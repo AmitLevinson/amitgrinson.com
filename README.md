@@ -11,6 +11,7 @@ The website was built with the following:
 * Using the [Hugo Framework](https://gohugo.io/) and the [Academic theme](https://themes.gohugo.io/academic/)  
 
 * Files are stored on GitHub (in this repository) and the site is deployed through [Netlify](https://www.netlify.com/) for free  
+* CSS is adapted from [Allison Hill's](https://alison.rbind.io/) amazing website
 
 <br>
 

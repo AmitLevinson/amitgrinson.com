@@ -2,17 +2,10 @@
 
 body {
   margin-top: 100px !important;
-  color: #172A3A;
 }
 
 .navbar {
   min-height: 100px !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: 400;
-  letter-spacing: 0.04em;
-  color: #172A3A;
 }
 
 /* links */
@@ -113,28 +106,6 @@ a.nav-link:hover:after {
 }
 
 
-/* code */
-/* https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd */
-
-pre, code {
-	color: #3f3f3f;
-	background-color: #fff;
-}
-
-pre {
-  border: 1px solid #fff;
-  box-shadow: 5px 5px 5px #eee;
-  padding: 0.25em;
-  background: #fff;
-  overflow-x: auto;
-  border-radius: 0px; /*undo rounded corners*/
-}
-
-pre code { 
-  background: none; 
-  font-size: 0.8rem;
-}
-
 /* alerts */
 
 div.alert-note > div:first-child::before {
@@ -222,7 +193,7 @@ div.universal-wrapper.pt-3 h1 {
 hr {
   border: 0;
   height: 1px;
-  background: #32408f;
+  background: #172A3A;
   background-image: none;
 }
 
@@ -289,5 +260,5 @@ iframe {
 }
 
 .section-heading p {
-	color: #3f51b5;
+	color: #172A3A;
 }

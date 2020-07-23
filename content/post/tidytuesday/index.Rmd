@@ -43,6 +43,21 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+### **22.07.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week30-aus_animals/aus-animals.R)
+
+<p align = "center">
+<img alt = 'animals-in-australia' src="/img/tt/animal-aus.png" width = "700">
+</p>
+
+
+### **22.06.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week25-slavery/shiny-app/app.R)
+
+<p align = "center">
+<img alt = 'slavery-shiny-app' src="/img/tt/tt-week25-slaves.gif" width = "700">
+</p>
+
 
 ### **02.06.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week23_marble-races/marble-races.Rmd)
@@ -54,7 +69,7 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 ### **14.05.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R)
 <p align = "center">
-<img alt = 'Tidytuesday volcano eruption' src = "/img/tt/vc.png" width = "700">
+<img alt = 'Tidytuesday-volcano-eruption' src = "/img/tt/vc.png" width = "700">
 </p>
 
 
