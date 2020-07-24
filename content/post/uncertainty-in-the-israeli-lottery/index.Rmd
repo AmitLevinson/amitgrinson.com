@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
 > "I have a great idea to get rich. All we need is a lot of money." </br> ― A meme on the internet
                               
-A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (`r emo::ji("light_bulb")`): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. 
+A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (`r emo::ji("light_bulb")`): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. In this blog post we'll learn about lottery probabilities and how to better understand the uncertainty of winning them using the geometric distribution.
 
 ```{r out.width="85%", out.height="85%"}
 knitr::include_graphics("hunger.jpg")
@@ -37,11 +37,11 @@ We'll be exploring the probability of winning the Israeli lottery held by the [P
 
 Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
 
-When filling out a lottery form you choose 6 numbers in the range of 1&ndash;37 and a 'strong' number in the range of 1–7[^1]. In order to win first place you have to ~~get~~ guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn't matter therefore if you wrote $6,12...n$ or $12,6,...n$ you're good on both (Also known as combinations, more on that in a minute).   
+When filling out a lottery form you choose 6 numbers in the range of 1&ndash;37 and a 'strong' number in the range of 1–7[^1]. In order to win first place you have to ~~get~~ guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn't matter, and therefore if you wrote $6,12...n$ or $12,6,...n$ you're good on both (Also known as combinations, more on that in a minute).   
 
 [^1]: An amusing anecdote is that the Pais organization offers information about 'Hot' numbers and the [frequency of appearance for each number](https://www.pais.co.il/lotto/statistics.aspx). Considering that the lottery is random I wouldn't rely on such a pattern... 
 
-Another 'luck' in our favor is that in each lottery ticket we have the option to fill out two sets of numbers, therefore doubling our odds of winning. I'm assuming we're on the same page and you won't use both of your attempts to guess the same sets of numbers, so that somewhat increases our odds of winning. Speaking of odds, let's have a look at them.
+Another 'luck' in our favor is that in each lottery ticket we have the option to fill out two sets of numbers, thus doubling our odds of winning. I'm assuming we're on the same page and you won't use both of your attempts to guess the same sets of numbers, so that somewhat increases our odds of winning. Speaking of odds, let's have a look at them.
 
 ### The odds
 
