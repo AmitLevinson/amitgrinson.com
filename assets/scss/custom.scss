@@ -38,6 +38,11 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
             animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
   }
+
+  .navbar {
+   -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
  
 
 /* Create setting and animate profile and details from the left */
@@ -73,19 +78,68 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     -webkit-animation: fade-in 1s forwards;
             animation: fade-in 1s forwards;
-    -webkit-animation-delay: 0.5s;
-            animation-delay: 0.5;
+    -webkit-animation-delay: 1.25s;
+            animation-delay: 1.25s;
   }
   
   .education-div {
     opacity: 0;
     -webkit-animation: fade-in 1s forwards;
             animation: fade-in 1s forwards;
-    -webkit-animation-delay: 1s;
-            animation-delay: 1s;
+    -webkit-animation-delay: 1.5s;
+            animation-delay: 1.5s;
+  }
+  .network-icon {
+    
+    margin-top: 15px;
+    padding: 5px;
+    
+    .fa-envelope {
+      opacity: 0;
+      -webkit-animation: grow 1s ease forwards;
+              animation: grow 1s ease forwards;
+      -webkit-animation-delay: 0.5s;
+              animation-delay: 0.5s;
+    }
+    
+    .fa-twitter {
+      opacity: 0;
+      -webkit-animation: grow 1s ease forwards;
+              animation: grow 1s ease forwards;
+      -webkit-animation-delay: 0.75s;
+              animation-delay: 0.75s;
+    }
+    
+    .fa-github {
+      opacity: 0;
+      -webkit-animation: grow 1s ease forwards;
+              animation: grow 1s ease forwards;
+      -webkit-animation-delay: 1s;
+              animation-delay: 1s;
+    }
+    .fa-linkedin {
+      opacity: 0;
+      -webkit-animation: grow 1s ease forwards;
+              animation: grow 1s ease forwards;
+      -webkit-animation-delay: 1.25s;
+              animation-delay: 1.25s;
+    }
+    .ai-cv {
+      opacity: 0;
+      -webkit-animation: grow 1s ease forwards;
+              animation: grow 1s ease forwards;
+      -webkit-animation-delay: 1.5s;
+              animation-delay: 1.5s;
+    }
+ @-webkit-keyframes grow {
+        100% { opacity: 1; }
+    }
+    
+    @keyframes grow {
+        100% { opacity: 1; }
+    } 
   }
 }
-
 /* links */
 
 a:active, 
