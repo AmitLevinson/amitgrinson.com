@@ -5,11 +5,85 @@ body {
 }
 
 .navbar {
-  min-height: 60px !important;
+  min-height: 65px !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.025em;
+}
+
+
+/*----Easy and amazing CSS implementation for animating about page from https://www.connorrothschild.com/post/animate-hugo-academic/ -----*/
+
+#about {
+
+/* Create setting and animate title and main content from the right */
+
+  @-webkit-keyframes slide-from-right {
+    0% {-webkit-transform: translateX(150%);transform: translateX(150%)}
+    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
+  }
+  
+  @keyframes slide-from-right {
+    0% {-webkit-transform: translateX(150%);transform: translateX(150%)}
+    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
+  }
+  
+  .biography-title {
+    -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+  .main-content {
+    -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+ 
+
+/* Create setting and animate profile and details from the left */
+
+  @-webkit-keyframes slide-from-left {
+    0% {-webkit-transform: translateX(-150%);transform: translateX(-150%)}
+    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
+  }
+  
+  @keyframes slide-from-left {
+    0% {-webkit-transform: translateX(-150%);transform: translateX(-150%)}
+    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
+  }
+  
+#profile {
+    -webkit-animation: slide-from-left 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+            animation: slide-from-left 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+/* Create setting and animate education and interest to fade in */
+
+  @-webkit-keyframes fade-in {
+    0% {opacity: 0}
+    100% {opacity: 1}
+  }
+  
+  @keyframes fade-in {
+    0% {opacity: 0}
+    100% {opacity: 1}
+  }
+  
+  .interests-div {
+    opacity: 0;
+    -webkit-animation: fade-in 1s forwards;
+            animation: fade-in 1s forwards;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5;
+  }
+  
+  .education-div {
+    opacity: 0;
+    -webkit-animation: fade-in 1s forwards;
+            animation: fade-in 1s forwards;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
 }
 
 /* links */
@@ -48,7 +122,7 @@ a:hover {
 a.nav-link,
 a.nav-link:after,
 a.nav-link:before {
-  transition: all .35s;
+  transition: all .45s;
 }
 
 a.nav-link {
@@ -65,7 +139,7 @@ a.nav-link:after {
   content: '.'; /* make invisible, dot beneath links */
   color: transparent;
   background: #32408f;
-  height: 2px;
+  height: 1px;
 }
 
 a.nav-link:hover:after {
