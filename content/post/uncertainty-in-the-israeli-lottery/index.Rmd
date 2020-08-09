@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
 > "I have a great idea to get rich. All we need is a lot of money." </br> ― A meme on the internet
                               
-A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (`r emo::ji("light_bulb")`): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. In this blog post we'll learn about lottery probabilities and how to better understand the uncertainty of winning them using the geometric distribution.
+A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (`r emo::ji("light_bulb")`): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. So, shall we?
 
 ```{r out.width="85%", out.height="85%"}
 knitr::include_graphics("hunger.jpg")
@@ -33,7 +33,7 @@ knitr::include_graphics("hunger.jpg")
 
 ### The rules
 
-We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. The ticket we'll be discussing costs is applicable to the main lottery called 'Loto' and costs 5.8 New Israeli Shekels (NIS), approximately ~1.6 dollars.  
+We'll be exploring the probability of winning the Israeli lottery held by the [Pais organization](https://www.pais.co.il/), a well-known lottery enterprise in Israel. The ticket we'll be discussing is applicable to the main lottery called 'Loto' and costs 5.8 New Israeli Shekels (NIS), approximately ~1.6 dollars.  
 
 Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there's no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I'll only discuss winning a first place prize (be the only winner). In addition I won't be discussing the effect of prize increase on when to participate.  
 

@@ -23,11 +23,11 @@
 &lt;blockquote&gt;
 &lt;p&gt;“I have a great idea to get rich. All we need is a lot of money.” &lt;/br&gt; ― A meme on the internet&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (💡): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. In this blog post we’ll learn about lottery probabilities and how to better understand the uncertainty of winning them using the geometric distribution.&lt;/p&gt;
+&lt;p&gt;A while ago I was reading about Bernoulli trials and decided that I wanted to explore them further. I was wondering what would be an interesting case study for such a topic, and then it hit me (💡): Why not explore lottery probabilities? Little did I know that this topic would lead me down the geometric distribution road and help me better understand the uncertainty in lotteries. So, shall we?&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;hunger.jpg&#34; width=&#34;85%&#34; height=&#34;85%&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;the-rules&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;The rules&lt;/h3&gt;
-&lt;p&gt;We’ll be exploring the probability of winning the Israeli lottery held by the &lt;a href=&#34;https://www.pais.co.il/&#34;&gt;Pais organization&lt;/a&gt;, a well-known lottery enterprise in Israel. The ticket we’ll be discussing costs is applicable to the main lottery called ‘Loto’ and costs 5.8 New Israeli Shekels (NIS), approximately ~1.6 dollars.&lt;/p&gt;
+&lt;p&gt;We’ll be exploring the probability of winning the Israeli lottery held by the &lt;a href=&#34;https://www.pais.co.il/&#34;&gt;Pais organization&lt;/a&gt;, a well-known lottery enterprise in Israel. The ticket we’ll be discussing is applicable to the main lottery called ‘Loto’ and costs 5.8 New Israeli Shekels (NIS), approximately ~1.6 dollars.&lt;/p&gt;
 &lt;p&gt;Pais holds their lotteries twice a week with the regular prize of 5 million NIS, equivalent to $1,420,000. If there’s no winner for a given week, the prize accumulates to the following lottery. For the sake of the post I’ll only discuss winning a first place prize (be the only winner). In addition I won’t be discussing the effect of prize increase on when to participate.&lt;/p&gt;
 &lt;p&gt;When filling out a lottery form you choose 6 numbers in the range of 1–37 and a ‘strong’ number in the range of 1–7&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. In order to win first place you have to &lt;del&gt;get&lt;/del&gt; guess correctly both the 6 number set and the strong number. Luckily, the order of the 6 numbers doesn’t matter, and therefore if you wrote &lt;span class=&#34;math inline&#34;&gt;\(6,12...n\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(12,6,...n\)&lt;/span&gt; you’re good on both (Also known as combinations, more on that in a minute).&lt;/p&gt;
 &lt;p&gt;Another ‘luck’ in our favor is that in each lottery ticket we have the option to fill out two sets of numbers, thus doubling our odds of winning. I’m assuming we’re on the same page and you won’t use both of your attempts to guess the same sets of numbers, so that somewhat increases our odds of winning. Speaking of odds, let’s have a look at them.&lt;/p&gt;
@@ -1030,24 +1030,2112 @@ You can find your hosted html file at &lt;span style=&#34;color:RoyalBlue;&#34;&
     
     <item>
       <title>Nicely Printing Categorical Variables with KableExtra</title>
-      <link>/post/sharing-interactive-charts/</link>
+      <link>/post/printing-table/</link>
       <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
-      <guid>/post/sharing-interactive-charts/</guid>
+      <guid>/post/printing-table/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(kableExtra)&lt;/code&gt;&lt;/pre&gt;
 &lt;style&gt;
 p.caption {
   font-size: 0.8em;
 }
 &lt;/style&gt;
-&lt;p&gt;This post is somewhat of a ~love post~ tribute to both the iteration abilities in R combined with the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&#34;&gt;&lt;code&gt;KableExtra&lt;/code&gt;&lt;/a&gt; package. I set myself several goals for my thesis, one of them was doing my survey analysis in something other than SPSS. This post is not to rant about SPSS, but to cut it short - I want to finish my Masters with some broader knowledge of statistical programs. I started learning R 10 months ago so that when the time comes - When my pilot and survey results come in (come in is a sugar coated for me collecting respsones) - I can analyse it all in R.&lt;/p&gt;
-&lt;p&gt;The time came and I started to analyse the data in R. However, the problem was, That I wasn’t going to do an OK job. After discovering much of R’s abilities, I wasn’t going to let myself copy+paste. So I wrote a few functions, maniuplated some of the work and then it was time to get out the big guns.&lt;/p&gt;
+&lt;p&gt;This post is somewhat of a ~love post~ tribute to both the iteration abilities in R combined with the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&#34;&gt;&lt;code&gt;KableExtra&lt;/code&gt;&lt;/a&gt; package. I set myself several goals for my thesis, one of them is doing my survey analysis in something other than SPSS. I wanted to finish my Masters’ with some broader knowledge of statistical programs and dive a little more into coding. I started learning R nearly a year ago so that when the time comes - When my pilot and survey results come in - I can analyze it all in R.&lt;/p&gt;
+&lt;p&gt;The time came and I started to analyze the data in R. However, the problem was, That I wasn’t going to do an OK job. After discovering much of R’s abilities, I wasn’t going to let myself copy+paste. So I wrote a few functions, manipulated some of the work and then it was time to get out the big guns; well big guns at least for me.&lt;/p&gt;
 &lt;div id=&#34;the-problem&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;The Problem&lt;/h3&gt;
-&lt;p&gt;In my pilot survey I had several questions (~20) that were categorical, ordinal and were simple constructs that didn’t require a more thorough analysis such as reliability of the scale. I wanted to nicely print all of these variables in one table.&lt;/p&gt;
-&lt;p&gt;Coming from an SPSS background, but with some broader knowledge of programming, I&lt;/p&gt;
+&lt;p&gt;In my pilot survey I had several questions (~20) that were categorical, ordinal and were simple constructs that didn’t require a more thorough analysis such as reliability of the scale. I wanted to nicely print all of these variables in one table, address any anomalies if needed and have them in the appendix for my supervisors to review.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The issue was, how can I nicely print all categorical variables along with the original question, the possible answers and the distribution of responses?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, let’s look at our data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse) # dplyr, tidyr, readr &amp;amp; purrr
+library(here) # Project management
+library(readxl) # For reading excel files
+library(knitr) # Printing tables
+library(kableExtra) # Printing tables, but nice ones
+library(janitor) # To clean names
+df_survey &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-categorical-variables-questions-with-kableextra&amp;quot;, &amp;quot;data&amp;quot;,&amp;quot;survey.xlsx&amp;quot;))
+
+head(df_survey)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 93
+##   StartDate           EndDate             Status Progress `Duration (in s~
+##   &amp;lt;dttm&amp;gt;              &amp;lt;dttm&amp;gt;              &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;
+## 1 2020-06-03 02:05:52 2020-06-03 02:12:13 IP Ad~      100              381
+## 2 2020-06-03 02:07:53 2020-06-03 02:16:56 IP Ad~      100              543
+## 3 2020-06-03 02:02:10 2020-06-03 02:18:19 IP Ad~      100              968
+## 4 2020-06-03 02:11:25 2020-06-03 02:18:49 IP Ad~      100              444
+## 5 2020-06-03 02:20:54 2020-06-03 02:26:01 IP Ad~      100              307
+## 6 2020-06-03 02:20:28 2020-06-03 02:30:05 IP Ad~      100              576
+## # ... with 88 more variables: Finished &amp;lt;chr&amp;gt;, RecordedDate &amp;lt;dttm&amp;gt;,
+## #   ResponseId &amp;lt;chr&amp;gt;, DistributionChannel &amp;lt;chr&amp;gt;, UserLanguage &amp;lt;chr&amp;gt;, Q1 &amp;lt;chr&amp;gt;,
+## #   Q2 &amp;lt;chr&amp;gt;, Q3 &amp;lt;chr&amp;gt;, Q4 &amp;lt;chr&amp;gt;, Q5 &amp;lt;chr&amp;gt;, Q6 &amp;lt;chr&amp;gt;, Q7 &amp;lt;chr&amp;gt;, Q8 &amp;lt;chr&amp;gt;,
+## #   Q9_1 &amp;lt;chr&amp;gt;, Q9_2 &amp;lt;chr&amp;gt;, Q9_3 &amp;lt;chr&amp;gt;, Q9_4 &amp;lt;chr&amp;gt;, Q9_5 &amp;lt;chr&amp;gt;, Q9_6 &amp;lt;chr&amp;gt;,
+## #   Q10_1 &amp;lt;chr&amp;gt;, Q10_2 &amp;lt;chr&amp;gt;, Q10_3 &amp;lt;chr&amp;gt;, Q10_4 &amp;lt;chr&amp;gt;, Q10_5 &amp;lt;chr&amp;gt;,
+## #   Q11_1 &amp;lt;chr&amp;gt;, Q12 &amp;lt;chr&amp;gt;, Q13_1 &amp;lt;chr&amp;gt;, Q14_1 &amp;lt;chr&amp;gt;, Q14_2 &amp;lt;chr&amp;gt;, Q14_3 &amp;lt;chr&amp;gt;,
+## #   Q14_4 &amp;lt;chr&amp;gt;, Q14_5 &amp;lt;chr&amp;gt;, Q14_6 &amp;lt;chr&amp;gt;, Q14_7 &amp;lt;chr&amp;gt;, Q14_8 &amp;lt;chr&amp;gt;, Q41 &amp;lt;chr&amp;gt;,
+## #   Q15 &amp;lt;chr&amp;gt;, Q16 &amp;lt;chr&amp;gt;, Q17 &amp;lt;chr&amp;gt;, Q17_10_TEXT &amp;lt;chr&amp;gt;, Q18_1 &amp;lt;chr&amp;gt;,
+## #   Q18_2 &amp;lt;chr&amp;gt;, Q18_3 &amp;lt;chr&amp;gt;, Q18_4 &amp;lt;chr&amp;gt;, Q18_5 &amp;lt;chr&amp;gt;, Q18_6 &amp;lt;chr&amp;gt;,
+## #   Q19_1 &amp;lt;chr&amp;gt;, Q19_2 &amp;lt;chr&amp;gt;, Q19_3 &amp;lt;chr&amp;gt;, Q19_4 &amp;lt;chr&amp;gt;, Q19_5 &amp;lt;chr&amp;gt;,
+## #   Q20_1 &amp;lt;chr&amp;gt;, Q20_2 &amp;lt;chr&amp;gt;, Q20_3 &amp;lt;chr&amp;gt;, Q20_4 &amp;lt;chr&amp;gt;, Q20_5 &amp;lt;chr&amp;gt;,
+## #   Q20_6 &amp;lt;chr&amp;gt;, Q21_1 &amp;lt;chr&amp;gt;, Q21_2 &amp;lt;chr&amp;gt;, Q21_3 &amp;lt;chr&amp;gt;, Q21_4 &amp;lt;chr&amp;gt;, Q23 &amp;lt;chr&amp;gt;,
+## #   Q24 &amp;lt;chr&amp;gt;, Q25 &amp;lt;chr&amp;gt;, Q26 &amp;lt;chr&amp;gt;, Q27 &amp;lt;chr&amp;gt;, Q28_1 &amp;lt;chr&amp;gt;, Q28_2 &amp;lt;chr&amp;gt;,
+## #   Q28_3 &amp;lt;chr&amp;gt;, Q28_4 &amp;lt;chr&amp;gt;, Q28_5 &amp;lt;chr&amp;gt;, Q28_6 &amp;lt;chr&amp;gt;, Q28_7 &amp;lt;chr&amp;gt;,
+## #   Q29_1 &amp;lt;chr&amp;gt;, Q29_2 &amp;lt;chr&amp;gt;, Q29_3 &amp;lt;chr&amp;gt;, Q29_4 &amp;lt;chr&amp;gt;, Q29_5 &amp;lt;chr&amp;gt;, Q30 &amp;lt;chr&amp;gt;,
+## #   Q31 &amp;lt;chr&amp;gt;, Q31_7_TEXT &amp;lt;chr&amp;gt;, Q32 &amp;lt;chr&amp;gt;, Q33 &amp;lt;chr&amp;gt;, Q33_9_TEXT &amp;lt;lgl&amp;gt;,
+## #   Q34 &amp;lt;chr&amp;gt;, Q35 &amp;lt;chr&amp;gt;, Q36 &amp;lt;chr&amp;gt;, Q37 &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So we have a lot of information regarding our sample  data we collected. In order to nicely print all of our &lt;em&gt;character&lt;/em&gt; columns, let’s start by removing anything other than a character column:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_char &amp;lt;- df_survey %&amp;gt;% 
+  janitor::clean_names () %&amp;gt;% 
+  select_if(is.character) %&amp;gt;% 
+  select(-c(status:q1, q9_1:q10_5,q18_1:q29_5))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we’ll need to change the data to a long form. A first thought the comes to mind is to use the &lt;code&gt;pivot_longer&lt;/code&gt; argument so that we have everything in one nice long table:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long &amp;lt;- df_char %&amp;gt;% 
+  pivot_longer(q2:q37, names_to = &amp;quot;question&amp;quot;) %&amp;gt;% 
+  count(question, value) %&amp;gt;%
+  group_by(question) %&amp;gt;% 
+  mutate(pct = n/sum(n)*100)
+
+
+knitr::kable(df_long) %&amp;gt;% 
+  kableExtra::kable_styling() %&amp;gt;% 
+  kableExtra::scroll_box(height = &amp;quot;400px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; &#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+question
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+value
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+n
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+pct
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Between once a week to once in a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Less than once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No, and I hadn’t applied to one (for any reason)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+88.235294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+About every week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+At least once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.235294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three to six months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I’ve never bought
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last time I bought was over half a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44.117647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Occassionly
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+76.470588
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Occassionly
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82.352941
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Occassionly
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Very often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35.294118
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.176471
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Occassionly
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Very often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Occassionly
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rarley
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Very often
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q14_8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+91.176471
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last half a year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1-3 Authentications
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3-5 Authentications
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5-10 Authentications
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+More than 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Id
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Id,A video holding a tool for consuming cannabis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of my Facebook
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of my Facebook,Id
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20.588235
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of my Facebook,Id,A photo of a paper with something written on it
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of my Facebook,Id,A video holding a tool for consuming cannabis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of my Facebook,Id,Other
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17_10_text
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05E6&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DD&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DA&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q17_10_text
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97.058824
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Female
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.058824
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Male
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.176471
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community,Activists
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community,Activists,second-hand  Movies &amp;amp; Tv-shows
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community,Drugs-psychedelic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community,Growers
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Community,Growers,Drugs-psychedelic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Drugs-psychedelic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Other
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+76.470588
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31_7_text
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05E7&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DD&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D4&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q31_7_text
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97.058824
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79.411765
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cocaine
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LSD,Mushrooms,Cocaine,MDMA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LSD,Mushrooms,MDMA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mushrooms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mushrooms,MDMA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85.294118
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85.294118
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Screenshot of Facebook page,Id
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Selfie,Screenshot of Facebook page,Id
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94.117647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05D4&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05DB&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05DE&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05D7&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D3&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E1&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DF&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D9&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E2&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D4&amp;gt;, &amp;lt;U+05D5&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt; &amp;lt;U+05D6&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05D0&amp;gt; &amp;lt;U+05E8&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D9&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05DB&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05D3&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DD&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D0&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+88.235294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.647059
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Self employed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.529412
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I smoke where there is
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+My partner buys
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.941177
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85.294118
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05E8&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DF&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D5&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D4&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.411765
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DB&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05EA&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&amp;lt;U+05EA&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.882353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Above average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.705882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Below average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.058824
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Similar to average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.235294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Center
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.058824
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+South
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.941176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+100.000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;Great, this prints nicely, but we’re left with several issues to address:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. We’re missing the actual questions&lt;/strong&gt; - Notice how we only have “q10_1” but not description of what the actual question or variable is.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Remove duplicated information&lt;/strong&gt; - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Questions were reorganized alphabetically&lt;/strong&gt; - Once we ran the &lt;code&gt;pivot_longer&lt;/code&gt; &lt;code&gt;R&lt;/code&gt; sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Sum of the responses aren’t ordered&lt;/strong&gt; - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX&lt;/p&gt;
+&lt;p&gt;Let’s address these issues and nicely finish up our table.&lt;/p&gt;
+&lt;div id=&#34;adding-information-to-our-questions&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Adding information to our questions&lt;/h4&gt;
+&lt;p&gt;When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it’s perfect for providing additional information. If you don’t have questions but variables, you can either skip this section or add information about the variables themselves.&lt;/p&gt;
+&lt;p&gt;To add the questions I found it pretty straight forward to just to combine the current data_long dataset with a dataset containing our questions. We’ll use a copy of the original survey data that only contains the questions, let’s have a look:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_questions &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-categorical-variables-questions-with-kableextra&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;questions.xlsx&amp;quot;))
+df_questions[,1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 3
+##   Q2    Q3    Q4           
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;        
+## 1 &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;   &amp;lt;U+05E1&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E1&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05E1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D9&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Great, now let’s turn it to a long format so that each row is a question id with the details of it as a value. Then we can join it with our current dataset of answers:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_q_clean &amp;lt;- df_questions %&amp;gt;% 
+  clean_names() %&amp;gt;% 
+  pivot_longer(cols = q2:q38, names_to = &amp;quot;question&amp;quot;, values_to = &amp;quot;text&amp;quot;) 
+
+df_long &amp;lt;-  inner_join(df_long, df_q_clean, by = c(&amp;quot;question&amp;quot; = &amp;quot;question&amp;quot;))
+
+head(df_long)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 5
+## # Groups:   question [1]
+##   question value                                n   pct text                    
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                            &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;                   
+## 1 q11_1    Between once a week to once in ~     5  14.7 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
+## 2 q11_1    Less than once a month               4  11.8 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
+## 3 q11_1    Once a day                           6  17.6 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
+## 4 q11_1    Once a week                          4  11.8 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
+## 5 q11_1    Several times a day                  6  17.6 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
+## 6 q11_1    Several times a week                 8  23.5 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;inner_join&lt;/code&gt; we kept only questions we want to display. Now let’s turn to our second issue and address the order of our questions. Basically, we want it to be ordered by the value of the number itself and not how it’s sorted alphabaetically (q11_1 before q_5). What we’ll do, and there might be a quicker way, is use regex (regular expression) to use the number values to sort by. Here it goes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_sorted &amp;lt;- df_long %&amp;gt;% 
+  mutate(q_num = str_remove_all(question, &amp;quot;[a-z]&amp;quot;),
+    q_num = str_replace_all(q_num, &amp;quot;_&amp;quot;, &amp;quot;.&amp;quot;),
+    q_num = str_remove(q_num, &amp;quot;\\.$&amp;quot;),
+    q_num = as.numeric(q_num)) %&amp;gt;% 
+  group_by(question) %&amp;gt;% 
+  arrange(q_num)
+
+head(df_long_sorted)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+## # Groups:   question [2]
+##   question value      n   pct text  q_num
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 q2       Female    16 47.1  &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;      2
+## 2 q2       Male      18 52.9  &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;      2
+## 3 q3       24         1  2.94 &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
+## 4 q3       27         6 17.6  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
+## 5 q3       28         5 14.7  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
+## 6 q3       29        14 41.2  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Perfect!&lt;/p&gt;
+&lt;p&gt;In our first &lt;code&gt;str_remove_all&lt;/code&gt; we remove all letters
+, but let’s assume we have some more details about our questions, such as the wording itself. For exmaple, when downloading Qualtrics survey data, you also get the wording of the question. We can use that to provide more information about our data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Merge the table with the questions
+# Run the kable again&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Great, so we have our actual questions, but now it’s a littlle messey considering it’s duplicated in each row. Here we can use the amazing &lt;code&gt;collapse_rows()&lt;/code&gt; function which, as the name suggests, collapses the rows of a column we choose. Let’s see it in action:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Same code, now with 
+# collapse_rows()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alright! Much better!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;map-map_df&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;map &amp;amp; map_df&lt;/h3&gt;
+&lt;p&gt;The issue we’re facing also provides us with a great opportunity to explore &lt;a href=&#34;https://purrr.tidyverse.org/&#34;&gt;{purrr’s}&lt;/a&gt; &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;map_df&lt;/code&gt;. If we think back on what we just did, we basically aggregated all our columns into one so we can compute the frequency of each category. But what if instead of manipulating them when they’re in one column, we manipulate each of the original columns?&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
