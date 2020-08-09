@@ -1,0 +1,158 @@
+q,answer,n,hir
+q2,Female,16,1
+q2,Male,18,2
+q3,24,1,
+q3,27,6,
+q3,28,5,
+q3,29,14,
+q3,30,3,
+q3,32,3,
+q3,55,2,
+q4,Salaried employee,18,
+q4,Self employed,3,
+q4,Student,8,
+q4,"Student,Salaried employee",3,
+q4,"Student,Unemployed",1,
+q4,Unemployed,1,
+q5,ýýýýýýýý ýýýýýýýýýý,20,
+q5,ýýýýýýýý ýýýýýý ýýýýýýýýýý,10,
+q5,ýýýýýýýýýýýýýý,2,
+q5,ýýýýýýýýýý ýýýýýýýýýý,2,
+q6,Above average,5,1
+q6,Below average,16,3
+q6,Similar to average,13,2
+q7,Center,16,
+q7,South,18,
+q8,Yes,34,
+q11_1,Between once a week to once in a month,5,6
+q11_1,Less than once a month,4,5
+q11_1,Once a day,6,2
+q11_1,Once a week,4,4
+q11_1,Several times a day,6,1
+q11_1,Several times a week,8,3
+q11_1,NA,1,7
+q12,"No, and I hadn't applied to one (for any reason)",30,
+q12,Yes,3,
+q12,NA,1,
+q13_1,About every week,1,1
+q13_1,At least once a month,13,2
+q13_1,Every three months,5,3
+q13_1,Every three to six months,4,4
+q13_1,I've never bought,5,6
+q13_1,Last time I bought was over half a year ago,6,5
+q14_1,Never,15,4
+q14_1,Occasionally,3,2
+q14_1,Often,3,1
+q14_1,Rarely,8,3
+q14_1,NA,5,5
+q14_2,Never,26,2
+q14_2,Rarely,3,1
+q14_2,NA,5,3
+q14_3,Never,25,4
+q14_3,Occasionally,1,2
+q14_3,Often,1,1
+q14_3,Rarely,2,3
+q14_3,NA,5,5
+q14_4,Never,28,2
+q14_4,Rarely,1,1
+q14_4,NA,5,3
+q14_5,Never,3,5
+q14_5,Occasionally,6,3
+q14_5,Often,2,2
+q14_5,Rarely,6,4
+q14_5,Very often,12,1
+q14_5,NA,5,6
+q14_6,Never,14,5
+q14_6,Occasionally,3,3
+q14_6,Often,4,2
+q14_6,Rarely,3,4
+q14_6,Very often,5,1
+q14_6,NA,5,6
+q14_7,Never,23,3
+q14_7,Occasionally,4,1
+q14_7,Rarely,2,2
+q14_7,NA,5,4
+q14_8,Never,1,2
+q14_8,Very often,2,1
+q14_8,NA,31,3
+q41,I smoke where there is,4,
+q41,My partner buys,1,
+q41,NA,29,
+q15,Last half a year,3,4
+q15,Last month,2,2
+q15,Last three months,3,3
+q15,Last week,1,1
+q15,Last year,1,5
+q15,Never,18,7
+q15,Over a year ago,6,6
+q16,1-3 Authentications,4,4
+q16,3-5 Authentications,1,3
+q16,5-10 Authentications,4,2
+q16,More than 10,3,1
+q16,Once,4,5
+q16,NA,18,6
+q17,Id,1,
+q17,Selfie,1,
+q17,"Selfie,Id,A video holding a tool for consuming cannabis",1,
+q17,"Selfie,Screenshot of my Facebook\Instagram",1,
+q17,"Selfie,Screenshot of my Facebook\Instagram,Id",7,
+q17,"Selfie,Screenshot of my Facebook\Instagram,Id,A photo of a paper with something written on it",1,
+q17,"Selfie,Screenshot of my Facebook\Instagram,Id,A video holding a tool for consuming cannabis",3,
+q17,"Selfie,Screenshot of my Facebook\Instagram,Id,Other",1,
+q17,NA,18,
+q17_10_text,ýýýýýýýýýý ýýýýýý ýýýýýýýý ýýýý ýýýýýýýýýýýý,1,
+q17_10_text,NA,33,
+q23,Never,28,3
+q23,Once,2,2
+q23,Several times,3,1
+q23,NA,1,4
+q24,Never,31,3
+q24,Once,1,2
+q24,Several times,1,1
+q24,NA,1,4
+q25,Never,32,2
+q25,Once,1,1
+q25,NA,1,3
+q26,No,20,
+q26,Yes,13,
+q26,NA,1,
+q27,2-3 times,4,3
+q27,5-7 times,4,2
+q27,Over 7 times,5,1
+q27,NA,21,4
+q30,No,5,
+q30,Yes,8,
+q30,NA,21,
+q31,Community,1,
+q31,"Community,Activists",1,
+q31,"Community,Activists,second-hand \ Movies & Tv-shows",1,
+q31,"Community,Drugs-psychedelic",1,
+q31,"Community,Growers",1,
+q31,"Community,Growers,Drugs-psychedelic",1,
+q31,Drugs-psychedelic,1,
+q31,Other,1,
+q31,NA,26,
+q31_7_text,ýýýýýýýýýýýý ýýýýýýýýýýýýýý ýýýýýýýýýý ýýýýýýýýýýýý,1,
+q31_7_text,NA,33,
+q32,No,27,
+q32,Yes,5,
+q32,NA,2,
+q33,Cocaine,1,
+q33,"LSD,Mushrooms,Cocaine,MDMA",1,
+q33,"LSD,Mushrooms,MDMA",1,
+q33,Mushrooms,1,
+q33,"Mushrooms,MDMA",1,
+q33,NA,29,
+q34,No,3,
+q34,Yes,2,
+q34,NA,29,
+q35,"Screenshot of Facebook page,Id",1,
+q35,"Selfie,Screenshot of Facebook page,Id",1,
+q35,NA,32,
+q36,"ýýýýýýýý ýýýýýý ýýýýýýýýýý ýýýýýýýýýý ýýýýýýýýýýýý ýýýýýý ýýýýýýýý ýýýýýýýýýýýý, ýýýýýýýýýýýý ýýýý ýýýýýýýýýý ýýýýýýýýýýýý ýýýý ýýýýýýýýýýýýýý",1,
+q36,ýýýýýý ýýýýýýýýýý,1,
+q36,ýýýý,2,
+q36,NA,30,
+q37,No,6,
+q37,Yes,25,
+q37,NA,3,
