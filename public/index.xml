@@ -1058,37 +1058,19 @@ library(janitor) # To clean names
 df_survey &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-categorical-variables-questions-with-kableextra&amp;quot;, &amp;quot;data&amp;quot;,&amp;quot;survey.xlsx&amp;quot;))
 
 head(df_survey)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 93
-##   StartDate           EndDate             Status Progress `Duration (in s~
-##   &amp;lt;dttm&amp;gt;              &amp;lt;dttm&amp;gt;              &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;
-## 1 2020-06-03 02:05:52 2020-06-03 02:12:13 IP Ad~      100              381
-## 2 2020-06-03 02:07:53 2020-06-03 02:16:56 IP Ad~      100              543
-## 3 2020-06-03 02:02:10 2020-06-03 02:18:19 IP Ad~      100              968
-## 4 2020-06-03 02:11:25 2020-06-03 02:18:49 IP Ad~      100              444
-## 5 2020-06-03 02:20:54 2020-06-03 02:26:01 IP Ad~      100              307
-## 6 2020-06-03 02:20:28 2020-06-03 02:30:05 IP Ad~      100              576
-## # ... with 88 more variables: Finished &amp;lt;chr&amp;gt;, RecordedDate &amp;lt;dttm&amp;gt;,
-## #   ResponseId &amp;lt;chr&amp;gt;, DistributionChannel &amp;lt;chr&amp;gt;, UserLanguage &amp;lt;chr&amp;gt;, Q1 &amp;lt;chr&amp;gt;,
-## #   Q2 &amp;lt;chr&amp;gt;, Q3 &amp;lt;chr&amp;gt;, Q4 &amp;lt;chr&amp;gt;, Q5 &amp;lt;chr&amp;gt;, Q6 &amp;lt;chr&amp;gt;, Q7 &amp;lt;chr&amp;gt;, Q8 &amp;lt;chr&amp;gt;,
-## #   Q9_1 &amp;lt;chr&amp;gt;, Q9_2 &amp;lt;chr&amp;gt;, Q9_3 &amp;lt;chr&amp;gt;, Q9_4 &amp;lt;chr&amp;gt;, Q9_5 &amp;lt;chr&amp;gt;, Q9_6 &amp;lt;chr&amp;gt;,
-## #   Q10_1 &amp;lt;chr&amp;gt;, Q10_2 &amp;lt;chr&amp;gt;, Q10_3 &amp;lt;chr&amp;gt;, Q10_4 &amp;lt;chr&amp;gt;, Q10_5 &amp;lt;chr&amp;gt;,
-## #   Q11_1 &amp;lt;chr&amp;gt;, Q12 &amp;lt;chr&amp;gt;, Q13_1 &amp;lt;chr&amp;gt;, Q14_1 &amp;lt;chr&amp;gt;, Q14_2 &amp;lt;chr&amp;gt;, Q14_3 &amp;lt;chr&amp;gt;,
-## #   Q14_4 &amp;lt;chr&amp;gt;, Q14_5 &amp;lt;chr&amp;gt;, Q14_6 &amp;lt;chr&amp;gt;, Q14_7 &amp;lt;chr&amp;gt;, Q14_8 &amp;lt;chr&amp;gt;, Q41 &amp;lt;chr&amp;gt;,
-## #   Q15 &amp;lt;chr&amp;gt;, Q16 &amp;lt;chr&amp;gt;, Q17 &amp;lt;chr&amp;gt;, Q17_10_TEXT &amp;lt;chr&amp;gt;, Q18_1 &amp;lt;chr&amp;gt;,
-## #   Q18_2 &amp;lt;chr&amp;gt;, Q18_3 &amp;lt;chr&amp;gt;, Q18_4 &amp;lt;chr&amp;gt;, Q18_5 &amp;lt;chr&amp;gt;, Q18_6 &amp;lt;chr&amp;gt;,
-## #   Q19_1 &amp;lt;chr&amp;gt;, Q19_2 &amp;lt;chr&amp;gt;, Q19_3 &amp;lt;chr&amp;gt;, Q19_4 &amp;lt;chr&amp;gt;, Q19_5 &amp;lt;chr&amp;gt;,
-## #   Q20_1 &amp;lt;chr&amp;gt;, Q20_2 &amp;lt;chr&amp;gt;, Q20_3 &amp;lt;chr&amp;gt;, Q20_4 &amp;lt;chr&amp;gt;, Q20_5 &amp;lt;chr&amp;gt;,
-## #   Q20_6 &amp;lt;chr&amp;gt;, Q21_1 &amp;lt;chr&amp;gt;, Q21_2 &amp;lt;chr&amp;gt;, Q21_3 &amp;lt;chr&amp;gt;, Q21_4 &amp;lt;chr&amp;gt;, Q23 &amp;lt;chr&amp;gt;,
-## #   Q24 &amp;lt;chr&amp;gt;, Q25 &amp;lt;chr&amp;gt;, Q26 &amp;lt;chr&amp;gt;, Q27 &amp;lt;chr&amp;gt;, Q28_1 &amp;lt;chr&amp;gt;, Q28_2 &amp;lt;chr&amp;gt;,
-## #   Q28_3 &amp;lt;chr&amp;gt;, Q28_4 &amp;lt;chr&amp;gt;, Q28_5 &amp;lt;chr&amp;gt;, Q28_6 &amp;lt;chr&amp;gt;, Q28_7 &amp;lt;chr&amp;gt;,
-## #   Q29_1 &amp;lt;chr&amp;gt;, Q29_2 &amp;lt;chr&amp;gt;, Q29_3 &amp;lt;chr&amp;gt;, Q29_4 &amp;lt;chr&amp;gt;, Q29_5 &amp;lt;chr&amp;gt;, Q30 &amp;lt;chr&amp;gt;,
-## #   Q31 &amp;lt;chr&amp;gt;, Q31_7_TEXT &amp;lt;chr&amp;gt;, Q32 &amp;lt;chr&amp;gt;, Q33 &amp;lt;chr&amp;gt;, Q33_9_TEXT &amp;lt;lgl&amp;gt;,
-## #   Q34 &amp;lt;chr&amp;gt;, Q35 &amp;lt;chr&amp;gt;, Q36 &amp;lt;chr&amp;gt;, Q37 &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 12
+##   Q2     Q4     Q6     Q7    Q11_1   Q13_1   Q15   Q26   Q27   Q30   Q32   Q37  
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1 Female Salar~ Simil~ Cent~ Once a~ At lea~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 2 Female Salar~ Below~ South Severa~ Every ~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 3 Female Stude~ Below~ South Betwee~ I&amp;#39;ve n~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 4 Female Unemp~ Simil~ Cent~ Once a~ At lea~ Last~ No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 5 Male   Salar~ Simil~ Cent~ Once a~ At lea~ Last~ Yes   2-3 ~ Yes   No    No   
+## 6 Female Salar~ Simil~ Cent~ Severa~ Last t~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So we have a lot of information regarding our sample  data we collected. In order to nicely print all of our &lt;em&gt;character&lt;/em&gt; columns, let’s start by removing anything other than a character column:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_char &amp;lt;- df_survey %&amp;gt;% 
   janitor::clean_names () %&amp;gt;% 
-  select_if(is.character) %&amp;gt;% 
-  select(-c(status:q1, q9_1:q10_5,q18_1:q29_5))&lt;/code&gt;&lt;/pre&gt;
+  select_if(is.character) &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;we’ll need to change the data to a long form. A first thought the comes to mind is to use the &lt;code&gt;pivot_longer&lt;/code&gt; argument so that we have everything in one nice long table:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long &amp;lt;- df_char %&amp;gt;% 
   pivot_longer(q2:q37, names_to = &amp;quot;question&amp;quot;) %&amp;gt;% 
@@ -1219,48 +1201,6 @@ NA
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-No, and I hadn’t applied to one (for any reason)
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-30
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-88.235294
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Yes
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
 q13_1
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -1341,496 +1281,6 @@ Last time I bought was over half a year ago
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 17.647059
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-44.117647
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Occassionly
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-23.529412
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-26
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-76.470588
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-25
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-73.529412
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Occassionly
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-28
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-82.352941
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Occassionly
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-17.647059
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-17.647059
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Very often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-35.294118
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-41.176471
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Occassionly
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Very often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-23
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-67.647059
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Occassionly
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Rarley
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Never
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Very often
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q14_8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-91.176471
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1933,244 +1383,6 @@ Over a year ago
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1-3 Authentications
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-3-5 Authentications
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-5-10 Authentications
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-More than 10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Once
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-18
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-52.941176
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Id
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Id,A video holding a tool for consuming cannabis
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of my Facebook
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of my Facebook,Id
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-20.588235
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of my Facebook,Id,A photo of a paper with something written on it
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of my Facebook,Id,A video holding a tool for consuming cannabis
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of my Facebook,Id,Other
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-18
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-52.941176
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17_10_text
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05E6&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DD&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DA&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q17_10_text
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-97.058824
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
 q2
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -2199,10 +1411,38 @@ Male
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q3
+q26
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-24
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58.823529
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.235294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1
@@ -2213,24 +1453,38 @@ q3
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q3
+q27
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-27
+2-3 times
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-6
+4
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-17.647059
+11.764706
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q3
+q27
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-28
+5-7 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.764706
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over 7 times
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 5
@@ -2241,58 +1495,16 @@ q3
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q3
+q27
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-29
+NA
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-14
+21
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-41.176471
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-30
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-32
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-55
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
+61.764706
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2303,10 +1515,10 @@ q30
 No
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-5
+1
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-14.705882
+2.941177
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2317,10 +1529,10 @@ q30
 Yes
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-8
+12
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-23.529412
+35.294118
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2335,160 +1547,6 @@ NA
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 61.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community,Activists
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community,Activists,second-hand  Movies &amp;amp; Tv-shows
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community,Drugs-psychedelic
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community,Growers
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Community,Growers,Drugs-psychedelic
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Drugs-psychedelic
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Other
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-26
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-76.470588
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31_7_text
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05E7&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DD&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D4&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q31_7_text
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-97.058824
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2531,230 +1589,6 @@ NA
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Cocaine
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-LSD,Mushrooms,Cocaine,MDMA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-LSD,Mushrooms,MDMA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Mushrooms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Mushrooms,MDMA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q33
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-29
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-85.294118
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-No
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Yes
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-29
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-85.294118
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q35
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Screenshot of Facebook page,Id
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q35
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Selfie,Screenshot of Facebook page,Id
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q35
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-32
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-94.117647
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q36
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05D4&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05DB&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05DE&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05D7&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D3&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E1&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05E4&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DF&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D9&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E2&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D4&amp;gt;, &amp;lt;U+05D5&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt; &amp;lt;U+05D6&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05D4&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05DC&amp;gt;&amp;lt;U+05D0&amp;gt; &amp;lt;U+05E8&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D9&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q36
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05DB&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05D3&amp;gt;&amp;lt;U+05D1&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DD&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q36
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D0&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q36
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-30
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-88.235294
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -2885,104 +1719,6 @@ Unemployed
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-q41
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-I smoke where there is
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.764706
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q41
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-My partner buys
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.941177
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q41
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-29
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-85.294118
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05E8&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E9&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05DF&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-20
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-58.823529
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05E8&amp;gt; &amp;lt;U+05E9&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D9&amp;gt; &amp;lt;U+05D5&amp;gt;&amp;lt;U+05DE&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05DC&amp;gt;&amp;lt;U+05D4&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-29.411765
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DB&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05EA&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&amp;lt;U+05EA&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.882353
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
 q6
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -3051,28 +1787,14 @@ South
 52.941176
 &lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-q8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Yes
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-100.000000
-&lt;/td&gt;
-&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;p&gt;Great, this prints nicely, but we’re left with several issues to address:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1. We’re missing the actual questions&lt;/strong&gt; - Notice how we only have “q10_1” but not description of what the actual question or variable is.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2. Remove duplicated information&lt;/strong&gt; - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;3. Questions were reorganized alphabetically&lt;/strong&gt; - Once we ran the &lt;code&gt;pivot_longer&lt;/code&gt; &lt;code&gt;R&lt;/code&gt; sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;4. Sum of the responses aren’t ordered&lt;/strong&gt; - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Questions were reorganized alphabetically&lt;/strong&gt; - Once we ran the &lt;code&gt;pivot_longer&lt;/code&gt; &lt;code&gt;R&lt;/code&gt; sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Some of the responses aren’t ordered&lt;/strong&gt; - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Remove duplicated information&lt;/strong&gt; - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.&lt;/p&gt;
 &lt;p&gt;Let’s address these issues and nicely finish up our table.&lt;/p&gt;
 &lt;div id=&#34;adding-information-to-our-questions&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Adding information to our questions&lt;/h4&gt;
@@ -3081,27 +1803,27 @@ Yes
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_questions &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-categorical-variables-questions-with-kableextra&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;questions.xlsx&amp;quot;))
 df_questions[,1:3]&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 3
-##   Q2    Q3    Q4           
-##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;        
-## 1 &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;   &amp;lt;U+05E1&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E1&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05E2&amp;gt;&amp;lt;U+05E1&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E7&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D9&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+##   Q2     Q4                   Q6                                                
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;                &amp;lt;chr&amp;gt;                                             
+## 1 Gender What&amp;#39;s your occupat~ The average income for an individual is X, you&amp;#39;re~&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Great, now let’s turn it to a long format so that each row is a question id with the details of it as a value. Then we can join it with our current dataset of answers:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_q_clean &amp;lt;- df_questions %&amp;gt;% 
   clean_names() %&amp;gt;% 
-  pivot_longer(cols = q2:q38, names_to = &amp;quot;question&amp;quot;, values_to = &amp;quot;text&amp;quot;) 
+  pivot_longer(cols = q2:q37, names_to = &amp;quot;question&amp;quot;, values_to = &amp;quot;text&amp;quot;) 
 
 df_long &amp;lt;-  inner_join(df_long, df_q_clean, by = c(&amp;quot;question&amp;quot; = &amp;quot;question&amp;quot;))
 
 head(df_long)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 5
 ## # Groups:   question [1]
-##   question value                                n   pct text                    
-##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                            &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;                   
-## 1 q11_1    Between once a week to once in ~     5  14.7 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
-## 2 q11_1    Less than once a month               4  11.8 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
-## 3 q11_1    Once a day                           6  17.6 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
-## 4 q11_1    Once a week                          4  11.8 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
-## 5 q11_1    Several times a day                  6  17.6 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~
-## 6 q11_1    Several times a week                 8  23.5 &amp;lt;U+05D1&amp;gt;&amp;lt;U+05D0&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05D6&amp;gt;&amp;lt;U+05D5&amp;gt; &amp;lt;U+05EA&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05EA&amp;gt; &amp;lt;U+05D0&amp;gt;&amp;lt;U+05EA&amp;gt;&amp;lt;U+05D4&amp;gt; &amp;lt;U+05E6&amp;gt;&amp;lt;U+05D5&amp;gt;&amp;lt;U+05E8&amp;gt;&amp;lt;U+05DA&amp;gt; &amp;lt;U+05E7&amp;gt;~&lt;/code&gt;&lt;/pre&gt;
+##   question value                            n   pct text                        
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                        &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;                       
+## 1 q11_1    Between once a week to once~     5  14.7 Every how often do you cons~
+## 2 q11_1    Less than once a month           4  11.8 Every how often do you cons~
+## 3 q11_1    Once a day                       6  17.6 Every how often do you cons~
+## 4 q11_1    Once a week                      4  11.8 Every how often do you cons~
+## 5 q11_1    Several times a day              6  17.6 Every how often do you cons~
+## 6 q11_1    Several times a week             8  23.5 Every how often do you cons~&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Using the &lt;code&gt;inner_join&lt;/code&gt; we kept only questions we want to display. Now let’s turn to our second issue and address the order of our questions. Basically, we want it to be ordered by the value of the number itself and not how it’s sorted alphabaetically (q11_1 before q_5). What we’ll do, and there might be a quicker way, is use regex (regular expression) to use the number values to sort by. Here it goes:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_sorted &amp;lt;- df_long %&amp;gt;% 
   mutate(q_num = str_remove_all(question, &amp;quot;[a-z]&amp;quot;),
@@ -3109,27 +1831,23 @@ head(df_long)&lt;/code&gt;&lt;/pre&gt;
     q_num = str_remove(q_num, &amp;quot;\\.$&amp;quot;),
     q_num = as.numeric(q_num)) %&amp;gt;% 
   group_by(question) %&amp;gt;% 
-  arrange(q_num)
+  arrange(q_num) %&amp;gt;% 
+  select(-q_num)
 
 head(df_long_sorted)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 5
 ## # Groups:   question [2]
-##   question value      n   pct text  q_num
-##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;
-## 1 q2       Female    16 47.1  &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;      2
-## 2 q2       Male      18 52.9  &amp;lt;U+05DE&amp;gt;&amp;lt;U+05D2&amp;gt;&amp;lt;U+05D3&amp;gt;&amp;lt;U+05E8&amp;gt;      2
-## 3 q3       24         1  2.94 &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
-## 4 q3       27         6 17.6  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
-## 5 q3       28         5 14.7  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3
-## 6 q3       29        14 41.2  &amp;lt;U+05D2&amp;gt;&amp;lt;U+05D9&amp;gt;&amp;lt;U+05DC&amp;gt;       3&lt;/code&gt;&lt;/pre&gt;
+##   question value                         n   pct text                   
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                     &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;                  
+## 1 q2       Female                       16 47.1  Gender                 
+## 2 q2       Male                         18 52.9  Gender                 
+## 3 q4       Salaried employee            18 52.9  What&amp;#39;s your occupation?
+## 4 q4       Self employed                 3  8.82 What&amp;#39;s your occupation?
+## 5 q4       Student                       8 23.5  What&amp;#39;s your occupation?
+## 6 q4       Student,Salaried employee     3  8.82 What&amp;#39;s your occupation?&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Perfect!&lt;/p&gt;
-&lt;p&gt;In our first &lt;code&gt;str_remove_all&lt;/code&gt; we remove all letters
-, but let’s assume we have some more details about our questions, such as the wording itself. For exmaple, when downloading Qualtrics survey data, you also get the wording of the question. We can use that to provide more information about our data:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Merge the table with the questions
-# Run the kable again&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Great, so we have our actual questions, but now it’s a littlle messey considering it’s duplicated in each row. Here we can use the amazing &lt;code&gt;collapse_rows()&lt;/code&gt; function which, as the name suggests, collapses the rows of a column we choose. Let’s see it in action:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Same code, now with 
-# collapse_rows()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We used some simple regular expressions to create a variable containing only our question number and sorted it by it. Now that we got that out of the way, let’s head on to our next issue. Our next problem is that we want some of our questions to be organized not by the count or some randomness, but by hierarchy of the answer options, for example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on.&lt;br /&gt;
+Personally, I didn’t have a magicly automated answer but manualy provided levels to each answer. You can do this by setting them as a factor, or the way I did it: Create another table with the possible answer options and provide each answer with a value. You can then sort the answers by the order of numbers you provided, let’s have a look:&lt;/p&gt;
 &lt;p&gt;Alright! Much better!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;

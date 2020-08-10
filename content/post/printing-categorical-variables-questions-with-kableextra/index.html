@@ -42,37 +42,19 @@ library(janitor) # To clean names
 df_survey &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;,&quot;survey.xlsx&quot;))
 
 head(df_survey)</code></pre>
-<pre><code>## # A tibble: 6 x 93
-##   StartDate           EndDate             Status Progress `Duration (in s~
-##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2020-06-03 02:05:52 2020-06-03 02:12:13 IP Ad~      100              381
-## 2 2020-06-03 02:07:53 2020-06-03 02:16:56 IP Ad~      100              543
-## 3 2020-06-03 02:02:10 2020-06-03 02:18:19 IP Ad~      100              968
-## 4 2020-06-03 02:11:25 2020-06-03 02:18:49 IP Ad~      100              444
-## 5 2020-06-03 02:20:54 2020-06-03 02:26:01 IP Ad~      100              307
-## 6 2020-06-03 02:20:28 2020-06-03 02:30:05 IP Ad~      100              576
-## # ... with 88 more variables: Finished &lt;chr&gt;, RecordedDate &lt;dttm&gt;,
-## #   ResponseId &lt;chr&gt;, DistributionChannel &lt;chr&gt;, UserLanguage &lt;chr&gt;, Q1 &lt;chr&gt;,
-## #   Q2 &lt;chr&gt;, Q3 &lt;chr&gt;, Q4 &lt;chr&gt;, Q5 &lt;chr&gt;, Q6 &lt;chr&gt;, Q7 &lt;chr&gt;, Q8 &lt;chr&gt;,
-## #   Q9_1 &lt;chr&gt;, Q9_2 &lt;chr&gt;, Q9_3 &lt;chr&gt;, Q9_4 &lt;chr&gt;, Q9_5 &lt;chr&gt;, Q9_6 &lt;chr&gt;,
-## #   Q10_1 &lt;chr&gt;, Q10_2 &lt;chr&gt;, Q10_3 &lt;chr&gt;, Q10_4 &lt;chr&gt;, Q10_5 &lt;chr&gt;,
-## #   Q11_1 &lt;chr&gt;, Q12 &lt;chr&gt;, Q13_1 &lt;chr&gt;, Q14_1 &lt;chr&gt;, Q14_2 &lt;chr&gt;, Q14_3 &lt;chr&gt;,
-## #   Q14_4 &lt;chr&gt;, Q14_5 &lt;chr&gt;, Q14_6 &lt;chr&gt;, Q14_7 &lt;chr&gt;, Q14_8 &lt;chr&gt;, Q41 &lt;chr&gt;,
-## #   Q15 &lt;chr&gt;, Q16 &lt;chr&gt;, Q17 &lt;chr&gt;, Q17_10_TEXT &lt;chr&gt;, Q18_1 &lt;chr&gt;,
-## #   Q18_2 &lt;chr&gt;, Q18_3 &lt;chr&gt;, Q18_4 &lt;chr&gt;, Q18_5 &lt;chr&gt;, Q18_6 &lt;chr&gt;,
-## #   Q19_1 &lt;chr&gt;, Q19_2 &lt;chr&gt;, Q19_3 &lt;chr&gt;, Q19_4 &lt;chr&gt;, Q19_5 &lt;chr&gt;,
-## #   Q20_1 &lt;chr&gt;, Q20_2 &lt;chr&gt;, Q20_3 &lt;chr&gt;, Q20_4 &lt;chr&gt;, Q20_5 &lt;chr&gt;,
-## #   Q20_6 &lt;chr&gt;, Q21_1 &lt;chr&gt;, Q21_2 &lt;chr&gt;, Q21_3 &lt;chr&gt;, Q21_4 &lt;chr&gt;, Q23 &lt;chr&gt;,
-## #   Q24 &lt;chr&gt;, Q25 &lt;chr&gt;, Q26 &lt;chr&gt;, Q27 &lt;chr&gt;, Q28_1 &lt;chr&gt;, Q28_2 &lt;chr&gt;,
-## #   Q28_3 &lt;chr&gt;, Q28_4 &lt;chr&gt;, Q28_5 &lt;chr&gt;, Q28_6 &lt;chr&gt;, Q28_7 &lt;chr&gt;,
-## #   Q29_1 &lt;chr&gt;, Q29_2 &lt;chr&gt;, Q29_3 &lt;chr&gt;, Q29_4 &lt;chr&gt;, Q29_5 &lt;chr&gt;, Q30 &lt;chr&gt;,
-## #   Q31 &lt;chr&gt;, Q31_7_TEXT &lt;chr&gt;, Q32 &lt;chr&gt;, Q33 &lt;chr&gt;, Q33_9_TEXT &lt;lgl&gt;,
-## #   Q34 &lt;chr&gt;, Q35 &lt;chr&gt;, Q36 &lt;chr&gt;, Q37 &lt;chr&gt;</code></pre>
+<pre><code>## # A tibble: 6 x 12
+##   Q2     Q4     Q6     Q7    Q11_1   Q13_1   Q15   Q26   Q27   Q30   Q32   Q37  
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Female Salar~ Simil~ Cent~ Once a~ At lea~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 2 Female Salar~ Below~ South Severa~ Every ~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 3 Female Stude~ Below~ South Betwee~ I&#39;ve n~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 4 Female Unemp~ Simil~ Cent~ Once a~ At lea~ Last~ No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 5 Male   Salar~ Simil~ Cent~ Once a~ At lea~ Last~ Yes   2-3 ~ Yes   No    No   
+## 6 Female Salar~ Simil~ Cent~ Severa~ Last t~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes</code></pre>
 <p>So we have a lot of information regarding our sample  data we collected. In order to nicely print all of our <em>character</em> columns, let’s start by removing anything other than a character column:</p>
 <pre class="r"><code>df_char &lt;- df_survey %&gt;% 
   janitor::clean_names () %&gt;% 
-  select_if(is.character) %&gt;% 
-  select(-c(status:q1, q9_1:q10_5,q18_1:q29_5))</code></pre>
+  select_if(is.character) </code></pre>
 <p>we’ll need to change the data to a long form. A first thought the comes to mind is to use the <code>pivot_longer</code> argument so that we have everything in one nice long table:</p>
 <pre class="r"><code>df_long &lt;- df_char %&gt;% 
   pivot_longer(q2:q37, names_to = &quot;question&quot;) %&gt;% 
@@ -203,48 +185,6 @@ NA
 </tr>
 <tr>
 <td style="text-align:left;">
-q12
-</td>
-<td style="text-align:left;">
-No, and I hadn’t applied to one (for any reason)
-</td>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-88.235294
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q12
-</td>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q12
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 q13_1
 </td>
 <td style="text-align:left;">
@@ -325,496 +265,6 @@ Last time I bought was over half a year ago
 </td>
 <td style="text-align:right;">
 17.647059
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_1
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-44.117647
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_1
-</td>
-<td style="text-align:left;">
-Occassionly
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_1
-</td>
-<td style="text-align:left;">
-Often
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_1
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-23.529412
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_1
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_2
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:right;">
-76.470588
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_2
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_2
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_3
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-73.529412
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_3
-</td>
-<td style="text-align:left;">
-Occassionly
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_3
-</td>
-<td style="text-align:left;">
-Often
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_3
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_3
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_4
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-28
-</td>
-<td style="text-align:right;">
-82.352941
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_4
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_4
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-Occassionly
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-17.647059
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-Often
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-17.647059
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-Very often
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-35.294118
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_5
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-41.176471
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-Occassionly
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-Often
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-Very often
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_6
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_7
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-23
-</td>
-<td style="text-align:right;">
-67.647059
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_7
-</td>
-<td style="text-align:left;">
-Occassionly
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_7
-</td>
-<td style="text-align:left;">
-Rarley
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_7
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-14.705882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_8
-</td>
-<td style="text-align:left;">
-Never
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_8
-</td>
-<td style="text-align:left;">
-Very often
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q14_8
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-31
-</td>
-<td style="text-align:right;">
-91.176471
 </td>
 </tr>
 <tr>
@@ -917,244 +367,6 @@ Over a year ago
 </tr>
 <tr>
 <td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-1-3 Authentications
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-3-5 Authentications
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-5-10 Authentications
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-More than 10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-Once
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q16
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-52.941176
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Id
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Id,A video holding a tool for consuming cannabis
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of my Facebook
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of my Facebook,Id
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-20.588235
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of my Facebook,Id,A photo of a paper with something written on it
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of my Facebook,Id,A video holding a tool for consuming cannabis
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of my Facebook,Id,Other
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-52.941176
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17_10_text
-</td>
-<td style="text-align:left;">
-&lt;U+05E6&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;&lt;U+05D5&gt;&lt;U+05DD&gt; &lt;U+05E9&gt;&lt;U+05DC&gt;&lt;U+05D9&gt; &lt;U+05D0&gt;&lt;U+05D5&gt;&lt;U+05DE&gt;&lt;U+05E8&gt; &lt;U+05D0&gt;&lt;U+05EA&gt; &lt;U+05D4&gt;&lt;U+05EA&gt;&lt;U+05D0&gt;&lt;U+05E8&gt;&lt;U+05D9&gt;&lt;U+05DA&gt;
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q17_10_text
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-33
-</td>
-<td style="text-align:right;">
-97.058824
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 q2
 </td>
 <td style="text-align:left;">
@@ -1183,10 +395,38 @@ Male
 </tr>
 <tr>
 <td style="text-align:left;">
-q3
+q26
 </td>
 <td style="text-align:left;">
-24
+No
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+58.823529
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q26
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38.235294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q26
+</td>
+<td style="text-align:left;">
+NA
 </td>
 <td style="text-align:right;">
 1
@@ -1197,24 +437,38 @@ q3
 </tr>
 <tr>
 <td style="text-align:left;">
-q3
+q27
 </td>
 <td style="text-align:left;">
-27
+2-3 times
 </td>
 <td style="text-align:right;">
-6
+4
 </td>
 <td style="text-align:right;">
-17.647059
+11.764706
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-q3
+q27
 </td>
 <td style="text-align:left;">
-28
+5-7 times
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11.764706
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q27
+</td>
+<td style="text-align:left;">
+Over 7 times
 </td>
 <td style="text-align:right;">
 5
@@ -1225,58 +479,16 @@ q3
 </tr>
 <tr>
 <td style="text-align:left;">
-q3
+q27
 </td>
 <td style="text-align:left;">
-29
+NA
 </td>
 <td style="text-align:right;">
-14
+21
 </td>
 <td style="text-align:right;">
-41.176471
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q3
-</td>
-<td style="text-align:left;">
-30
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q3
-</td>
-<td style="text-align:left;">
-32
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q3
-</td>
-<td style="text-align:left;">
-55
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
+61.764706
 </td>
 </tr>
 <tr>
@@ -1287,10 +499,10 @@ q30
 No
 </td>
 <td style="text-align:right;">
-5
+1
 </td>
 <td style="text-align:right;">
-14.705882
+2.941177
 </td>
 </tr>
 <tr>
@@ -1301,10 +513,10 @@ q30
 Yes
 </td>
 <td style="text-align:right;">
-8
+12
 </td>
 <td style="text-align:right;">
-23.529412
+35.294118
 </td>
 </tr>
 <tr>
@@ -1319,160 +531,6 @@ NA
 </td>
 <td style="text-align:right;">
 61.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community,Activists
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community,Activists,second-hand  Movies &amp; Tv-shows
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community,Drugs-psychedelic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community,Growers
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Community,Growers,Drugs-psychedelic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Drugs-psychedelic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-Other
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:right;">
-76.470588
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31_7_text
-</td>
-<td style="text-align:left;">
-&lt;U+05E7&gt;&lt;U+05D1&gt;&lt;U+05D5&gt;&lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05E9&gt;&lt;U+05E7&gt;&lt;U+05E9&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05DC&gt;&lt;U+05DE&gt;&lt;U+05E7&gt;&lt;U+05D5&gt;&lt;U+05DD&gt; &lt;U+05D4&gt;&lt;U+05E2&gt;&lt;U+05D1&gt;&lt;U+05D5&gt;&lt;U+05D3&gt;&lt;U+05D4&gt;
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q31_7_text
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-33
-</td>
-<td style="text-align:right;">
-97.058824
 </td>
 </tr>
 <tr>
@@ -1515,230 +573,6 @@ NA
 </td>
 <td style="text-align:right;">
 5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-Cocaine
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-LSD,Mushrooms,Cocaine,MDMA
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-LSD,Mushrooms,MDMA
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-Mushrooms
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-Mushrooms,MDMA
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q33
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-29
-</td>
-<td style="text-align:right;">
-85.294118
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q34
-</td>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q34
-</td>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q34
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-29
-</td>
-<td style="text-align:right;">
-85.294118
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q35
-</td>
-<td style="text-align:left;">
-Screenshot of Facebook page,Id
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q35
-</td>
-<td style="text-align:left;">
-Selfie,Screenshot of Facebook page,Id
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q35
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-94.117647
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q36
-</td>
-<td style="text-align:left;">
-&lt;U+05D4&gt;&lt;U+05D3&gt;&lt;U+05D1&gt;&lt;U+05E8&gt; &lt;U+05D4&gt;&lt;U+05DB&gt;&lt;U+05D9&gt; &lt;U+05DE&gt;&lt;U+05E4&gt;&lt;U+05D7&gt;&lt;U+05D9&gt;&lt;U+05D3&gt; &lt;U+05E9&gt;&lt;U+05DE&gt;&lt;U+05E1&gt;&lt;U+05E4&gt;&lt;U+05E8&gt; &lt;U+05D4&gt;&lt;U+05D8&gt;&lt;U+05DC&gt;&lt;U+05E4&gt;&lt;U+05D5&gt;&lt;U+05DF&gt; &lt;U+05E9&gt;&lt;U+05DC&gt;&lt;U+05D9&gt; &lt;U+05D9&gt;&lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05E2&gt; &lt;U+05DC&gt;&lt;U+05DE&gt;&lt;U+05E9&gt;&lt;U+05D8&gt;&lt;U+05E8&gt;&lt;U+05D4&gt;, &lt;U+05D5&gt;&lt;U+05D1&gt;&lt;U+05E9&gt;&lt;U+05D1&gt;&lt;U+05D9&gt;&lt;U+05DC&gt; &lt;U+05D6&gt;&lt;U+05D4&gt; &lt;U+05EA&gt;&lt;U+05D1&gt;&lt;U+05DC&gt;&lt;U+05D9&gt;&lt;U+05DA&gt; &lt;U+05D4&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05DE&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05DC&gt;&lt;U+05D0&gt; &lt;U+05E8&gt;&lt;U+05DC&gt;&lt;U+05D5&gt;&lt;U+05D5&gt;&lt;U+05E0&gt;&lt;U+05D8&gt;&lt;U+05D9&gt;
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q36
-</td>
-<td style="text-align:left;">
-&lt;U+05DB&gt;&lt;U+05DE&gt;&lt;U+05D4&gt; &lt;U+05D3&gt;&lt;U+05D1&gt;&lt;U+05E8&gt;&lt;U+05D9&gt;&lt;U+05DD&gt;
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q36
-</td>
-<td style="text-align:left;">
-&lt;U+05DC&gt;&lt;U+05D0&gt;
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q36
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-88.235294
 </td>
 </tr>
 <tr>
@@ -1869,104 +703,6 @@ Unemployed
 </tr>
 <tr>
 <td style="text-align:left;">
-q41
-</td>
-<td style="text-align:left;">
-I smoke where there is
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11.764706
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q41
-</td>
-<td style="text-align:left;">
-My partner buys
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.941177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q41
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-29
-</td>
-<td style="text-align:right;">
-85.294118
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q5
-</td>
-<td style="text-align:left;">
-&lt;U+05EA&gt;&lt;U+05D5&gt;&lt;U+05D0&gt;&lt;U+05E8&gt; &lt;U+05E8&gt;&lt;U+05D0&gt;&lt;U+05E9&gt;&lt;U+05D5&gt;&lt;U+05DF&gt;
-</td>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-58.823529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q5
-</td>
-<td style="text-align:left;">
-&lt;U+05EA&gt;&lt;U+05D5&gt;&lt;U+05D0&gt;&lt;U+05E8&gt; &lt;U+05E9&gt;&lt;U+05E0&gt;&lt;U+05D9&gt; &lt;U+05D5&gt;&lt;U+05DE&gt;&lt;U+05E2&gt;&lt;U+05DC&gt;&lt;U+05D4&gt;
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-29.411765
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q5
-</td>
-<td style="text-align:left;">
-&lt;U+05EA&gt;&lt;U+05D9&gt;&lt;U+05DB&gt;&lt;U+05D5&gt;&lt;U+05E0&gt;&lt;U+05D9&gt;&lt;U+05EA&gt;
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q5
-</td>
-<td style="text-align:left;">
-&lt;U+05EA&gt;&lt;U+05E2&gt;&lt;U+05D5&gt;&lt;U+05D3&gt;&lt;U+05EA&gt; &lt;U+05D1&gt;&lt;U+05D2&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt;
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5.882353
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 q6
 </td>
 <td style="text-align:left;">
@@ -2035,28 +771,14 @@ South
 52.941176
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-q8
-</td>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:right;">
-34
-</td>
-<td style="text-align:right;">
-100.000000
-</td>
-</tr>
 </tbody>
 </table>
 </div>
 <p>Great, this prints nicely, but we’re left with several issues to address:</p>
 <p><strong>1. We’re missing the actual questions</strong> - Notice how we only have “q10_1” but not description of what the actual question or variable is.</p>
-<p><strong>2. Remove duplicated information</strong> - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.</p>
-<p><strong>3. Questions were reorganized alphabetically</strong> - Once we ran the <code>pivot_longer</code> <code>R</code> sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions.</p>
-<p><strong>4. Sum of the responses aren’t ordered</strong> - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX</p>
+<p><strong>2. Questions were reorganized alphabetically</strong> - Once we ran the <code>pivot_longer</code> <code>R</code> sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions.</p>
+<p><strong>3. Some of the responses aren’t ordered</strong> - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX</p>
+<p><strong>4. Remove duplicated information</strong> - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.</p>
 <p>Let’s address these issues and nicely finish up our table.</p>
 <div id="adding-information-to-our-questions" class="section level4">
 <h4>Adding information to our questions</h4>
@@ -2065,27 +787,27 @@ Yes
 <pre class="r"><code>df_questions &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;, &quot;questions.xlsx&quot;))
 df_questions[,1:3]</code></pre>
 <pre><code>## # A tibble: 1 x 3
-##   Q2    Q3    Q4           
-##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        
-## 1 &lt;U+05DE&gt;&lt;U+05D2&gt;&lt;U+05D3&gt;&lt;U+05E8&gt;  &lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;   &lt;U+05E1&gt;&lt;U+05D8&gt;&lt;U+05D8&gt;&lt;U+05D5&gt;&lt;U+05E1&gt; &lt;U+05EA&gt;&lt;U+05E2&gt;&lt;U+05E1&gt;&lt;U+05D5&gt;&lt;U+05E7&gt;&lt;U+05EA&gt;&lt;U+05D9&gt;</code></pre>
+##   Q2     Q4                   Q6                                                
+##   &lt;chr&gt;  &lt;chr&gt;                &lt;chr&gt;                                             
+## 1 Gender What&#39;s your occupat~ The average income for an individual is X, you&#39;re~</code></pre>
 <p>Great, now let’s turn it to a long format so that each row is a question id with the details of it as a value. Then we can join it with our current dataset of answers:</p>
 <pre class="r"><code>df_q_clean &lt;- df_questions %&gt;% 
   clean_names() %&gt;% 
-  pivot_longer(cols = q2:q38, names_to = &quot;question&quot;, values_to = &quot;text&quot;) 
+  pivot_longer(cols = q2:q37, names_to = &quot;question&quot;, values_to = &quot;text&quot;) 
 
 df_long &lt;-  inner_join(df_long, df_q_clean, by = c(&quot;question&quot; = &quot;question&quot;))
 
 head(df_long)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ## # Groups:   question [1]
-##   question value                                n   pct text                    
-##   &lt;chr&gt;    &lt;chr&gt;                            &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;                   
-## 1 q11_1    Between once a week to once in ~     5  14.7 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~
-## 2 q11_1    Less than once a month               4  11.8 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~
-## 3 q11_1    Once a day                           6  17.6 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~
-## 4 q11_1    Once a week                          4  11.8 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~
-## 5 q11_1    Several times a day                  6  17.6 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~
-## 6 q11_1    Several times a week                 8  23.5 &lt;U+05D1&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05D6&gt;&lt;U+05D5&gt; &lt;U+05EA&gt;&lt;U+05D3&gt;&lt;U+05D9&gt;&lt;U+05E8&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05D0&gt;&lt;U+05EA&gt;&lt;U+05D4&gt; &lt;U+05E6&gt;&lt;U+05D5&gt;&lt;U+05E8&gt;&lt;U+05DA&gt; &lt;U+05E7&gt;~</code></pre>
+##   question value                            n   pct text                        
+##   &lt;chr&gt;    &lt;chr&gt;                        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;                       
+## 1 q11_1    Between once a week to once~     5  14.7 Every how often do you cons~
+## 2 q11_1    Less than once a month           4  11.8 Every how often do you cons~
+## 3 q11_1    Once a day                       6  17.6 Every how often do you cons~
+## 4 q11_1    Once a week                      4  11.8 Every how often do you cons~
+## 5 q11_1    Several times a day              6  17.6 Every how often do you cons~
+## 6 q11_1    Several times a week             8  23.5 Every how often do you cons~</code></pre>
 <p>Using the <code>inner_join</code> we kept only questions we want to display. Now let’s turn to our second issue and address the order of our questions. Basically, we want it to be ordered by the value of the number itself and not how it’s sorted alphabaetically (q11_1 before q_5). What we’ll do, and there might be a quicker way, is use regex (regular expression) to use the number values to sort by. Here it goes:</p>
 <pre class="r"><code>df_long_sorted &lt;- df_long %&gt;% 
   mutate(q_num = str_remove_all(question, &quot;[a-z]&quot;),
@@ -2093,27 +815,23 @@ head(df_long)</code></pre>
     q_num = str_remove(q_num, &quot;\\.$&quot;),
     q_num = as.numeric(q_num)) %&gt;% 
   group_by(question) %&gt;% 
-  arrange(q_num)
+  arrange(q_num) %&gt;% 
+  select(-q_num)
 
 head(df_long_sorted)</code></pre>
-<pre><code>## # A tibble: 6 x 6
+<pre><code>## # A tibble: 6 x 5
 ## # Groups:   question [2]
-##   question value      n   pct text  q_num
-##   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1 q2       Female    16 47.1  &lt;U+05DE&gt;&lt;U+05D2&gt;&lt;U+05D3&gt;&lt;U+05E8&gt;      2
-## 2 q2       Male      18 52.9  &lt;U+05DE&gt;&lt;U+05D2&gt;&lt;U+05D3&gt;&lt;U+05E8&gt;      2
-## 3 q3       24         1  2.94 &lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;       3
-## 4 q3       27         6 17.6  &lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;       3
-## 5 q3       28         5 14.7  &lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;       3
-## 6 q3       29        14 41.2  &lt;U+05D2&gt;&lt;U+05D9&gt;&lt;U+05DC&gt;       3</code></pre>
+##   question value                         n   pct text                   
+##   &lt;chr&gt;    &lt;chr&gt;                     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;                  
+## 1 q2       Female                       16 47.1  Gender                 
+## 2 q2       Male                         18 52.9  Gender                 
+## 3 q4       Salaried employee            18 52.9  What&#39;s your occupation?
+## 4 q4       Self employed                 3  8.82 What&#39;s your occupation?
+## 5 q4       Student                       8 23.5  What&#39;s your occupation?
+## 6 q4       Student,Salaried employee     3  8.82 What&#39;s your occupation?</code></pre>
 <p>Perfect!</p>
-<p>In our first <code>str_remove_all</code> we remove all letters
-, but let’s assume we have some more details about our questions, such as the wording itself. For exmaple, when downloading Qualtrics survey data, you also get the wording of the question. We can use that to provide more information about our data:</p>
-<pre class="r"><code># Merge the table with the questions
-# Run the kable again</code></pre>
-<p>Great, so we have our actual questions, but now it’s a littlle messey considering it’s duplicated in each row. Here we can use the amazing <code>collapse_rows()</code> function which, as the name suggests, collapses the rows of a column we choose. Let’s see it in action:</p>
-<pre class="r"><code># Same code, now with 
-# collapse_rows()</code></pre>
+<p>We used some simple regular expressions to create a variable containing only our question number and sorted it by it. Now that we got that out of the way, let’s head on to our next issue. Our next problem is that we want some of our questions to be organized not by the count or some randomness, but by hierarchy of the answer options, for example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on.<br />
+Personally, I didn’t have a magicly automated answer but manualy provided levels to each answer. You can do this by setting them as a factor, or the way I did it: Create another table with the possible answer options and provide each answer with a value. You can then sort the answers by the order of numbers you provided, let’s have a look:</p>
 <p>Alright! Much better!</p>
 </div>
 </div>

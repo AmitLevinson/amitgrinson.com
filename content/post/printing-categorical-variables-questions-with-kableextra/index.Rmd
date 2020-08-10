@@ -57,8 +57,7 @@ So we have a lot of information regarding our sample \ data we collected. In ord
 ```{r}
 df_char <- df_survey %>% 
   janitor::clean_names () %>% 
-  select_if(is.character) %>% 
-  select(-c(status:q1, q9_1:q10_5,q18_1:q29_5))
+  select_if(is.character) 
 ```
 
 we'll need to change the data to a long form. A first thought the comes to mind is to use the `pivot_longer` argument so that we have everything in one nice long table:
@@ -80,11 +79,12 @@ Great, this prints nicely, but we're left with several issues to address:
 
 **1. We're missing the actual questions** -  Notice how we only have "q10_1" but not description of what the actual question or variable is.  
 
-**2. Remove duplicated information** - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don't need to show it's from that question only once. In addition, once we'll add the question title it'll be even more cluttered, so we'll have to deal with that.  
+**2. Questions were reorganized alphabetically** - Once we ran the `pivot_longer` `R` sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions. 
 
-**3. Questions were reorganized alphabetically** - Once we ran the `pivot_longer` `R` sorted our new dataframe alphabetically according to the question variable, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to show it aligned to the order of the survey questions. 
+**3. Some of the responses aren't ordered** - Notice how some of the responses are randomly ordered, when ideally we'd want them to be ordered by hierarchy. For example question XXXXX
 
-**4. Sum of the responses aren't ordered** - Notice how some of the responses are randomly ordered, when ideally we'd want them to be ordered by hierarchy. For example question XXXXX
+**4. Remove duplicated information** - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don't need to show it's from that question only once. In addition, once we'll add the question title it'll be even more cluttered, so we'll have to deal with that.  
+
 
 Let's address these issues and nicely finish up our table.
 
@@ -104,7 +104,7 @@ Great, now let's turn it to a long format so that each row is a question id with
 ```{r}
 df_q_clean <- df_questions %>% 
   clean_names() %>% 
-  pivot_longer(cols = q2:q38, names_to = "question", values_to = "text") 
+  pivot_longer(cols = q2:q37, names_to = "question", values_to = "text") 
 
 df_long <-  inner_join(df_long, df_q_clean, by = c("question" = "question"))
 
@@ -120,27 +120,23 @@ df_long_sorted <- df_long %>%
     q_num = str_remove(q_num, "\\.$"),
     q_num = as.numeric(q_num)) %>% 
   group_by(question) %>% 
-  arrange(q_num)
+  arrange(q_num) %>% 
+  select(-q_num)
 
 head(df_long_sorted)
 ```
 
-Perfect!
+Perfect!  
 
-In our first `str_remove_all` we remove all letters
-, but let's assume we have some more details about our questions, such as the wording itself. For exmaple, when downloading Qualtrics survey data, you also get the wording of the question. We can use that to provide more information about our data:
-
-```{r}
-# Merge the table with the questions
-# Run the kable again
-```
-
-Great, so we have our actual questions, but now it's a littlle messey considering it's duplicated in each row. Here we can use the amazing `collapse_rows()` function which, as the name suggests, collapses the rows of a column we choose. Let's see it in action:
+We used some simple regular expressions to create a variable containing only our question number and sorted it by it. Now that we got that out of the way, let's head on to our next issue. Our next problem is that we want some of our questions to be organized not by the count or some randomness, but by hierarchy of the answer options, for example 'a few times a day', 'Once a day', 'several times a week' and so on.  
+Personally, I didn't have a magicly automated answer but manualy provided levels to each answer. You can do this by setting them as a factor, or the way I did it: Create another table with the possible answer options and provide each answer with a value. You can then sort the answers by the order of numbers you provided, let's have a look:
 
 ```{r}
-# Same code, now with 
-# collapse_rows()
+
 ```
+
+
+
 
 Alright! Much better!
 
