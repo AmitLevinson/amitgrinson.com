@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>Printing categorical variables with KableExtra</title>
+      <title>Survey categorical variables with KableExtra</title>
       <link>/post/printing-survey-table/</link>
       <pubDate>Tue, 01 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/printing-survey-table/</guid>
-      <description>Aestheticaly printing descriptive categorical variables from your data</description>
+      <description>Aestheticaly printing descriptive variables from your survey data</description>
       
     </item>
     

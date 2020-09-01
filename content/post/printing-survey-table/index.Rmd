@@ -1,12 +1,12 @@
 ---
-title: Printing categorical variables with KableExtra
+title: Survey categorical variables with KableExtra
 author: Amit Levinson
 date: '2020-09-01'
 slug: printing-survey-table
 categories: []
 tags: []
 subtitle: ''
-summary: "Aestheticaly printing descriptive categorical variables from your data"
+summary: "Aestheticaly printing descriptive variables from your survey data"
 featured: no
 image:
   caption: 'Image by <a href="https://pixabay.com/users/Egle_pe-1340873/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Egle P.</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Pixabay</a>'
