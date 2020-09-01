@@ -212,7 +212,7 @@ df_long_q_sorted %>%
   collapse_rows(columns = c(1,2), valign = "top")
 ```
 
-```{r fig.align='center', fig.cap='Example using kable_minimal as a table theme'}
+```{r echo=FALSE, fig.align='center', fig.cap='Example using kable_minimal as a table theme'}
 include_graphics("kable_minimal.png")
 ```
 
@@ -230,7 +230,7 @@ df_long_q_sorted %>%
   head(20)
 ```
 
-```{r fig.cap='Outputting a table using df_print: kable in the YAML section'}
+```{r echo=FALSE, fig.cap='Outputting a table using df_print: kable in the YAML section'}
 include_graphics("df_print.png")
 ```
 

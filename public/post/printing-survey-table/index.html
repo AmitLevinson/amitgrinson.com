@@ -2113,7 +2113,6 @@ Figure 1: Just select all and copy it into a word document
   kable_styling(full_width = F) %&gt;% 
   column_spec(1, bold = T) %&gt;% 
   collapse_rows(columns = c(1,2), valign = &quot;top&quot;)</code></pre>
-<pre class="r"><code>include_graphics(&quot;kable_minimal.png&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="kable_minimal.png" alt="Example using kable_minimal as a table theme" width="80%" />
 <p class="caption">
@@ -2129,7 +2128,6 @@ Figure 2: Example using kable_minimal as a table theme
   mutate(across(c(question, text), ~ ifelse(duplicated(.x), &quot; &quot;, .x))) %&gt;% 
   select(`Question` = question, `Text` = text, `Value` = value, n, `%` = pct) %&gt;% 
   head(20)</code></pre>
-<pre class="r"><code>include_graphics(&quot;df_print.png&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="df_print.png" alt="Outputting a table using df_print: kable in the YAML section" width="80%" />
 <p class="caption">
