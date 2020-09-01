@@ -31,7 +31,7 @@
   <meta name="description" content="Aestheticaly printing descriptive categorical variables from your data">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/printing-table/">
+  <link rel="alternate" hreflang="en-us" href="/post/printing-survey-table/">
 
   
 
@@ -252,7 +252,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/post/printing-table/">
+  <link rel="canonical" href="/post/printing-survey-table/">
 
   
   
@@ -268,15 +268,15 @@
   <meta property="twitter:creator" content="@Amit_Levinson">
   
   <meta property="og:site_name" content="Amit Levinson">
-  <meta property="og:url" content="/post/printing-table/">
-  <meta property="og:title" content="Printing your survey&#39;s categorical variables | Amit Levinson">
-  <meta property="og:description" content="Aestheticaly printing descriptive categorical variables from your data"><meta property="og:image" content="/post/printing-table/featured.jpg">
-  <meta property="twitter:image" content="/post/printing-table/featured.jpg"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="/post/printing-survey-table/">
+  <meta property="og:title" content="Printing categorical variables with KableExtra | Amit Levinson">
+  <meta property="og:description" content="Aestheticaly printing descriptive categorical variables from your data"><meta property="og:image" content="/post/printing-survey-table/featured.jpg.jpg">
+  <meta property="twitter:image" content="/post/printing-survey-table/featured.jpg.jpg"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-05-01T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-09-01T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-05-01T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-09-01T00:00:00&#43;00:00">
   
 
   
@@ -302,16 +302,16 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/post/printing-table/"
+    "@id": "/post/printing-survey-table/"
   },
-  "headline": "Printing your survey's categorical variables",
+  "headline": "Printing categorical variables with KableExtra",
   
   "image": [
-    "/post/printing-table/featured.jpg"
+    "/post/printing-survey-table/featured.jpg.jpg"
   ],
   
-  "datePublished": "2020-05-01T00:00:00Z",
-  "dateModified": "2020-05-01T00:00:00Z",
+  "datePublished": "2020-09-01T00:00:00Z",
+  "dateModified": "2020-09-01T00:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -344,7 +344,7 @@
 
 
 
-  <title>Printing your survey&#39;s categorical variables | Amit Levinson</title>
+  <title>Printing categorical variables with KableExtra | Amit Levinson</title>
 
 </head>
 
@@ -501,7 +501,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Printing your survey&#39;s categorical variables</h1>
+  <h1>Printing categorical variables with KableExtra</h1>
 
   
 
@@ -520,7 +520,7 @@
     
       
     
-    May 1, 2020
+    Sep 1, 2020
   </span>
   
 
@@ -529,7 +529,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    14 min read
+    15 min read
   </span>
   
 
@@ -575,22 +575,26 @@ p.caption {
   font-size: 0.8em;
 }
 </style>
-<p>This post is somewhat of a ~love post~ tribute to both the iteration abilities in R combined with the <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>KableExtra</code></a> package. I set myself several goals for my thesis, one of them is doing my survey analysis in something other than SPSS. I wanted to finish my Masters’ with some broader knowledge of statistical programs and dive a little more into coding. I started learning R nearly a year ago so that when the time comes - When my pilot and survey results come in - I can analyze it all in R.</p>
-<p>The time came and I started to analyze the data in R. However, the problem was, That I wasn’t going to do an OK job. After discovering much of R’s abilities, I wasn’t going to let myself copy+paste. So I wrote a few functions, manipulated some of the work and then it was time to get out the big guns; well big guns at least for me.</p>
+<p>In my in-progress thesis I decided I’ll analyze my survey results in something other than SPSS we learned in undergrad, which eventually led me to begin using R. The time came and I started analyzing my pilot survey data from Qualtrics<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. In this post I’ll address how I used <code>{KableExtra}</code> to nicely print a frequency table of the categorical &amp; ordinal questions I had in my survey. You can also do what I describe below in other packages, however I enjoy using <code>{KableExtra}</code> for its rich vignette and clearly defomed functions.</p>
 <div id="the-problem" class="section level3">
 <h3>The Problem</h3>
-<p>In my pilot survey I had several questions (~20) that were categorical, ordinal and were simple constructs that didn’t require a more thorough analysis such as reliability of the scale. I wanted to nicely print all of these variables in one table, address any anomalies if needed and have them in the appendix for my supervisors to review.</p>
-<p><strong>The issue was, how can I nicely print all categorical variables along with the original question, the possible answers and the distribution of responses?</strong></p>
-<p>First, let’s look at our data:</p>
-<pre class="r"><code>library(tidyverse) # dplyr, tidyr, readr &amp; purrr
-library(here) # Project management
-library(readxl) # For reading excel files
-library(knitr) # Printing tables
-library(kableExtra) # Printing tables, but nice ones
-library(janitor) # To clean names
+<p>In my pilot survey I had ~20 questions that were categorical, ordinal and were simple constructs not requiring a thorough analysis but only a quick review at the distribution of responses. I wanted to print all of these variables in one formatted table and address any anomalies if needed.</p>
+<p><strong>The issue was, how can I format printing of all categorical variables in their chronological order, along with the original question and the distribution of responses?</strong></p>
+<p>Basically, how can I achieve the following output:</p>
+<p><img src="table.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="explore-our-data" class="section level3">
+<h3>Explore our data</h3>
+<p>First, let’s loda the packages we’ll need and look at our data:</p>
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(janitor)
 library(scales)
-df_survey &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;,&quot;survey.xlsx&quot;))
 
+df_survey &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;,&quot;survey.xlsx&quot;))
 head(df_survey)</code></pre>
 <pre><code>## # A tibble: 6 x 12
 ##   Q2     Q4     Q6     Q7    Q11_1   Q13_1   Q15   Q26   Q27   Q30   Q32   Q37  
@@ -601,22 +605,22 @@ head(df_survey)</code></pre>
 ## 4 Female Unemp~ Simil~ Cent~ Once a~ At lea~ Last~ No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
 ## 5 Male   Salar~ Simil~ Cent~ Once a~ At lea~ Last~ Yes   2-3 ~ Yes   No    No   
 ## 6 Female Salar~ Simil~ Cent~ Severa~ Last t~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes</code></pre>
-<p>So we have a lot of information regarding our sample  data we collected. In order to nicely print all of our <em>character</em> columns, let’s start by removing anything other than a character column:</p>
+<p>So we have a lot of information describing our sample data records. While this data is fabricated, it mirrors a common survey dataset: Each row represents a respondent with answers to various questions. With respect to continuous variables I did a different analysis, so for the purpose of the following post we’ll need only character columns. Let’s start by removing anything other than the relevant columns:</p>
 <pre class="r"><code>df_char &lt;- df_survey %&gt;% 
   janitor::clean_names () %&gt;% 
   select_if(is.character) </code></pre>
-<p>we’ll need to change the data to a long form. A first thought the comes to mind is to use the <code>pivot_longer</code> argument so that we have everything in one nice long table:</p>
+<p>We’ll need to change the data to a long form so that we can print it for efficient reading. An easy approach will be to use the <code>pivot_longer</code> argument, rendering all our columns in one long table:</p>
 <pre class="r"><code>df_long &lt;- df_char %&gt;% 
   pivot_longer(q2:q37, names_to = &quot;question&quot;) %&gt;% 
   count(question, value) %&gt;%
   group_by(question) %&gt;% 
   mutate(pct = percent(n/sum(n)))
 
-
+# Print table
 kbl(df_long) %&gt;% 
   kable_styling() %&gt;% 
-  scroll_box(height = &quot;450px&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:450px; ">
+  scroll_box(height = &quot;550px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:550px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -923,10 +927,10 @@ q2
 Female
 </td>
 <td style="text-align:right;">
-16
+15
 </td>
 <td style="text-align:left;">
-47.1%
+44.1%
 </td>
 </tr>
 <tr>
@@ -937,10 +941,24 @@ q2
 Male
 </td>
 <td style="text-align:right;">
-18
+17
 </td>
 <td style="text-align:left;">
-52.9%
+50.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q2
+</td>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
 </td>
 </tr>
 <tr>
@@ -1325,24 +1343,23 @@ South
 </table>
 </div>
 <p><br></p>
-<p>Great, this prints nicely, but we’re left with several issues to address:</p>
-<p><strong>1. We’re missing the actual questions</strong> - Notice how we only have “q10_1” but not description of what the actual question or variable is.</p>
-<p><strong>2. Questions were reorganized alphabetically</strong> - Once we ran the <code>pivot_longer</code> R sorted our dataframe alphabetically according to the question column, but we might want it ordered chronologically according to the survey. Of course this is contingent on your data, I wanted to present it aligned to the order of the survey questions.</p>
-<p><strong>3. Some of the responses aren’t ordered</strong> - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question XXXXX</p>
-<p><strong>4. Remove duplicated information</strong> - Our column question, and if we add another with the text, will have duplicate information. While the value changes within questions, we don’t need to show it’s from that question only once. In addition, once we’ll add the question title it’ll be even more cluttered, so we’ll have to deal with that.</p>
-<p>Let’s address these issues one by one.</p>
-<p><br></p>
-<div id="adding-information-to-our-questions" class="section level4">
-<h4>Adding information to our questions</h4>
-<p>When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it’s perfect for providing additional information. If you don’t have questions but variables, you can either skip this section or add information about the variables themselves.</p>
-<p>To add the questions I found it pretty straight forward to just to combine the current data_long dataset with a dataset containing our questions. We’ll use a copy of the original survey data that only contains the questions, let’s have a look:</p>
-<pre class="r"><code>df_questions &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;, &quot;questions.xlsx&quot;))
+<p>Great, this prints nicely, but we’re left with several issues to address<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
+<p><strong>1. We’re missing the actual questions</strong> - Notice how we only have “q11_1” but not a description of what the actual question or what the variable is. You can add a question label within Qualtrics, but I still wanted to have the question itself presented along with the question number.</p>
+<p><strong>2. Questions were reorganized alphabetically</strong> - Once we ran the <code>pivot_longer</code> R sorted our dataframe alphabetically according to the question column, but we might want it ordered according to the survey layout. Of course this is contingent on your data; I wanted to present it aligned to the order of the survey questions.</p>
+<p><strong>3. Some of the responses aren’t ordered</strong> - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question q11_1 describes frequency responses that aren’t hierarchically ordered.</p>
+<p><strong>4. Remove duplicated information</strong> - Our question column, and if we add another one with the question’s text, will have duplicate information. While the value changes within questions printing the question column for each row is redundant. In addition, once we’ll add the question title it’ll be even more cluttered and any additional irrelevant text should be removed.</p>
+<p>So then, let’s address these issues individually.</p>
+<div id="adding-information-to-our-questions" class="section level5">
+<h5>Adding information to our questions</h5>
+<p>When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it’s perfect for our display of additional information. There’s also a great function for doing exactly that from the <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html"><code>{qualtRics}</code></a> package, but I was having trouble connecting to the platform’s API through my Qualtrics user.</p>
+<p>Adding the questions was straightforward: Just combine the current <em>data_long</em> with a dataset containing my questions. We’ll use a copy of the original survey data (of course fabricated for purpose of the survey) that only contains the questions:</p>
+<pre class="r"><code>df_questions &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;questions.xlsx&quot;))
 df_questions[,1:3]</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   Q2     Q4                   Q6                                                
 ##   &lt;chr&gt;  &lt;chr&gt;                &lt;chr&gt;                                             
 ## 1 Gender What&#39;s your occupat~ The average income for an individual is X, you&#39;re~</code></pre>
-<p>Great, now let’s turn it to a long format so that each row is a question id with the details of it as a value. Then we can join it with our current dataset of answers:</p>
+<p>Great! we see our question’s text as values with the variables being the questions themselves. Now let’s render it in a long format so that each row is a question id with the corresponding text as a value, and then we’ll join it with our current dataset of answers:</p>
 <pre class="r"><code>df_q_clean &lt;- df_questions %&gt;% 
   clean_names() %&gt;% 
   pivot_longer(cols = q2:q37, names_to = &quot;question&quot;, values_to = &quot;text&quot;) 
@@ -1352,21 +1369,24 @@ df_long_joined &lt;-  left_join(df_long, df_q_clean)
 head(df_long_joined)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ## # Groups:   question [1]
-##   question value                            n pct   text                        
-##   &lt;chr&gt;    &lt;chr&gt;                        &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                       
-## 1 q11_1    Between once a week to once~     5 14.7% Every how often do you cons~
-## 2 q11_1    Less than once a month           4 11.8% Every how often do you cons~
-## 3 q11_1    Once a day                       6 17.6% Every how often do you cons~
-## 4 q11_1    Once a week                      4 11.8% Every how often do you cons~
-## 5 q11_1    Several times a day              6 17.6% Every how often do you cons~
-## 6 q11_1    Several times a week             8 23.5% Every how often do you cons~</code></pre>
-<p>As you can see, our column text provides the same information across the same questions, which seems kind of redundant. We’ll keep it for now and address it soon when we turn to print our table.</p>
-<p>Our next problem is that we want some of our questions to be organized not by the count or some randomness, but by hierarchy of the answer options. For example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on has a hierarachal structure, also defined as an ordinal variable.</p>
-<p>Personally, I don’t have a magical automated answer and would be glad to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually.</p>
+##   question value                           n pct   text                         
+##   &lt;chr&gt;    &lt;chr&gt;                       &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                        
+## 1 q11_1    Between once a week to onc~     5 14.7% Every how often do you consu~
+## 2 q11_1    Less than once a month          4 11.8% Every how often do you consu~
+## 3 q11_1    Once a day                      6 17.6% Every how often do you consu~
+## 4 q11_1    Once a week                     4 11.8% Every how often do you consu~
+## 5 q11_1    Several times a day             6 17.6% Every how often do you consu~
+## 6 q11_1    Several times a week            8 23.5% Every how often do you consu~</code></pre>
+<p>Perfect. However, as you can see, our new text column provides the same information across the same questions, which seems kind of redundant. We’ll keep it for now and address it soon when we turn to print our table.</p>
+</div>
+<div id="reordering-within-and-across-questions" class="section level5">
+<h5>Reordering within and across questions</h5>
+<p>The next issue on the list is that we want some of our questions to be organized not by the count frequency or some randomness, but by hierarchy of the answer options. For example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on as a hierarachal structure in my ordinal variables.</p>
+<p>Alas, I don’t have a magical automated method and would be grateful to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually. Though a tedious task, this manual workload is more efficient than automating everything.</p>
 <pre class="r"><code># Save the sorted response file and use that to rank
-# write_csv(df_long_q_sorted, here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
+# write_csv(df_long_q_sorted, here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
 
-answer_hir &lt;- read_csv(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
+answer_hir &lt;- read_csv(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
 head(answer_hir)</code></pre>
 <pre><code>## # A tibble: 6 x 3
 ##   question value                      rank
@@ -1377,10 +1397,21 @@ head(answer_hir)</code></pre>
 ## 4 q4       Self employed                NA
 ## 5 q4       Student                      NA
 ## 6 q4       Student,Salaried employee    NA</code></pre>
-<p>Great, we have our new guide in which we ranked our questions. Notice how the first answers are <code>NA</code>, but that’s because it’s a nominal variable with no intrinsic hierarchy. Now Let’s use this dataframe to create a value to sort our answers by:</p>
-<pre class="r"><code>df_long_ranked &lt;- left_join(x = df_long_joined, y = answer_hir) </code></pre>
-<p>We’ll reorder by rank along with solving the next issu which is the way our questions are ordered. Basically, we want it to be ordered by the question value and not how it’s sorted alphabetically. For example, we’d like q_5 to appear before q11_1, similar to how it was laid out in the survey. I’ll apply some regex (regular expression) manipulation to capture only the numbers and use that to sort by.</p>
-<p>Here it goes:</p>
+<p>We now have our new guide in which we ranked our questions. Notice that the first answers are NA, but that’s because the nominal variables have no intrinsic hierarchy. Now let’s use this dataframe to create a value with which to sort our answers:</p>
+<pre class="r"><code>df_long_ranked &lt;- left_join(x = df_long_joined, y = answer_hir) 
+head(df_long_ranked)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+## # Groups:   question [1]
+##   question value                         n pct   text                       rank
+##   &lt;chr&gt;    &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                     &lt;dbl&gt;
+## 1 q11_1    Between once a week to o~     5 14.7% Every how often do you c~     5
+## 2 q11_1    Less than once a month        4 11.8% Every how often do you c~     6
+## 3 q11_1    Once a day                    6 17.6% Every how often do you c~     2
+## 4 q11_1    Once a week                   4 11.8% Every how often do you c~     4
+## 5 q11_1    Several times a day           6 17.6% Every how often do you c~     1
+## 6 q11_1    Several times a week          8 23.5% Every how often do you c~     3</code></pre>
+<p>We’ll reorder by rank along with solving the next issue which is the way our questions are ordered. Basically, we want it to be ordered by the question value and not using an alphabetic sort. For example, we’d like q_5 to appear before q11_1, similar to how it appeared in the survey. I’ll apply some regex (regular expression) manipulation to capture only the numbers and use that to sort by.
+Displayed as follows:</p>
 <pre class="r"><code>df_long_q_sorted &lt;- df_long_ranked %&gt;% 
   mutate(q_num = str_remove_all(question, &quot;[a-z]&quot;),
     q_num = str_replace_all(q_num, &quot;_&quot;, &quot;.&quot;),
@@ -1394,33 +1425,31 @@ head(answer_hir)</code></pre>
 
 head(df_long_q_sorted)</code></pre>
 <pre><code>## # A tibble: 6 x 5
-##   question text                    value                         n pct  
-##   &lt;chr&gt;    &lt;chr&gt;                   &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;
-## 1 q2       Gender                  Female                       16 47.1%
-## 2 q2       Gender                  Male                         18 52.9%
-## 3 q4       What&#39;s your occupation? Salaried employee            18 52.9%
-## 4 q4       What&#39;s your occupation? Self employed                 3 8.8% 
-## 5 q4       What&#39;s your occupation? Student                       8 23.5%
-## 6 q4       What&#39;s your occupation? Student,Salaried employee     3 8.8%</code></pre>
+##   question text                    value                 n pct  
+##   &lt;chr&gt;    &lt;chr&gt;                   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;
+## 1 q2       Gender                  Female               15 44.1%
+## 2 q2       Gender                  Male                 17 50.0%
+## 3 q2       Gender                  Other                 2 5.9% 
+## 4 q4       What&#39;s your occupation? Salaried employee    18 52.9%
+## 5 q4       What&#39;s your occupation? Self employed         3 8.8% 
+## 6 q4       What&#39;s your occupation? Student               8 23.5%</code></pre>
 <p>Fantastic!</p>
 <p>I found that first using the regex and then sorting by rank doesn’t properly work, so instead I implemented it along with sorting the questions. Again, if the order of questions and answers doesn’t matter in your data you can just skip past some of the stages.</p>
-<p>Great, now we have all our data formatted properly, on to the printing!</p>
+<p>Great, now that we have all our data formatted properly, we can turn to the printing!</p>
 </div>
-</div>
-<div id="kableextra" class="section level3">
-<h3>KableExtra</h3>
-<p>In my initial round of exploring the pilot survey I used <code>{KableExtra}</code> and its powerful features. However, the package isn’t ideal when knitting to word, and it’s recommended to knit to Html and copy that into a word document. Despite the copy + paste, I found it to be a great approach, but you can also directly print to word using KableExtra or other formats formats [^1].</p>
-<p>[^1] In a future blogpost I’ll explore the {formattable} package which works great when wanting to knit to a word output.</p>
-<div id="html-output" class="section level5">
-<h5>Html output</h5>
-<p>As we saw earlier, the argument is pretty straight forward. We can address the redundant information we have - question and text column appearing with each answer - within the KableExtra arguments:</p>
+<div id="kableextra" class="section level4">
+<h4>KableExtra</h4>
+<p>In my initial round of exploring the pilot survey I used <code>{KableExtra}</code> and its powerful features. You might find other packages better to work with when knitting to Word. With that said, it’s possible (and very effective) to knit to Html and copy that into a Word document. Despite the copy + paste requirement, I found it to be the better approach for keeping all the aesthetics and formatting integrated in the original document. Oh, and I also had my questions originally in Hebrew which was easier to knit to Html altogether.</p>
+<div id="removing-redundant-information" class="section level5">
+<h5>removing redundant information</h5>
+<p>As we saw earlier, the argument is pretty straight forward. We can address the redundant information we have - question and text column appearing with each answer (our final issue) - within the KableExtra object using <code>collapse_rows</code>:</p>
 <pre class="r"><code>df_long_q_sorted %&gt;% 
   kbl(col.names = c(&quot;Question&quot;, &quot;Text&quot;, &quot;Answer&quot;, &quot;n&quot;, &quot;%&quot;)) %&gt;% 
   kable_styling(full_width = F) %&gt;% 
   column_spec(1, bold = T) %&gt;% 
   collapse_rows(columns = c(1,2), valign = &quot;top&quot;) %&gt;% 
-  kableExtra::scroll_box(height = &quot;450px&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:450px; ">
+  scroll_box(height = &quot;750px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:750px; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1443,20 +1472,20 @@ n
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="2">
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
 q2
 </td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Gender
 </td>
 <td style="text-align:left;">
 Female
 </td>
 <td style="text-align:right;">
-16
+15
 </td>
 <td style="text-align:left;">
-47.1%
+44.1%
 </td>
 </tr>
 <tr>
@@ -1464,10 +1493,21 @@ Female
 Male
 </td>
 <td style="text-align:right;">
-18
+17
 </td>
 <td style="text-align:left;">
-52.9%
+50.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
 </td>
 </tr>
 <tr>
@@ -1614,7 +1654,7 @@ South
 q11_1
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="7">
-Every how often do you consume choclate?
+Every how often do you consume chocolate?
 </td>
 <td style="text-align:left;">
 Several times a day
@@ -1697,7 +1737,7 @@ NA
 q13_1
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="6">
-Every how often do you buy choclate?
+Every how often do you buy chocolate?
 </td>
 <td style="text-align:left;">
 About every week
@@ -1980,7 +2020,7 @@ NA
 q32
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="3">
-&lt;U+05D4&gt;&lt;U+05D0&gt;&lt;U+05DD&gt; &lt;U+05D9&gt;&lt;U+05E6&gt;&lt;U+05D0&gt; &lt;U+05DC&gt;&lt;U+05DA&gt; &lt;U+05DC&gt;&lt;U+05E7&gt;&lt;U+05E0&gt;&lt;U+05D5&gt;&lt;U+05EA&gt; &lt;U+05E1&gt;&lt;U+05DE&gt;&lt;U+05D9&gt;&lt;U+05DD&gt; &lt;U+05E0&gt;&lt;U+05D5&gt;&lt;U+05E1&gt;&lt;U+05E4&gt;&lt;U+05D9&gt;&lt;U+05DD&gt; &lt;U+05E9&gt;&lt;U+05D0&gt;&lt;U+05D9&gt;&lt;U+05E0&gt;&lt;U+05DD&gt; &lt;U+05E7&gt;&lt;U+05E0&gt;&lt;U+05D0&gt;&lt;U+05D1&gt;&lt;U+05D9&gt;&lt;U+05E1&gt;?
+Do you really mean that?
 </td>
 <td style="text-align:left;">
 No
@@ -2056,495 +2096,243 @@ NA
 </tbody>
 </table>
 </div>
-<p>That easy? Yes!</p>
-<p>The trick here that I love is collapsing the columns, an argument also common in other packages such as {formattable}. This makes printing in rmarkdown really easy and efficient, something I found lacking in other platforms I learned such as SPSS. If you want the table to be a little more formally formatted I recommend exploring aesthetic arguments such as <code>kable_classic</code>, <code>kable_minimal</code> and others from the <a href="http://haozhu233.github.io/kableExtra/awesome_table_in_html.html">KableExtra</a> family. Here’s a short example using the <code>kable_classic</code>:</p>
+<p><br></p>
+<p><strong>That easy? Yes!</strong></p>
+<p>The trick here that I love is collapsing the column, an argument also common in other packages such as <a href="https://github.com/renkun-ken/formattable">{formattable}</a> I look forward to explore. Collapsing a column makes printing in rmarkdown really easy and efficient, something I found lacking in other platforms I learned such as SPSS. I also added a <code>column_spec</code> to bold the first column. Of course you can also remove the scroll box by not using the <code>scroll_box</code> option at the end, which will print your whole table.</p>
+<p>If you’re looking for a word format, you can just copy &amp; paste your html output (Perfect for working with Hebrew text for example, more on that below)</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="html-copy.gif" alt="Just select all and copy it into a word document" width="80%" />
+<p class="caption">
+Figure 1: Just select all and copy it into a word document
+</p>
+</div>
+<p>If you want the table to be a little more formally formatted I recommend exploring aesthetic arguments such as <code>kable_classic</code>, <code>kable_minimal</code> and others from the <a href="http://haozhu233.github.io/kableExtra/awesome_table_in_html.html">{KableExtra}</a> family. Here’s a short example using the <code>kable_minimal</code> with an Html output:</p>
 <pre class="r"><code>df_long_q_sorted %&gt;% 
-  head(6) %&gt;% 
+  head(10) %&gt;% 
   kbl() %&gt;% 
   kable_styling(full_width = F) %&gt;% 
   column_spec(1, bold = T) %&gt;% 
-  collapse_rows(columns = c(1,2), valign = &quot;top&quot;) %&gt;% 
-  kable_classic(html_font = &quot;Roboto Condensed&quot;)</code></pre>
-<table class="table lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Roboto Condensed; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-question
-</th>
-<th style="text-align:left;">
-text
-</th>
-<th style="text-align:left;">
-value
-</th>
-<th style="text-align:right;">
-n
-</th>
-<th style="text-align:left;">
-pct
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="2">
-q2
-</td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="2">
-Gender
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:left;">
-47.1%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:left;">
-52.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="4">
-q4
-</td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="4">
-What’s your occupation?
-</td>
-<td style="text-align:left;">
-Salaried employee
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:left;">
-52.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Self employed
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-8.8%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Student
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-23.5%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Student,Salaried employee
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-8.8%
-</td>
-</tr>
-</tbody>
-</table>
+  collapse_rows(columns = c(1,2), valign = &quot;top&quot;)</code></pre>
+<pre class="r"><code>include_graphics(&quot;kable_minimal.png&quot;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="kable_minimal.png" alt="Example using kable_minimal as a table theme" width="80%" />
+<p class="caption">
+Figure 2: Example using kable_minimal as a table theme
+</p>
+</div>
+<p><br></p>
 </div>
 <div id="wait-but-what-if-i-want-a-simple-table-in-word" class="section level5">
 <h5>Wait, but what if I want a simple table in word?</h5>
-<p>Let’s say you want a simple kable table when knitting in word, you can just add ‘df_print: kable’ to the YAML of your document. Alternatively, you can explore other options in the <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#figure-options">Rmarkdown book</a>. This makes printing dataframes easy and elegant.</p>
-<p>How do we remove the redundant information when printing? Just replace the duplicated values with an empty string:</p>
+<p>Let’s say you want a simple kable table when knitting in word, you can just add ‘df_print: kable’ to the YAML of your document or alternatively, you can explore other options in the <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">Rmarkdown book</a> that elegantly print dataframes. How do we remove the redundant information when printing? Just replace the duplicated values with an empty string:</p>
 <pre class="r"><code>df_long_q_sorted %&gt;% 
-  mutate(across(c(question, text), function(x) ifelse(duplicated(x), &quot; &quot;, x))) %&gt;% 
+  mutate(across(c(question, text), ~ ifelse(duplicated(.x), &quot; &quot;, .x))) %&gt;% 
   select(`Question` = question, `Text` = text, `Value` = value, n, `%` = pct) %&gt;% 
-  head(10) %&gt;% 
-  kbl()</code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-Question
-</th>
-<th style="text-align:left;">
-Text
-</th>
-<th style="text-align:left;">
-Value
-</th>
-<th style="text-align:right;">
-n
-</th>
-<th style="text-align:left;">
-%
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-q2
-</td>
-<td style="text-align:left;">
-Gender
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:left;">
-47.1%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:left;">
-52.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q4
-</td>
-<td style="text-align:left;">
-What’s your occupation?
-</td>
-<td style="text-align:left;">
-Salaried employee
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:left;">
-52.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Self employed
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-8.8%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Student
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-23.5%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Student,Salaried employee
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-8.8%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Student,Unemployed
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-2.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Unemployed
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-2.9%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-q6
-</td>
-<td style="text-align:left;">
-The average income for an individual is X, you’re income is:
-</td>
-<td style="text-align:left;">
-Below average
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:left;">
-47.1%
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Similar to average
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-38.2%
-</td>
-</tr>
-</tbody>
-</table>
+  head(20)</code></pre>
+<pre class="r"><code>include_graphics(&quot;df_print.png&quot;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="df_print.png" alt="Outputting a table using df_print: kable in the YAML section" width="80%" />
+<p class="caption">
+Figure 3: Outputting a table using df_print: kable in the YAML section
+</p>
+</div>
 <p>Voila!</p>
-<p>What I did was similar to the KableExtra argument. I first removed redundant text by using the <code>across</code> along with a conditional argument to remove duplicated text. Basically it reads as take anyone of the specified columns and pass it to a conditional statement that if true (if the word is duplicated), add a space character instead. In the above example I added <code>kbl</code> at the end, but as long as you specify in your YAML the <code>df_print: kable</code> there’s no need to add kbl everytime.</p>
+<p>I first removed redundant text by using the <code>across</code> along with a conditional argument to remove duplicated text. Basically the formula (<code>~ ifelse</code>) reads as take anyone of the specified columns and pass it to a conditional statement that if true (if the word is duplicated), add a space character instead. Below is a screenshot when rendered to word, and you can continue to format it with or without other packages.</p>
 </div>
 <div id="right-to-left-languages" class="section level5">
 <h5>Right-to-Left languages?</h5>
-<p>I found it even more difficult knitting to word Hebrew characters, but works great when doing so to HTML. This working with html formats, at least on the knitting part, much more efficient. Here’s a short example, without the whole pre-processing, using some Hebrew questions:</p>
-<pre class="r"><code>hebrew_example &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-categorical-variables-questions-with-kableextra&quot;, &quot;data&quot;, &quot;hebrew_example.xlsx&quot;))
+<p>I found it difficult knitting Hebrew characters to a Word output but easily done when rendering Html documents. Here’s a short example, without the whole pre-processing, using some Hebrew questions:</p>
+<pre class="r"><code>hebrew_example &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;hebrew_example.xlsx&quot;))
 
-# Read Hebrew
-Sys.setlocale(&quot;LC_ALL&quot;, &quot;Hebrew&quot;)</code></pre>
-<pre><code>## [1] &quot;LC_COLLATE=Hebrew_Israel.1255;LC_CTYPE=Hebrew_Israel.1255;LC_MONETARY=Hebrew_Israel.1255;LC_NUMERIC=C;LC_TIME=Hebrew_Israel.1255&quot;</code></pre>
-<pre class="r"><code>hebrew_example %&gt;% 
-  select(question, text, value, n, pct) %&gt;% 
-  kable(col.names = c(&quot;Question&quot;, &quot;Text&quot;, &quot;Answer&quot;, &quot;n&quot;, &quot;%&quot;)) %&gt;% 
+hebrew_example %&gt;% 
+  select(pct, n, value, text, question) %&gt;% 
+  mutate(pct = percent(pct)) %&gt;% 
+  # Reverse the order of questions
+  kbl(col.names = c(&quot;%&quot;, &quot;שכיחות&quot;, &quot;תשובה&quot;, &quot;שאלה&quot;, &quot;פריט&quot;), align = &#39;r&#39;) %&gt;% 
   kable_styling(full_width = F) %&gt;% 
-  column_spec(1, bold = T) %&gt;% 
-  collapse_rows(columns = c(1,2), valign = &quot;top&quot;) %&gt;% 
-  kableExtra::scroll_box(height = &quot;450px&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:450px; ">
+  column_spec(5, bold = T) %&gt;% 
+  collapse_rows(columns = c(4,5), valign = &quot;top&quot;) %&gt;% 
+  scroll_box(height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Question
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Text
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Answer
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-n
-</th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 %
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+שכיחות
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+תשובה
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+שאלה
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+פריט
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="2">
-q2
-</td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="2">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
-</td>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+47.1%
 </td>
 <td style="text-align:right;">
 16
 </td>
 <td style="text-align:right;">
-0.471
+נקבה
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="2">
+מגדר
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="2">
+q2
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+52.9%
 </td>
 <td style="text-align:right;">
 18
 </td>
 <td style="text-align:right;">
-0.529
+זכר
 </td>
 </tr>
 <tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="6">
+<td style="text-align:right;">
+52.9%
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+שכיר
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="6">
+סטטוס תעסוקתי
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="6">
 q4
 </td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="6">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
-</td>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-0.529
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+8.8%
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-0.088
+עצמאי
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+23.5%
 </td>
 <td style="text-align:right;">
 8
 </td>
 <td style="text-align:right;">
-0.235
+סטודנט
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;, &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+8.8%
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-0.088
+סטודנט, שכיר
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;, &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+2.9%
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-0.029
+סטודנט, מובטל
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+2.9%
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-0.029
+מובטל
 </td>
 </tr>
 <tr>
-<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
-q37
-</td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="3">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt; &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt; &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt; &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt; &lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;&lt;U+FFFD&gt;?
-</td>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+17.6%
 </td>
 <td style="text-align:right;">
 6
 </td>
 <td style="text-align:right;">
-0.176
+לא
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="3">
+האם תסכים להשתתף במחקר המשך?
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q37
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-&lt;U+FFFD&gt;&lt;U+FFFD&gt;
+<td style="text-align:right;">
+73.5%
 </td>
 <td style="text-align:right;">
 25
 </td>
 <td style="text-align:right;">
-0.735
+כן
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-NA
+<td style="text-align:right;">
+8.8%
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-0.088
+חסר
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>XXXXXXX</p>
-<p>FIX HEBREW</p>
+<p><br></p>
+<p>Notice how I reversed the columns direction to have it compatible for a right-to-left reading. I also changed the locale setting (not shown) using the <code>Sys.setlocale</code> argument. While this still needs some additional work (for example the ‘?’ isn’t aligned), it’s definitely a good start.</p>
+</div>
 </div>
 <div id="wrapping-up" class="section level4">
 <h4>Wrapping up</h4>
-<p>So this is how I approached the issue of providing a simple descriptive table of my categorical variables. While it was kind of tedious and some parts required manual work, you might not need all the stages such as reordering within variables or providing additional information to each one. I hope you were able to take something from this post, I certainly enjoyed working with the {KableExtra} package and look forward to sharing additional things I’ve learned while working on my thesis.</p>
+<p>So this is how I approached the issue of providing a simple descriptive table of my categorical variables. While it was somewhat tedious and some parts required manual work, you might not require all the stages. I hope you were able to take something from this post, I certainly enjoy working with the <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>{KableExtra}</code></a> package and look forward to sharing additional things I’ve learned while using it for reporting findings from my thesis.</p>
 <p>Now then, time to get back to writing!</p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you use Qualtrics as your survey platform, check out the corresponding package to work with such data <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Of course there are many other issues I won’t address here, such as response options that are missing if no one chose them in my current pilot population.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
     </div>
@@ -2568,7 +2356,7 @@ NA
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/printing-table/&amp;text=Printing%20your%20survey&amp;#39;s%20categorical%20variables" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/printing-survey-table/&amp;text=Printing%20categorical%20variables%20with%20KableExtra" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -2581,7 +2369,7 @@ NA
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/printing-table/&amp;t=Printing%20your%20survey&amp;#39;s%20categorical%20variables" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/printing-survey-table/&amp;t=Printing%20categorical%20variables%20with%20KableExtra" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -2594,7 +2382,7 @@ NA
       
       
       <li>
-        <a href="mailto:?subject=Printing%20your%20survey&amp;#39;s%20categorical%20variables&amp;body=/post/printing-table/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Printing%20categorical%20variables%20with%20KableExtra&amp;body=/post/printing-survey-table/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -2607,7 +2395,7 @@ NA
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/printing-table/&amp;title=Printing%20your%20survey&amp;#39;s%20categorical%20variables" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/printing-survey-table/&amp;title=Printing%20categorical%20variables%20with%20KableExtra" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -2620,7 +2408,7 @@ NA
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Printing%20your%20survey&amp;#39;s%20categorical%20variables%20/post/printing-table/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Printing%20categorical%20variables%20with%20KableExtra%20/post/printing-survey-table/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -2633,7 +2421,7 @@ NA
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/printing-table/&amp;title=Printing%20your%20survey&amp;#39;s%20categorical%20variables" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/printing-survey-table/&amp;title=Printing%20categorical%20variables%20with%20KableExtra" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
