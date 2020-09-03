@@ -3,7 +3,7 @@ title: Survey categorical variables with KableExtra
 author: Amit Levinson
 date: '2020-09-01'
 slug: printing-survey-table
-categories: []
+categories: [R]
 tags: []
 subtitle: ''
 summary: "Aestheticaly printing descriptive variables from your survey data"
