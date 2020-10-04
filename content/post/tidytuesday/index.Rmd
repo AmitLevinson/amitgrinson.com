@@ -43,6 +43,14 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+### **29.09.2020**
+Beyonce's lyrics | [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_40_b_t/week40_beyonce-swift.R)
+
+<p align = "center">
+<img alt = 'music-note-wordcloud' src="/img/tt/week40.png" width = "700">
+</p>
+
+
 ### **22.07.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week30-aus_animals/aus-animals.R)
 

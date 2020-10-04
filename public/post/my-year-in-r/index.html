@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Amit Levinson">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Looking back at my year of learning R">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/my-year-in-r/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/zenburn.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/zenburn.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i%7CKarla:400,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156329952-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-156329952-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/my-year-in-r/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@Amit_Levinson">
+  <meta property="twitter:creator" content="@Amit_Levinson">
+  
+  <meta property="og:site_name" content="Amit Levinson">
+  <meta property="og:url" content="/post/my-year-in-r/">
+  <meta property="og:title" content="My year in R | Amit Levinson">
+  <meta property="og:description" content="Looking back at my year of learning R"><meta property="og:image" content="/post/my-year-in-r/featured.jpg">
+  <meta property="twitter:image" content="/post/my-year-in-r/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-09-20T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-09-20T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/my-year-in-r/"
+  },
+  "headline": "My year in R",
+  
+  "image": [
+    "/post/my-year-in-r/featured.jpg"
+  ],
+  
+  "datePublished": "2020-09-20T00:00:00Z",
+  "dateModified": "2020-09-20T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Amit Levinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Amit Levinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "img//"
+    }
+  },
+  "description": "Looking back at my year of learning R"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>My year in R | Amit Levinson</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Amit Levinson</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks"><span>Talks</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>My year in R</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 20, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    13 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 404px;">
+  <div style="position: relative">
+    <img src="/post/my-year-in-r/featured_hu94f6dca80a909cfba24c71a2bf8abd60_917521_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<div id="why-contemplate" class="section level3">
+<h3>Why contemplate?</h3>
+<p>Learning <code>R</code> for a year is not that long, so what’s so exciting that I should write about it? Well, I believe that stopping what you’re doing and contemplating about it - such as asking is this the right choice, am I in the right direction <em>for me</em> - is a healthy process. Doing so can help you <strong>acknowledge your accomplishments and think of where you’re heading</strong>. I’m glad I have the opportunity to do it in the following post.</p>
+</div>
+<div id="the-journey" class="section level3">
+<h3>The Journey</h3>
+<p>I was wondering how to summarize my past year: A list of resources? a story? an ordered list of items? I decided to go with more of an a item-list that’s somewhat chronologically ordered that I believe captures my doing. Of course like a lot of many other things in life, the timeline discussed isn’t completely rigid as some items I’d do concurrently or jumped back and forth.</p>
+<div id="so-what-did-i-have-in-the-past-year" class="section level4">
+<h4>So what did I have in the past year?</h4>
+<p><strong>1. Hearing about R</strong> - I first heard of R when it was used in a hierarchical linear models workshop I attended. The workshop focused more on the statistics part of the analysis so we didn’t go in depth into the code. Following that I’ve heard about R twice - Once from a friend studying Psychology and from my sister. Both in different setting and ways exposed me to it.</p>
+<p><strong>2. First learning steps</strong> - My psychologist friend also told me there’s a recorded psychology R course available on moodle (A platform aggregating course materials) I could freely use. The course is led by <a href="https://kesslerlab.wordpress.com/">Yoav Kesller</a> and was a fantastic introduction. I followed along with the course and did the different assignments until we reached ggplot, a library for plotting in R.</p>
+<p><strong>3. Joining the #TidyTuesday community</strong> - By the time we reached ggplot in the psychology course I was already somewhat familiar with Twitter<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> where the <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> mostly takes place. <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> is an amazing project where every week a new dataset is published for the #rstats community to analyze, visualize and post their results on Twitter. My excitement and motivation to participate were extremely high: So many professional and experienced R-users working on the same dataset, conjuring amazing visualizations and posting their code for others to explore (and all this for free)?! I was blown away. So I followed along on Twitter for a week or two until I said OK, let’s give it a try.</p>
+<p>It was <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-09-17">week 38</a> in 2019 and we were working on visualizing national parks. I wasn’t really sure what to do, so I did a minimal exploration of the data and noticed an interesting increase of visitors in national parks across years, which all in all sounded intuitive but perfect for a first visualization. Following a basic plot I did I remembered a visualization from <a href="https://twitter.com/ariamsita">Ariane Aumaitre</a> using roller-coaster icons the week before. Knowing nothing on how to integrate icons, I adapted her code into my visualization to create a nice scenery for the mountain the data displayed (see tweet below). I was pretty satisfied at the time and the feedback from the #rstats community was incredible - I was hooked on the project.</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">My first attempt at plotting in <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> 👏 <br>took the <a href="https://twitter.com/hashtag/tidytuesday?src=hash&amp;ref_src=twsrc%5Etfw">#tidytuesday</a> opportunity to get some practice and plot the average number of visitors at national parks per year.<br>icon inspiration from <a href="https://twitter.com/ariamsita?ref_src=twsrc%5Etfw">@ariamsita</a>, thanks! <a href="https://t.co/sLGUkRl80f">pic.twitter.com/sLGUkRl80f</a></p>&mdash; Amit Levinson (@Amit_Levinson) <a href="https://twitter.com/Amit_Levinson/status/1174364639427272706?ref_src=twsrc%5Etfw">September 18, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I believe the project was a fantastic introduction to continuously analyze and visualize data in R. <strong>Participating in the project provides a safe, motivating and rich setting to practice and learn R</strong>. Additionally, I didn’t have anything that ‘forced’ me to learn R, so knowing that every week I had a new data set to analyze and visualize along with others provided me with some sort of <strong>routine and commitment</strong>.</p>
+<p><br></p>
+<p><strong>4. Openning a GitHub account</strong> - Following the first visualization for <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> I wanted to share the code I wrote. At the time I was only using GitHub to read others code. Using the <a href="https://happygitwithr.com/">Happy git with r</a> guide I was able to properly upload my code and be able to synchronize future workflow. <strong>Using GitHub taught me so much: Reading others code and discovering new functions; Organizing my own code so others can easily read it, and thus ‘forcing me’ to clean it once I finish; and having a place to host all my doings.</strong> I sincerely believe that opening a GitHub account to share everything I did was an important and pivoting moment learning R. Although I still have so much more to learn when it comes to clean code and project management, a lot of what I know now is attributed to having GitHub repositories and code as accessible as possible for others to learn.</p>
+<p><strong>5. Visualizing things I was interested in</strong> - As I was participating in #Tidytuesday Eliud Kipchoge broke (unofficially) the two-hour marathon barrier. I found this amazing and wanted to visualize the comparison between the new record and older ones. To do that I manually copied the marathon record values from Wikipedia and used that to plot running icons representing the different records. It wasn’t an aethetic plot but it was definitely rewarding. I’ve since improved the visualization by making it more reproducible and eventually wrote a <a href="https://amitlevinson.com/post/eliud-kichoge/">blog post</a> explaining the process of how I made it. Similarly, a month or two later I <a href="https://amitlevinson.com/post/bomb-shelters/">plotted bomb shelter locations around my house</a> amidst missiles fired towards Israel and a few days after discovering my municipality’s open data, all in R and Google maps. <strong>My point is that I was finally able to take something around me I was interested in and make a meaningful visualization for me and for others to enjoy and use.</strong></p>
+<p><strong>6. Continuous learning</strong> - Well, it’s kind of redundant to say this, but it is important: After I joined the #Tidytuesday community I stopped with the psychology R course. I started focusing more on visualizations and data wrangling in addition to solidifying my basic knowledge of R. For this I relied on the following sources:</p>
+<ul>
+<li><p><strong>R &amp; R4DS book</strong> - I decided to start with the free <a href="https://r4ds.had.co.nz/">R for data science book</a>. Everyday I would read for 30-60 minutes either learning something new or attempting to answer the questions. <strong>I’d re-write the code into my R console while following along, exploring and trying to understand what was going on.</strong> To validate my answers to the questions or understand those I didn’t know I cross-checked them with the <a href="https://jrnold.github.io/r4ds-exercise-solutions/">‘Excercise solutions book’</a> by Jeffrey Arnold. I also bought <a href="https://socviz.co/">Data Visualizaiton, A practical introduction</a> by Kieran Healy and <a href="https://www.tidytextmining.com/">Text Mining with R, A tidy Approach</a> by Julia Silge and David Robinson, but I used them more on the go.</p></li>
+<li><p><strong>Online courses and materials</strong> - While reading the book I decided to seek out some other courses at the university. My friend (the one who introduced me to R) told me about a workshop on algorithms and research in the intersection of Psychology and big data by <a href="https://t.co/3hLoUnYbPa?amp=1">Michael Gilead</a>. Getting an approval to sit in on some classes I found it a great introduction to working with big data. While there I met <a href="https://almogsi.com/">Almog Simchon</a> who led a fantastic text analysis in R workshop the following semester. I’d also infrequently join <a href="sites.google.com/view/mattansb">Mattan Ben-Shachar’s</a> TA class and learn more about data wrangling and statistical methods. Additionaly, a friend told me about <a href="https://www.john-ros.com/">Jonathan Rosenblatt’s</a> R course in the department of industrial engineering and management (recorded lectures in Hebrew are freely available). <strong>Although I didn’t understand some of what was going on in these courses, I was glad to be exposed to a lot of new things I could follow up on later.</strong> Also, if you’re reading this, thank you very much for the opportunity.</p></li>
+<li><p>I also started reading books that are not related to the R ecosystem. That is, I found a strong liking towards visualizing data and bought books on that topic too. <strong>These books immensely improved my visualizations and how I look at them.</strong> I still have a lot more to learn - both theoretically and technically - but these books definitely inspired and opened my mind when it comes to visualizing something. I highly recommend reading <a href="http://www.storytellingwithdata.com/books">Storytelling with data</a> by Cole Nussbaumer Knaflic and <a href="http://albertocairo.com/">How Charts Lie</a> by Alberto Cairo if you’re looking for something to start with.</p></li>
+<li><p><strong>Watch live webinars &amp; videos; attended meetups</strong> - An invaluable source of learning was participating in various online meetups and webinars. A good place I found many of them was on Twitter, but I’m sure you can also find them in Facebook groups, Rstudio news letter, etc. Sometimes I didn’t even understand what they’re were talking about but just exposing myself to it felt great (seems like an occuring theme). It motivated me to want to learn more in order to succeed in doing what was presented. I also highly recommend exploring the <a href="https://rstudio.com/resources/webinars/">Rstudio Webinars</a>.</p></li>
+</ul>
+<p>Luckily, I started learning R before the COVID-19 prevailed so I was able to join 2 Israeli R-meetups. This was a great experience and although being a novice when I attended them, the community was great. People were welcoming, there’s great pizza and beer and the presentation were fantastic. It was a great source of inspiration of what was to come. <strong>Plus, seeing so many people enthusiasticly talking about R made me understand that I’m not alone in liking this world.</strong></p>
+<p><strong>7. Making my own website</strong> - A month or two into learning R I noticed people had their own websites they made in R. Again I was fascinated at how this was possible - Not only can I wrangle data and beautifully visualize data but I can also build my own website? and for 10$ I can use my own domain? This was crazy!</p>
+<p>Nearing mid January (4+- months into R) I decided it’s time open my own website. I had a few things I already made (<a href="https://amitlevinson.com/post/eliud-kichoge/">Eliud Kipchoge’s record</a> and the <a href="https://amitlevinson.com/post/bomb-shelters/">bomb shelters around my house</a>) and also wanted a place for others to learn more about me. I scrolled and followed along the <a href="https://bookdown.org/yihui/blogdown/">blogdown book</a> for creating websites with R, viewed some of <a href="https://alison.rbind.io/project/up-running-blogdown/">Allison Hill’s blogdown workshops</a> and other resources. Eventually, I was setup and had my website on air all done in R, hosted for free on Netlify and GitHub with an elegant Hugo Academic theme, and my own domain for only 10$. <strong>I was amazed at how easy and rewarding this was.</strong> I mean, I had no knowledge (and still don’t) in HTML, CSS or anything else to build a website and here I conjured one, and pretty easily!</p>
+<p><strong>I highly recommend openning a website.</strong> Even if you’re not an R user, I think a personal website is a great motivator for writing blogs; a platform for others to learn more about you and in these days a not so difficult thing to do if you set your mind to it. <strong>Opening a website has definitely motivated me to learn so much more by writing about it</strong> (here’s a great talk by David Robinson on [The unreasonable effectiveness of public work] (<a href="https://rstudio.com/resources/rstudioconf-2019/the-unreasonable-effectiveness-of-public-work/" class="uri">https://rstudio.com/resources/rstudioconf-2019/the-unreasonable-effectiveness-of-public-work/</a>)).</p>
+<p><strong>8. Giving a talk</strong> - During Passover (April) 2020, the Israel fellows group sent out a call inviting individuals to come and talk about anything they wanted. I decided to pick up this opportuniyt and create a talk to give there and following that at another meetup of a group of friends of mine. Although being only ~7 months into learning R I wanted to share the amazing powers of it for wrangling and visualizing data, the extreme difference of using it compared to SPSS and how it helped me tackle and explore quantitative questions I had. So I sat down, wrote an outline, and made a presentation using the {Xaringan} package.</p>
+<p>The talk was great (I think) and some of the participants even followed up inquiring about resources to get started, how can they do this in R, etc. However more importantnly, <strong>making and giving the talk <em>forced</em> me to think about what is it in R that I like</strong>. Organizing these thoughts and communicating them in a way to that is alluring to the audience was a fantastic oppourtnity to stop and think exactly about that.</p>
+<p>*** INSERT SLIDES ***</p>
+<p><strong>9. Integrating R into my daily work</strong> - I was extremely fortunately that the researcher I work for, <a href="https://www.jenniferoser.com/">Dr. Jennifer Oser</a>, was (and still is) very supportive of integrating R into our daily work. I remember as we started analyzing our data and trying to make sense of it I was debating whether to open SPSS, google sheet or R. Luckily, I knew how to do a lot of what we wanted to in R so I turned to use that. Jenny was very supportive and I think we’ve greatly progressed since that I find it absurd to use something else now. Ironicly, today I re-ran our report after a few changes in our data. I can’t imagine re-writing the 27 pages report just to correct numbers that changed and aren’t automatically updated like in Rmarkdown. My point is, if you can integrate R into your daily work it’s definitely a bonus, I know I learned a lot (I mean a lot) about rmarkdown and version control once I started using R in my research assitant position and in my thesis.</p>
+<p><strong>10. Blog, and then blog some more</strong> - I imagine you’ve heard this saying a lot, but I definitely agree with it: If you like then <s>you should put a ring on it</s> write about it. Don’t write for others, write for yourself. While I mentioned earlier that I wrote about my visualizations, I also wanted to learn about statistical analysis I was intruiged by. So I read about the topic and thought of an example I can easily use to explain the concept. For e.g. to learn what is Term frequency inverse document frequency (tf-idf) I implemented it in <a href="https://amitlevinson.com/post/learning-tfidf-with-political-theorists/">analyzing the tfidf in 4 books of political theorists’</a> I like. At one point I wanted to learn more about Bernoulli trials so I explored the <a href="https://amitlevinson.com/post/uncertainty-in-the-israeli-lottery/">uncertainty in the Israeli lottery</a>. <strong>Alternatively, write about a challenge you faced and how you solved it.</strong> For e.g., I also wrote about how I solved a challenge I had when nicely presenting a static summary of categorical variables from my thesis pilot survey (<a href="https://amitlevinson.com/post/printing-survey-table/">found here</a>).</p>
+<p>In my opinion, don’t write for others to click on your website; rather, write for you to learn or communicate something you want to share with the world.</p>
+</div>
+</div>
+<div id="summary" class="section level3">
+<h3>Summary</h3>
+<p>So this was a not-so-short recap of my last year. I hope you gained something from it, whether it’s agreeing or disagreeing with the short journey I had thus far. It’s interesting to think back about something you’ve done and how would you have done it differently. I’m not sure, and I’m kind of glad that it happened the way it happened.</p>
+<p>I think my main takeaways were:</p>
+<ol style="list-style-type: decimal">
+<li><p>Learn a bit.</p></li>
+<li><p>Find a community and project tha’ll keep you hooked (such as the <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> project).</p></li>
+<li><p>Share what you learn - whether if it’s by uploading your code to GitHub, opening your own website or giving a talk. It usually doesn’t fall out of the sky so keep your eyes open and take that leap of faith, you got this!</p></li>
+</ol>
+<div id="whats-next" class="section level4">
+<h4>What’s next</h4>
+<p>Great question! Honestly I don’t know. I hope to finish my thesis soon and look for a job that’ll require me to work with R and visualize data. On a personal level, I hope to contribute to the community and work on an r package; learn some new concepts and statistical analyses; and incorporate more #Tidytuesdays into my weekly routine. I relly don’t know what’s waiting but I’m definitely excited towards it!</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Joining Twitter is owed to the researcher I worked with at the time, <a href="https://www.jenniferoser.com/">Jennifer Oser</a>, who recommended I follow scholars in our field on Social Media.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/my-year-in-r/&amp;text=My%20year%20in%20R" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/my-year-in-r/&amp;t=My%20year%20in%20R" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=My%20year%20in%20R&amp;body=/post/my-year-in-r/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/my-year-in-r/&amp;title=My%20year%20in%20R" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=My%20year%20in%20R%20/post/my-year-in-r/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/my-year-in-r/&amp;title=My%20year%20in%20R" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hub71a408706e589f09faa92e611c4d1ab_121232_250x250_fill_q90_lanczos_center.jpg" alt="Photo of Amit Levinson">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">Amit Levinson</a></h5>
+      <h6 class="card-subtitle">Sociology MA student</h6>
+      <p class="card-text">I&rsquo;m an avid R user interested in R analysis, visualizations, drug markets and political participation.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:amitlevinson1@gmail.com" >
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/Amit_Levinson" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/AmitLevinson" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/amit-levinson-b23851150" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://amitlevinson.com/cv/" target="_blank" rel="noopener">
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.e5c8525332f417fe3589df9a6b25b6c4.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/"></a>
+    
+    
+       &middot; 
+      <a href="/terms/"></a>
+    
+  </p>
+  
+
+ <p class="powered-by">
+    © Amit Levinson 2020 &middot; 
+
+    Made in <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i></a> with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a><a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener"> Academic theme</a>
+ &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-Bloggers</a>
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
