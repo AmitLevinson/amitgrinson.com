@@ -6,10 +6,1783 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
-    <lastBuildDate>Thu, 09 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Survey categorical variables with KableExtra</title>
+      <link>/post/printing-survey-table/</link>
+      <pubDate>Tue, 01 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/printing-survey-table/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;/rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;style&gt;
+p.caption {
+  font-size: 0.8em;
+}
+&lt;/style&gt;
+&lt;p&gt;In my in-progress thesis I decided I’ll analyze my survey results in something other than SPSS we learned in undergrad, which eventually led me to begin using R. The time came and I started analyzing my pilot survey data from Qualtrics&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. In this post I’ll address how I used &lt;code&gt;{KableExtra}&lt;/code&gt; to nicely print a frequency table of the categorical &amp;amp; ordinal questions I had in my survey. You can also do what I describe below in other packages, however I enjoy using &lt;code&gt;{KableExtra}&lt;/code&gt; for its rich vignette and clearly defomed functions.&lt;/p&gt;
+&lt;div id=&#34;the-problem&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The Problem&lt;/h3&gt;
+&lt;p&gt;In my pilot survey I had ~20 questions that were categorical, ordinal and were simple constructs not requiring a thorough analysis but only a quick review at the distribution of responses. I wanted to print all of these variables in one formatted table and address any anomalies if needed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The issue was, how can I format printing of all categorical variables in their chronological order, along with the original question and the distribution of responses?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Basically, how can I achieve the following output:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;table.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;explore-our-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Explore our data&lt;/h3&gt;
+&lt;p&gt;First, let’s loda the packages we’ll need and look at our data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(here)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(janitor)
+library(scales)
+df_survey &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-survey-table&amp;quot;, &amp;quot;data&amp;quot;,&amp;quot;survey.xlsx&amp;quot;))
+head(df_survey)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 12
+##   Q2     Q4     Q6     Q7    Q11_1   Q13_1   Q15   Q26   Q27   Q30   Q32   Q37  
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1 Female Salar~ Simil~ Cent~ Once a~ At lea~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 2 Female Salar~ Below~ South Severa~ Every ~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 3 Female Stude~ Below~ South Betwee~ I&amp;#39;ve n~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 4 Female Unemp~ Simil~ Cent~ Once a~ At lea~ Last~ No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes  
+## 5 Male   Salar~ Simil~ Cent~ Once a~ At lea~ Last~ Yes   2-3 ~ Yes   No    No   
+## 6 Female Salar~ Simil~ Cent~ Severa~ Last t~ Never No    &amp;lt;NA&amp;gt;  &amp;lt;NA&amp;gt;  No    Yes&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So we have a lot of information describing our sample data records. While this data is fabricated, it mirrors a common survey dataset: Each row represents a respondent with answers to various questions. With respect to continuous variables I did a different analysis, so for the purpose of the following post we’ll need only character columns. Let’s start by removing anything other than the relevant columns:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_char &amp;lt;- df_survey %&amp;gt;% 
+  janitor::clean_names () %&amp;gt;% 
+  select_if(is.character) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’ll need to change the data to a long form so that we can print it for efficient reading. An easy approach will be to use the &lt;code&gt;pivot_longer&lt;/code&gt; argument, rendering all our columns in one long table:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long &amp;lt;- df_char %&amp;gt;% 
+  pivot_longer(q2:q37, names_to = &amp;quot;question&amp;quot;) %&amp;gt;% 
+  count(question, value) %&amp;gt;%
+  group_by(question) %&amp;gt;% 
+  mutate(pct = percent(n/sum(n)))
+# Print table
+kbl(df_long) %&amp;gt;% 
+  kable_styling() %&amp;gt;% 
+  scroll_box(height = &amp;quot;550px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:550px; &#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+question
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+value
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+n
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+pct
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Between once a week to once in a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Less than once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+About every week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+At least once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38.2%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three to six months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I’ve never bought
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last time I bought was over half a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last half a year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Female
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+44.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Male
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+50.0%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Other
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+59%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2-3 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5-7 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over 7 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+61.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+35%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+62%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+79.4%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+73.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Self employed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Above average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Below average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+47.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Similar to average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38.2%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Center
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+47.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+q7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+South
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Great, this prints nicely, but we’re left with several issues to address&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. We’re missing the actual questions&lt;/strong&gt; - Notice how we only have “q11_1” but not a description of what the actual question or what the variable is. You can add a question label within Qualtrics, but I still wanted to have the question itself presented along with the question number.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Questions were reorganized alphabetically&lt;/strong&gt; - Once we ran the &lt;code&gt;pivot_longer&lt;/code&gt; R sorted our dataframe alphabetically according to the question column, but we might want it ordered according to the survey layout. Of course this is contingent on your data; I wanted to present it aligned to the order of the survey questions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Some of the responses aren’t ordered&lt;/strong&gt; - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question q11_1 describes frequency responses that aren’t hierarchically ordered.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Remove duplicated information&lt;/strong&gt; - Our question column, and if we add another one with the question’s text, will have duplicate information. While the value changes within questions printing the question column for each row is redundant. In addition, once we’ll add the question title it’ll be even more cluttered and any additional irrelevant text should be removed.&lt;/p&gt;
+&lt;p&gt;So then, let’s address these issues individually.&lt;/p&gt;
+&lt;div id=&#34;adding-information-to-our-questions&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Adding information to our questions&lt;/h5&gt;
+&lt;p&gt;When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it’s perfect for our display of additional information. There’s also a great function for doing exactly that from the &lt;a href=&#34;https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html&#34;&gt;&lt;code&gt;{qualtRics}&lt;/code&gt;&lt;/a&gt; package, but I was having trouble connecting to the platform’s API through my Qualtrics user.&lt;/p&gt;
+&lt;p&gt;Adding the questions was straightforward: Just combine the current &lt;em&gt;data_long&lt;/em&gt; with a dataset containing my questions. We’ll use a copy of the original survey data (of course fabricated for purpose of the survey) that only contains the questions:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_questions &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-survey-table&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;questions.xlsx&amp;quot;))
+df_questions[,1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 3
+##   Q2     Q4                   Q6                                                
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;                &amp;lt;chr&amp;gt;                                             
+## 1 Gender What&amp;#39;s your occupat~ The average income for an individual is X, you&amp;#39;re~&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Great! we see our question’s text as values with the variables being the questions themselves. Now let’s render it in a long format so that each row is a question id with the corresponding text as a value, and then we’ll join it with our current dataset of answers:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_q_clean &amp;lt;- df_questions %&amp;gt;% 
+  clean_names() %&amp;gt;% 
+  pivot_longer(cols = q2:q37, names_to = &amp;quot;question&amp;quot;, values_to = &amp;quot;text&amp;quot;) 
+df_long_joined &amp;lt;-  left_join(df_long, df_q_clean)
+head(df_long_joined)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 5
+## # Groups:   question [1]
+##   question value                           n pct   text                         
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;                        
+## 1 q11_1    Between once a week to onc~     5 14.7% Every how often do you consu~
+## 2 q11_1    Less than once a month          4 11.8% Every how often do you consu~
+## 3 q11_1    Once a day                      6 17.6% Every how often do you consu~
+## 4 q11_1    Once a week                     4 11.8% Every how often do you consu~
+## 5 q11_1    Several times a day             6 17.6% Every how often do you consu~
+## 6 q11_1    Several times a week            8 23.5% Every how often do you consu~&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Perfect. However, as you can see, our new text column provides the same information across the same questions, which seems kind of redundant. We’ll keep it for now and address it soon when we turn to print our table.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reordering-within-and-across-questions&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Reordering within and across questions&lt;/h5&gt;
+&lt;p&gt;The next issue on the list is that we want some of our questions to be organized not by the count frequency or some randomness, but by hierarchy of the answer options. For example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on as a hierarachal structure in my ordinal variables.&lt;/p&gt;
+&lt;p&gt;Alas, I don’t have a magical automated method and would be grateful to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually. Though a tedious task, this manual workload is more efficient than automating everything.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Save the sorted response file and use that to rank
+# write_csv(df_long_q_sorted, here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-survey-table&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;answers_hir.csv&amp;quot;))
+answer_hir &amp;lt;- read_csv(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-survey-table&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;answers_hir.csv&amp;quot;))
+head(answer_hir)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##   question value                      rank
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                     &amp;lt;dbl&amp;gt;
+## 1 q2       Female                       NA
+## 2 q2       Male                         NA
+## 3 q4       Salaried employee            NA
+## 4 q4       Self employed                NA
+## 5 q4       Student                      NA
+## 6 q4       Student,Salaried employee    NA&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now have our new guide in which we ranked our questions. Notice that the first answers are NA, but that’s because the nominal variables have no intrinsic hierarchy. Now let’s use this dataframe to create a value with which to sort our answers:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_ranked &amp;lt;- left_join(x = df_long_joined, y = answer_hir) 
+head(df_long_ranked)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+## # Groups:   question [1]
+##   question value                         n pct   text                       rank
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                     &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;                     &amp;lt;dbl&amp;gt;
+## 1 q11_1    Between once a week to o~     5 14.7% Every how often do you c~     5
+## 2 q11_1    Less than once a month        4 11.8% Every how often do you c~     6
+## 3 q11_1    Once a day                    6 17.6% Every how often do you c~     2
+## 4 q11_1    Once a week                   4 11.8% Every how often do you c~     4
+## 5 q11_1    Several times a day           6 17.6% Every how often do you c~     1
+## 6 q11_1    Several times a week          8 23.5% Every how often do you c~     3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’ll reorder by rank along with solving the next issue which is the way our questions are ordered. Basically, we want it to be ordered by the question value and not using an alphabetic sort. For example, we’d like q_5 to appear before q11_1, similar to how it appeared in the survey. I’ll apply some regex (regular expression) manipulation to capture only the numbers and use that to sort by.
+Displayed as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_q_sorted &amp;lt;- df_long_ranked %&amp;gt;% 
+  mutate(q_num = str_remove_all(question, &amp;quot;[a-z]&amp;quot;),
+    q_num = str_replace_all(q_num, &amp;quot;_&amp;quot;, &amp;quot;.&amp;quot;),
+    q_num = str_remove(q_num, &amp;quot;\\.$&amp;quot;),
+    q_num = as.numeric(q_num)) %&amp;gt;% 
+  group_by(question) %&amp;gt;% 
+  arrange(q_num, rank) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  select(-c(q_num, rank)) %&amp;gt;% 
+  relocate(text, .after = question)
+head(df_long_q_sorted)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 5
+##   question text                    value                 n pct  
+##   &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;                   &amp;lt;chr&amp;gt;             &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;
+## 1 q2       Gender                  Female               15 44.1%
+## 2 q2       Gender                  Male                 17 50.0%
+## 3 q2       Gender                  Other                 2 5.9% 
+## 4 q4       What&amp;#39;s your occupation? Salaried employee    18 52.9%
+## 5 q4       What&amp;#39;s your occupation? Self employed         3 8.8% 
+## 6 q4       What&amp;#39;s your occupation? Student               8 23.5%&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fantastic!&lt;/p&gt;
+&lt;p&gt;I found that first using the regex and then sorting by rank doesn’t properly work, so instead I implemented it along with sorting the questions. Again, if the order of questions and answers doesn’t matter in your data you can just skip past some of the stages.&lt;/p&gt;
+&lt;p&gt;Great, now that we have all our data formatted properly, we can turn to the printing!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;kableextra&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;KableExtra&lt;/h4&gt;
+&lt;p&gt;In my initial round of exploring the pilot survey I used &lt;code&gt;{KableExtra}&lt;/code&gt; and its powerful features. You might find other packages better to work with when knitting to Word. With that said, it’s possible (and very effective) to knit to Html and copy that into a Word document. Despite the copy + paste requirement, I found it to be the better approach for keeping all the aesthetics and formatting integrated in the original document. Oh, and I also had my questions originally in Hebrew which was easier to knit to Html altogether.&lt;/p&gt;
+&lt;div id=&#34;removing-redundant-information&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;removing redundant information&lt;/h5&gt;
+&lt;p&gt;As we saw earlier, the argument is pretty straight forward. We can address the redundant information we have - question and text column appearing with each answer (our final issue) - within the KableExtra object using &lt;code&gt;collapse_rows&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_q_sorted %&amp;gt;% 
+  kbl(col.names = c(&amp;quot;Question&amp;quot;, &amp;quot;Text&amp;quot;, &amp;quot;Answer&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;%&amp;quot;)) %&amp;gt;% 
+  kable_styling(full_width = F) %&amp;gt;% 
+  column_spec(1, bold = T) %&amp;gt;% 
+  collapse_rows(columns = c(1,2), valign = &amp;quot;top&amp;quot;) %&amp;gt;% 
+  scroll_box(height = &amp;quot;750px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:750px; &#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Question
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Text
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Answer
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+n
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+%
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Female
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+44.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Male
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+50.0%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Other
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+What’s your occupation?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Self employed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Salaried employee
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Student,Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Unemployed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+The average income for an individual is X, you’re income is:
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Below average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+47.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Similar to average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38.2%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Above average
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+q7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Where do you live in Israel
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Center
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+47.1%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+South
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;7&#34;&gt;
+q11_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;7&#34;&gt;
+Every how often do you consume chocolate?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a day
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Several times a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Once a week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Between once a week to once in a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Less than once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+q13_1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+Every how often do you buy chocolate?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+About every week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+At least once a month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38.2%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Every three to six months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last time I bought was over half a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I’ve never bought
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;7&#34;&gt;
+q15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;7&#34;&gt;
+When did you last attend a party?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last week
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last month
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last three months
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last half a year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Last year
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over a year ago
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Never
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Do you think 2020 was a good year?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+59%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+38%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+q27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+How many times did you decide to stay home instead of going out this year?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2-3 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5-7 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Over 7 times
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+61.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Should Amit buy a new computer?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+35%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+62%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Do you really mean that?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+79.4%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.7%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+5.9%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Would you like to participate in a follow up study?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Yes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+73.5%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+NA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;That easy? Yes!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The trick here that I love is collapsing the column, an argument also common in other packages such as &lt;a href=&#34;https://github.com/renkun-ken/formattable&#34;&gt;{formattable}&lt;/a&gt; I look forward to explore. Collapsing a column makes printing in rmarkdown really easy and efficient, something I found lacking in other platforms I learned such as SPSS. I also added a &lt;code&gt;column_spec&lt;/code&gt; to bold the first column. Of course you can also remove the scroll box by not using the &lt;code&gt;scroll_box&lt;/code&gt; option at the end, which will print your whole table.&lt;/p&gt;
+&lt;p&gt;If you’re looking for a word format, you can just copy &amp;amp; paste your html output (Perfect for working with Hebrew text for example, a little more on that below). You can find an additional example by &lt;a href=&#34;https://haozhu233.github.io/kableExtra/kableExtra_and_word.html&#34;&gt;Hao Zhu&lt;/a&gt;, the creator of the package, or here’s my attempt below:&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-11&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;html-copy.gif&#34; alt=&#34;Just select all and copy it into a word document&#34; width=&#34;80%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Just select all and copy it into a word document
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;If you want the table to be a little more formally formatted I recommend exploring aesthetic arguments such as &lt;code&gt;kable_classic&lt;/code&gt;, &lt;code&gt;kable_minimal&lt;/code&gt; and others from the &lt;a href=&#34;http://haozhu233.github.io/kableExtra/awesome_table_in_html.html&#34;&gt;{KableExtra}&lt;/a&gt; family. Here’s a short example using the &lt;code&gt;kable_minimal&lt;/code&gt; with an Html output:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_q_sorted %&amp;gt;% 
+  head(10) %&amp;gt;% 
+  kbl() %&amp;gt;% 
+  kable_styling(full_width = F) %&amp;gt;% 
+  column_spec(1, bold = T) %&amp;gt;% 
+  collapse_rows(columns = c(1,2), valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;kable_minimal.png&#34; alt=&#34;Example using kable_minimal as a table theme&#34; width=&#34;80%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Example using kable_minimal as a table theme
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wait-but-what-if-i-want-a-simple-table-in-word&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Wait, but what if I want a simple table in word?&lt;/h5&gt;
+&lt;p&gt;Let’s say you want a simple kable table when knitting in word, you can just add ‘df_print: kable’ to the YAML of your document or alternatively, you can explore other options in the &lt;a href=&#34;https://bookdown.org/yihui/rmarkdown/html-document.html&#34;&gt;Rmarkdown book&lt;/a&gt; that elegantly print dataframes. How do we remove the redundant information when printing? Just replace the duplicated values with an empty string:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_long_q_sorted %&amp;gt;% 
+  mutate(across(c(question, text), ~ ifelse(duplicated(.x), &amp;quot; &amp;quot;, .x))) %&amp;gt;% 
+  select(`Question` = question, `Text` = text, `Value` = value, n, `%` = pct) %&amp;gt;% 
+  head(20)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;df_print.png&#34; alt=&#34;Outputting a table using df_print: kable in the YAML section&#34; width=&#34;80%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: Outputting a table using df_print: kable in the YAML section
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Voila!&lt;/p&gt;
+&lt;p&gt;I first removed redundant text by using the &lt;code&gt;across&lt;/code&gt; along with a conditional argument to remove duplicated text. Basically the formula (&lt;code&gt;~ ifelse&lt;/code&gt;) reads as take anyone of the specified columns and pass it to a conditional statement that if true (if the word is duplicated), add a space character instead. Below is a screenshot when rendered to word, and you can continue to format it with or without other packages.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;right-to-left-languages&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Right-to-Left languages?&lt;/h5&gt;
+&lt;p&gt;I found it difficult knitting Hebrew characters to a Word output but easily done when rendering Html documents. Here’s a short example, without the whole pre-processing, using some Hebrew questions:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hebrew_example &amp;lt;- read_xlsx(here(&amp;quot;content&amp;quot;, &amp;quot;post&amp;quot;, &amp;quot;printing-survey-table&amp;quot;, &amp;quot;data&amp;quot;, &amp;quot;hebrew_example.xlsx&amp;quot;))
+hebrew_example %&amp;gt;% 
+  select(pct, n, value, text, question) %&amp;gt;% 
+  mutate(pct = percent(pct)) %&amp;gt;% 
+  # Reverse the order of questions
+  kbl(col.names = c(&amp;quot;%&amp;quot;, &amp;quot;שכיחות&amp;quot;, &amp;quot;תשובה&amp;quot;, &amp;quot;שאלה&amp;quot;, &amp;quot;פריט&amp;quot;), align = &amp;#39;r&amp;#39;) %&amp;gt;% 
+  kable_styling(full_width = F) %&amp;gt;% 
+  column_spec(5, bold = T) %&amp;gt;% 
+  collapse_rows(columns = c(4,5), valign = &amp;quot;top&amp;quot;) %&amp;gt;% 
+  scroll_box(height = &amp;quot;500px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; &#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+%
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+שכיחות
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+תשובה
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+שאלה
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+פריט
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.1%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+נקבה
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+מגדר
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+q2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+זכר
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.9%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+שכיר
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+סטטוס תעסוקתי
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
+q4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+עצמאי
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.5%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+סטודנט
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+סטודנט, שכיר
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+סטודנט, מובטל
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.9%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+מובטל
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.6%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+לא
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+האם תסכים להשתתף במחקר המשך?
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+q37
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.5%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+כן
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.8%
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+חסר
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Notice how I reversed the columns direction to have it compatible for a right-to-left reading. I also changed the locale setting (not shown) using the &lt;code&gt;Sys.setlocale&lt;/code&gt; argument. While this still needs some additional work (for example the ‘?’ isn’t aligned), it’s definitely a good start.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wrapping-up&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Wrapping up&lt;/h4&gt;
+&lt;p&gt;So this is how I approached the issue of providing a simple descriptive table of my categorical variables. While it was somewhat tedious and some parts required manual work, you might not require all the stages. I hope you were able to take something from this post, I certainly enjoy working with the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&#34;&gt;&lt;code&gt;{KableExtra}&lt;/code&gt;&lt;/a&gt; package and look forward to sharing additional things I’ve learned while using it for reporting findings from my thesis.&lt;/p&gt;
+&lt;p&gt;Now then, time to get back to writing!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;If you use Qualtrics as your survey platform, check out the corresponding package to work with such data &lt;a href=&#34;https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html&#34;&gt;here&lt;/a&gt;.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Of course there are many other issues I won’t address here, such as response options that are missing if no one chose them in my current pilot population.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+      
+      
+            <category>R</category>
+      
+    </item>
     
     <item>
       <title>Defining uncertainty in the Israeli lottery</title>

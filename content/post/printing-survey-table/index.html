@@ -1,23 +1,26 @@
 ---
-title: My year with R
+title: Survey categorical variables with KableExtra
 author: Amit Levinson
-date: '2020-09-20'
-slug: my-year-in-r
-categories: []
+date: '2020-09-01'
+slug: printing-survey-table
+categories: [R]
 tags: []
 subtitle: ''
-summary: "Looking back at my year of learning R"
+summary: "Aestheticaly printing descriptive variables from your survey data"
 featured: no
 image:
-  caption: ''
+  caption: 'Image by <a href="https://pixabay.com/users/Egle_pe-1340873/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Egle P.</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Pixabay</a>'
   focal_point: ''
-  preview_only: no
+  preview_only: yes
 projects: []
-draft: true
+draft: false
+df_print: paged
 editor_options:
   chunk_output_type: console
 ---
 
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 
 <style>
@@ -25,58 +28,1753 @@ p.caption {
   font-size: 0.8em;
 }
 </style>
-<div id="why-contemplate" class="section level3">
-<h3>Why contemplate?</h3>
-<p>I believe that stopping what you’re doing and contemplating about it - is this the right choise; am I in the right direction <em>for me</em> - is a healthy process. Doing so can help you <strong>acknowledge your accomplishments and think of where you’re heading</strong>. I’m glad I have the opportunity to do so and hope someone might benefit from it.</p>
+<p>In my in-progress thesis I decided I’ll analyze my survey results in something other than SPSS we learned in undergrad, which eventually led me to begin using R. The time came and I started analyzing my pilot survey data from Qualtrics<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. In this post I’ll address how I used <code>{KableExtra}</code> to nicely print a frequency table of the categorical &amp; ordinal questions I had in my survey. You can also do what I describe below in other packages, however I enjoy using <code>{KableExtra}</code> for its rich vignette and clearly defomed functions.</p>
+<div id="the-problem" class="section level3">
+<h3>The Problem</h3>
+<p>In my pilot survey I had ~20 questions that were categorical, ordinal and were simple constructs not requiring a thorough analysis but only a quick review at the distribution of responses. I wanted to print all of these variables in one formatted table and address any anomalies if needed.</p>
+<p><strong>The issue was, how can I format printing of all categorical variables in their chronological order, along with the original question and the distribution of responses?</strong></p>
+<p>Basically, how can I achieve the following output:</p>
+<p><img src="table.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="the-journey" class="section level3">
-<h3>The Journey</h3>
-<p>Well, it’s not really going to be a timeline but more of a item-list somewhat chronologically ordered that I belive captures my doing. Of course like a lot of many other things in life, the timeline isn’t rigid with spontenaeous back-and-forth in between some of the items on the list. Let’s begin.</p>
-<p><strong>1. Hearing about R</strong> - I first heard of R when it used in a hierarchical linear models workshop. The workshop focused more on the statistics part of it so we didn’t go in depth into the code. Following that I’ve heard about R twice - Once from a psychology friend and from my sister. Both in different ways exposed me to it.</p>
-<p><strong>2. First learning steps</strong> - My psychologist friend also told me there’s a video-recorded psychology R course available on moodle which I could freely use. The course is led by Yoav Kesller and was a fantastic introduction for me. I followed along with the course and did the different assignments until we reached ggplot. I decided that to practice ggplot I’ll try a #Tidytuesday submission.</p>
-<p><strong>3. Joining the #TidyTuesday community</strong> - The <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> is an amazing project where every week they publish a new dataset for the #rstats community to analyze and visualize, and participants are encouraged to post their results on Twitter<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Could you imagine the motivation and excitment I had? So many professional and experienced indviduals working on the same dataset, conjuring amazing visualizaitons and posting their code for others to explore (and all this for free)?! I mean wow, I was blown away. So I followed along for a week or two until I said ok, let’s give it a try.</p>
-<p>It was <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-09-17">week 38</a> and we were working on visualizing national parks. I wasn’t really sure what to do, so I did a minimal exploration of the data and noticed an interesting increase of visitors in national parks, which all in all sounded intuitive (better transportation methods, increase in population, etc.), but perefect for a first visualization. Following the basic plot I remembered a visualizaiton from <a href="https://twitter.com/ariamsita">Ariane Aumaitre</a> using roller-coaster icons and thought to implement it. Knowing nothing on how to integrate icons, I copied Ariane’s code for the icons and adapted it into my visualization to create a nice scenery for the mountain the data displayed (see tweet below). I was pretty satisfied at the time and the feedback from the #rstats community was incredible - I was hooked on the project.</p>
-{{% tweet "1174364639427272706" %}}
+<div id="explore-our-data" class="section level3">
+<h3>Explore our data</h3>
+<p>First, let’s loda the packages we’ll need and look at our data:</p>
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(janitor)
+library(scales)
+df_survey &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;,&quot;survey.xlsx&quot;))
+head(df_survey)</code></pre>
+<pre><code>## # A tibble: 6 x 12
+##   Q2     Q4     Q6     Q7    Q11_1   Q13_1   Q15   Q26   Q27   Q30   Q32   Q37  
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Female Salar~ Simil~ Cent~ Once a~ At lea~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 2 Female Salar~ Below~ South Severa~ Every ~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 3 Female Stude~ Below~ South Betwee~ I&#39;ve n~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 4 Female Unemp~ Simil~ Cent~ Once a~ At lea~ Last~ No    &lt;NA&gt;  &lt;NA&gt;  No    Yes  
+## 5 Male   Salar~ Simil~ Cent~ Once a~ At lea~ Last~ Yes   2-3 ~ Yes   No    No   
+## 6 Female Salar~ Simil~ Cent~ Severa~ Last t~ Never No    &lt;NA&gt;  &lt;NA&gt;  No    Yes</code></pre>
+<p>So we have a lot of information describing our sample data records. While this data is fabricated, it mirrors a common survey dataset: Each row represents a respondent with answers to various questions. With respect to continuous variables I did a different analysis, so for the purpose of the following post we’ll need only character columns. Let’s start by removing anything other than the relevant columns:</p>
+<pre class="r"><code>df_char &lt;- df_survey %&gt;% 
+  janitor::clean_names () %&gt;% 
+  select_if(is.character) </code></pre>
+<p>We’ll need to change the data to a long form so that we can print it for efficient reading. An easy approach will be to use the <code>pivot_longer</code> argument, rendering all our columns in one long table:</p>
+<pre class="r"><code>df_long &lt;- df_char %&gt;% 
+  pivot_longer(q2:q37, names_to = &quot;question&quot;) %&gt;% 
+  count(question, value) %&gt;%
+  group_by(question) %&gt;% 
+  mutate(pct = percent(n/sum(n)))
+# Print table
+kbl(df_long) %&gt;% 
+  kable_styling() %&gt;% 
+  scroll_box(height = &quot;550px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:550px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+question
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+value
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+pct
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Between once a week to once in a month
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Less than once a month
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Once a day
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Once a week
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Several times a day
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+Several times a week
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+23.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q11_1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+About every week
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+At least once a month
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+Every three months
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+Every three to six months
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+I’ve never bought
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q13_1
+</td>
+<td style="text-align:left;">
+Last time I bought was over half a year ago
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Last half a year
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Last month
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Last three months
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Last week
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Last year
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Never
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q15
+</td>
+<td style="text-align:left;">
+Over a year ago
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q2
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+44.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q2
+</td>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+50.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q2
+</td>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q26
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:left;">
+59%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q26
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q26
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q27
+</td>
+<td style="text-align:left;">
+2-3 times
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q27
+</td>
+<td style="text-align:left;">
+5-7 times
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q27
+</td>
+<td style="text-align:left;">
+Over 7 times
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q27
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+61.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q30
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q30
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+35%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q30
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+62%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q32
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+79.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q32
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q32
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q37
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q37
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;">
+73.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q37
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Salaried employee
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Self employed
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Student
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+23.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Student,Salaried employee
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Student,Unemployed
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q4
+</td>
+<td style="text-align:left;">
+Unemployed
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q6
+</td>
+<td style="text-align:left;">
+Above average
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q6
+</td>
+<td style="text-align:left;">
+Below average
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+47.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q6
+</td>
+<td style="text-align:left;">
+Similar to average
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q7
+</td>
+<td style="text-align:left;">
+Center
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+47.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q7
+</td>
+<td style="text-align:left;">
+South
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><br></p>
-<p><strong>4. Openning a GitHub account</strong> - Following the first visualization for #Tidytuesday I wanted to share the code. I had no idea how to use GitHub despite openning an account to read others code. Using the <a href="https://happygitwithr.com/">Happy git with r</a> guide I was able to properly upload my code and be able to synch future workflow. Using GitHub taught me so much: Reading others code and discovering new functions; Organizing my own code so others can easily read it, and thus ‘forcing me’ to clean it once I finish; and having a place to host all my doings. I do not take this lightly and sincerely believe that openning a GitHub account to share everything I did was an important and pivoting moment learning R. Although I have so much more to learn when it comes to clean code and project management, a lot of what I know now is attributed to having my GitHub repositories and code as accessible as possible for others to learn.</p>
-<p><strong>5. Visualizing things I was interested in</strong> - As I was participating in #Tidytuesday Eliud Kipchoge broke (unofficially) the two-hour marathon barrier. I found this amazing and wanted to visualize the comparison between the new record and older ones. To do that I manually copied the martathon record values from Wikipedia and used that to plot running icons representing the different records. It wasn’t the most aethetic plot but it was definitely rewarding. I’ve since improved the visualizaiton by making it more reproducible and eventually wrote a <a href="https://amitlevinson.com/post/eliud-kichoge/">blog post</a> explaining the process of how I made it. Similarly, a month or two later I <a href="https://amitlevinson.com/post/bomb-shelters/">plotted bomb shelter locations around my house</a> amidst missiles fired towards Israel and a few days after discovering my municipality’s open data, all in R and Google maps. My point is that I was finally able to make lemonade out of lemons: I took information around me I was interested in and made a meaningful visualization for others to enjoye and/or use.</p>
-<p><strong>6. Continuous learning</strong> - Well, it’s kind of redundant to say this, but it is important: After I joined the #Tidytuesday community I stopeed with the psychology R course. I started focusing more on visualizations and data wrangling in addition to sollidyfying my basic knowledge of R. For this I relied on the following sources:</p>
-<ul>
-<li><p><strong>R &amp; R4DS book</strong> - I decided to start with the free <a href="https://r4ds.had.co.nz/">R for data science book</a>. Everyday I would read for 30-60 minutes either learning something new or attempting to answer the questions. I’d re-write the code into my R console while following along, exploring and trying to understand what was going on. To validate my answers to the questions or understand those I didn’t know I cross-checked them with the <a href="https://jrnold.github.io/r4ds-exercise-solutions/">‘Excercise solutions book’</a> by Jeffrey Arnold. I also bought <a href="https://socviz.co/">Data Visualizaiton, A practical introduction</a> by Kieran Healy and <a href="https://www.tidytextmining.com/">Text Mining with R, A tidy Approach</a> by Julia Silge and David Robinson, but I used them more on the go.</p></li>
-<li><p><strong>Online courses and materials</strong> - While reading the book I decided to seek out some other courses at the university. My friend (the one who introduced me to R) told me about a workshop discussing implementation of algorithms and research on the intersection of Psychology and big data by <a href="https://t.co/3hLoUnYbPa?amp=1">Michael Gilead</a> which I asked to join. While there I met <a href="https://almogsi.com/">Almog Simchon</a> who led a fantastic text analysis in R workshop the following semster. I’d also infrequently join <a href="sites.google.com/view/mattansb">Mattan Ben-Shachar’s</a> TA class and learn more about data wrangling and statistical methods. Additionaly, a friend told me about <a href="https://www.john-ros.com/">Jonathan Rosenblatt’s</a> R course in the department of industrial engineering and management (recorded lectures in Hebrew are freely available). While my point is also to highlight my predelection to synchronous courses, I also wanted to take the opportunity to thank these wonderful individuals for letting me join \ listen in on their courses.</p></li>
-</ul>
-<p>I also started reading books that are not ad-hoc R ecosystem. That is, I found a strong liking towards visualizing data and bought books on that topic too. This immensly improved my visualizations and how I look at them. I still have a lot more to learn - both theoretically and technically - but it definitely inspired and opened my mind when it comes to visualizing something. I highly recommend reading <a href="http://www.storytellingwithdata.com/books">Storytelling with data</a> by Cole Nussbaumer Knaflic and <a href="http://albertocairo.com/">How Charts Lie</a> by Alberto Cairo if you’re looking for something to start with.</p>
-<ul>
-<li><strong>Watch live webinars &amp; videos; attended meetups</strong> - An invaluable source of learning was participating in various meetups. A good place I found many of them was on Twitter, but I’m sure you can also find in Facebook groups, Rstudio news letter, etc. Sometimes I didn’t even understand what they’re were talking about but just exposing myself to it felt great. It motivated me to want to learn more in order to succeed in doing what was presented. I also highly recommend exploring the <a href="https://rstudio.com/resources/webinars/">Rstudio Webinars</a>.</li>
-</ul>
-<p>Luckily, I started learning R before the COVID-19 pervailed so I was able to join 2 Israeli R-meetups. This was a great experience and althogh being a novice when I attended them, the community was great. People were welcoming, there’s great pizzaa and beer and the presentation were fantastic. Again, I didn’t understand a lot of it at the time, but it was a great source of inspiration of what was to come. Plus, seeing so many people enthusiasticly talking about R made me understand that I’m not alone in my liking this world.</p>
-<p><strong>7. Making my own website</strong> - A month or two into learning R I noticed people had their own websites they made in R. Once again I was fascinated at how this was possible - Not only can I wrangle data and beautifully visualize it but I can build my own website? and for 10$ I can also use my own domain? This was crazy! At the time I thought of openning one I had 1-2 posts I elabroated a little more about than a #Tidytuesday visualizaiton. For example Iexplained the original bomb-shelters post as a <strong>GitHub Readme file</strong>. That is, I used the Readme file as my platform for elaborating on something I wanted to explain more in depth. Little did I know that many do this, but for me it was perfect as a place to share my thoughts that won’t be lost in the Twitterverse feed.</p>
-<p>Nearing mid January (4+- months into R) I decided it’s time open my own website. I had a few things I already made (<a href="https://amitlevinson.com/post/eliud-kichoge/">Eliud Kipchoge’s record</a> and the <a href="https://amitlevinson.com/post/bomb-shelters/">bomb shelters around my house</a>) and also wanted a place for others to learn more about me. I scrolled and followed along the <a href="https://bookdown.org/yihui/blogdown/">blogdown book</a> for creating websites with R, viewed some of <a href="https://alison.rbind.io/project/up-running-blogdown/">Allison Hill’s blogdown workshops</a> and other resources. Eventually, I was setup and had my website on air all done in R, hosted for free on Netlify and GitHub with an elegant Hugo Academic theme, and my own domain for only 10$. Again, I was amazed at how easy and rewarding this was. I mean, I had no knowledge (and still don’t) in HTML, CSS or anything else to build a website and here I conjured one up, and pretty easily!</p>
-<p>I highly recommend openning a website. Even if you’re not an R user, I think a personal website is a great motivator for writing blogs; a platform for others to learn more about you and in these days a not so difficult thing to do if you set your mind to it. Opening a website has definitely motivated me to learn so much more by writing about it.</p>
-<p><strong>8. Giving a talk</strong> - During Passover (April) 2020, the Israel fellows group sent out a call inviting individuals to come and talk about anything they wanted. I decided to pick up this opportuniyt and create a talk to give there and following that at another meetup of a group of friends of mine. Although being only ~7 months into learning R I wanted to share the amazing powers of it for wrangling and visualizing data, the extreme difference of using it compared to SPSS and how it helped me tackle and explore quantitative questions I had. So I sat down, wrote an outline, and made a presentation using the {Xaringan} package.</p>
-<p>The talk was great (I think) and some of the participants even followed up inquiring about resources to get started, how can they do this in R, etc. However more importantnly, <strong>making and giving the talk <em>forced</em> me to think about what is it in R that I like</strong>. Organizing these thoughts and communicating them in a way to that is alluring to the audience was a fantastic oppourtnity to stop and think exactly about that.</p>
-<p>*** INSERT SLIDES ***</p>
-<p><strong>9. Integrating R into my daily work</strong> - I was extremely fortunately that the researcher I work for, <a href="https://www.jenniferoser.com/">Dr. Jennifer Oser</a>, was (and still is) very supportive of integrating R into our daily work. I remember as we started analyzing our data and trying to make sense of it I was debating whether to open SPSS, google sheet or R. Luckily, I knew how to do a lot of what we wanted to in R so I turned to use that. Jenny was very supportive and I think we’ve greatly progressed since that I find it absurd to use something else now. Ironicly, today I re-ran our report after a few changes in our data. I can’t imagine re-writing the 27 pages report just to correct numbers that changed and aren’t automatically updated like in Rmarkdown. My point is, if you can integrate R into your daily work it’s definitely a bonus, I know I learned a lot (I mean a lot) about rmarkdown and version control once I started using R in my research assitant position and in my thesis.</p>
-<p><strong>10. Blog, and then blog some more</strong> - I imagine you’ve heard this saying a lot, but I definitely agree with it: If you like then <s>you should put a ring on it</s> write about it. Don’t write for others, write for yourself. While I mentioned earlier that I wrote about my visualizations, I also wanted to learn about statistical analysis I was intruiged by. So I read about the topic and thought of an example I can easily use to explain the concept. For e.g. to learn what is Term frequency inverse document frequency (tf-idf) I implemented it in <a href="https://amitlevinson.com/post/learning-tfidf-with-political-theorists/">analyzing the tfidf in 4 books of political theorists’</a> I like. At one point I wanted to learn more about Bernoulli trials so I explored the <a href="https://amitlevinson.com/post/uncertainty-in-the-israeli-lottery/">uncertainty in the Israeli lottery</a>. <strong>Alternatively, write about a challenge you faced and how you solved it.</strong> For e.g., I also wrote about how I solved a challenge I had when nicely presenting a static summary of categorical variables from my thesis pilot survey (<a href="https://amitlevinson.com/post/printing-survey-table/">found here</a>).</p>
-<p>In my opinion, don’t write for others to click on your website; rather, write for you to learn or communicate something you want to share with the world.</p>
+<p>Great, this prints nicely, but we’re left with several issues to address<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
+<p><strong>1. We’re missing the actual questions</strong> - Notice how we only have “q11_1” but not a description of what the actual question or what the variable is. You can add a question label within Qualtrics, but I still wanted to have the question itself presented along with the question number.</p>
+<p><strong>2. Questions were reorganized alphabetically</strong> - Once we ran the <code>pivot_longer</code> R sorted our dataframe alphabetically according to the question column, but we might want it ordered according to the survey layout. Of course this is contingent on your data; I wanted to present it aligned to the order of the survey questions.</p>
+<p><strong>3. Some of the responses aren’t ordered</strong> - Notice how some of the responses are randomly ordered, when ideally we’d want them to be ordered by hierarchy. For example question q11_1 describes frequency responses that aren’t hierarchically ordered.</p>
+<p><strong>4. Remove duplicated information</strong> - Our question column, and if we add another one with the question’s text, will have duplicate information. While the value changes within questions printing the question column for each row is redundant. In addition, once we’ll add the question title it’ll be even more cluttered and any additional irrelevant text should be removed.</p>
+<p>So then, let’s address these issues individually.</p>
+<div id="adding-information-to-our-questions" class="section level5">
+<h5>Adding information to our questions</h5>
+<p>When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it’s perfect for our display of additional information. There’s also a great function for doing exactly that from the <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html"><code>{qualtRics}</code></a> package, but I was having trouble connecting to the platform’s API through my Qualtrics user.</p>
+<p>Adding the questions was straightforward: Just combine the current <em>data_long</em> with a dataset containing my questions. We’ll use a copy of the original survey data (of course fabricated for purpose of the survey) that only contains the questions:</p>
+<pre class="r"><code>df_questions &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;questions.xlsx&quot;))
+df_questions[,1:3]</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   Q2     Q4                   Q6                                                
+##   &lt;chr&gt;  &lt;chr&gt;                &lt;chr&gt;                                             
+## 1 Gender What&#39;s your occupat~ The average income for an individual is X, you&#39;re~</code></pre>
+<p>Great! we see our question’s text as values with the variables being the questions themselves. Now let’s render it in a long format so that each row is a question id with the corresponding text as a value, and then we’ll join it with our current dataset of answers:</p>
+<pre class="r"><code>df_q_clean &lt;- df_questions %&gt;% 
+  clean_names() %&gt;% 
+  pivot_longer(cols = q2:q37, names_to = &quot;question&quot;, values_to = &quot;text&quot;) 
+df_long_joined &lt;-  left_join(df_long, df_q_clean)
+head(df_long_joined)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+## # Groups:   question [1]
+##   question value                           n pct   text                         
+##   &lt;chr&gt;    &lt;chr&gt;                       &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                        
+## 1 q11_1    Between once a week to onc~     5 14.7% Every how often do you consu~
+## 2 q11_1    Less than once a month          4 11.8% Every how often do you consu~
+## 3 q11_1    Once a day                      6 17.6% Every how often do you consu~
+## 4 q11_1    Once a week                     4 11.8% Every how often do you consu~
+## 5 q11_1    Several times a day             6 17.6% Every how often do you consu~
+## 6 q11_1    Several times a week            8 23.5% Every how often do you consu~</code></pre>
+<p>Perfect. However, as you can see, our new text column provides the same information across the same questions, which seems kind of redundant. We’ll keep it for now and address it soon when we turn to print our table.</p>
 </div>
-<div id="summary" class="section level3">
-<h3>Summary</h3>
-<p>So this was a not-so-short recap of my last year. I hope you gained something from it, whether it’s agreeing or disagreeing with the short journey I had thus far. It’s interesting to think back about something you’ve done and how would you have done it differently. I’m not sure, and I’m kind of glad that it happened the way it happened.</p>
-<p>I think my main takeaways were:</p>
-<ol style="list-style-type: decimal">
-<li><p>Learn a bit.</p></li>
-<li><p>Find a community and project tha’ll keep you hooked (such as the <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> project).</p></li>
-<li><p>Share what you learn - whether if it’s by uploading your code to GitHub, opening your own website or giving a talk. It usually doesn’t fall out of the sky so keep your eyes open and take that leap of faith, you got this!</p></li>
-</ol>
-<div id="whats-next" class="section level4">
-<h4>What’s next</h4>
-<p>Great question! Honestly I don’t know. I hope to finish my thesis soon and look for a job that’ll require me to work with R and visualize data. On a personal level, I hope to contribute to the community and work on an r package; learn some new concepts and statistical analyses; and incorporate more #Tidytuesdays into my weekly routine. I relly don’t know what’s waiting but I’m definitely excited towards it!</p>
+<div id="reordering-within-and-across-questions" class="section level5">
+<h5>Reordering within and across questions</h5>
+<p>The next issue on the list is that we want some of our questions to be organized not by the count frequency or some randomness, but by hierarchy of the answer options. For example ‘a few times a day’, ‘Once a day’, ‘several times a week’ and so on as a hierarachal structure in my ordinal variables.</p>
+<p>Alas, I don’t have a magical automated method and would be grateful to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually. Though a tedious task, this manual workload is more efficient than automating everything.</p>
+<pre class="r"><code># Save the sorted response file and use that to rank
+# write_csv(df_long_q_sorted, here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
+answer_hir &lt;- read_csv(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
+head(answer_hir)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   question value                      rank
+##   &lt;chr&gt;    &lt;chr&gt;                     &lt;dbl&gt;
+## 1 q2       Female                       NA
+## 2 q2       Male                         NA
+## 3 q4       Salaried employee            NA
+## 4 q4       Self employed                NA
+## 5 q4       Student                      NA
+## 6 q4       Student,Salaried employee    NA</code></pre>
+<p>We now have our new guide in which we ranked our questions. Notice that the first answers are NA, but that’s because the nominal variables have no intrinsic hierarchy. Now let’s use this dataframe to create a value with which to sort our answers:</p>
+<pre class="r"><code>df_long_ranked &lt;- left_join(x = df_long_joined, y = answer_hir) 
+head(df_long_ranked)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+## # Groups:   question [1]
+##   question value                         n pct   text                       rank
+##   &lt;chr&gt;    &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                     &lt;dbl&gt;
+## 1 q11_1    Between once a week to o~     5 14.7% Every how often do you c~     5
+## 2 q11_1    Less than once a month        4 11.8% Every how often do you c~     6
+## 3 q11_1    Once a day                    6 17.6% Every how often do you c~     2
+## 4 q11_1    Once a week                   4 11.8% Every how often do you c~     4
+## 5 q11_1    Several times a day           6 17.6% Every how often do you c~     1
+## 6 q11_1    Several times a week          8 23.5% Every how often do you c~     3</code></pre>
+<p>We’ll reorder by rank along with solving the next issue which is the way our questions are ordered. Basically, we want it to be ordered by the question value and not using an alphabetic sort. For example, we’d like q_5 to appear before q11_1, similar to how it appeared in the survey. I’ll apply some regex (regular expression) manipulation to capture only the numbers and use that to sort by.
+Displayed as follows:</p>
+<pre class="r"><code>df_long_q_sorted &lt;- df_long_ranked %&gt;% 
+  mutate(q_num = str_remove_all(question, &quot;[a-z]&quot;),
+    q_num = str_replace_all(q_num, &quot;_&quot;, &quot;.&quot;),
+    q_num = str_remove(q_num, &quot;\\.$&quot;),
+    q_num = as.numeric(q_num)) %&gt;% 
+  group_by(question) %&gt;% 
+  arrange(q_num, rank) %&gt;% 
+  ungroup() %&gt;% 
+  select(-c(q_num, rank)) %&gt;% 
+  relocate(text, .after = question)
+head(df_long_q_sorted)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   question text                    value                 n pct  
+##   &lt;chr&gt;    &lt;chr&gt;                   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;
+## 1 q2       Gender                  Female               15 44.1%
+## 2 q2       Gender                  Male                 17 50.0%
+## 3 q2       Gender                  Other                 2 5.9% 
+## 4 q4       What&#39;s your occupation? Salaried employee    18 52.9%
+## 5 q4       What&#39;s your occupation? Self employed         3 8.8% 
+## 6 q4       What&#39;s your occupation? Student               8 23.5%</code></pre>
+<p>Fantastic!</p>
+<p>I found that first using the regex and then sorting by rank doesn’t properly work, so instead I implemented it along with sorting the questions. Again, if the order of questions and answers doesn’t matter in your data you can just skip past some of the stages.</p>
+<p>Great, now that we have all our data formatted properly, we can turn to the printing!</p>
+</div>
+<div id="kableextra" class="section level4">
+<h4>KableExtra</h4>
+<p>In my initial round of exploring the pilot survey I used <code>{KableExtra}</code> and its powerful features. You might find other packages better to work with when knitting to Word. With that said, it’s possible (and very effective) to knit to Html and copy that into a Word document. Despite the copy + paste requirement, I found it to be the better approach for keeping all the aesthetics and formatting integrated in the original document. Oh, and I also had my questions originally in Hebrew which was easier to knit to Html altogether.</p>
+<div id="removing-redundant-information" class="section level5">
+<h5>removing redundant information</h5>
+<p>As we saw earlier, the argument is pretty straight forward. We can address the redundant information we have - question and text column appearing with each answer (our final issue) - within the KableExtra object using <code>collapse_rows</code>:</p>
+<pre class="r"><code>df_long_q_sorted %&gt;% 
+  kbl(col.names = c(&quot;Question&quot;, &quot;Text&quot;, &quot;Answer&quot;, &quot;n&quot;, &quot;%&quot;)) %&gt;% 
+  kable_styling(full_width = F) %&gt;% 
+  column_spec(1, bold = T) %&gt;% 
+  collapse_rows(columns = c(1,2), valign = &quot;top&quot;) %&gt;% 
+  scroll_box(height = &quot;750px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:750px; ">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Question
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Text
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Answer
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q2
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Gender
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+44.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+50.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="6">
+q4
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
+What’s your occupation?
+</td>
+<td style="text-align:left;">
+Salaried employee
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Self employed
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Student
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+23.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Student,Salaried employee
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Student,Unemployed
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unemployed
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q6
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+The average income for an individual is X, you’re income is:
+</td>
+<td style="text-align:left;">
+Below average
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+47.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Similar to average
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Above average
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="2">
+q7
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+Where do you live in Israel
+</td>
+<td style="text-align:left;">
+Center
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+47.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+South
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="7">
+q11_1
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="7">
+Every how often do you consume chocolate?
+</td>
+<td style="text-align:left;">
+Several times a day
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Once a day
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Several times a week
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+23.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Once a week
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Between once a week to once in a month
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Less than once a month
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="6">
+q13_1
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
+Every how often do you buy chocolate?
+</td>
+<td style="text-align:left;">
+About every week
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+At least once a month
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Every three months
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Every three to six months
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Last time I bought was over half a year ago
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I’ve never bought
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="7">
+q15
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="7">
+When did you last attend a party?
+</td>
+<td style="text-align:left;">
+Last week
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Last month
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Last three months
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Last half a year
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Last year
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Over a year ago
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Never
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+52.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q26
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Do you think 2020 was a good year?
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:left;">
+59%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+38%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="4">
+q27
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+How many times did you decide to stay home instead of going out this year?
+</td>
+<td style="text-align:left;">
+2-3 times
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5-7 times
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+11.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Over 7 times
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+61.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q30
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Should Amit buy a new computer?
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+35%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+62%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q32
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Do you really mean that?
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+79.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+14.7%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+5.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q37
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Would you like to participate in a follow up study?
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+17.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;">
+73.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+8.8%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<p><strong>That easy? Yes!</strong></p>
+<p>The trick here that I love is collapsing the column, an argument also common in other packages such as <a href="https://github.com/renkun-ken/formattable">{formattable}</a> I look forward to explore. Collapsing a column makes printing in rmarkdown really easy and efficient, something I found lacking in other platforms I learned such as SPSS. I also added a <code>column_spec</code> to bold the first column. Of course you can also remove the scroll box by not using the <code>scroll_box</code> option at the end, which will print your whole table.</p>
+<p>If you’re looking for a word format, you can just copy &amp; paste your html output (Perfect for working with Hebrew text for example, a little more on that below). You can find an additional example by <a href="https://haozhu233.github.io/kableExtra/kableExtra_and_word.html">Hao Zhu</a>, the creator of the package, or here’s my attempt below:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="html-copy.gif" alt="Just select all and copy it into a word document" width="80%" />
+<p class="caption">
+Figure 1: Just select all and copy it into a word document
+</p>
+</div>
+<p>If you want the table to be a little more formally formatted I recommend exploring aesthetic arguments such as <code>kable_classic</code>, <code>kable_minimal</code> and others from the <a href="http://haozhu233.github.io/kableExtra/awesome_table_in_html.html">{KableExtra}</a> family. Here’s a short example using the <code>kable_minimal</code> with an Html output:</p>
+<pre class="r"><code>df_long_q_sorted %&gt;% 
+  head(10) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling(full_width = F) %&gt;% 
+  column_spec(1, bold = T) %&gt;% 
+  collapse_rows(columns = c(1,2), valign = &quot;top&quot;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="kable_minimal.png" alt="Example using kable_minimal as a table theme" width="80%" />
+<p class="caption">
+Figure 2: Example using kable_minimal as a table theme
+</p>
+</div>
+<p><br></p>
+</div>
+<div id="wait-but-what-if-i-want-a-simple-table-in-word" class="section level5">
+<h5>Wait, but what if I want a simple table in word?</h5>
+<p>Let’s say you want a simple kable table when knitting in word, you can just add ‘df_print: kable’ to the YAML of your document or alternatively, you can explore other options in the <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">Rmarkdown book</a> that elegantly print dataframes. How do we remove the redundant information when printing? Just replace the duplicated values with an empty string:</p>
+<pre class="r"><code>df_long_q_sorted %&gt;% 
+  mutate(across(c(question, text), ~ ifelse(duplicated(.x), &quot; &quot;, .x))) %&gt;% 
+  select(`Question` = question, `Text` = text, `Value` = value, n, `%` = pct) %&gt;% 
+  head(20)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="df_print.png" alt="Outputting a table using df_print: kable in the YAML section" width="80%" />
+<p class="caption">
+Figure 3: Outputting a table using df_print: kable in the YAML section
+</p>
+</div>
+<p>Voila!</p>
+<p>I first removed redundant text by using the <code>across</code> along with a conditional argument to remove duplicated text. Basically the formula (<code>~ ifelse</code>) reads as take anyone of the specified columns and pass it to a conditional statement that if true (if the word is duplicated), add a space character instead. Below is a screenshot when rendered to word, and you can continue to format it with or without other packages.</p>
+</div>
+<div id="right-to-left-languages" class="section level5">
+<h5>Right-to-Left languages?</h5>
+<p>I found it difficult knitting Hebrew characters to a Word output but easily done when rendering Html documents. Here’s a short example, without the whole pre-processing, using some Hebrew questions:</p>
+<pre class="r"><code>hebrew_example &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;hebrew_example.xlsx&quot;))
+hebrew_example %&gt;% 
+  select(pct, n, value, text, question) %&gt;% 
+  mutate(pct = percent(pct)) %&gt;% 
+  # Reverse the order of questions
+  kbl(col.names = c(&quot;%&quot;, &quot;שכיחות&quot;, &quot;תשובה&quot;, &quot;שאלה&quot;, &quot;פריט&quot;), align = &#39;r&#39;) %&gt;% 
+  kable_styling(full_width = F) %&gt;% 
+  column_spec(5, bold = T) %&gt;% 
+  collapse_rows(columns = c(4,5), valign = &quot;top&quot;) %&gt;% 
+  scroll_box(height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+%
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+שכיחות
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+תשובה
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+שאלה
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+פריט
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+47.1%
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+נקבה
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="2">
+מגדר
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="2">
+q2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+52.9%
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+זכר
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+52.9%
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+שכיר
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="6">
+סטטוס תעסוקתי
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="6">
+q4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8.8%
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+עצמאי
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23.5%
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+סטודנט
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8.8%
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+סטודנט, שכיר
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.9%
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+סטודנט, מובטל
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.9%
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+מובטל
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17.6%
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+לא
+</td>
+<td style="text-align:right;vertical-align: top !important;" rowspan="3">
+האם תסכים להשתתף במחקר המשך?
+</td>
+<td style="text-align:right;font-weight: bold;vertical-align: top !important;" rowspan="3">
+q37
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+73.5%
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+כן
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8.8%
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+חסר
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<p>Notice how I reversed the columns direction to have it compatible for a right-to-left reading. I also changed the locale setting (not shown) using the <code>Sys.setlocale</code> argument. While this still needs some additional work (for example the ‘?’ isn’t aligned), it’s definitely a good start.</p>
+</div>
+</div>
+<div id="wrapping-up" class="section level4">
+<h4>Wrapping up</h4>
+<p>So this is how I approached the issue of providing a simple descriptive table of my categorical variables. While it was somewhat tedious and some parts required manual work, you might not require all the stages. I hope you were able to take something from this post, I certainly enjoy working with the <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>{KableExtra}</code></a> package and look forward to sharing additional things I’ve learned while using it for reporting findings from my thesis.</p>
+<p>Now then, time to get back to writing!</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Joining Twitter is owed to the research I worked with at the time, <a href="https://www.jenniferoser.com/">Jennifer Oser</a>, who recommended I follow scholars in our field on Social Media.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>If you use Qualtrics as your survey platform, check out the corresponding package to work with such data <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Of course there are many other issues I won’t address here, such as response options that are missing if no one chose them in my current pilot population.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

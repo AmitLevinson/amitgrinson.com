@@ -1,19 +1,20 @@
 ---
-title: My year with R
+title: Survey categorical variables with KableExtra
 author: Amit Levinson
-date: '2020-09-20'
-slug: my-year-in-r
-categories: []
+date: '2020-09-01'
+slug: printing-survey-table
+categories: [R]
 tags: []
 subtitle: ''
-summary: "Looking back at my year of learning R"
+summary: "Aestheticaly printing descriptive variables from your survey data"
 featured: no
 image:
-  caption: ''
+  caption: 'Image by <a href="https://pixabay.com/users/Egle_pe-1340873/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Egle P.</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1328856">Pixabay</a>'
   focal_point: ''
-  preview_only: no
+  preview_only: yes
 projects: []
-draft: true
+draft: false
+df_print: paged
 editor_options:
   chunk_output_type: console
 ---
@@ -28,83 +29,238 @@ p.caption {
 }
 </style>
 
+In my in-progress thesis I decided I'll analyze my survey results in something other than SPSS we learned in undergrad, which eventually led me to begin using R. The time came and I started analyzing my pilot survey data from Qualtrics[^1]. In this post I'll address how I used `{KableExtra}` to nicely print a frequency table of the categorical & ordinal questions I had in my survey. You can also do what I describe below in other packages, however I enjoy using `{KableExtra}` for its rich vignette and clearly defomed  functions. 
 
+[^1]: If you use Qualtrics as your survey platform, check out the corresponding package to work with such data [here](https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html).
 
-### Why contemplate?  
+### The Problem
 
-I believe that stopping what you're doing and contemplating about it - is this the right choise; am I in the right direction *for me* - is a healthy process. Doing so can help you **acknowledge your accomplishments and think of where you're heading**. I'm glad I have the opportunity to do so and hope someone might benefit from it.
+In my pilot survey I had ~20 questions that were categorical, ordinal and were simple constructs not requiring a thorough analysis but only a quick review at the distribution of responses. I wanted to print all of these variables in one formatted table and address any anomalies if needed.
 
-### The Journey
+**The issue was, how can I format printing of all categorical variables in their chronological order, along with the original question and the distribution of responses?**
 
-Well, it's not really going to be a timeline but more of a item-list somewhat chronologically ordered that I belive captures my doing. Of course like a lot of many other things in life, the timeline isn't rigid with spontenaeous back-and-forth in between some of the items on the list. Let's begin.  
+Basically, how can I achieve the following output:  
 
-**1. Hearing about R** - I first heard of R when it used in a hierarchical linear models workshop. The workshop focused more on the statistics part of it so we didn't go in depth into the code. Following that I've heard about R twice - Once from a psychology friend and from my sister. Both in different ways exposed me to it.
+```{r echo=FALSE}
+knitr::include_graphics("table.png")
+```
 
-**2. First learning steps** - My psychologist friend also told me there's a video-recorded psychology R course available on moodle which I could freely use. The course is led by Yoav Kesller and was a fantastic introduction for me. I followed along with the course and did the different assignments until we reached ggplot. I decided that to practice ggplot I'll try a #Tidytuesday submission.
+### Explore our data
 
-**3.  Joining the #TidyTuesday community** - The [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an amazing project where every week they publish a new dataset for the #rstats community to analyze and visualize, and participants are encouraged to post their results on Twitter[^1]. Could you imagine the motivation and excitment I had? So many professional and experienced indviduals working on the same dataset, conjuring amazing visualizaitons and posting their code for others to explore (and all this for free)?! I mean wow, I was blown away. So I followed along for a week or two until I said ok, let's give it a try.  
+First, let's loda the packages we'll need and look at our data:
 
+```{r}
+library(tidyverse)
+library(here)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(janitor)
+library(scales)
+df_survey <- read_xlsx(here("content", "post", "printing-survey-table", "data","survey.xlsx"))
+head(df_survey)
+```
 
-[^1]: Joining Twitter is owed to the research I worked with at the time, [Jennifer Oser](https://www.jenniferoser.com/), who recommended I follow scholars in our field on Social Media.
+So we have a lot of information describing our sample data records. While this data is fabricated, it mirrors a common survey dataset: Each row represents a respondent with answers to various questions. With respect to continuous variables I did a different analysis, so for the purpose of the following post we'll need only character columns. Let's start by removing anything other than the relevant columns:
 
-It was [week 38](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-09-17) and we were working on visualizing national parks. I wasn't really sure what to do, so I did a minimal exploration of the data and noticed an interesting increase of visitors in national parks, which all in all sounded intuitive (better transportation methods, increase in population, etc.), but perefect for a first visualization. Following the basic plot I remembered a visualizaiton from [Ariane Aumaitre](https://twitter.com/ariamsita) using roller-coaster icons and thought to implement it. Knowing nothing on how to integrate icons, I copied Ariane's code for the icons and adapted it into my visualization to create a nice scenery for the mountain the data displayed (see tweet below). I was pretty satisfied at the time and the feedback from the #rstats community was incredible - I was hooked on the project.
+```{r}
+df_char <- df_survey %>% 
+  janitor::clean_names () %>% 
+  select_if(is.character) 
+```
 
-```{r echo=FALSE, fig.cap='my first visualization in r and participation in the #Tidytuesday project'}
-blogdown::shortcode('tweet', '1174364639427272706')
+We'll need to change the data to a long form so that we can print it for efficient reading. An easy approach will be to use the `pivot_longer` argument, rendering all our columns in one long table:
+
+```{r}
+df_long <- df_char %>% 
+  pivot_longer(q2:q37, names_to = "question") %>% 
+  count(question, value) %>%
+  group_by(question) %>% 
+  mutate(pct = percent(n/sum(n)))
+# Print table
+kbl(df_long) %>% 
+  kable_styling() %>% 
+  scroll_box(height = "550px")
 ```
 
 <br>
 
-**4. Openning a GitHub account** - Following the first visualization for #Tidytuesday I wanted to share the code. I had no idea how to use GitHub despite openning an account to read others code. Using the [Happy git with r](https://happygitwithr.com/) guide I was able to properly upload my code and be able to synch future workflow. Using GitHub taught me so much: Reading others code and discovering new functions; Organizing my own code so others can easily read it, and thus 'forcing me' to clean it once I finish; and having a place to host all my doings. I do not take this lightly and sincerely believe that openning a GitHub account to share everything I did was an important and pivoting moment learning R. Although I have so much more to learn when it comes to clean code and project management, a lot of what I know now is attributed to having my GitHub repositories and code as accessible as possible for others to learn.
+Great, this prints nicely, but we're left with several issues to address[^2]:  
 
-**5. Visualizing things I was interested in** - As I was participating in #Tidytuesday Eliud Kipchoge broke (unofficially) the two-hour marathon barrier. I found this amazing and wanted to visualize the comparison between the new record and older ones. To do that I manually copied the martathon record values from Wikipedia and used that to plot running icons representing the different records. It wasn't the most aethetic plot but it was definitely rewarding. I've since improved the visualizaiton by making it more reproducible and eventually wrote a [blog post](https://amitlevinson.com/post/eliud-kichoge/) explaining the process of how I made it. Similarly, a month or two later I [plotted bomb shelter locations around my house](https://amitlevinson.com/post/bomb-shelters/) amidst missiles fired towards Israel and a few days after discovering my municipality's open data, all in R and Google maps. My point is that I was finally able to make lemonade out of lemons: I took information around me I was interested in and made a meaningful visualization for others to enjoye and/or use.  
+**1. We're missing the actual questions** -  Notice how we only have "q11_1" but not a description of what the actual question or what the variable is. You can add a question label within Qualtrics, but I still wanted to have the question itself presented along with the question number.
+
+**2. Questions were reorganized alphabetically** - Once we ran the `pivot_longer` R sorted our dataframe alphabetically according to the question column, but we might want it ordered according to the survey layout. Of course this is contingent on your data; I wanted to present it aligned to the order of the survey questions. 
+
+**3. Some of the responses aren't ordered** - Notice how some of the responses are randomly ordered, when ideally we'd want them to be ordered by hierarchy. For example question q11_1 describes frequency responses that aren't hierarchically ordered.
+
+**4. Remove duplicated information** - Our question column, and if we add another one with the question's text, will have duplicate information. While the value changes within questions printing the question column for each row is redundant. In addition, once we'll add the question title it'll be even more cluttered and any additional irrelevant text should be removed.  
+
+[^2]: Of course there are many other issues I won't address here, such as response options that are missing if no one chose them in my current pilot population. 
+
+So then, let's address these issues individually.
+
+##### Adding information to our questions
+
+When you download the survey data from Qualtrics you also receive it with the original questions. When I personally analyzed the data I removed it, but here it's perfect for our display of additional information. There's also a great function for doing exactly that from the [`{qualtRics}`](https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html) package, but I was having trouble connecting to the platform's API through my Qualtrics user.
+
+Adding the questions was straightforward: Just combine the current *data_long* with a dataset containing my questions. We'll use a copy of the original survey data (of course fabricated for purpose of the survey) that only contains the questions:
+
+```{r}
+df_questions <- read_xlsx(here("content", "post", "printing-survey-table", "data", "questions.xlsx"))
+df_questions[,1:3]
+```
+
+Great! we see our question’s text as values with the variables being the questions themselves. Now let’s render it in a long format so that each row is a question id with the corresponding text as a value, and then we’ll join it with our current dataset of answers:
+
+```{r}
+df_q_clean <- df_questions %>% 
+  clean_names() %>% 
+  pivot_longer(cols = q2:q37, names_to = "question", values_to = "text") 
+df_long_joined <-  left_join(df_long, df_q_clean)
+head(df_long_joined)
+```
+
+Perfect. However, as you can see, our new text column provides the same information across the same questions, which seems kind of redundant. We'll keep it for now and address it soon when we turn to print our table.  
+
+##### Reordering within and across questions
+
+The next issue on the list is that we want some of our questions to be organized not by the count frequency or some randomness, but by hierarchy of the answer options. For example 'a few times a day', 'Once a day', 'several times a week' and so on as a hierarachal structure in my ordinal variables.  
+
+Alas, I don’t have a magical automated method and would be grateful to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually. Though a tedious task, this manual workload is more efficient than automating everything.
+
+```{r}
+# Save the sorted response file and use that to rank
+# write_csv(df_long_q_sorted, here("content", "post", "printing-survey-table", "data", "answers_hir.csv"))
+answer_hir <- read_csv(here("content", "post", "printing-survey-table", "data", "answers_hir.csv"))
+head(answer_hir)
+```
+
+We now have our new guide in which we ranked our questions. Notice that the first answers are NA, but that’s because the nominal variables have no intrinsic hierarchy. Now let’s use this dataframe to create a value with which to sort our answers:
+
+```{r}
+df_long_ranked <- left_join(x = df_long_joined, y = answer_hir) 
+head(df_long_ranked)
+```
+
+We’ll reorder by rank along with solving the next issue which is the way our questions are ordered. Basically, we want it to be ordered by the question value and not using an alphabetic sort. For example, we’d like q_5 to appear before q11_1, similar to how it appeared in the survey. I’ll apply some regex (regular expression) manipulation to capture only the numbers and use that to sort by.
+Displayed as follows:
 
 
-**6. Continuous learning** - Well, it's kind of redundant to say this, but it is important: After I joined the #Tidytuesday community I stopeed with the psychology R course. I started focusing more on visualizations and data wrangling in addition to sollidyfying my basic knowledge of R. For this I relied on the following sources:
+```{r}
+df_long_q_sorted <- df_long_ranked %>% 
+  mutate(q_num = str_remove_all(question, "[a-z]"),
+    q_num = str_replace_all(q_num, "_", "."),
+    q_num = str_remove(q_num, "\\.$"),
+    q_num = as.numeric(q_num)) %>% 
+  group_by(question) %>% 
+  arrange(q_num, rank) %>% 
+  ungroup() %>% 
+  select(-c(q_num, rank)) %>% 
+  relocate(text, .after = question)
+head(df_long_q_sorted)
+```
 
-- **R & R4DS book** -  I decided to start with the free [R for data science book](https://r4ds.had.co.nz/). Everyday I would read for 30-60 minutes either learning something new or attempting to answer the questions. I'd re-write the code into my R console while following along, exploring and trying to understand what was going on. To validate my answers to the questions or understand those I didn't know I cross-checked them with the ['Excercise solutions book'](https://jrnold.github.io/r4ds-exercise-solutions/) by Jeffrey Arnold. I also bought [Data Visualizaiton, A practical introduction](https://socviz.co/) by Kieran Healy and [Text Mining with R, A tidy Approach](https://www.tidytextmining.com/) by Julia Silge and David Robinson, but I used them more on the go.
+Fantastic!  
 
-- **Online courses and materials** - While reading the book I decided to seek out some other courses at the university. My friend (the one who introduced me to R) told me about a workshop discussing implementation of algorithms and research on the intersection of Psychology and big data by [Michael Gilead](https://t.co/3hLoUnYbPa?amp=1) which I asked to join. While there I met [Almog Simchon](https://almogsi.com/) who led a fantastic text analysis in R workshop the following semster. I'd also infrequently join [Mattan Ben-Shachar's](sites.google.com/view/mattansb) TA class and learn more about data wrangling and statistical methods. Additionaly, a friend told me about [Jonathan Rosenblatt's](https://www.john-ros.com/) R course in the department of industrial engineering and management (recorded lectures in Hebrew are freely available). While my point is also to highlight my predelection to synchronous courses, I also wanted to take the opportunity to thank these wonderful individuals for letting me join \\ listen in on their courses.  
+I found that first using the regex and then sorting by rank doesn’t properly work, so instead I implemented it along with sorting the questions. Again, if the order of questions and answers doesn’t matter in your data you can just skip past some of the stages.  
 
-I also started reading books that are not ad-hoc R ecosystem. That is, I found a strong liking towards visualizing data and bought books on that topic too. This immensly improved my visualizations and how I look at them. I still have a lot more to learn - both theoretically and technically - but it definitely inspired and opened my mind when it comes to visualizing something. I highly recommend reading [Storytelling with data](http://www.storytellingwithdata.com/books) by Cole Nussbaumer Knaflic and [How Charts Lie](http://albertocairo.com/) by Alberto Cairo if you're looking for something to start with.
+Great, now that we have all our data formatted properly, we can turn to the printing!
 
-- **Watch live webinars & videos; attended meetups** - An invaluable source of learning was participating in various meetups. A good place I found many of them was on Twitter, but I'm sure you can also find in Facebook groups, Rstudio news letter, etc. Sometimes I didn't even understand what they're were talking about but just exposing myself to it felt great. It motivated me to want to learn more in order to succeed in doing what was presented. I also highly recommend exploring the [Rstudio Webinars](https://rstudio.com/resources/webinars/).  
+#### KableExtra
 
-Luckily, I started learning R before the COVID-19 pervailed so I was able to join 2 Israeli R-meetups. This was a great experience and althogh being a novice when I attended them, the community was great. People were welcoming, there's great pizzaa and beer and the presentation were fantastic. Again, I didn't understand a lot of it at the time, but it was a great source of inspiration of what was to come. Plus, seeing so many people enthusiasticly talking about R made me understand that I'm not alone in my liking this world.
+In my initial round of exploring the pilot survey I used `{KableExtra}` and its powerful features. You might find other packages better to work with when knitting to Word. With that said, it’s possible (and very effective) to knit to Html and copy that into a Word document. Despite the copy + paste requirement, I found it to be the better approach for keeping all the aesthetics and formatting integrated in the original document. Oh, and I also had my questions originally in Hebrew which was easier to knit to Html altogether.
 
-**7. Making my own website** - A month or two into learning R I noticed people had their own websites they made in R. Once again I was fascinated at how this was possible - Not only can I wrangle data and beautifully visualize it but I can build my own website? and for 10$ I can also use my own domain? This was crazy! At the time I thought of openning one I had 1-2 posts I elabroated a little more about than a #Tidytuesday visualizaiton. For example Iexplained the original bomb-shelters post as a **GitHub Readme file**. That is, I used the Readme file as my platform for elaborating on something I wanted to explain more in depth. Little did I know that many do this, but for me it was perfect as a place to share my thoughts that won't be lost in the Twitterverse feed.  
+##### removing redundant information
 
-Nearing mid January (4+- months into R) I decided it's time open my own website. I had a few things I already made ([Eliud Kipchoge's record](https://amitlevinson.com/post/eliud-kichoge/) and the [bomb shelters around my house](https://amitlevinson.com/post/bomb-shelters/)) and also wanted a place for others to learn more about me. I scrolled and followed along the [blogdown book](https://bookdown.org/yihui/blogdown/) for creating websites with R, viewed some of [Allison Hill's blogdown workshops](https://alison.rbind.io/project/up-running-blogdown/) and other resources. Eventually, I was setup and had my website on air all done in R, hosted for free on Netlify and GitHub with an elegant Hugo Academic theme, and my own domain for only 10$. Again, I was amazed at how easy and rewarding this was. I mean, I had no knowledge (and still don't) in HTML, CSS or anything else to build a website and here I conjured one up, and pretty easily!
+As we saw earlier, the argument is pretty straight forward. We can address the redundant information we have - question and text column appearing with each answer (our final issue) - within the KableExtra object using `collapse_rows`:
 
-I highly recommend openning a website. Even if you're not an R user, I think a personal website is a great motivator for writing blogs; a platform for others to learn more about you and in these days a not so difficult thing to do if you set your mind to it. Opening a website has definitely motivated me to learn so much more by writing about it.  
+```{r}
+df_long_q_sorted %>% 
+  kbl(col.names = c("Question", "Text", "Answer", "n", "%")) %>% 
+  kable_styling(full_width = F) %>% 
+  column_spec(1, bold = T) %>% 
+  collapse_rows(columns = c(1,2), valign = "top") %>% 
+  scroll_box(height = "750px")
+```
+<br>
 
-**8. Giving a talk** - During Passover (April) 2020, the Israel fellows group sent out a call inviting individuals to come and talk about anything they wanted. I decided to pick up this opportuniyt and create a talk to give there and following that at another meetup of a group of friends of mine. Although being only ~7 months into learning R I wanted to share the amazing powers of it for wrangling and visualizing data, the extreme difference of using it compared to SPSS and how it helped me tackle and explore quantitative questions I had. So I sat down, wrote an outline, and made a presentation using the {Xaringan} package.   
+**That easy? Yes!**
 
-The talk was great (I think) and some of the participants even followed up inquiring about resources to get started, how can they do this in R, etc. However more importantnly, **making and giving the talk _forced_ me to think about what is it in R that I like**. Organizing these thoughts and communicating them in a way to that is alluring to the audience was a fantastic oppourtnity to stop and think exactly about that.
+The trick here that I love is collapsing the column, an argument also common in other packages such as [{formattable}](https://github.com/renkun-ken/formattable) I look forward to explore. Collapsing a column makes printing in rmarkdown really easy and efficient, something I found lacking in other platforms I learned such as SPSS. I also added a `column_spec` to bold the first column. Of course you can also remove the scroll box by not using the `scroll_box` option at the end, which will print your whole table.
 
-*** INSERT SLIDES ***
+If you're looking for a word format, you can just copy & paste your html output (Perfect for working with Hebrew text for example, a little more on that below). You can find an additional example by [Hao Zhu](https://haozhu233.github.io/kableExtra/kableExtra_and_word.html), the creator of the package, or here's my attempt below:
 
-**9. Integrating R into my daily work** - I was extremely fortunately that the researcher I work for, [Dr. Jennifer Oser](https://www.jenniferoser.com/), was (and still is) very supportive of integrating R into our daily work. I remember as we started analyzing our data and trying to make sense of it I was debating whether to open SPSS, google sheet or R. Luckily, I knew how to do a lot of what we wanted to in R so I turned to use that. Jenny was very supportive and I think we've greatly progressed since that I find it absurd to use something else now. Ironicly, today I re-ran our report after a few changes in our data. I can't imagine re-writing the 27 pages report just to correct numbers that changed and aren't automatically updated like in Rmarkdown. My point is, if you can integrate R into your daily work it's definitely a bonus, I know I learned a lot (I mean a lot) about rmarkdown and version control once I started using R in my research assitant position and in my thesis. 
-
-**10. Blog, and then blog some more** - I imagine you've heard this saying a lot, but I definitely agree with it: If you like then <s>you should put a ring on it</s> write about it.  Don't write for others, write for yourself. While I mentioned earlier that I wrote about my visualizations, I also wanted to learn about statistical analysis I was intruiged by. So I read about the topic and thought of an example I can easily use to explain the concept. For e.g. to learn what is Term frequency inverse document frequency (tf-idf) I implemented it in [analyzing the tfidf in 4 books of political theorists'](https://amitlevinson.com/post/learning-tfidf-with-political-theorists/) I like. At one point I wanted to learn more about Bernoulli trials so I explored the [uncertainty in the Israeli lottery](https://amitlevinson.com/post/uncertainty-in-the-israeli-lottery/). **Alternatively, write about a challenge you faced and how you solved it.** For e.g., I also wrote about how I solved a challenge I had when nicely presenting a static summary of categorical variables from my thesis pilot survey ([found here](https://amitlevinson.com/post/printing-survey-table/)).  
-
-In my opinion, don't write for others to click on your website; rather, write for you to learn or communicate something you want to share with the world. 
-
-### Summary
-
-So this was a not-so-short recap of my last year. I hope you gained something from it, whether it's agreeing or disagreeing with the short journey I had thus far. It's interesting to think back about something you've done and how would you have done it differently. I'm not sure, and I'm kind of glad that it happened the way it happened.  
-
-I think my main takeaways were:  
-
-1. Learn a bit.  
-
-2. Find a community and project tha'll keep you hooked (such as the [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) project).  
-
-3. Share what you learn - whether if it's by uploading your code to GitHub, opening your own website or giving a talk. It usually doesn't fall out of the sky so keep your eyes open and take that leap of faith, you got this!
+```{r, echo = FALSE, fig.cap="Just select all and copy it into a word document", out.width="80%"}
+knitr::include_graphics("html-copy.gif")
+```
 
 
-#### What's next
+If you want the table to be a little more formally formatted I recommend exploring aesthetic arguments such as `kable_classic`, `kable_minimal` and others from the [{KableExtra}](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html) family. Here's a short example using the `kable_minimal` with an Html output:
 
-Great question! Honestly I don't know. I hope to finish my thesis soon and look for a job that'll require me to work with R and visualize data. On a personal level, I hope to contribute to the community and work on an r package; learn some new concepts and statistical analyses; and incorporate more #Tidytuesdays into my weekly routine. I relly don't know what's waiting but I'm definitely excited towards it!
+```{r eval = FALSE}
+df_long_q_sorted %>% 
+  head(10) %>% 
+  kbl() %>% 
+  kable_styling(full_width = F) %>% 
+  column_spec(1, bold = T) %>% 
+  collapse_rows(columns = c(1,2), valign = "top")
+```
+
+```{r echo=FALSE, fig.align='center', fig.cap='Example using kable_minimal as a table theme'}
+include_graphics("kable_minimal.png")
+```
 
 
+<br>
+
+##### Wait, but what if I want a simple table in word?
+
+Let’s say you want a simple kable table when knitting in word, you can just add ‘df_print: kable’ to the YAML of your document or alternatively, you can explore other options in the [Rmarkdown book](https://bookdown.org/yihui/rmarkdown/html-document.html) that elegantly print dataframes. How do we remove the redundant information when printing? Just replace the duplicated values with an empty string:
+
+```{r, eval = FALSE}
+df_long_q_sorted %>% 
+  mutate(across(c(question, text), ~ ifelse(duplicated(.x), " ", .x))) %>% 
+  select(`Question` = question, `Text` = text, `Value` = value, n, `%` = pct) %>% 
+  head(20)
+```
+
+```{r echo=FALSE, fig.cap='Outputting a table using df_print: kable in the YAML section'}
+include_graphics("df_print.png")
+```
+
+Voila! 
+
+I first removed redundant text by using the `across` along with a conditional argument to remove duplicated text. Basically the formula (`~ ifelse`) reads as take anyone of the specified columns and pass it to a conditional statement that if true (if the word is duplicated), add a space character instead. Below is a screenshot when rendered to word, and you can continue to format it with or without other packages.
+
+##### Right-to-Left languages?
+
+I found it difficult knitting Hebrew characters to a Word output but easily done when rendering Html documents. Here's a short example, without the whole pre-processing, using some Hebrew questions:
+
+```{r include=FALSE}
+# Set for Hebrew
+Sys.setlocale(category = "LC_ALL", locale = "Hebrew")
+```
+
+
+```{r}
+hebrew_example <- read_xlsx(here("content", "post", "printing-survey-table", "data", "hebrew_example.xlsx"))
+hebrew_example %>% 
+  select(pct, n, value, text, question) %>% 
+  mutate(pct = percent(pct)) %>% 
+  # Reverse the order of questions
+  kbl(col.names = c("%", "שכיחות", "תשובה", "שאלה", "פריט"), align = 'r') %>% 
+  kable_styling(full_width = F) %>% 
+  column_spec(5, bold = T) %>% 
+  collapse_rows(columns = c(4,5), valign = "top") %>% 
+  scroll_box(height = "500px")
+```
+
+<br>
+
+Notice how I reversed the columns direction to have it compatible for a right-to-left reading. I also changed the locale setting (not shown) using the `Sys.setlocale` argument. While this still needs some additional work (for example the '?' isn't aligned), it's definitely a good start.
+
+#### Wrapping up
+
+So this is how I approached the issue of providing a simple descriptive table of my categorical variables. While it was somewhat tedious and some parts required manual work, you might not require all the stages. I hope you were able to take something from this post, I certainly enjoy working with the [`{KableExtra}`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) package and look forward to sharing additional things I've learned while using it for reporting findings from my thesis.
+
+Now then, time to get back to writing!

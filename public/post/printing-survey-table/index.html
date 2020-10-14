@@ -597,7 +597,6 @@ library(knitr)
 library(kableExtra)
 library(janitor)
 library(scales)
-
 df_survey &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;,&quot;survey.xlsx&quot;))
 head(df_survey)</code></pre>
 <pre><code>## # A tibble: 6 x 12
@@ -619,7 +618,6 @@ head(df_survey)</code></pre>
   count(question, value) %&gt;%
   group_by(question) %&gt;% 
   mutate(pct = percent(n/sum(n)))
-
 # Print table
 kbl(df_long) %&gt;% 
   kable_styling() %&gt;% 
@@ -1367,9 +1365,7 @@ df_questions[,1:3]</code></pre>
 <pre class="r"><code>df_q_clean &lt;- df_questions %&gt;% 
   clean_names() %&gt;% 
   pivot_longer(cols = q2:q37, names_to = &quot;question&quot;, values_to = &quot;text&quot;) 
-
 df_long_joined &lt;-  left_join(df_long, df_q_clean)
-
 head(df_long_joined)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ## # Groups:   question [1]
@@ -1389,7 +1385,6 @@ head(df_long_joined)</code></pre>
 <p>Alas, I don’t have a magical automated method and would be grateful to hear about other options you encountered or thought of. I thought of using factors to reorder the levels, but once I pivot my data into a long format the answers are again sorted alphabetically. Instead I decided to manually combine my current dataframe with an identical one I saved where I ranked each relevant ordinal question manually. Though a tedious task, this manual workload is more efficient than automating everything.</p>
 <pre class="r"><code># Save the sorted response file and use that to rank
 # write_csv(df_long_q_sorted, here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
-
 answer_hir &lt;- read_csv(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;answers_hir.csv&quot;))
 head(answer_hir)</code></pre>
 <pre><code>## # A tibble: 6 x 3
@@ -1426,7 +1421,6 @@ Displayed as follows:</p>
   ungroup() %&gt;% 
   select(-c(q_num, rank)) %&gt;% 
   relocate(text, .after = question)
-
 head(df_long_q_sorted)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ##   question text                    value                 n pct  
@@ -2145,7 +2139,6 @@ Figure 3: Outputting a table using df_print: kable in the YAML section
 <h5>Right-to-Left languages?</h5>
 <p>I found it difficult knitting Hebrew characters to a Word output but easily done when rendering Html documents. Here’s a short example, without the whole pre-processing, using some Hebrew questions:</p>
 <pre class="r"><code>hebrew_example &lt;- read_xlsx(here(&quot;content&quot;, &quot;post&quot;, &quot;printing-survey-table&quot;, &quot;data&quot;, &quot;hebrew_example.xlsx&quot;))
-
 hebrew_example %&gt;% 
   select(pct, n, value, text, question) %&gt;% 
   mutate(pct = percent(pct)) %&gt;% 
