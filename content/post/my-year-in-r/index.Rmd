@@ -48,7 +48,7 @@ newcaption {
 
 Learning R for a little over a year now was and still is a great experience. But a year isn’t a lot, so why make a blog post about it?
 
-I believe that pausing what one is doing and periodically evaluating if this pursuit is the right direction *for me* - is a healthy process. Doing so can help you **acknowledge your accomplishments and think of where you're heading**. And I'm glad I have the opportunity to do it in the following post.
+I believe that pausing what one is doing and periodically evaluating if this pursuit is the right direction *for him or her* - is a healthy process. Doing so can help you **acknowledge your accomplishments and think of where you're heading**. And I'm glad I have the opportunity to do it in the following post.
 
 ### The Journey
 
@@ -64,7 +64,7 @@ My friend from Psychology also told me there’s a recorded R course for psychol
 
 #### 3. Joining the TidyTuesday community
 
-By the time we reached ggplot in the psychology course I was already somewhat familiar with Twitter[^1] where the [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) mostly takes place. [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an amazing project where every week a new dataset is published for the #rstats community to analyze, visualize and post their results on Twitter. My excitement and motivation to participate were extremely high: So many professional and experienced R-users working on the same dataset, conjuring amazing visualizations and posting their code for others to explore (and all this for free)?! I was blown away. So I followed along on Twitter for a week or two until I said OK, let's give it a try.  
+By the time we reached ggplot in the psychology course I was already somewhat familiar with Twitter where the [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) mostly takes place. [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an amazing project where every week a new dataset is published for the #rstats community to analyze, visualize and post their results on Twitter. My excitement and motivation to participate were extremely high: So many professional and experienced R-users working on the same dataset, conjuring amazing visualizations and posting their code for others to explore (and all this for free)?! I was blown away. So I followed along on Twitter for a week or two until I said OK, let's give it a try.  
 
 It was [week 38](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-09-17) in 2019 and we were working on visualizing national parks. I wasn’t really sure what to do, so I did a minimal exploration of the data and noticed an interesting increase of visitors in national parks across years, which seemed intuitive and perfect for a first visualization. Following the basic area-graph I made I remembered a visualization a week earlier from [Ariane Aumaitre](https://twitter.com/ariamsita) using roller-coaster icons in her graph. Knowing nothing on how to integrate icons, I adapted her code into my visualization to create a nice scenery for the mountain the data displayed (see tweet below). I was pretty satisfied at the time and the feedback from the #rstats community was incredible - I was hooked on the project.
 
