@@ -22,18 +22,6 @@ draft: false
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
 ```
 
-
-<!-- begin.rcode captionhook, echo=FALSE, results='hide'
-  knit_hooks$set(plot = function(x,options) {
-      base = opts_knit$get('base.url')
-      if (is.null(base)) base = ''
-      caption = opts_knit$get('caption')
-      if (is.null(caption)) caption = options$label
-      sprintf('![%s](%s%s.%s)', options$caption,
-              base, x[1], x[2])
-  })
-  end.rcode --> 
-
 ```{css}
 newcaption {
   font-size: 0.9em;
@@ -60,7 +48,7 @@ I first heard of R when it was used in a hierarchical linear models workshop I a
 
 #### 2. First learning steps
 
-My friend from Psychology also told me there’s a recorded R course for psychology available on moodle (A platform for online course information) I could use freely. The course was led by [Yoav Kesller](https://kesslerlab.wordpress.com/) and proved to be a fantastic introduction. I followed along with the course and did the different assignments until we reached ggplot, a library for plotting in R.
+My friend from Psychology also told me there’s a recorded R course for psychology available on moodle (A platform for online course information) I could use freely. The course was led by [Yoav Kessler](https://kesslerlab.wordpress.com/) and proved to be a fantastic introduction. I followed along with the course and did the different assignments until we reached ggplot, a library for plotting in R.
 
 #### 3. Joining the TidyTuesday community
 
@@ -92,7 +80,7 @@ Well, it's kind of redundant to say this, as we're always learning, but it is im
 
 - **R & R4DS book** -  I decided to start with the [R for data science online book](https://r4ds.had.co.nz/). Every morning I would spend 30-60 minutes either reading and learning something new or attempting to answer the book's questions. **I'd re-write the code into my R console while following along, exploring and trying to understand what was going on.** To validate my answers to the questions or understand those I didn't know I cross-checked them with the [Excercise solutions book](https://jrnold.github.io/r4ds-exercise-solutions/) by Jeffrey Arnold. I also bought [Data Visualizaiton, A practical introduction](https://socviz.co/) by Kieran Healy and [Text Mining with R, A tidy Approach](https://www.tidytextmining.com/) by Julia Silge and David Robinson, but I used them more on the go and less of a sit-down.
 
-- **Joining online courses** - While reading the R4DS book I decided to seek out some other courses at my university, mainly for recreational as I had no course credits left to take. The friend who introduced me to R told me about a workshop on 'algorithms and research in the intersection of Psychology and big data' by [Michael Gilead](https://t.co/3hLoUnYbPa?amp=1). Getting an approval to sit in on some classes I found it a great introduction to working with big data. While joining in I met [Almog Simchon](https://almogsi.com/) who led a fantastic 'text analysis in R' workshop the following semester. I'd also join [Mattan Ben-Shachar's](sites.google.com/view/mattansb) TA class and learn more about data wrangling and statistical methods. Additionally, a friend told me about [Jonathan Rosenblatt's](https://www.john-ros.com/) R course in the department of industrial engineering and management (recorded lectures in Hebrew are freely available). **Although I didn't understand some of what was going on in these courses, I was glad to expose myself to new things I could follow up on later.** If any of you are reading this, thank you very much for the opportunity. 
+- **Joining online courses** - While reading the R4DS book I decided to seek out some other courses at my university, mainly for recreational as I had no course credits left to take. The friend who introduced me to R told me about a workshop on 'algorithms and research in the intersection of Psychology and big data' by [Michael Gilead](https://t.co/3hLoUnYbPa?amp=1). Getting an approval to sit in on some classes I found it a great introduction to working with big data. While joining in I met [Almog Simchon](https://almogsi.com/) who led a fantastic 'text analysis in R' workshop the following semester. I'd also join [Mattan Ben-Shachar's](https://sites.google.com/view/mattansb) TA class and learn more about data wrangling and statistical methods. Additionally, a friend told me about [Jonathan Rosenblatt's](https://www.john-ros.com/) R course in the department of industrial engineering and management (recorded lectures in Hebrew are freely available). **Although I didn't understand some of what was going on in these courses, I was glad to expose myself to new things I could follow up on later.** If any of you are reading this, thank you very much for the opportunity. 
 
 - **Other visualization books** - I found myself leaning towards books that are not related to the R ecosystem, but that I discovered during my R journey. That is, I found a strong liking towards visualizing data and bought books on that topic too. **These books immensely improved my visualizations and how I look at visualizing data**. I still have a lot more to learn - both theoretically and technically - but these books definitely inspired and opened my mind when it comes to visualizations. I highly recommend reading [Storytelling with data](http://www.storytellingwithdata.com/books) by Cole Nussbaumer Knaflic and [How Charts Lie](http://albertocairo.com/) by Alberto Cairo which I started with.
 
