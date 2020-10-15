@@ -76,7 +76,7 @@ As I was participating in #Tidytuesday Eliud Kipchoge broke (unofficially) the t
 
 ![](https://media.giphy.com/media/8dYmJ6Buo3lYY/giphy.gif)
 
-Well, it's kind of redundant to say this, as we're always learning, but it is important: After I joined the #Tidytuesday community, I started focusing more on visualizations and data wrangling in addition to solidifying my basic knowledge of R. For this I relied on the following sources:
+Well, it's kind of redundant to say this, as we're always learning, but it is important: After I joined the #Tidytuesday community, I started again to actively learn about visualizations and data wrangling in addition to solidifying my basic knowledge of R. For this I relied on the following sources:
 
 - **R & R4DS book** -  I decided to start with the [R for data science online book](https://r4ds.had.co.nz/). Every morning I would spend 30-60 minutes either reading and learning something new or attempting to answer the book's questions. **I'd re-write the code into my R console while following along, exploring and trying to understand what was going on.** To validate my answers to the questions or understand those I didn't know I cross-checked them with the [Excercise solutions book](https://jrnold.github.io/r4ds-exercise-solutions/) by Jeffrey Arnold. I also bought [Data Visualizaiton, A practical introduction](https://socviz.co/) by Kieran Healy and [Text Mining with R, A tidy Approach](https://www.tidytextmining.com/) by Julia Silge and David Robinson, but I used them more on the go and less of a sit-down.
 
