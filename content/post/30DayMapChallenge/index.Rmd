@@ -1,7 +1,7 @@
 ---
 title: Thirty Day Map Challenge
 author: Amit Levinson
-date: '2020-11-02'
+date: '2020-11-03'
 slug: thirty-day-map-challenge
 categories: []
 tags: []
@@ -30,13 +30,24 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 Taken from the [GitHub page](https://github.com/tjukanovt/30DayMapChallenge) of the project:
 
-> "The idea is to create (and publish) maps based on different themes on each day of the month using the hashtag #30DayMapChallenge, You can prepare the maps beforehand, but the main idea is to publish maps from specific topics on specific days listed below. Just include a picture of the map when you post to Twitter with the hashtag. You don't have to sign up anywhere to participate. There are no restrictions on the tools, technologies and the data you use in your maps. Doing less than 30 is also fine (and actually doing all 30 is really hard!). See the code of conduct at the bottom of the page."
+> "The idea is to create (and publish) maps based on different themes on each day of the month using the hashtag #30DayMapChallenge, You can prepare the maps beforehand, but the main idea is to publish maps from specific topics on specific days listed below. Just include a picture of the map when you post to Twitter with the hashtag. You don't have to sign up anywhere to participate. There are no restrictions on the tools, technologies and the data you use in your maps. Doing less than 30 is also fine (and actually doing all 30 is really hard!)..."
 
 #### How do I see it?
 
-I don't get to plot maps that often in my daily work, so I find this challenge a great opportunity in doing so. I'll try to do as many as possible, and you can find below all of the attempts including links to the code for you to explore.  
+**I don't get to plot maps that often in my daily work, so I find this challenge a great opportunity in doing so.** I'll try to do as many as possible, and you can find below all of the attempts including links to the code for you to explore.  
 
 Enjoy!
+
+
+### Day 03 - Lines  
+
+[Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/03_Polygons/03_polygons.R)
+
+<p align = "center">
+<img src="/img/30daymap/03_polygons.png" width="700" height="350">
+</p>
+</br>
+
 
 
 ### Day 02 - Lines  
