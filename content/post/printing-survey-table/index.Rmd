@@ -47,7 +47,7 @@ knitr::include_graphics("table.png")
 
 ### Explore our data
 
-First, let's loda the packages we'll need and look at our data:
+First, let's load the packages we'll need and look at our data:
 
 ```{r}
 library(tidyverse)
