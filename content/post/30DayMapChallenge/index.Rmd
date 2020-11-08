@@ -1,7 +1,7 @@
 ---
 title: Thirty Day Map Challenge
 author: Amit Levinson
-date: '2020-11-07'
+date: '2020-11-08'
 slug: thirty-day-map-challenge
 categories: []
 tags: []
@@ -37,6 +37,17 @@ Taken from the [GitHub page](https://github.com/tjukanovt/30DayMapChallenge) of 
 **I don't get to plot maps that often in my daily work, so I find this challenge a great opportunity in doing so.** I'll try to do as many as possible, and you can find below all of the attempts including links to the code for you to explore.  
 
 Enjoy!
+
+
+### Day 08 - Yellow
+
+[Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R)
+
+<p align = "center">
+<img src="/img/30daymap/08_yellow.png" width="700">
+</p>
+</br>
+
 
 
 ### Day 07 - Green
