@@ -38,13 +38,23 @@ Taken from the [GitHub page](https://github.com/tjukanovt/30DayMapChallenge) of 
 
 Enjoy!
 
+### Day 20 - Population
+
+[Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/20_population/population.R)
+
+<p align = "center">
+<img src="/img/30daymap/20_map.gif" alt="gif of israel map and a cartogram" width="700" height="450">
+</p>
+</br>
+
+
 
 ### Day 08 - Yellow
 
 [Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R)
 
 <p align = "center">
-<img src="/img/30daymap/08_yellow.png" width="700">
+<img src="/img/30daymap/08_yellow.png" alt="Map of light posts in beer-sheva" width="700">
 </p>
 </br>
 
@@ -55,7 +65,7 @@ Enjoy!
 [Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R)
 
 <p align = "center">
-<img src="/img/30daymap/07_green.png" width="700">
+<img src="/img/30daymap/07_green.png" alt="Mapping trees in San Francisco" width="700">
 </p>
 </br>
 
