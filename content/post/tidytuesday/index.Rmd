@@ -1,7 +1,7 @@
 ---
 title: The Tidytuesday project
 author: Amit Levinson
-date: ''
+date: '2019-09-22'
 slug: the-tidytuesday-project
 categories: []
 tags: []
@@ -42,6 +42,21 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
+
+### **29.12.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R)
+
+<p align = "center">
+<img alt = 'Analyzing tidytuesday twitter data' src="/img/tt/data_2020.png" width = "700">
+</p>
+
+
+### **19.12.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R)
+
+<p align = "center">
+<img alt = 'ninja warrior obstacles' src="/img/tt/week51_ninja.png" width = "700">
+</p>
 
 ### **06.10.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R)
