@@ -9274,7 +9274,11 @@ iframe {
 
 /* https://github.com/gcushen/hugo-academic/issues/147 */
 .container {
-  max-width: 1000px; }
+  max-width: 1050px; }
+
+/* change article layout to a little wider */
+.article-container {
+  max-width: 775px; }
 
 .carousel-indicators li {
   background-color: #06805E80; }
