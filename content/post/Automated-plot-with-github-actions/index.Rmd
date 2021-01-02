@@ -1,9 +1,9 @@
 ---
 title: A Taste of GitHub Actions with an Automated Plot
 author: Amit Levinson
-date: '2021-01-02'
+date: '2021-01-03'
 slug: Automated-plot-with-github-actions
-categories: [R]
+categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
 summary: 'Trying out GitHub actions by automatically rendering a plot depicting frequently used packages in a repository.'
@@ -204,7 +204,9 @@ An issue that's left is when calling `tidyverse` essentially we load packages su
 
 ![](https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif)
 
-GitHub actions provide an easy way to automate various *workflows*. Essentially we provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands. For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
+GitHub actions provide an easy way to automate various *workflows*. We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
+
+[^3]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
 
 We have our plot showcasing our most frequently used packages, but we want it rendered on every participation in #TidyTuesday. That's exactly where GitHub Actions can help us by running the script for us. We setup the code once, like we did before, and have our workflow run it when we choose.
 
@@ -275,20 +277,20 @@ Let's break break up the script piece by piece:
 
 * `jobs: build:` - I'm not sure what exactly they do. I know that for rendering README files you'd have `render` instead of build, but honestly I don't know what either does exactly.
 
-* `runs-on: macOS-latest` This tells GitHub on which operating system to run the r environment. Essentially you can even choose a few such as Ubuntu, Windows, etc. It can be extremely useful when you're checking out packages and want to verify they work on various operating systems. I use on my own computer Windows and left it with `macOS-latest`.
+* `runs-on: macOS-latest` This tells GitHub on which operating system to run the r environment. You can also choose to run the action on several OS such as Ubuntu and Windows. It can be extremely useful when you're checking out packages and want to verify they work on various operating systems. I use on my own computer Windows and left it with `macOS-latest`.
 
-* `if: "contains(github.event.head_commit.message, 'initial commit')"` - Here we provide GitHub an 'exit' condition when running the Action, and the condition on when to run it. `github.event.head_commit.message` captures the commit message you used before pushing. We then check whether it matches a regex we provided, in this case 'initial commit'. Without a logical condition, the Action will follow through on every push.
+* `if: "contains(github.event.head_commit.message, 'initial commit')"` - Here we provide GitHub an 'exit' option when running the Action, and the condition on when to run it. `github.event.head_commit.message` captures the commit message you used before pushing using a regex we provide - 'initial commit'. Without a logical condition, the Action will follow through on every push.
 
 {{% alert note %}}
 We use a conditional statement to tell GitHub when to run our Action. If the condition returns true, in this case matching our commit message, GitHub Actions will complete the workflow. Otherwise the Action will stop and exit before processing the following steps. 
 {{% /alert %}}
 
 * `steps...` - Telling GitHub the exact steps we want the action to do. The script starts with `uses` and then transitions between `name` and `run`.   
-`uses` tells GitHub what to use: In the first one, `actions/checkout@v2`, GitHub checks out a copy of our repository on which the workflow will run. We set the 'fetch-depth' to 2 so the Action collects the relevant info it needs from the repository (not sure exactly what, but with 1 won't suffice. You can read more about it [here](https://github.com/actions/checkout#usage)). Next we set up a remote r environment using the `r-lib/actions/setup-r@v1` argument (Again, read more about it [here])(https://github.com/r-lib/actions/tree/master/setup-r).  
+`uses` tells GitHub what to use: In the first one, [`actions/checkout@v2`](https://github.com/actions/checkout), GitHub checks out our repository on which the workflow will run. Next we set up a [remote r environment](https://github.com/jimhester/setup-r) using the `r-lib/actions/setup-r@v1` argument.  
 
-* In the following steps we provide a name for the step and the actual code. In the first step we install the packages we'll be using and in the next one we `source` the R code that produces our plot[^2]. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I'm not too sure about the 'user.email' and 'user.name' arguments so I left them as is.
+* In the following steps we provide a name for the step and the actual code. In the first step we install the packages we'll be using and in the next one we `source` the R code that produces our plot[^2]. Lastly we provide Git commands in which we config the built-in token (to run the git commands), add our rendered plot, commit and push the results. 
 
-[^2]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated.
+[^2]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you're concern you can use less depdencies than I have.
 
 That's it! Just upload the newly edited files, and activate the Action with the specific commit. Don't forget to reference it from your repository's README so it shows up.
 
@@ -303,7 +305,7 @@ When the Action is running you will see an orange dot at the top of the root fol
 If the above GitHub Action follows through with the workflow and produces a new plot, it will only be updated in your remote repository. You might be required to merge the remote content locally next time you want to push.
 {{% /alert %}}
 
-In order to debug, for example if the orange dot turn to a red x, go into the 'Actions' tab in your repository, click on 'Render library update' or however you called the action -> click on the last commit message -> 'build' and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I'm not definitely the one to write it.
+In order to debug, for example if the orange dot turn to a red x, go into the 'Actions' tab in your repository, click on 'Render library update' or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> 'build' and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I'm currently not the one to write it.
 
 **Disabling:** If you wish to disable the GitHub Action, you can either remove the `.yaml` file or disable the action from the repository's settings.
 
@@ -313,7 +315,7 @@ knitr::include_graphics("featured.png")
 
 ### Closing remarks
 
-This was my first time around using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
+This was my first time using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
 
 You can find the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
 
