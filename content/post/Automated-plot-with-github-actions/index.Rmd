@@ -300,14 +300,16 @@ knitr::include_graphics("outcome.png")
 
 ### Closing remarks
 
-This was my first time around using GitHub actions and hopefully not the last. I'm not too familiar with GitHub actions at the time of writing this, and would like to highlight several resources I found useful for learning more about them:
+This was my first time around using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
+
+You can find the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
+
+Lastly, I would like to highlight several resources I found useful for learning more about GitHub Actions and for you to explore:
 
 1. Jim Hester's [rstudio talk](https://www.jimhester.com/talk/2020-rsc-github-actions/) on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions. 
 
 2. Gavin Simpson's blog post ['Rendering your README with GitHub Actions'](https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/) - A more hands-on approach on setting everything up to learn more about the `yaml` we write, and how to implement it in a README file.
 
-3.  Simon Couch blog post - As I was finalizing this blog post published a fantastic blog post on using [GitHub actions to run an R script on a schedule](https://blog.simonpcouch.com/blog/r-github-actions-commit/). 
+3.  As I was finalizing this blog post I noticed Simon Couch published a fantastic blog post on using [GitHub actions to run an R script on a schedule](https://blog.simonpcouch.com/blog/r-github-actions-commit/). 
 
-Above I used only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
-
-You can find the complete R script [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the Actions [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
+That's it for now. Hope you enjoyed this blog post and found it useful!
