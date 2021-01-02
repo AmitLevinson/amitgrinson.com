@@ -14,22 +14,21 @@ image:
   focal_point: ''
   preview_only: yes
 projects: []
-editor_options: 
-  chunk_output_type: console
 draft: true
 ---
 
 
 
 <div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="plot.png" alt="Final output: An automatically updating plot rendered on a specific commit to the repository." width="1200" />
+<img src="plot.png" alt="Final output of an automatically updating plot rendered on a specific commit to a GitHub repository." width="1200" />
 <p class="caption">
-Figure 1: Final output: An automatically updating plot rendered on a specific commit to the repository.
+Figure 1: Final output of an automatically updating plot rendered on a specific commit to a GitHub repository.
 </p>
 </div>
 <div id="preface" class="section level3">
 <h3>Preface</h3>
-<p>Before we begin, I want to thank two individuals: <a href="https://ramikrispin.github.io/">Rami Krispin</a> and <a href="https://geobgu.xyz/">Michael Dorman</a>. I contacted Rami a while back when I wanted to learn more about GitHub Actions. Rami reassured me that it wasn’t difficult to learn and was forthcoming in helping me if any problems arose, whic they did and he saved me a lot of frustration. As to Michael, I thank him for the example I use in the post to tryout GitHub actions. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently uses. When thinking of how to try out GitHub actions I thought replicating it will be a great example, only adding an automation as a twist.</p>
+<p>Before we begin, I want to thank <a href="https://ramikrispin.github.io/">Rami Krispin</a> and <a href="https://geobgu.xyz/">Michael Dorman</a>. I contacted Rami a while back when I wanted to learn more about GitHub Actions and asked for adivce. Rami reassured me that it wasn’t difficult to learn and was forthcoming in helping if any problems arose, which they did and he saved me a lot of frustration.</p>
+<p>As to Michael, I thank him for the example I use in the post to try out GitHub Actions. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently uses (<a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">Here’s</a> a gist with the script). When thinking of how to try out GitHub actions I thought replicating it would be a great example, only adding an automation as a twist.</p>
 <p>Speaking of automation, let’s dive in!</p>
 <p><img src="https://media.giphy.com/media/XCxcmEQWxDdc8qsd2R/giphy.gif" /></p>
 <div id="why-automate" class="section level4">
@@ -38,15 +37,19 @@ Figure 1: Final output: An automatically updating plot rendered on a specific co
 <blockquote>
 <p>Automate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you’d like, including CI/CD, and combine actions in a completely customized workflow.</p>
 </blockquote>
-<p>I’ve first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. That is, one can have GitHub run a script they built on a given Git action (e.g. a push or pull request), or at a specific time slot in the day\week\month. For the purpose of this post and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you suscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>).</p>
-<p><strong>Reading up on the automation opportunities I was eager to try it out - Automating a script, sending yourself an email and so much more.</strong> Another example that got me motivated was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day.</p>
-<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in a GitHub README file. Specifically, I’ll have the plot show my top 15 frequently used packages in #TidyTuesday. In short, #Tidytuesday is an awesome weekly data project where individauls analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R and data visualization</a>.</p>
-<p><strong>My Tidytuesday repository provides a perfect opportunity for me to try a GitHub Action.</strong> I open a new R session for each new project, resulting with multiple R files, and more relevant to us, the packages we used each session. This is a specific example, but I hope you’ll be able to see the bigger picture of this amazing resource and use it when the time comes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>One can have GitHub run a script built on a given Git action (e.g. a push or pull request), or at a specific time slot in the day\week\month.</strong> For the purpose of this postת and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>).</p>
+<p>Reading up on various things you can automate made me eager to try it out - <strong>Automating a script to run every Sunday morning, sending an email, and so much more.</strong>. Another example that got me motivated was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day. <strong>I constantly read about automation in R with functions, reports and the like, so why not take automating one step further?</strong></p>
 </div>
+</div>
+<div id="our-example-for-today---tidytuesday-packages" class="section level3">
+<h3>Our example for today - TidyTuesday packages</h3>
+<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in a GitHub README file. Specifically, I’ll have the plot show my top 15 frequently used packages in #TidyTuesday. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R and data visualization</a>.</p>
+<p>My Tidytuesday repository provides a perfect opportunity for me to try a GitHub Action. I open a new R session for each new project, resulting in creation of multiple R files, and more relevant to us, the packages we used each session. <strong>This is a specific example, but I hope you’ll be able to see the bigger picture of this amazing automating resource and use it when the time comes.</strong></p>
+<p>Side note: if you just want to visualize your #TidyTuesday libraries or <code>geoms</code> without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code from a while back. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll do below. I came across his tweet after completing the analysis part here and decided to leave it as it helps me understand what happens ‘under the hood’.</p>
 </div>
 <div id="reading-the-files" class="section level3">
 <h3>Reading the files</h3>
-<p>Michael’s original plot inspiring the example for this post is fantastic and completely adequate. However, what’s a blog post without some challenges and tears; therefore, we’ll replicate the same idea with a tidyverse approach (he originally did it with base R code).</p>
+<p>Michael’s original plot as an inspiration for the example to use with GitHub Actions is fantastic. However, what’s a blog post without some challenges and tears; therefore, we’ll replicate the same idea with a tidyverse approach (he originally did it with base R code).</p>
 <pre class="r"><code>library(purrr)
 library(stringr)
 library(dplyr)
@@ -59,8 +62,8 @@ library(extrafont)
 tt_path &lt;- &quot;C:/Users/amitl/R_code/tidytuesday&quot;
 files &lt;- list.files(path = &quot;C:/Users/amitl/R_code/tidytuesday&quot;, pattern = &quot;\\.R$|.Rmd$&quot;, recursive = TRUE)
 files &lt;- files[-length(files)]</code></pre>
-<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. The argument basically lists all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path. The <code>recursive = TRUE</code> searches through any sub-folders for any matching patterns, reading them in too.</p>
-<p>Lastly, the reason I filter the last element of the vector is because that’s the code file I use to produce the plot in the GitHub Action. One can have the Action run on a <code>README.Rmd</code> file that renders markdown README instead. However, I found using the code in a README cluttering so decided to stick with a regular R file and call the outputted plot from the repository’s README.</p>
+<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The argument basically lists all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path. The <code>recursive = TRUE</code> searches through any sub-folders for any matching patterns, reading them in too.</p>
+<p>I also filter the last element of the vector because that’s the code file I use to produce the plot in the GitHub Action. One can have the Action run on a <code>README.Rmd</code> file that renders markdown README instead. However, I found using the code in a README cluttering so decided to stick with a regular R file and call the outputted plot from the repository’s README. If you wish to host the plot or a dashboard in a spearate html file, you can also see a different blog post of mine on <a href="https://amitlevinson.com/post/sharing-interactive-charts/">hosting interactive graphs online</a>, and render to that instead.</p>
 <p>Let’s look at what we have:</p>
 <pre class="r"><code>head(files)</code></pre>
 <pre><code>## [1] &quot;2019/1_Week38_Number of Visitors/National Parks.R&quot;       
@@ -70,7 +73,7 @@ files &lt;- files[-length(files)]</code></pre>
 ## [5] &quot;2019/Week40_All the Pizza/BarstoolPizza.R&quot;               
 ## [6] &quot;2019/Week41_Power_lifting/ipf.R&quot;</code></pre>
 <p>We see the R scripts I used to produce my Tidytuesdays. Unfortunately, it also returns R scripts I opened but didn’t completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There’s not that many of them and for the purpose of the exercise we’ll leave them there.</p>
-<p>Before we dig in I want to get the names of the files. It’s definitely not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.</p>
+<p>Before we dig in I want to get the names of the files. It’s not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.</p>
 <pre class="r"><code># Get names
 file_names &lt;- str_extract(files, &#39;[^/]+(?=\\.)&#39;)
 
@@ -78,8 +81,8 @@ head(file_names)</code></pre>
 <pre><code>## [1] &quot;National Parks&quot;           &quot;School_Diversity&quot;        
 ## [3] &quot;School_Diversity_Updated&quot; &quot;Barstool_Top_2_Percent&quot;  
 ## [5] &quot;BarstoolPizza&quot;            &quot;ipf&quot;</code></pre>
-<p>Let’s see what we did here, and to better understand the regular expression (regex) we’ll look at the original string: “2019/1_Week38_Number of Visitors/National Parks.R”. Basically, we want to take everything after the last <code>/</code> - “National Parks.R” - using <code>[^/]+</code>, and then remove everything from the final period to the end with a positive look ahead <code>(?=\\.)</code>. Voila, our final output of “National Parks”.</p>
-<p>Finally we can read in the text from all these R scripts:</p>
+<p>Our original string was “2019/1_Week38_Number of Visitors/National Parks.R”, and we want everything after the last <code>/</code> - “National Parks.R”. We can achieve this using <code>[^/]+</code> and a positive look ahead <code>(?=\\.)</code> to capture everything between the last backslash and a period. Voila, our final output of “National Parks”.</p>
+<p>Now we can read in the text from all these R scripts:</p>
 <pre class="r"><code>tt_path &lt;- paste0(tt_path, &quot;\\/&quot; ,files)
 file_lines &lt;- map(tt_path, readLines)
 
@@ -90,12 +93,12 @@ head(file_lines[[1]])</code></pre>
 ## [4] &quot;&quot;                                                                                                                                                
 ## [5] &quot;park_visits &lt;- readr::read_csv(\&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-09-17/national_parks.csv\&quot;)&quot;
 ## [6] &quot;&quot;</code></pre>
-<p>I first created the complete path of our scripts and then iterated the function <code>readLines</code> across it. Essentially, you can read <code>map</code> as follows: Run function <code>readLines</code> on every element of vector <code>tt_path</code> (The vector containing our path to each <code>.R</code>/<code>.Rmd</code> script). For a better understanding of the <code>map</code> function I highly recommend exploring the <a href="https://purrr.tidyverse.org/reference/map.html">documentations</a>.</p>
-<p>As to our output notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run. If you call each <em>library</em> in a separate line (which I imagine is common), we can directly search each line for those containing the word <code>library</code>.</p>
+<p>After creating a complete path of our scripts we iterated across them using <code>map</code> and the function <code>readLines</code>. Essentially, you can read <code>map</code> as follows: Run function <code>readLines</code> on every element of vector <code>tt_path</code> (The vector containing our path to each <code>.R</code>/<code>.Rmd</code> script). For a better understanding of the <code>map</code> function and family I highly recommend exploring the <a href="https://purrr.tidyverse.org/reference/map.html">documentation</a>.</p>
+<p>As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run. If you call each <em>library</em> in a separate line (which I imagine is common), we can directly search each of them for those containing the word <code>library</code>.</p>
 </div>
 <div id="cleaning" class="section level3">
 <h3>Cleaning</h3>
-<p>Now that we read all lines in let’s extract the libraries we used. If my memory is correct, I mainly use functions either by loading the library through <code>library()</code> or inline with <code>library::</code>. We’ll capture both and return them as a dataframe:</p>
+<p>Now that we read all lines in let’s extract the libraries we used. If my memory is correct, I mainly use functions either by loading the library through <code>library()</code> or reference specific argument with <code>library::</code>. We’ll capture both and return them as a dataframe:</p>
 <pre class="r"><code>names(file_lines) &lt;- file_names
 file_packages &lt;- map_dfr(file_lines, ~ tibble(package = str_extract(.x, &quot;((?&lt;=library\\().+(?=\\))|\\w+(?=::))&quot;)),
   .id = &quot;tidytuesday&quot;) %&gt;% 
@@ -113,18 +116,18 @@ head(file_packages)</code></pre>
 ## 5 School_Diversity tidyverse   
 ## 6 School_Diversity stringr</code></pre>
 <p>Perfect! First I added the original script names for each sub list within the <code>file_lines</code>. As to the analysis Let’s tackle each element at a time from the inside out, starting with the regular expressions.</p>
-<p>We can split the regex into two parts. the first one <code>(?&lt;=library\\()).+(?=\\())</code> is both a positive look behind capturing everything after <code>library\\(</code> until it reaches <code>(?=\\))</code>, which is a positive look ahead. That way we capture everything in between the perenticies in <code>library()</code>. The second section of the regex <code>\\w+(?=::))</code> essentially mimics the previous one but this time only with a positive look ahead. Capture the word (<code>\\w+</code>) before the two <code>::</code>.</p>
-<p>We iterate the <code>str_extract</code> across each sublist of our <code>file_lines</code> object containing all our R scripts using <code>map_dfr</code>. <code>map_dfr</code> works similarly to <code>map</code>, only that it returns a <code>data.frame</code> and not a list. Since it returns a data frame we can provide a column name which I assigned to it as <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column.</p>
-<p>I then filtered all <code>NA</code> values from the ‘package’ column, words that didn’t match our regex such as empty lines. Lastly, I ran the <code>distinct</code> function to remove duplicate packages form a tidytuesday, for example if I called <code>stringr::</code> twice in a session.</p>
-<p>An issue that’s left is when calling <code>tidyverse</code> essentially we load packages such as <code>readr</code>, <code>ggplot2</code>, etc. However, only <code>readr</code> dominates the plot as I call it specifically when loading the data, and other packages such as ggplot2 I don’t find myself loading or referencing specifically. So do I want to leave <code>readr</code> or remove it if I already call <code>tidyverse</code>? I don’t know, and here I leave it as is, but feel free to workaround it.</p>
+<p>We can split the regex into two parts. the first one <code>(?&lt;=library\\()).+(?=\\())</code> is both a positive look behind capturing everything after <code>library\\(</code> until it reaches <code>(?=\\))</code>, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove <code>library()</code> text. The second section of the regex <code>\\w+(?=::))</code> mimics the previous one but this time only with a positive look ahead – Capture the word (<code>\\w+</code>) before the two <code>::</code>.</p>
+<p>We iterate the <code>str_extract</code> across each sub-list of our <code>file_lines</code> object containing all our R scripts using <code>map_dfr</code> to return a tibble. Since it returns a a data frame format we can provide a column name - <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column.</p>
+<p>After filtering any <code>NA</code>, that is words that didn’t match our regex such as empty lines, I used <code>distinct</code> to remove duplicate packages in each week. For example, if I called <code>stringr::</code> twice in an R script.</p>
+<p>An issue that’s left is when calling <code>tidyverse</code> essentially we load packages such as <code>readr</code>, <code>ggplot2</code>, etc. We see that <code>readr</code> dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 I only call from the <code>tidyverse</code>. So do I want to leave <code>readr</code> or remove it if I already call <code>tidyverse</code>? Here I leave it as is, but feel free to find a workaround it.</p>
 </div>
 <div id="plot" class="section level3">
 <h3>plot</h3>
-<p>We’re at the last part of reading-processing-plotting journey. The plot is pretty straight forward and I invite you to explore other plots if you wish to produce different outputs. However, remember that we’re gonna want it to be automated so make sure you create something that won’t throw any errors.</p>
+<p>We’re at the last part of reading-processing-plotting journey. The plot is pretty straight forward and I invite you to explore other plots if you wish to produce different outputs. Remember though that you want it to automatically update, so make sure you create something that won’t throw any errors requiring you to constantly edit the code.</p>
 <pre class="r"><code># Uncomment if you use it in a GitHub Action
-# library(showtext)
-# font_add_google(&quot;Roboto Condensed&quot;, &quot;Roboto&quot;)
-# showtext_auto()
+library(showtext)
+font_add_google(&quot;Roboto Condensed&quot;, &quot;Roboto&quot;)
+showtext_auto()
 
 file_packages %&gt;% 
   count(package, sort = T) %&gt;%
@@ -147,7 +150,7 @@ file_packages %&gt;%
     axis.text.y = element_text(size = 12),
     plot.margin = unit(c(4,2,2,4), &quot;mm&quot;)
   )</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code># Save somewhere you&#39;ll reference later
 # ggsave (&quot;extra/packages-used.png&quot;)</code></pre>
 <p>A few things to note:</p>
@@ -158,13 +161,13 @@ file_packages %&gt;%
 </ol>
 </div>
 <div id="github-actions" class="section level2">
-<h2>GitHub actions</h2>
+<h2>GitHub Actions</h2>
 <p>This was my first time around using GitHub actions and hopefully not the last. I’m not too familiar with GitHub actions at the time of writing this so I’ll start off by highlighting a few resources I found useful:</p>
 <ol style="list-style-type: decimal">
 <li><p>Jim Hester’s <a href="https://www.jimhester.com/talk/2020-rsc-github-actions/">rstudio talk</a> on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions.</p></li>
 <li><p>Gavin Simpson’s blog post <a href="https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/">‘Rendering your README with GitHub Actions’</a> - A more hands-on approach on setting everything up to learn more about the <code>yaml</code> we write.</p></li>
 </ol>
-<p>To begin, make sure you have the <code>usethis</code> package installed. The package makes it extremely easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups. Next we’re going to create a <code>yaml</code> file that will contain the commands we want GitHub to run. I found <code>usethis</code> <code>README.Rmd</code> template adequate so we’ll create that. Just type the following in the r console in the root folder of your #Tidytuesday repository:</p>
+<p>To begin, make sure you have the <code>usethis</code> package installed. The package makes it extremely easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups. We’re going to create a <code>yaml</code> file that will contain the commands we want GitHub to run. I found <code>usethis</code> <code>README.Rmd</code> template adequate so we’ll create that. Just type the following in the r console in the root folder of your #Tidytuesday repository (or whatever repository you want the Action to run on):</p>
 <pre class="r"><code>usethis::use_github_action()</code></pre>
 <p>And you should get the following output, only with your information instead:</p>
 <pre class="yaml"><code>√ Setting active project to &#39;C:/Users/amitl/R_code/TidyTuesday&#39;
@@ -177,8 +180,8 @@ file_packages %&gt;%
   &lt;!-- badges: start --&gt;
   [![R build status](https://github.com/AmitLevinson/TidyTuesday/workflows/R-CMD-check/badge.svg)](https://github.com/AmitLevinson/TidyTuesday/actions)
   &lt;!-- badges: end --&gt;</code></pre>
-<p>Perfect. We’re not going to copy the lines suggested as they’re helpful for package checks, and we’re only interested in producing a plot. The important outcome for us from running the line is the newly produced output under <code>./github/workflows/R-CMD-check.yaml</code>. We’re going to use that YAML file to write up what we want GitHub actions to do.</p>
-<p>I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I’ll provide you with the script I used in the <code>.yaml</code> to run what we need and we’ll go through that. You can just copy and paste it in and edit any information that’s specific to you (e.g. the plot name and folder you save it in). Also, feel free to rename the file, as long as it’s a <code>yaml</code> file undere the <code>workflows</code> directory GitHub will process it as an Action automatically.</p>
+<p>Perfect. We’re not going to copy the lines suggested as they’re helpful for package checks, and we’re only interested in producing a plot. The important outcome for us from running the line is the newly produced output under <code>./github/workflows/R-CMD-check.yaml</code>. We’re going to use that YAML file to write up what we want GitHub to do.</p>
+<p>I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I’ll provide you with the script I used in the <code>.yaml</code> to run what we need and we’ll go through that. You can just copy and paste it in and edit any information that’s specific to you (e.g. the plot name and folder you save it in). Also, feel free to rename the file, as long as it’s a <code>yaml</code> file under the <code>workflows</code> directory GitHub will process it as an Action automatically (no setup is needed, unless you use credentials).</p>
 <pre class="yaml"><code>name: Render library update
 
 on: [push]
@@ -214,7 +217,7 @@ jobs:
 <li><p><code>if: "contains(github.event.head_commit.message, 'initial commit')"</code> - Here we provide GitHub an ‘exit’ condition when running the script, and the condition on when to run it. <code>github.event.head_commit.message</code> captures the commit message you used before pushing. We then check whether it matches a regex we provided, in this case ‘initial commit’. If it matches then GitHub will run the action, otherwise it’ll exit the action and not process your script.<br />
 I implemented this because I didn’t want GitHub to run the script on every push. I was wondering how to have the script run only on newly added <code>.R</code> or <code>.Rmd</code> files and not also modifications of existing R files. But I found it a little too specific and decided to rely on a commit I commonly use when uploading a TidyTuesday output for the first time.</p></li>
 <li><p><code>steps...</code> - Here we tell GitHub the exact steps we want the action to do. The script starts with <code>uses</code> and then transitions between <code>name</code> and <code>run</code>.<br />
-<code>uses</code> tells GitHub what to use: In the first one, <code>actions/checkout@v2</code>, GitHub checks out a copy of our repository on which the workflow will run. We set the ‘fetch-depth’ to 2 so the Action collects the relevant info it needs from the repository (not sure exactly what, but with 1 won’t suffice. You can read more about it <a href="https://github.com/actions/checkout#usage">here</a>). Next we set up a remote r environment using the <code>r-lib/actions/setup-r@v1</code> argument (Again, read more about it <a href="https://github.com/r-lib/actions/tree/master/setup-r">here</a>.<br />
+<code>uses</code> tells GitHub what to use: In the first one, <code>actions/checkout@v2</code>, GitHub checks out a copy of our repository on which the workflow will run. We set the ‘fetch-depth’ to 2 so the Action collects the relevant info it needs from the repository (not sure exactly what, but with 1 won’t suffice. You can read more about it <a href="https://github.com/actions/checkout#usage">here</a>). Next we set up a remote r environment using the <code>r-lib/actions/setup-r@v1</code> argument (Again, read more about it [here])(<a href="https://github.com/r-lib/actions/tree/master/setup-r" class="uri">https://github.com/r-lib/actions/tree/master/setup-r</a>).<br />
 In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I’m not too sure about the ‘user.email’ and ‘user.name’ arguments so I left them as is.</p></li>
 </ul>
 <p>That’s it!</p>
@@ -227,9 +230,9 @@ Figure 2: Succesfull GitHub Action detailing the process, found under the Action
 <p>When the action is running you will see an orange dot at the top of your repository’s root folder. Once it’s complete it should turn green if all went well, or red if not. After it finishes give it a few minutes as it might take some time until the plot is actually updated.</p>
 <p><strong>The GitHub Action produces a new plot in the remote repository, but not locally on your computer. Therefore you might be required to merge the first time you push following the Action using ‘git pull’.</strong></p>
 <p>In order to debug, e.g., the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action -&gt; click on the last commit message -&gt; ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m not definitely the one to write it.</p>
-<p><strong>Disabling:</strong> If you wish to disable the GitHub action then you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
+<p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="outcome.png" alt="our final outcome automatically updating in our README file." width="505" />
+<img src="outcome.png" alt="our final outcome automatically updating in our README file." width="452" />
 <p class="caption">
 Figure 3: our final outcome automatically updating in our README file.
 </p>
@@ -243,7 +246,6 @@ Figure 3: our final outcome automatically updating in our README file.
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>If you just want to visualize your #TidyTuesday libraries or <code>geoms</code> without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> a while back. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll do below. I only came across his tweet after completing the analysis part here and decided to leave it as is.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>If you decide to automate this with GitHub Actions, be alert if file paths throw an error.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>If you decide to automate this with GitHub Actions, be alert if file paths throw an error.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
