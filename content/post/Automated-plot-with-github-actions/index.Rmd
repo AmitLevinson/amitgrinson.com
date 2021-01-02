@@ -40,9 +40,9 @@ newcaption {
 
 ### Preface
 
-Before we begin, I want to thank [Rami Krispin](https://ramikrispin.github.io/) and [Michael Dorman](https://geobgu.xyz/). I contacted Rami a while back asking for advice on working with GitHub Actions. Rami was forthcoming in helping if any problems arose and saved me a lot of frustration.
+Before we begin, I want to thank [Rami Krispin](https://ramikrispin.github.io/) and [Michael Dorman](https://geobgu.xyz/). I contacted Rami a while back asking for advice on working with GitHub Actions. Rami helped me solve several problems I had and saved me a lot of frustration.
 
-As to Michael, I thank him for the example I use in this blog post. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently used at that time ([here's a gist with the script](https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0)). As I wanted to learn more about automation, I found it a perfect example to try out GitHub Actions where I update that plot with my frequently used packages in #TidyTuesday submissions.
+As to Michael, I thank him for the example I use in this blog post. A while back Michael posted in an Israeli R Facebook group a plot detailing [the packages he frequently used at that time](https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0). As I wanted to learn more about automation, I found it a perfect example to try out GitHub Actions where I update that plot with my frequently used packages in #TidyTuesday submissions.
 
 Speaking of automation, let's dive in!
 
@@ -54,9 +54,7 @@ To answer that let's start with understanding what GitHub Actions are. Taken fro
 
 > Automate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you'd like, including CI/CD, and combine actions in a completely customized workflow.
 
-I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. **For example you can have GitHub run a script when you commit or push t, or at a specific time slot in the day/week/month.** 
-
-Reading up on various things you can automate made me eager to try it out - **For example, automating a script to run every Sunday morning, sending an email, updating a dashboard hosted online, collect data and more.** One example that I saw while working on this post was [Emil Hvitfeldt's](https://www.hvitfeldt.me/) awesome paletter [bot](https://twitter.com/BotPaletteer). A Twitter bot that automatically tweets color palette packages once a day.
+Reading up on various things you can automate made me eager to try it out - **For example, automating a script to run every Sunday morning, sending an email, updating a dashboard hosted online, collecting data and more.** One example that I saw while working on this post was [Emil Hvitfeldt's](https://www.hvitfeldt.me/) awesome paletter [bot](https://twitter.com/BotPaletteer). A Twitter bot that automatically tweets color palette packages once a day.
 
 <center>
 `r blogdown::shortcode('tweet','1340376626853535745')` 
@@ -65,15 +63,15 @@ Reading up on various things you can automate made me eager to try it out - **Fo
 
 ## My TidyTuesday packages
 
-In this post I'll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the [project's Github page](https://github.com/rfordatascience/tidytuesday), or [about how it helps me in my journey of learning R](https://amitlevinson.com/post/my-year-in-r/).
+In this post I'll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an awesome weekly data project where individuals analyze and visualize new data every week. I find it a terrific learning experience and try to participate when I can. 
 
-When participating in Tidytuesday, I open a new R session for each new project. A new session each week results in the creation of multiple R files, and more relevant to us, the packages we used each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, why not automate the plotting work by using GitHub Action, resulting in this blog post.
+Every TidyTuesday I open a new R session resulting in the creation of multiple R files, and more relevant to us, the packages we use each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, I thought why not automate the plotting work by using GitHub Actions.
 
-Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring [Georgis Karmanis](https://karaman.is/) [Tweet](https://twitter.com/geokaramanis/status/1334437358519902209) and code. There he used the `{textreadr}` package which does a lot of the heavy lifting reading in and cleaning the files we'll be doing below. I came across his tweet after completing the analysis here and decided to leave as is, since it helps me better understand what happens 'under the hood'.
+Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring [Georgis Karmanis](https://karaman.is/) [Tweet](https://twitter.com/geokaramanis/status/1334437358519902209) and code. There he used the `{textreadr}` package which does a lot of the heavy lifting reading in and cleaning the files we'll be doing below. I came across his tweet after completing the analysis here and therefore decided to leave it as is.
 
 ### Reading the files
 
-Michael's original plot as an inspiration for the example to use with GitHub Actions is fantastic. However, what's a blog post without some challenges and tears; therefore, we'll replicate the same idea with a tidyverse approach.
+Michael's original plot is fantastic. However, what's a blog post without some challenges and tears; therefore, we'll replicate the same idea with a tidyverse approach.
 
 ```{r}
 # For map iterations
@@ -95,20 +93,20 @@ files <- list.files(path = "C:/Users/amitl/R_code/tidytuesday", pattern = "\\.R$
 files <- files[-length(files)]
 ```
 
-First and most important, I recommend using R projects and the [{here}](https://github.com/jennybc/here_here) package by [Jennifer Bryan](https://jennybryan.org/) for file management. The only reason I'm using a direct path is because when writing this post my R session assumes I'm within my website directory, making it a challenge to move between project roots[^1]. We started by listing all files ending in `.R` or `.Rmd` in that specific path, also searching through sub-folder using `recursive = TRUE`. I then filter the last element of the vector because that's the code file I use to produce the plot. 
+First and most important, I recommend using R projects and the [{here}](https://github.com/jennybc/here_here) package by [Jennifer Bryan](https://jennybryan.org/) for file management. The only reason I'm using a direct path is because when writing this post my R session assumes I'm within my website directory, making it a challenge to move between project roots[^1].
+
+We started by listing all files ending in `.R` or `.Rmd` in that specific path, also searching through sub-folder using `recursive = TRUE`. I then filter the last element of the vector because that's the code file I use to produce the plot. Let's look at what we have:  
 
 
 [^1]: If you decide to automate this with GitHub Actions, be alert if file paths throw an error.
-
-Let's look at what we have:  
 
 ```{r}
 head(files)
 ```
 
-We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn't completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There's not that many of them and for the purpose of the exercise we'll leave them there. 
+We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn't completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There's not that many of them and for the purpose of the post we'll leave them there. 
 
-Before we dig in I want to get the names of the files. It's  not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.
+Before we dig in I want to get the names of the files. It's not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.
 
 ```{r}
 # Get names
@@ -117,9 +115,9 @@ file_names <- str_extract(files, '[^/]+(?=\\.)')
 head(file_names)
 ```
 
-Our original string was "`r files[1]`", and we want everything after the last `/` - "National Parks.R". We can achieve this using some regular expressions (regex) `[^/]+` and a positive look ahead `(?=\\.)` to capture everything between the last backslash and a period. Voila, our final output of "`r file_names[1]`", my first #TidyTuesday R script.   
+Our original string was "`r files[1]`", and we wanted everything after the last `/` but before the period - "National Parks". We achieve this using the regular expression `[^/]+` and a positive look ahead `(?=\\.)`, capturing everything between the last backslash and a period. Voila, our final output of "`r file_names[1]`", my first #TidyTuesday R script.   
 
-Now we can read in the text from all these R scripts:
+Next we read in the text from all the R scripts:
 
 ```{r}
 tt_path <- paste0(tt_path, "\\/" ,files)
@@ -128,11 +126,11 @@ file_lines <- map(tt_path, readLines)
 head(file_lines[[1]])
 ```
 
-After creating a complete path of our scripts we iterated across them using `map` and the function `readLines`. Essentially, you can read `map` as follows: Run function `readLines` on every element of vector `tt_path` (The vector containing our path to each `.R`/`.Rmd` script). For a better understanding of the `map` function and family I highly recommend exploring the [documentation](https://purrr.tidyverse.org/reference/map.html). As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run. 
+After creating a complete path of our scripts we iterated across them using `map` and the function `readLines`. You can read `map` as follows: Run function `readLines` on every element of vector `tt_path` (The vector containing our path to each `.R`/`.Rmd` script). For a better understanding of the `map` function and family I highly recommend exploring the [documentation](https://purrr.tidyverse.org/reference/map.html). As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run. 
 
 ### Cleaning
 
-If my memory is correct, I mainly use functions either by loading the library through `library()` or reference specific argument with `library::`. We'll capture both using some regex and return them as a dataframe:
+If my memory is correct, I mainly use functions either by loading the library through `library()` or reference specific argument with `library::`. We'll capture both options using some regex and return them as a dataframe:
 
 ```{r}
 names(file_lines) <- file_names
@@ -148,7 +146,7 @@ Perfect! First I added the original script names for each sub list within the `f
 
 We can split the regex into two parts. the first one `(?<=library\\()).+(?=\\())` is both a positive look behind capturing everything after `library\\(` until it reaches `(?=\\))`, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove the string `library()`. The second section of the regex `\\w+(?=::))` mimics the previous one but this time only with a positive look ahead -- Capture the word (`\\w+`) before the two `::`. 
 
-We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column. After filtering any `NA`, that is words that didn't match our regex such as empty lines, I used `distinct` to remove duplicate packages in each week. For example, if I called `stringr::` twice in an R script.  
+We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any `NA`, that is words that didn't match our regex such as empty lines, I used `distinct` to remove duplicate packages in each week. For example, if I called `stringr::` twice in an R script I want to count it as one. 
 
 ### plot
 
@@ -236,7 +234,7 @@ And you should receive the following output, only with your information instead:
 
 Perfect. We're not going to copy the lines suggested as they're helpful for package checks, and we're only interested in producing a plot. The important outcome for us from running the line is the newly produced output under `./github/workflows/R-CMD-check.yaml`. We're going to use that yaml file to write up what we want GitHub to do.  
 
-I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I'll provide you with the script I used and we'll review that. Also, feel free to rename the worflow file, as long as it's a `yaml` file under the `workflows` directory GitHub will process it as an Action automatically. no further setup is needed, unless you want to use 'secretes' such as confidential API keys (More on scretes [here](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets).
+Feel free to rename the *worflow* file, as long as it's a `yaml` file under the `/.github/workflows` directory GitHub will process it as an Action automatically. No further setup is needed, unless you need to use ['secretes'](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets), e.g. for confidential API keys.
 
 Below are the instructions we implement in our yaml file:
 

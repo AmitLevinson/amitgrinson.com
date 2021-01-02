@@ -33,8 +33,8 @@ newcaption {
 <p><strong>TL;DR</strong>: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing step by step how I plot my most frequently used R packages for <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a>, a weekly data project. However, I constantly add more information to that data every week I participate and will have to re-run the script to update the plot. For that purpose we turn to GitHub Actions and provide a workflow to run the R script on a specific Git commit.</p>
 <div id="preface" class="section level3">
 <h3>Preface</h3>
-<p>Before we begin, I want to thank <a href="https://ramikrispin.github.io/">Rami Krispin</a> and <a href="https://geobgu.xyz/">Michael Dorman</a>. I contacted Rami a while back asking for advice on working with GitHub Actions. Rami was forthcoming in helping if any problems arose and saved me a lot of frustration.</p>
-<p>As to Michael, I thank him for the example I use in this blog post. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently used at that time (<a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">here’s a gist with the script</a>). As I wanted to learn more about automation, I found it a perfect example to try out GitHub Actions where I update that plot with my frequently used packages in #TidyTuesday submissions.</p>
+<p>Before we begin, I want to thank <a href="https://ramikrispin.github.io/">Rami Krispin</a> and <a href="https://geobgu.xyz/">Michael Dorman</a>. I contacted Rami a while back asking for advice on working with GitHub Actions. Rami helped me solve several problems I had and saved me a lot of frustration.</p>
+<p>As to Michael, I thank him for the example I use in this blog post. A while back Michael posted in an Israeli R Facebook group a plot detailing <a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">the packages he frequently used at that time</a>. As I wanted to learn more about automation, I found it a perfect example to try out GitHub Actions where I update that plot with my frequently used packages in #TidyTuesday submissions.</p>
 <p>Speaking of automation, let’s dive in!</p>
 <p><img src="https://media.giphy.com/media/XCxcmEQWxDdc8qsd2R/giphy.gif" /></p>
 </div>
@@ -44,8 +44,7 @@ newcaption {
 <blockquote>
 <p>Automate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you’d like, including CI/CD, and combine actions in a completely customized workflow.</p>
 </blockquote>
-<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>For example you can have GitHub run a script when you commit or push t, or at a specific time slot in the day/week/month.</strong></p>
-<p>Reading up on various things you can automate made me eager to try it out - <strong>For example, automating a script to run every Sunday morning, sending an email, updating a dashboard hosted online, collect data and more.</strong> One example that I saw while working on this post was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day.</p>
+<p>Reading up on various things you can automate made me eager to try it out - <strong>For example, automating a script to run every Sunday morning, sending an email, updating a dashboard hosted online, collecting data and more.</strong> One example that I saw while working on this post was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day.</p>
 <center>
 {{% tweet "1340376626853535745" %}}
 <newcaption><a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> Twitter bot tweeting color palettes once a day using GitHub Actions</newcaption>
@@ -53,12 +52,12 @@ newcaption {
 </div>
 <div id="my-tidytuesday-packages" class="section level2">
 <h2>My TidyTuesday packages</h2>
-<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R</a>.</p>
-<p>When participating in Tidytuesday, I open a new R session for each new project. A new session each week results in the creation of multiple R files, and more relevant to us, the packages we used each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, why not automate the plotting work by using GitHub Action, resulting in this blog post.</p>
-<p>Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis Karmanis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll be doing below. I came across his tweet after completing the analysis here and decided to leave as is, since it helps me better understand what happens ‘under the hood’.</p>
+<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a> is an awesome weekly data project where individuals analyze and visualize new data every week. I find it a terrific learning experience and try to participate when I can.</p>
+<p>Every TidyTuesday I open a new R session resulting in the creation of multiple R files, and more relevant to us, the packages we use each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, I thought why not automate the plotting work by using GitHub Actions.</p>
+<p>Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis Karmanis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll be doing below. I came across his tweet after completing the analysis here and therefore decided to leave it as is.</p>
 <div id="reading-the-files" class="section level3">
 <h3>Reading the files</h3>
-<p>Michael’s original plot as an inspiration for the example to use with GitHub Actions is fantastic. However, what’s a blog post without some challenges and tears; therefore, we’ll replicate the same idea with a tidyverse approach.</p>
+<p>Michael’s original plot is fantastic. However, what’s a blog post without some challenges and tears; therefore, we’ll replicate the same idea with a tidyverse approach.</p>
 <pre class="r"><code># For map iterations
 library(purrr)
 # Cleaning text
@@ -76,8 +75,8 @@ library(extrafont)
 tt_path &lt;- &quot;C:/Users/amitl/R_code/tidytuesday&quot;
 files &lt;- list.files(path = &quot;C:/Users/amitl/R_code/tidytuesday&quot;, pattern = &quot;\\.R$|.Rmd$&quot;, recursive = TRUE)
 files &lt;- files[-length(files)]</code></pre>
-<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. We started by listing all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path, also searching through sub-folder using <code>recursive = TRUE</code>. I then filter the last element of the vector because that’s the code file I use to produce the plot.</p>
-<p>Let’s look at what we have:</p>
+<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>We started by listing all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path, also searching through sub-folder using <code>recursive = TRUE</code>. I then filter the last element of the vector because that’s the code file I use to produce the plot. Let’s look at what we have:</p>
 <pre class="r"><code>head(files)</code></pre>
 <pre><code>## [1] &quot;2019/1_Week38_Number of Visitors/National Parks.R&quot;       
 ## [2] &quot;2019/2_Week39_SchoolDiversity/School_Diversity.R&quot;        
@@ -85,7 +84,7 @@ files &lt;- files[-length(files)]</code></pre>
 ## [4] &quot;2019/Week40_All the Pizza/Barstool_Top_2_Percent.R&quot;      
 ## [5] &quot;2019/Week40_All the Pizza/BarstoolPizza.R&quot;               
 ## [6] &quot;2019/Week41_Power_lifting/ipf.R&quot;</code></pre>
-<p>We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn’t completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There’s not that many of them and for the purpose of the exercise we’ll leave them there.</p>
+<p>We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn’t completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There’s not that many of them and for the purpose of the post we’ll leave them there.</p>
 <p>Before we dig in I want to get the names of the files. It’s not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.</p>
 <pre class="r"><code># Get names
 file_names &lt;- str_extract(files, &#39;[^/]+(?=\\.)&#39;)
@@ -94,8 +93,8 @@ head(file_names)</code></pre>
 <pre><code>## [1] &quot;National Parks&quot;           &quot;School_Diversity&quot;        
 ## [3] &quot;School_Diversity_Updated&quot; &quot;Barstool_Top_2_Percent&quot;  
 ## [5] &quot;BarstoolPizza&quot;            &quot;ipf&quot;</code></pre>
-<p>Our original string was “2019/1_Week38_Number of Visitors/National Parks.R”, and we want everything after the last <code>/</code> - “National Parks.R”. We can achieve this using some regular expressions (regex) <code>[^/]+</code> and a positive look ahead <code>(?=\\.)</code> to capture everything between the last backslash and a period. Voila, our final output of “National Parks”, my first #TidyTuesday R script.</p>
-<p>Now we can read in the text from all these R scripts:</p>
+<p>Our original string was “2019/1_Week38_Number of Visitors/National Parks.R”, and we wanted everything after the last <code>/</code> but before the period - “National Parks”. We achieve this using the regular expression <code>[^/]+</code> and a positive look ahead <code>(?=\\.)</code>, capturing everything between the last backslash and a period. Voila, our final output of “National Parks”, my first #TidyTuesday R script.</p>
+<p>Next we read in the text from all the R scripts:</p>
 <pre class="r"><code>tt_path &lt;- paste0(tt_path, &quot;\\/&quot; ,files)
 file_lines &lt;- map(tt_path, readLines)
 
@@ -106,11 +105,11 @@ head(file_lines[[1]])</code></pre>
 ## [4] &quot;&quot;                                                                                                                                                
 ## [5] &quot;park_visits &lt;- readr::read_csv(\&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-09-17/national_parks.csv\&quot;)&quot;
 ## [6] &quot;&quot;</code></pre>
-<p>After creating a complete path of our scripts we iterated across them using <code>map</code> and the function <code>readLines</code>. Essentially, you can read <code>map</code> as follows: Run function <code>readLines</code> on every element of vector <code>tt_path</code> (The vector containing our path to each <code>.R</code>/<code>.Rmd</code> script). For a better understanding of the <code>map</code> function and family I highly recommend exploring the <a href="https://purrr.tidyverse.org/reference/map.html">documentation</a>. As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run.</p>
+<p>After creating a complete path of our scripts we iterated across them using <code>map</code> and the function <code>readLines</code>. You can read <code>map</code> as follows: Run function <code>readLines</code> on every element of vector <code>tt_path</code> (The vector containing our path to each <code>.R</code>/<code>.Rmd</code> script). For a better understanding of the <code>map</code> function and family I highly recommend exploring the <a href="https://purrr.tidyverse.org/reference/map.html">documentation</a>. As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run.</p>
 </div>
 <div id="cleaning" class="section level3">
 <h3>Cleaning</h3>
-<p>If my memory is correct, I mainly use functions either by loading the library through <code>library()</code> or reference specific argument with <code>library::</code>. We’ll capture both using some regex and return them as a dataframe:</p>
+<p>If my memory is correct, I mainly use functions either by loading the library through <code>library()</code> or reference specific argument with <code>library::</code>. We’ll capture both options using some regex and return them as a dataframe:</p>
 <pre class="r"><code>names(file_lines) &lt;- file_names
 file_packages &lt;- map_dfr(file_lines, ~ tibble(package = str_extract(.x, &quot;((?&lt;=library\\().+(?=\\))|\\w+(?=::))&quot;)),
   .id = &quot;tidytuesday&quot;) %&gt;% 
@@ -129,7 +128,7 @@ head(file_packages)</code></pre>
 ## 6 School_Diversity stringr</code></pre>
 <p>Perfect! First I added the original script names for each sub list within the <code>file_lines</code>. As to the analysis Let’s tackle each element at a time from the inside out, starting with the regular expressions.</p>
 <p>We can split the regex into two parts. the first one <code>(?&lt;=library\\()).+(?=\\())</code> is both a positive look behind capturing everything after <code>library\\(</code> until it reaches <code>(?=\\))</code>, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove the string <code>library()</code>. The second section of the regex <code>\\w+(?=::))</code> mimics the previous one but this time only with a positive look ahead – Capture the word (<code>\\w+</code>) before the two <code>::</code>.</p>
-<p>We iterate the <code>str_extract</code> across each sub-list of the <code>file_lines</code> object using <code>map_dfr</code> to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column. After filtering any <code>NA</code>, that is words that didn’t match our regex such as empty lines, I used <code>distinct</code> to remove duplicate packages in each week. For example, if I called <code>stringr::</code> twice in an R script.</p>
+<p>We iterate the <code>str_extract</code> across each sub-list of the <code>file_lines</code> object using <code>map_dfr</code> to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any <code>NA</code>, that is words that didn’t match our regex such as empty lines, I used <code>distinct</code> to remove duplicate packages in each week. For example, if I called <code>stringr::</code> twice in an R script I want to count it as one.</p>
 </div>
 <div id="plot" class="section level3">
 <h3>plot</h3>
@@ -195,7 +194,7 @@ file_packages %&gt;%
   [![R build status](https://github.com/AmitLevinson/TidyTuesday/workflows/R-CMD-check/badge.svg)](https://github.com/AmitLevinson/TidyTuesday/actions)
   &lt;!-- badges: end --&gt;</code></pre>
 <p>Perfect. We’re not going to copy the lines suggested as they’re helpful for package checks, and we’re only interested in producing a plot. The important outcome for us from running the line is the newly produced output under <code>./github/workflows/R-CMD-check.yaml</code>. We’re going to use that yaml file to write up what we want GitHub to do.</p>
-<p>I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I’ll provide you with the script I used and we’ll review that. Also, feel free to rename the worflow file, as long as it’s a <code>yaml</code> file under the <code>workflows</code> directory GitHub will process it as an Action automatically. no further setup is needed, unless you want to use ‘secretes’ such as confidential API keys (More on scretes <a href="https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets">here</a>.</p>
+<p>Feel free to rename the <em>worflow</em> file, as long as it’s a <code>yaml</code> file under the <code>/.github/workflows</code> directory GitHub will process it as an Action automatically. No further setup is needed, unless you need to use <a href="https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets">‘secretes’</a>, e.g. for confidential API keys.</p>
 <p>Below are the instructions we implement in our yaml file:</p>
 <pre class="yaml"><code>name: Render library update
 
