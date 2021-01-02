@@ -240,45 +240,63 @@ a.nav-link:hover:after {
 
 /* alerts */
 
+
+
+/* I also changed the color of the icon & its top & left positions */ 
+
+
+.article-style aside p,
+div.alert > div {
+  position: relative;
+  display: block;
+  /* I made the font size smaller & adjusted the margin-left */
+  font-size: 0.8rem;
+  margin-left: 1.7rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* I also changed the color of the icon & its top & left positions */ 
+.article-style aside p::before,
+div.alert > div:first-child::before {
+  position: absolute;
+  top: -0.3rem;
+  left: -2rem;
+ }
+
+
 div.alert-note > div:first-child::before {
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  color: #004346;
-  content: "\f0a4";
+  color: #5a66a5;
+  font-size: 1.2rem;
+  content: '\f0a4';
+}
+
+/* You can edit the borders and backgrounds here */
+.article-style aside,
+.alert-note {
+  color: #32408f;
+  background-color: #fff;
+  border-color: #5a66a5;
+  box-shadow: 2px 2px 0 0 #5a66a5;
+  font-weight: 500;
+  text-align: left;
 }
 
 div.alert-warning > div:first-child::before {
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  color: #004346;
-  content: "\f1e2";
+  color: #ff3860;
+  font-size: 1.2rem;
+  content: "\f06a";
 }
 
-.alert-note {
-  color: #333;
+.alert-warning {
+  color: #ff3860;
   background-color: #fff;
-  border-top: 2px solid #004346;
-  border-radius: 0px; /*undo rounded corners*/
-  border-right-style: none;
-  border-bottom-style: none;
-  border-left-style: none;
-  padding: 23px 10px 21px 10px;
-}
-
-div.alert > div {
-  font-size: 0.85rem;
-}
-
-
-div.alert.alert-warning {
-  color: #d03b39;
-  background-color: #fdf4f4;
-  border-top: 2px solid #004346;
-  border-radius: 0px; /*undo rounded corners*/
-  border-right-style: none;
-  border-bottom-style: none;
-  border-left-style: none;
-  padding: 23px 10px 21px 10px;
+  border-color: #ff3860;
+  box-shadow: 1.5px 1.5px 0 0 #ff3860;
+  content: "\f12a";
+  font-weight: 500;
 }
 
 /* buttons */
