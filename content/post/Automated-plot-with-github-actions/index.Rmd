@@ -1,7 +1,7 @@
 ---
 title: A Taste of GitHub Actions with an Automated Plot
 author: Amit Levinson
-date: '2020-01-02'
+date: '2021-01-02'
 slug: Automated-plot-with-github-actions
 categories: [R]
 tags: [TidyTuesday, GitHub]
@@ -29,15 +29,11 @@ newcaption {
 }
 ```
 
-![](outcome.png)
+![](featured.png)
 <center>
 <newcaption>Final outcome of a plot automatically updating and rendering on a specific git commit.</newcaption>
 </center>
 <br>
-
-```{r echo = FALSE, eval = FALSE, fig.cap='Final outcome of a plot automatically updating and rendering on a specific git commit.'}
-knitr::include_graphics("featured.png")
-```
 
 
 **TL;DR**: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing step by step how I plot my most frequently used R packages for [#Tidytuesday](https://github.com/rfordatascience/tidytuesday), a weekly data project. However, I constantly add more information to that data every week I participate and will have to re-run the script to update the plot. For that purpose we turn to GitHub Actions and provide a workflow to run the R script on a specific Git commit. 

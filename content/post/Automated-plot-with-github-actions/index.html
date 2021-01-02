@@ -1,7 +1,7 @@
 ---
 title: A Taste of GitHub Actions with an Automated Plot
 author: Amit Levinson
-date: '2020-01-02'
+date: '2021-01-02'
 slug: Automated-plot-with-github-actions
 categories: [R]
 tags: [TidyTuesday, GitHub]
@@ -25,7 +25,7 @@ newcaption {
   text-align: center;
 }
 </style>
-<img src="outcome.png" />
+<img src="featured.png" />
 <center>
 <newcaption>Final outcome of a plot automatically updating and rendering on a specific git commit.</newcaption>
 </center>
@@ -161,7 +161,7 @@ file_packages %&gt;%
     panel.grid.major.y = element_blank(),
     plot.margin = unit(c(4,2,2,4), &quot;mm&quot;)
   )</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code># Save somewhere you&#39;ll reference later
 # ggsave (&quot;extra/packages-used.png&quot;)</code></pre>
 <p>A few specific things to note:</p>
@@ -241,7 +241,7 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 <li><p>In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I’m not too sure about the ‘user.email’ and ‘user.name’ arguments so I left them as is.</p></li>
 </ul>
 <p>That’s it! Just upload the newly edited files, and activate the Action with the specific commit. Don’t forget to reference it from your repository’s README so it shows up.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
 <img src="success.png" alt="The different steps the Action does when activated" width="960" />
 <p class="caption">
 Figure 1: The different steps the Action does when activated
@@ -253,7 +253,7 @@ If the above GitHub Action follows through with the workflow and produces a new 
 {{% /alert %}}</p>
 <p>In order to debug, for example if the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action -&gt; click on the last commit message -&gt; ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m not definitely the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
-<div class="figure"><span id="fig:unnamed-chunk-13"></span>
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
 <img src="featured.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
 <p class="caption">
 Figure 2: Final outcome of a plot automatically updating in our README file.
