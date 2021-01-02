@@ -19,17 +19,26 @@ draft: false
 
 
 
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
-<img src="plot.png" alt="Final output of a plot automatically updating on a specific git commit." width="1200" />
-<p class="caption">
-Figure 1: Final output of a plot automatically updating on a specific git commit.
-</p>
-</div>
+<pre class="css"><code>newcaption {
+  font-size: 0.9em;
+  text-align: center;
+}</code></pre>
+<style type="text/css">
+newcaption {
+  font-size: 0.9em;
+  text-align: center;
+}
+</style>
+<img src="outcome.png" />
+<center>
+<newcaption>Final outcome of a plot automatically updating and rendering on a specific git commit.</newcaption>
+</center>
+<p><br></p>
+<p><strong>TL;DR</strong>: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing how to plot my most frequently used R packages for Tidytuesday. However, I constantly add more information to that data and need to re-run the script to update the plot. For that purpose we turn to GitHub Actions that provide the ability to run an R script on a specific commit. We setup the script for the GitHub Action to run our plot and review the various arguments.</p>
 <div id="preface" class="section level3">
 <h3>Preface</h3>
-<p><strong>TL;DR</strong>: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing how to plot my most frequently used R packages for Tidytuesday. I then setup the code for A GitHub Action to automatically render the plot on a specific commit, and reference it from my repository’s README file.</p>
 <p>Before we begin, I want to thank <a href="https://ramikrispin.github.io/">Rami Krispin</a> and <a href="https://geobgu.xyz/">Michael Dorman</a>. I contacted Rami a while back asking for advice on working with GitHub Actions. Rami was forthcoming in helping if any problems arose and saved me a lot of frustration.</p>
-<p>As to Michael, I thank him for the example I use in the post to try out GitHub Actions. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently uses (<a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">here’sa gist with the script</a> ). When thinking of how to try out GitHub actions I thought replicating it would be a great example, only adding an automation as a twist.</p>
+<p>As to Michael, I thank him for the example I use in the post to try out GitHub Actions. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently uses (<a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">here’s a gist with the script</a> ). When thinking of how to try out GitHub actions I thought replicating it would be a great example, only adding an automation as a twist.</p>
 <p>Speaking of automation, let’s dive in!</p>
 <p><img src="https://media.giphy.com/media/XCxcmEQWxDdc8qsd2R/giphy.gif" /></p>
 </div>
@@ -39,7 +48,7 @@ Figure 1: Final output of a plot automatically updating on a specific git commit
 <blockquote>
 <p>Automate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you’d like, including CI/CD, and combine actions in a completely customized workflow.</p>
 </blockquote>
-<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>One can have GitHub run a script when a Git action occurs (e.g. a push or pull request), or at a specific time slot in the day/week/month.</strong></p>
+<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>You can have GitHub run a script when a Git action occurs (e.g. a push or pull request), or at a specific time slot in the day/week/month.</strong></p>
 <p>Reading up on various things you can automate made me eager to try it out - <strong>Automating a script to run every Sunday morning, sending an email, or hosting an <a href="https://amitlevinson.com/post/sharing-interactive-charts/">interactive graph online</a>.</strong> Another example that got me motivated to learn was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day.</p>
 <center>
 {{% tweet "1340376626853535745" %}}
@@ -49,7 +58,7 @@ Figure 1: Final output of a plot automatically updating on a specific git commit
 <div id="my-tidytuesday-packages" class="section level2">
 <h2>My TidyTuesday packages</h2>
 <p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R</a>.</p>
-<p>When participating in Tidytuesday, I open a new R session for each new project. A new session each week results in the creation of multiple R files, and more relevant to us, the packages we used each session. Therefore I thought to myself why not showcase my frequently used packages, and have it automatically update?</p>
+<p>When participating in Tidytuesday, I open a new R session for each new project. A new session each week results in the creation of multiple R files, and more relevant to us, the packages we used each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, why not automate the plotting work by using GitHub Action, resulting in this blog post.</p>
 <p>Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis Karmanis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll be doing below. I came across his tweet after completing the analysis here and decided to leave as is, since it helps me better understand what happens ‘under the hood’.</p>
 <div id="reading-the-files" class="section level3">
 <h3>Reading the files</h3>
@@ -75,7 +84,7 @@ files &lt;- files[-length(files)]</code></pre>
 ## [4] &quot;2019/Week40_All the Pizza/Barstool_Top_2_Percent.R&quot;      
 ## [5] &quot;2019/Week40_All the Pizza/BarstoolPizza.R&quot;               
 ## [6] &quot;2019/Week41_Power_lifting/ipf.R&quot;</code></pre>
-<p>We see the R scripts I used to produce my Tidytuesdays. Unfortunately, it also returns R scripts I opened but didn’t completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There’s not that many of them and for the purpose of the exercise we’ll leave them there.</p>
+<p>We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn’t completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There’s not that many of them and for the purpose of the exercise we’ll leave them there.</p>
 <p>Before we dig in I want to get the names of the files. It’s not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.</p>
 <pre class="r"><code># Get names
 file_names &lt;- str_extract(files, &#39;[^/]+(?=\\.)&#39;)
@@ -118,10 +127,8 @@ head(file_packages)</code></pre>
 ## 5 School_Diversity tidyverse   
 ## 6 School_Diversity stringr</code></pre>
 <p>Perfect! First I added the original script names for each sub list within the <code>file_lines</code>. As to the analysis Let’s tackle each element at a time from the inside out, starting with the regular expressions.</p>
-<p>We can split the regex into two parts. the first one <code>(?&lt;=library\\()).+(?=\\())</code> is both a positive look behind capturing everything after <code>library\\(</code> until it reaches <code>(?=\\))</code>, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove <code>library()</code> text. The second section of the regex <code>\\w+(?=::))</code> mimics the previous one but this time only with a positive look ahead – Capture the word (<code>\\w+</code>) before the two <code>::</code>.</p>
-<p>We iterate the <code>str_extract</code> across each sub-list of our <code>file_lines</code> object containing all our R scripts using <code>map_dfr</code> to return a tibble. Since it returns a a data frame format we can provide a column name - <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column.</p>
-<p>After filtering any <code>NA</code>, that is words that didn’t match our regex such as empty lines, I used <code>distinct</code> to remove duplicate packages in each week. For example, if I called <code>stringr::</code> twice in an R script.</p>
-<p>An issue that’s left is when calling <code>tidyverse</code> essentially we load packages such as <code>readr</code>, <code>ggplot2</code>, etc. We see that <code>readr</code> dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 I only call from the <code>tidyverse</code>. So do I want to leave <code>readr</code> or remove it if I already call <code>tidyverse</code>? Here I leave it as is, but feel free to find a workaround it.</p>
+<p>We can split the regex into two parts. the first one <code>(?&lt;=library\\()).+(?=\\())</code> is both a positive look behind capturing everything after <code>library\\(</code> until it reaches <code>(?=\\))</code>, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove the string <code>library()</code>. The second section of the regex <code>\\w+(?=::))</code> mimics the previous one but this time only with a positive look ahead – Capture the word (<code>\\w+</code>) before the two <code>::</code>.</p>
+<p>We iterate the <code>str_extract</code> across each sub-list of the <code>file_lines</code> object using <code>map_dfr</code> to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - <code>package</code>. In addition, <code>map_df*</code> (map_df, map_dfr, etc.) can take an <code>.id</code> argument that will return the names of the original sub-lists as a column. After filtering any <code>NA</code>, that is words that didn’t match our regex such as empty lines, I used <code>distinct</code> to remove duplicate packages in each week. For example, if I called <code>stringr::</code> twice in an R script.</p>
 </div>
 <div id="plot" class="section level3">
 <h3>plot</h3>
@@ -153,7 +160,7 @@ file_packages %&gt;%
     panel.grid.major.y = element_blank(),
     plot.margin = unit(c(4,2,2,4), &quot;mm&quot;)
   )</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code># Save somewhere you&#39;ll reference later
 # ggsave (&quot;extra/packages-used.png&quot;)</code></pre>
 <p>A few specific things to note:</p>
@@ -162,6 +169,7 @@ file_packages %&gt;%
 <li><p>I decided to only take the top 15 frequently used packages. You can play around with it to find a number you like or one that properly fits.</p></li>
 <li><p>I automated the caption to print the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.</p></li>
 </ol>
+<p>An issue that’s left is when calling <code>tidyverse</code> essentially we load packages such as <code>readr</code>, <code>ggplot2</code>, etc. We see that <code>readr</code> dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only using <code>tidyverse</code>. So do I want to leave <code>readr</code> or remove it if I already call <code>tidyverse</code>? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).</p>
 </div>
 </div>
 <div id="github-actions" class="section level2">
@@ -232,10 +240,10 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 <li><p>In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I’m not too sure about the ‘user.email’ and ‘user.name’ arguments so I left them as is.</p></li>
 </ul>
 <p>That’s it! Just upload the newly edited files, and activate the Action with the specific commit. Don’t forget to reference it from your repository’s README so it shows up.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="success.png" alt="Succesfull GitHub Action detailing the process, found under the Actions tab" width="960" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="success.png" alt="The different steps the Action does when activated" width="960" />
 <p class="caption">
-Figure 2: Succesfull GitHub Action detailing the process, found under the Actions tab
+Figure 1: The different steps the Action does when activated
 </p>
 </div>
 <p>When the Action is running you will see an orange dot at the top of the root folder of your repository. Once it’s complete it should turn green if all went well, or red if not. After it finishes give it a few minutes as it might take some time until the plot is actually updated. You can explore this action in <a href="https://github.com/AmitLevinson/TidyTuesday">my #Tidytuesday repository</a>.</p>
@@ -244,10 +252,10 @@ If the above GitHub Action follows through with the workflow and produces a new 
 {{% /alert %}}</p>
 <p>In order to debug, for example if the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action -&gt; click on the last commit message -&gt; ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m not definitely the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
-<div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="outcome.png" alt="our final outcome automatically updating in our README file." width="509" />
+<div class="figure"><span id="fig:unnamed-chunk-13"></span>
+<img src="outcome.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
 <p class="caption">
-Figure 3: our final outcome automatically updating in our README file.
+Figure 2: Final outcome of a plot automatically updating in our README file.
 </p>
 </div>
 </div>
