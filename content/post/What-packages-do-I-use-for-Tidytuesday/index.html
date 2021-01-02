@@ -1,5 +1,5 @@
 ---
-title: A taste of GitHub Actions with an automated plot
+title: A Taste of GitHub Actions with an automated plot
 author: Amit Levinson
 date: '2020-12-31'
 slug: Identifying-packages-used-for-Tidytuesday
@@ -19,10 +19,10 @@ draft: true
 
 
 
-<div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="plot.png" alt="Final output of an automatically updating plot rendered on a specific commit to a GitHub repository." width="1200" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
+<img src="plot.png" alt="Final output of a plot automatically updating on a specific git commit." width="1200" />
 <p class="caption">
-Figure 1: Final output of an automatically updating plot rendered on a specific commit to a GitHub repository.
+Figure 1: Final output of a plot automatically updating on a specific git commit.
 </p>
 </div>
 <div id="preface" class="section level3">
@@ -31,22 +31,25 @@ Figure 1: Final output of an automatically updating plot rendered on a specific 
 <p>As to Michael, I thank him for the example I use in the post to try out GitHub Actions. A while back Michael posted in an Israeli R Facebook group a plot detailing the packages he frequently uses (<a href="https://gist.github.com/michaeldorman/ad8d89136f03769105ccc6199a913f0b?fbclid=IwAR09u1WFD9YpKYb7nvezOKqGGZac3AuVWC7ogDItSv9sXXS0x2KpYxg3aU0">Here’s</a> a gist with the script). When thinking of how to try out GitHub actions I thought replicating it would be a great example, only adding an automation as a twist.</p>
 <p>Speaking of automation, let’s dive in!</p>
 <p><img src="https://media.giphy.com/media/XCxcmEQWxDdc8qsd2R/giphy.gif" /></p>
-<div id="why-automate" class="section level4">
-<h4>Why automate?</h4>
+</div>
+<div id="why-automate" class="section level3">
+<h3>Why automate?</h3>
 <p>To answer that let’s start with understanding what GitHub Actions are. Taken from GitHub’s website:</p>
 <blockquote>
 <p>Automate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you’d like, including CI/CD, and combine actions in a completely customized workflow.</p>
 </blockquote>
-<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>One can have GitHub run a script built on a given Git action (e.g. a push or pull request), or at a specific time slot in the day\week\month.</strong> For the purpose of this postת and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>).</p>
-<p>Reading up on various things you can automate made me eager to try it out - <strong>Automating a script to run every Sunday morning, sending an email, and so much more.</strong>. Another example that got me motivated was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day. <strong>I constantly read about automation in R with functions, reports and the like, so why not take automating one step further?</strong></p>
+<p>I first heard about GitHub Actions in regards to package checks, enabling package developers to run continuous integrations, unit tests and the like automatically. <strong>One can have GitHub run a script when a Git action occurs (e.g. a push or pull request), or at a specific time slot in the day/week/month.</strong></p>
+<p>Reading up on various things you can automate made me eager to try it out - <strong>Automating a script to run every Sunday morning, sending an email, and so much more.</strong> Another example that got me motivated to learn was <a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> awesome paletter <a href="https://twitter.com/BotPaletteer">bot</a>. A Twitter bot that automatically tweets color palette packages once a day.</p>
+<center>
+{{% tweet "1340376626853535745" %}}
+<newcaption><a href="https://www.hvitfeldt.me/">Emil Hvitfeldt’s</a> Twitter bot tweeting color palettes once a day using GitHub Actions</newcaption>
+</center>
 </div>
-</div>
-<div id="our-example-for-today---tidytuesday-packages" class="section level3">
-<h3>Our example for today - TidyTuesday packages</h3>
-<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in a GitHub README file. Specifically, I’ll have the plot show my top 15 frequently used packages in #TidyTuesday. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R and data visualization</a>.</p>
-<p>My Tidytuesday repository provides a perfect opportunity for me to try a GitHub Action. I open a new R session for each new project, resulting in creation of multiple R files, and more relevant to us, the packages we used each session. <strong>This is a specific example, but I hope you’ll be able to see the bigger picture of this amazing automating resource and use it when the time comes.</strong></p>
-<p>Side note: if you just want to visualize your #TidyTuesday libraries or <code>geoms</code> without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code from a while back. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll do below. I came across his tweet after completing the analysis part here and decided to leave it as it helps me understand what happens ‘under the hood’.</p>
-</div>
+<div id="my-tidytuesday-packages" class="section level2">
+<h2>My TidyTuesday packages</h2>
+<p>In this post I’ll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, #Tidytuesday is an awesome weekly data project where individuals analyze and visualize new data every week. You can find more info on the <a href="https://github.com/rfordatascience/tidytuesday">project’s Github page</a>, or <a href="https://amitlevinson.com/post/my-year-in-r/">about how it helps me in my journey of learning R</a>.</p>
+<p>When participating in Tidytuesday, I open a new R session for each new project. A new session for each week results in creation of multiple R files, and more relevant to us, the packages we used each session. Therefore I thought to myself why not showcase my frequently used packages, and have it automatically update?</p>
+<p>Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring <a href="https://karaman.is/">Georgis Karmanis</a> <a href="https://twitter.com/geokaramanis/status/1334437358519902209">Tweet</a> and code. There he used the <code>{textreadr}</code> package which does a lot of the heavy lifting reading in and cleaning the files we’ll be doing below. I came across his tweet after completing the analysis here and decided to leave as is, since it helps me better understand what happens ‘under the hood’.</p>
 <div id="reading-the-files" class="section level3">
 <h3>Reading the files</h3>
 <p>Michael’s original plot as an inspiration for the example to use with GitHub Actions is fantastic. However, what’s a blog post without some challenges and tears; therefore, we’ll replicate the same idea with a tidyverse approach (he originally did it with base R code).</p>
@@ -62,8 +65,8 @@ library(extrafont)
 tt_path &lt;- &quot;C:/Users/amitl/R_code/tidytuesday&quot;
 files &lt;- list.files(path = &quot;C:/Users/amitl/R_code/tidytuesday&quot;, pattern = &quot;\\.R$|.Rmd$&quot;, recursive = TRUE)
 files &lt;- files[-length(files)]</code></pre>
-<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The argument basically lists all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path. The <code>recursive = TRUE</code> searches through any sub-folders for any matching patterns, reading them in too.</p>
-<p>I also filter the last element of the vector because that’s the code file I use to produce the plot in the GitHub Action. One can have the Action run on a <code>README.Rmd</code> file that renders markdown README instead. However, I found using the code in a README cluttering so decided to stick with a regular R file and call the outputted plot from the repository’s README. If you wish to host the plot or a dashboard in a spearate html file, you can also see a different blog post of mine on <a href="https://amitlevinson.com/post/sharing-interactive-charts/">hosting interactive graphs online</a>, and render to that instead.</p>
+<p>First and most important, I recommend using R projects and the <a href="https://github.com/jennybc/here_here">{here}</a> package by <a href="https://jennybryan.org/">Jennifer Bryan</a> for file management. The only reason I’m using a direct path is because when writing this post my R session assumes I’m within my website directory, making it a challenge to move between project roots<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>We started by listing all files ending in <code>.R</code> or <code>.Rmd</code> in that specific path, also searching through sub-folder using <code>recursive = TRUE</code>. I then filter the last element of the vector because that’s the code file I use to produce the plot. One can have the Action run in a <code>README.Rmd</code> file that renders to markdown. Alternatively, you can host the <a href="https://amitlevinson.com/post/sharing-interactive-charts/">plot or dashboard in a separate interactive html file.</a></p>
 <p>Let’s look at what we have:</p>
 <pre class="r"><code>head(files)</code></pre>
 <pre><code>## [1] &quot;2019/1_Week38_Number of Visitors/National Parks.R&quot;       
@@ -125,51 +128,51 @@ head(file_packages)</code></pre>
 <h3>plot</h3>
 <p>We’re at the last part of reading-processing-plotting journey. The plot is pretty straight forward and I invite you to explore other plots if you wish to produce different outputs. Remember though that you want it to automatically update, so make sure you create something that won’t throw any errors requiring you to constantly edit the code.</p>
 <pre class="r"><code># Uncomment if you use it in a GitHub Action
-library(showtext)
-font_add_google(&quot;Roboto Condensed&quot;, &quot;Roboto&quot;)
-showtext_auto()
+# library(showtext)
+# font_add_google(&quot;Roboto Condensed&quot;, &quot;Roboto&quot;)
+# showtext_auto()
 
 file_packages %&gt;% 
   count(package, sort = T) %&gt;%
   slice(1:15) %&gt;% 
   ggplot()+
-  geom_col(aes(y= fct_reorder(package,n), x = n))+
-  labs(title = &quot;Top 15 frequently used packages in #Tidytuesday&quot;,
-       subtitle = &quot;Plot is rendered on every &#39;initial commit&#39; to this repository&quot;,
+  geom_col(aes(y= fct_reorder(package,n), x = n), fill = &quot;gray45&quot;)+
+  labs(title = &quot;Frequently used packages in #Tidytuesday&quot;,
+       subtitle = &quot;Plot is rendered on every &#39;initial commit&#39; to this repository, showcasing my 15 most frequently\nused packages in #TidyTuesday&quot;,
        x = &quot;Number of times used&quot;, y = &quot;Package name&quot;,
        caption = paste0(&quot;Last updated:\n&quot;,format(Sys.Date(), &quot;%b %d, %Y&quot;)))+
   theme_minimal()+
   theme(
     text = element_text(family = &quot;Roboto Condensed&quot;),
-    plot.title = element_text(size = 20),
+    plot.title = element_text(size = 18),
     plot.title.position = &quot;plot&quot;,
-    plot.subtitle = element_text(size = 13, color = &quot;gray20&quot;),
-    plot.caption = element_text(color = &quot;gray30&quot;, face = &quot;italic&quot;),
-    axis.title = element_text(color = &quot;gray40&quot;, size = 12),
+    plot.subtitle = element_text(size = 11, color = &quot;gray20&quot;),
+    plot.caption = element_text(size = 8, color = &quot;gray30&quot;, face = &quot;italic&quot;),
+    axis.title = element_text(color = &quot;gray40&quot;, size = 9),   
     axis.text.x = element_text(size = 10),
-    axis.text.y = element_text(size = 12),
+    axis.text.y = element_text(size = 11),
+    panel.grid.major.y = element_blank(),
     plot.margin = unit(c(4,2,2,4), &quot;mm&quot;)
   )</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code># Save somewhere you&#39;ll reference later
 # ggsave (&quot;extra/packages-used.png&quot;)</code></pre>
-<p>A few things to note:</p>
+<p>A few specific things to note:</p>
 <ol style="list-style-type: decimal">
-<li><p>I used <code>showtext</code> as it enables to load a font that’s not currently installed on the computer. This will be beneficial for when we run the script through GitHub Actions that set up a remote R environment.</p></li>
+<li><p>In the GitHub Action I use <a href="https://github.com/yixuan/showtext"><code>showtext</code></a> as it enables to load a font that’s not currently installed on the computer. You might need to play around with the text size if you use this package, as the appearance of graphs might vary across operating systems. Here I used the<code>{extrafont}</code> package along with Roboto font, since for some reason showtext wasn’t properly rendering in this blog post.</p></li>
 <li><p>I decided to only take the top 15 frequently used packages. You can play around with it to find a number you like or one that properly fits.</p></li>
 <li><p>I automated the caption to print the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.</p></li>
 </ol>
 </div>
+</div>
 <div id="github-actions" class="section level2">
 <h2>GitHub Actions</h2>
-<p>This was my first time around using GitHub actions and hopefully not the last. I’m not too familiar with GitHub actions at the time of writing this so I’ll start off by highlighting a few resources I found useful:</p>
-<ol style="list-style-type: decimal">
-<li><p>Jim Hester’s <a href="https://www.jimhester.com/talk/2020-rsc-github-actions/">rstudio talk</a> on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions.</p></li>
-<li><p>Gavin Simpson’s blog post <a href="https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/">‘Rendering your README with GitHub Actions’</a> - A more hands-on approach on setting everything up to learn more about the <code>yaml</code> we write.</p></li>
-</ol>
-<p>To begin, make sure you have the <code>usethis</code> package installed. The package makes it extremely easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups. We’re going to create a <code>yaml</code> file that will contain the commands we want GitHub to run. I found <code>usethis</code> <code>README.Rmd</code> template adequate so we’ll create that. Just type the following in the r console in the root folder of your #Tidytuesday repository (or whatever repository you want the Action to run on):</p>
+<p><em>See additional learning resources below</em></p>
+<p><img src="https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif" /></p>
+<p>GitHub actions provide an easy way to automate various <em>workflows</em> one wants automated. We’ll be providing GitHub a set of instructions on when to run the Action and what exactly does it need to do. Instructions are aggregated as a script, in our case a ‘YAML’ file (Yet Another Markdown Language) with specific commands. For the purpose of this post, and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>).</p>
+<p>We’ll use the <code>usethis</code> package to create the Action workflow. The package makes it easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups. Alternatively, you can create a workflow yaml file yourself through the ‘Actions’ tab in your repository. I found <code>usethis</code> <code>README.Rmd</code> template adequate so we’ll create that. Assuming you have the package installed, just type the following in the r console in the root folder of your #Tidytuesday repository (or whatever repository you want the Action to run on):</p>
 <pre class="r"><code>usethis::use_github_action()</code></pre>
-<p>And you should get the following output, only with your information instead:</p>
+<p>And you should receive the following output, only with your information instead:</p>
 <pre class="yaml"><code>√ Setting active project to &#39;C:/Users/amitl/R_code/TidyTuesday&#39;
 √ Creating &#39;.github/&#39;
 √ Adding &#39;^\\.github$&#39; to &#39;.Rbuildignore&#39;
@@ -180,8 +183,9 @@ file_packages %&gt;%
   &lt;!-- badges: start --&gt;
   [![R build status](https://github.com/AmitLevinson/TidyTuesday/workflows/R-CMD-check/badge.svg)](https://github.com/AmitLevinson/TidyTuesday/actions)
   &lt;!-- badges: end --&gt;</code></pre>
-<p>Perfect. We’re not going to copy the lines suggested as they’re helpful for package checks, and we’re only interested in producing a plot. The important outcome for us from running the line is the newly produced output under <code>./github/workflows/R-CMD-check.yaml</code>. We’re going to use that YAML file to write up what we want GitHub to do.</p>
-<p>I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I’ll provide you with the script I used in the <code>.yaml</code> to run what we need and we’ll go through that. You can just copy and paste it in and edit any information that’s specific to you (e.g. the plot name and folder you save it in). Also, feel free to rename the file, as long as it’s a <code>yaml</code> file under the <code>workflows</code> directory GitHub will process it as an Action automatically (no setup is needed, unless you use credentials).</p>
+<p>Perfect. We’re not going to copy the lines suggested as they’re helpful for package checks, and we’re only interested in producing a plot. The important outcome for us from running the line is the newly produced output under <code>./github/workflows/R-CMD-check.yaml</code>. We’re going to use that yaml file to write up what we want GitHub to do.</p>
+<p>I will not go through what the file currently contains, due to lack of space and my knowledge of everything there. Instead I’ll provide you with the script I used and we’ll review that. Also, feel free to rename the worflow file, as long as it’s a <code>yaml</code> file under the <code>workflows</code> directory GitHub will process it as an Action automatically. no further setup is needed, unless you want to use ‘secretes’ such as confidential API keys (More on scretes <a href="https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets">here</a>.</p>
+<p>Below are the instructions we implement in our yaml file:</p>
 <pre class="yaml"><code>name: Render library update
 
 on: [push]
@@ -208,17 +212,21 @@ jobs:
           git push origin || echo &quot;No changes to commit&quot;</code></pre>
 <div id="whats-all-this-yaml" class="section level3">
 <h3>What’s all this yaml</h3>
-<p>Let’s break up the above script piece by piece:</p>
+<p>Let’s break break up the script piece by piece:</p>
 <ul>
-<li><p><code>name: Render library update</code> - The name of the the GitHub action. This is what will appear under the workflows section in the GitHub actions tab.</p></li>
+<li><p><code>name: Render library update</code> - The name of the the GitHub Action. This is what will appear under the workflows section in the GitHub actions tab.</p></li>
 <li><p><code>on: [push]</code> - Tells GitHub when to activate the workflow. There’s a plethora of options to use here; for example, you can have it run on every commit, a pull request or both. In addition, you can have it run at a specific time frame using <code>schedule</code>.</p></li>
 <li><p><code>jobs: build:</code> - I’m not sure what exactly they do. I know that for rendering README files you’d have <code>render</code> instead of build, but honestly I don’t know what either does exactly.</p></li>
-<li><p><code>runs-on: macOS-latest</code> This tells GitHub on which operating system to run the r environment. Essentially you can even choose a few such as Ubuntu, Windows, etc. It can be extremely useful when you’re checking out packages and want to verify they work on various operating systems. I use on my own computer windows, but <code>macOS-latest</code> works nonetheless.</p></li>
-<li><p><code>if: "contains(github.event.head_commit.message, 'initial commit')"</code> - Here we provide GitHub an ‘exit’ condition when running the script, and the condition on when to run it. <code>github.event.head_commit.message</code> captures the commit message you used before pushing. We then check whether it matches a regex we provided, in this case ‘initial commit’. If it matches then GitHub will run the action, otherwise it’ll exit the action and not process your script.<br />
-I implemented this because I didn’t want GitHub to run the script on every push. I was wondering how to have the script run only on newly added <code>.R</code> or <code>.Rmd</code> files and not also modifications of existing R files. But I found it a little too specific and decided to rely on a commit I commonly use when uploading a TidyTuesday output for the first time.</p></li>
-<li><p><code>steps...</code> - Here we tell GitHub the exact steps we want the action to do. The script starts with <code>uses</code> and then transitions between <code>name</code> and <code>run</code>.<br />
-<code>uses</code> tells GitHub what to use: In the first one, <code>actions/checkout@v2</code>, GitHub checks out a copy of our repository on which the workflow will run. We set the ‘fetch-depth’ to 2 so the Action collects the relevant info it needs from the repository (not sure exactly what, but with 1 won’t suffice. You can read more about it <a href="https://github.com/actions/checkout#usage">here</a>). Next we set up a remote r environment using the <code>r-lib/actions/setup-r@v1</code> argument (Again, read more about it [here])(<a href="https://github.com/r-lib/actions/tree/master/setup-r" class="uri">https://github.com/r-lib/actions/tree/master/setup-r</a>).<br />
-In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I’m not too sure about the ‘user.email’ and ‘user.name’ arguments so I left them as is.</p></li>
+<li><p><code>runs-on: macOS-latest</code> This tells GitHub on which operating system to run the r environment. Essentially you can even choose a few such as Ubuntu, Windows, etc. It can be extremely useful when you’re checking out packages and want to verify they work on various operating systems. I use on my own computer Windows and left it with <code>macOS-latest</code>.</p></li>
+<li><p><code>if: "contains(github.event.head_commit.message, 'initial commit')"</code> - Here we provide GitHub an ‘exit’ condition when running the Action, and the condition on when to run it. <code>github.event.head_commit.message</code> captures the commit message you used before pushing. We then check whether it matches a regex we provided, in this case ‘initial commit’. Without a logical condition, the Action will follow through on every push.</p></li>
+</ul>
+<p>{{% alert note %}}
+We use a conditional statement to tell GitHub when to run our Action. If the condition returns true, in this case matching our commit message, GitHub Actions will complete the workflow. Otherwise the Action will stop and exit before processing the following steps.
+{{% /alert %}}</p>
+<ul>
+<li><p><code>steps...</code> - Telling GitHub the exact steps we want the action to do. The script starts with <code>uses</code> and then transitions between <code>name</code> and <code>run</code>.<br />
+<code>uses</code> tells GitHub what to use: In the first one, <code>actions/checkout@v2</code>, GitHub checks out a copy of our repository on which the workflow will run. We set the ‘fetch-depth’ to 2 so the Action collects the relevant info it needs from the repository (not sure exactly what, but with 1 won’t suffice. You can read more about it <a href="https://github.com/actions/checkout#usage">here</a>). Next we set up a remote r environment using the <code>r-lib/actions/setup-r@v1</code> argument (Again, read more about it [here])(<a href="https://github.com/r-lib/actions/tree/master/setup-r" class="uri">https://github.com/r-lib/actions/tree/master/setup-r</a>).</p></li>
+<li><p>In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Lastly we provide Git commands in which we add our rendered plot (notice that I save it in a sub-folder), commit and push the results. I’m not too sure about the ‘user.email’ and ‘user.name’ arguments so I left them as is.</p></li>
 </ul>
 <p>That’s it!</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
@@ -227,12 +235,14 @@ In the following steps we provide a name for the step and the actual code. In th
 Figure 2: Succesfull GitHub Action detailing the process, found under the Actions tab
 </p>
 </div>
-<p>When the action is running you will see an orange dot at the top of your repository’s root folder. Once it’s complete it should turn green if all went well, or red if not. After it finishes give it a few minutes as it might take some time until the plot is actually updated.</p>
-<p><strong>The GitHub Action produces a new plot in the remote repository, but not locally on your computer. Therefore you might be required to merge the first time you push following the Action using ‘git pull’.</strong></p>
-<p>In order to debug, e.g., the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action -&gt; click on the last commit message -&gt; ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m not definitely the one to write it.</p>
+<p>When the Action is running you will see an orange dot at the top of the root folder of your repository. Once it’s complete it should turn green if all went well, or red if not. After it finishes give it a few minutes as it might take some time until the plot is actually updated. You can explore this action in <a href="https://github.com/AmitLevinson/TidyTuesday">my #Tidytuesday repository</a>.</p>
+<p>{{% alert warning %}}
+If the above GitHub Action follows through with the workflow and produces a new plot, it will only be updated in your remote repository. You might be required to merge the remote content locally next time you want to push.
+{{% /alert %}}</p>
+<p>In order to debug, for example if the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action -&gt; click on the last commit message -&gt; ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m not definitely the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="outcome.png" alt="our final outcome automatically updating in our README file." width="452" />
+<img src="outcome.png" alt="our final outcome automatically updating in our README file." width="509" />
 <p class="caption">
 Figure 3: our final outcome automatically updating in our README file.
 </p>
@@ -240,12 +250,20 @@ Figure 3: our final outcome automatically updating in our README file.
 </div>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
-<p>So this was only one example, and might be a little niche for some people, but I hope you got the big picture – GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action, would love to see what you came up with!</p>
+<p>This was my first time around using GitHub actions and hopefully not the last. I’m not too familiar with GitHub actions at the time of writing this, and would like to highlight several resources I found useful for learning more about them:</p>
+<ol style="list-style-type: decimal">
+<li><p>Jim Hester’s <a href="https://www.jimhester.com/talk/2020-rsc-github-actions/">rstudio talk</a> on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions.</p></li>
+<li><p>Gavin Simpson’s blog post <a href="https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/">‘Rendering your README with GitHub Actions’</a> - A more hands-on approach on setting everything up to learn more about the <code>yaml</code> we write, and how to implement it in a README file.</p></li>
+<li><p>Simon Couch blog post - As I was finalizing this blog post published a fantastic blog post on using <a href="https://blog.simonpcouch.com/blog/r-github-actions-commit/">GitHub actions to run an R script on a schedule</a>.</p></li>
+</ol>
+<p>Above I used only one example, and might be a little niche for some people, but I hope you got the big picture – GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.</p>
+<p>You can find the complete R script <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R">here</a>, and the YAML script for the Actions <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml">here</a>.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>If you decide to automate this with GitHub Actions, be alert if file paths throw an error.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
