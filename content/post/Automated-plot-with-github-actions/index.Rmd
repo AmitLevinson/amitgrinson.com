@@ -65,15 +65,15 @@ Reading up on various things you can automate made me eager to try it out - **Fo
 
 ## My TidyTuesday packages
 
-In this post I'll go through creating the infrastructure to automatically updating a plot I present in my TidyTuesday GitHub README file. In short, [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an awesome weekly data project where individuals analyze and visualize new data every week. I find it a terrific learning experience and try to participate when I can. 
+In this post I'll go through creating the infrastructure to automatically update a plot I present in my TidyTuesday GitHub README file. In short, [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) is an awesome weekly data project where individuals analyze and visualize new data every week. I find it a terrific learning experience and try to participate when I can. 
 
 Every TidyTuesday I open a new R session resulting in the creation of multiple R files, and more relevant to us, the packages we use each session. We can read the script of all our R code and see what plot do I frequently use. However, the project occurs each week, resulting in additional data and need to update the plot. Instead of me updating it every week, I thought why not automate the plotting work by using GitHub Actions.
 
-Quick side note: if you just want to visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring [Georgis Karmanis](https://karaman.is/) [Tweet](https://twitter.com/geokaramanis/status/1334437358519902209) and code. There he used the `{textreadr}` package which does a lot of the heavy lifting reading in and cleaning the files we'll be doing below. I came across his tweet after completing the analysis here and therefore decided to leave it as is.
+Side note: if you just want to quickly visualize your #TidyTuesday code without any GitHub Actions, I highly recommend exploring [Georgis Karmanis](https://karaman.is/) [Tweet](https://twitter.com/geokaramanis/status/1334437358519902209) and code. There he used the `{textreadr}` package to do a lot of the heavy lifting reading in and cleaning the files we'll do below. 
 
 ### Reading the files
 
-Michael's original plot is fantastic. However, what's a blog post without challenges and tears. Therefore I decided to re-write his R-code using purrr and other friends.
+Michael's original plot is fantastic. However, what's a blog post without challenges and tears. Therefore I decided to re-write his R-code using purrr and other friends. Let's start by loading the packages and reading in the files:
 
 ```{r}
 # For map iterations
@@ -95,7 +95,7 @@ files <- files[!str_detect(files, "packages-plot.R")]
 
 First and most important, I recommend using R projects and the [{here}](https://github.com/jennybc/here_here) package by [Jennifer Bryan](https://jennybryan.org/) for file management. The only reason I'm using a direct path is because when writing this post my R session assumes I'm within my website directory, making it a challenge to move between project roots[^1].
 
-We started by listing all files ending in `.R` or `.Rmd` in that specific path, also searching through sub-folder using `recursive = TRUE`. I then filter the script I use to produce the plot, since I don't want to include it in the analysis. Let's look at what we have:  
+We started by listing all files ending in `.R` or `.Rmd` in that specific path, also searching through sub-folder using `recursive = TRUE`. I then filter the script I use to produce the plot, since I don't want to include it in the analysis.
 
 
 [^1]: If you decide to automate this with GitHub Actions, be alert if file paths throw an error.
@@ -104,7 +104,7 @@ We started by listing all files ending in `.R` or `.Rmd` in that specific path, 
 head(files)
 ```
 
-We see the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn't completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There's not that many of them and for the purpose of the post we'll leave them there. 
+We now have the R scripts I used to produce my TidyTuesdays. Unfortunately, it also returns R scripts I opened but didn't completely follow through with the analysis. That is, sometimes I worked on a TidyTuesday but stopped and left it incomplete without producing a plot (shame on me). There's not that many of them and for the purpose of the post we'll leave them there. 
 
 Before we dig in I want to get the names of the files. It's not required for the analysis, but I found in nicer to look at the packages used corresponding to where they came from.
 
@@ -146,7 +146,7 @@ Perfect! First I added the original script names for each sub list within the `f
 
 We can split the regex into two parts. the first one `(?<=library\\()).+(?=\\())` is both a positive look behind capturing everything after `library\\(` until it reaches `(?=\\))`, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove the string `library()`. The second section of the regex `\\w+(?=::))` mimics the previous one but this time only with a positive look ahead -- Capture the word (`\\w+`) before the two `::`. 
 
-We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, which is also a data frame, we can provide a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any `NA`, that is words that didn't match our regex such as empty lines, I used `distinct` to remove duplicate packages in each week. For example, if I called `stringr::` twice in an R script I want to count it as one. 
+We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, (a variant of a data frame), we can assign the new vector a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any `NA` values such as empty lines, I used `distinct` to remove duplicate called packages in each week. For example, if I called `stringr::` twice in an R script I only want to count it once per session. 
 
 ### plot
 
@@ -193,9 +193,7 @@ A few specific things to note:
 
 1. In the GitHub Action I use [`showtext`](https://github.com/yixuan/showtext) as it enables to load a font that's not currently installed on the computer. You might need to play around with the text size if you use this package, as the appearance of graphs might vary across operating systems. Here I used the`{extrafont}` package since for some reason showtext wasn't properly rendering for me in this blog post.
 
-2. I decided to only take the top 15 frequently used packages. You can play around with it to find a number you like or one that properly fits.
-
-3. In the caption I added two additional pieces of information we can insert. The First part is the number of scripts used to produce the plot, in this case the length of the object containing our scripts (`file_names`). Second, I added the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
+2. In the caption I added two additional pieces of information we can insert. The First part is the number of scripts used to produce the plot, in this case the length of the object containing our scripts (`file_names`). Second, I added the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
 
 An issue that's left is when calling `tidyverse` essentially we load packages such as `readr`, `ggplot2`, etc. We see that `readr` dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only using `tidyverse`. So do I want to leave `readr` or remove it if I already call `tidyverse`? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).
 
@@ -205,11 +203,11 @@ An issue that's left is when calling `tidyverse` essentially we load packages su
 
 ![](https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif)
 
-GitHub actions provide an easy way to automate various *workflows*. We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
+GitHub actions provide an easy way to automate various *workflows*. **We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
 
 [^3]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
 
-We have our plot showcasing our most frequently used packages, but we want it rendered on every participation in #TidyTuesday. That's exactly where GitHub Actions can help us by running the script for us. We setup the code once, like we did before, and have our workflow run it when we choose.
+We have our plot showcasing our most frequently used packages, but we want it rendered for us on every participation in #TidyTuesday. That's exactly where GitHub Actions can help us by running the script for us. **We setup the code once, like we did before, and have our workflow run it when we choose.**
 
 ### Action Setup 
 
@@ -237,7 +235,7 @@ And you should receive the following output, only with your information instead:
 
 Perfect. We're not going to copy the lines suggested as they're helpful for package checks, and we're only interested in producing a plot. The important outcome for us from running the line is the newly produced output under `./github/workflows/R-CMD-check.yaml`. We're going to use that yaml file to write up what we want GitHub to do.  
 
-Feel free to rename the *worflow* file, as long as it's a `yaml` file under `/.github/workflows` GitHub will process it as an Action automatically. No further setup is needed, unless you need to use ['secretes'](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets), e.g. for confidential API keys.
+Feel free to rename the *worflow* file; as long as it's a `yaml` file under `/.github/workflows` GitHub will process it as an Action automatically. No further setup is needed, unless you need to use ['secretes'](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-secrets), e.g. for confidential API keys.
 
 Below are the instructions we implement in our yaml file:
 
@@ -318,14 +316,14 @@ knitr::include_graphics("outcome.png")
 
 This was my first time using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
 
-You can find the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
+You can find the above example live in [my #TidyTuesday repository](https://github.com/AmitLevinson/TidyTuesday), the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
 
-Lastly, I would like to highlight several resources I found useful for learning more about GitHub Actions and for you to explore:
+Lastly, I would like to highlight several resources I found extremely useful for learning more about GitHub Actions:
 
-1. Jim Hester's [rstudio talk](https://www.jimhester.com/talk/2020-rsc-github-actions/) on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions. 
+1. Jim Hester's [rstudio talk](https://www.jimhester.com/talk/2020-rsc-github-actions/) on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions.  
 
-2. Gavin Simpson's blog post ['Rendering your README with GitHub Actions'](https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/) - A more hands-on approach on setting everything up to learn more about the `yaml` we write, and how to implement it in a README file.
+2. Gavin Simpson's blog post ['Rendering your README with GitHub Actions'](https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/) - A more hands-on approach on setting everything up, learning about the `yaml` commands and implementing it in a README file.  
 
-3.  As I was finalizing this blog post I noticed Simon Couch published a fantastic blog post on using [GitHub actions to run an R script on a schedule](https://blog.simonpcouch.com/blog/r-github-actions-commit/). 
+3. As I was finalizing this blog post I noticed Simon Couch published a fantastic blog post on using [GitHub actions to run an R script on a schedule](https://blog.simonpcouch.com/blog/r-github-actions-commit/). 
 
 That's it for now. Hope you enjoyed this blog post and found it useful!
