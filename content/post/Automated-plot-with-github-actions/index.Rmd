@@ -37,7 +37,7 @@ newcaption {
 <br>
 
 
-**TL;DR**: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing step by step how I plot my most frequently used R packages for [#Tidytuesday](https://github.com/rfordatascience/tidytuesday), a weekly data project. However, I constantly add more information to that data every week I participate and will have to re-run the script to update the plot. For that purpose we turn to GitHub Actions and provide a workflow to run the R script on a specific Git commit. 
+**TL;DR**: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing step by step how I plot my most frequently used R packages for [#Tidytuesday](https://github.com/rfordatascience/tidytuesday), a weekly data project. However, I constantly add more information to that data every week I participate and will have to re-run the script to update the plot. For that purpose we turn to GitHub Actions and provide a workflow to run the R script on a specific Git commit. You can find a live example of the outcome in my [#TidyTuesday repository](https://github.com/AmitLevinson/TidyTuesday).
 
 ### Preface
 
