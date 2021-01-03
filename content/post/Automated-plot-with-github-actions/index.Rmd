@@ -125,7 +125,7 @@ file_lines <- map(tt_path, readLines)
 head(file_lines[[1]])
 ```
 
-After creating a complete path of our scripts we iterated across them using `map` and the function `readLines`. You can read `map` as follows: Run function `readLines` on every element of vector `tt_path` (The vector containing our path to each `.R`/`.Rmd` script). For a better understanding of the `map` function and family I highly recommend exploring the [documentation](https://purrr.tidyverse.org/reference/map.html). As to our output, notice that the line breaks from the original code scripts are preserved. That means that every line represents a code that was run. 
+After creating a complete path of our scripts we iterated across them using `map` and the function `readLines`. You can read `map` as follows: Run function `readLines` on every element of vector `tt_path` (The vector containing our path to each `.R`/`.Rmd` script). For a better understanding of the `map` function and family I highly recommend exploring the [documentation](https://purrr.tidyverse.org/reference/map.html).  
 
 ### Cleaning
 
@@ -145,7 +145,7 @@ Perfect! First I added the original script names for each sub list within the `f
 
 We can split the regex into two parts. the first one `(?<=library\\()).+(?=\\())` is both a positive look behind capturing everything after `library\\(` until it reaches `(?=\\))`, a positive look ahead for a parentheses. That way we capture everything in between the parentheses but remove the string `library()`. The second section of the regex `\\w+(?=::))` mimics the previous one but this time only with a positive look ahead -- Capture the word (`\\w+`) before the two `::`. 
 
-We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, (a variant of a data frame), we can assign the new vector a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any `NA` values such as empty lines, I used `distinct` to remove duplicate called packages in each week. For example, if I called `stringr::` twice in an R script I only want to count it once per session. 
+We iterate the `str_extract` across each sub-list of the `file_lines` object using `map_dfr` to return a tibble. Since it returns a tibble, a variant of a data frame, we can assign the new vector a column name - `package`. In addition, `map_df*` (map_df, map_dfr, etc.) can take an `.id` argument that will return the names of the original sub-lists as a column, in our case the names of our files we earlier cleaned. After filtering any `NA` values such as empty lines, I used `distinct` to remove duplicate called packages in each week. For example, if I called `stringr::` twice in an R script I only want to count it once per session. 
 
 ### plot
 
@@ -194,7 +194,7 @@ A few specific things to note:
 
 2. In the caption I added two additional pieces of information we can insert to take advantage of the automation. The First part is the number of scripts used to produce the plot (`file_names`) when the Action ran. Second, the caption adds the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
 
-An issue that's left is when calling `tidyverse` essentially we load packages such as `readr`, `ggplot2`, etc. We see that `readr` dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only using `tidyverse`. So do I want to leave `readr` or remove it if I already call `tidyverse`? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).
+An issue that's left is when calling `tidyverse` essentially we load packages such as `readr`, `ggplot2`, etc. We see that `readr` dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only load using `tidyverse`. So do I want to leave `readr` or remove it if I already load it with the `tidyverse`? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).
 
 ## GitHub Actions
 
