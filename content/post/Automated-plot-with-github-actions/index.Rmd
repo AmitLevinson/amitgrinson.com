@@ -290,10 +290,10 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 
 [^2]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you're concern you can use less depdencies than I have.
 
-That's it! Just upload the newly edited files, and activate the Action with the specific commit. **Don't forget to reference it from your repository's README so it shows up.** If you're not sure how you can see how I did it [here](https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md).
+That's it! Just upload the newly edited files, and activate the Action with the specific commit. **Don't forget to reference the plot from your repository's README so it shows up.** If you're not sure how you can see how I did it [here](https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md).
 
 ```{r, echo = FALSE, fig.cap='The different steps the Action does when activated', fig.align='center'}
-knitr::include_graphics("success.png")
+knitr::include_graphics("success.png") #
 ```
 
 
