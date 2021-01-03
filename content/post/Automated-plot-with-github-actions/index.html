@@ -1,12 +1,12 @@
 ---
-title: Automating a Plot with GitHub Actions
+title: Automatic Rendering of a Plot with GitHub Actions
 author: Amit Levinson
 date: '2021-01-03'
 slug: Automated-plot-with-github-actions
 categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
-summary: 'Trying out GitHub actions by automatically rendering a plot depicting frequently used packages in a repository.'
+summary: 'a light introduction to GitHub actions for automating a plot of frequently used R packages.'
 authors: []
 featured: yes
 image:
@@ -27,9 +27,9 @@ newcaption {
   text-align: center;
 }
 </style>
-<img src="featured.png" />
+<img src="outcome.png" />
 <center>
-<newcaption>Final outcome of a plot in my GitHub Readme automatically updating and rendering on a specific git commit.</newcaption>
+<newcaption>Final outcome of a plot in my GitHub README automatically updating and rendering on a specific git commit.</newcaption>
 </center>
 <p><br></p>
 <p><strong>TL;DR</strong>: In this post we setup the code for having a GitHub Action automatically update a plot. I start by showing step by step how I plot my most frequently used R packages for <a href="https://github.com/rfordatascience/tidytuesday">#Tidytuesday</a>, a weekly data project. However, I constantly add more information to that data every week I participate and will have to re-run the script to update the plot. For that purpose we turn to GitHub Actions and provide a workflow to run the R script on a specific Git commit.</p>
@@ -146,7 +146,7 @@ file_packages %&gt;%
   ggplot()+
   geom_col(aes(y= package, x = n), fill = &quot;gray45&quot;)+
   labs(title = &quot;Frequently used packages in #Tidytuesday&quot;,
-       subtitle = &quot;Plot is rendered on every &#39;initial commit&#39; to this repository, showcasing my 15 most frequently\nused packages in #TidyTuesday&quot;,
+       subtitle = &quot;Plot is rendered on every &#39;initial commit&#39; to this repository, showing my 15 most frequently\nused packages in #TidyTuesday&quot;,
        x = &quot;Number of times used&quot;, y = &quot;Package name&quot;,
        caption = paste0(&quot;Total scripts: &quot;, length(file_names),
                         &quot;\nLast updated:&quot;,format(Sys.Date(), &quot;%b %d, %Y&quot;)))+
@@ -243,7 +243,7 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 <code>uses</code> tells GitHub what to use: In the first one, <a href="https://github.com/actions/checkout"><code>actions/checkout@v2</code></a>, GitHub checks out our repository on which the workflow will run. Next we set up a <a href="https://github.com/jimhester/setup-r">remote r environment</a> using the <code>r-lib/actions/setup-r@v1</code> argument.</p></li>
 <li><p>In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, located in my ‘extra’ folder in the repository. Lastly we provide Git commands in which we config the built-in token (to run the git commands), add our rendered plot, commit and push the results.</p></li>
 </ul>
-<p>That’s it! Just upload the newly edited files, and activate the Action with the specific commit. Don’t forget to reference it from your repository’s README so it shows up.</p>
+<p>That’s it! Just upload the newly edited files, and activate the Action with the specific commit. <strong>Don’t forget to reference it from your repository’s README so it shows up.</strong> If you’re not sure how you can see how I did it <a href="https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md">here</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
 <img src="success.png" alt="The different steps the Action does when activated" width="960" />
 <p class="caption">
@@ -257,7 +257,7 @@ If the above GitHub Action follows through with the workflow and produces a new 
 <p>In order to debug, for example if the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m currently not the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="featured.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
+<img src="outcome.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
 <p class="caption">
 Figure 2: Final outcome of a plot automatically updating in our README file.
 </p>

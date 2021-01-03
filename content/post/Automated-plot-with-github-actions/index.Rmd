@@ -1,12 +1,12 @@
 ---
-title: Automating a Plot with GitHub Actions
+title: Automatic Rendering of a Plot with GitHub Actions
 author: Amit Levinson
 date: '2021-01-03'
 slug: Automated-plot-with-github-actions
 categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
-summary: 'Trying out GitHub actions by automatically rendering a plot depicting frequently used packages in a repository.'
+summary: 'a light introduction to GitHub actions for automating a plot of frequently used R packages.'
 authors: []
 featured: yes
 image:
@@ -31,9 +31,9 @@ newcaption {
 }
 ```
 
-![](featured.png)
+![](outcome.png)
 <center>
-<newcaption>Final outcome of a plot in my GitHub Readme automatically updating and rendering on a specific git commit.</newcaption>
+<newcaption>Final outcome of a plot in my GitHub README automatically updating and rendering on a specific git commit.</newcaption>
 </center>
 <br>
 
@@ -167,7 +167,7 @@ file_packages %>%
   ggplot()+
   geom_col(aes(y= package, x = n), fill = "gray45")+
   labs(title = "Frequently used packages in #Tidytuesday",
-       subtitle = "Plot is rendered on every 'initial commit' to this repository, showcasing my 15 most frequently\nused packages in #TidyTuesday",
+       subtitle = "Plot is rendered on every 'initial commit' to this repository, showing my 15 most frequently\nused packages in #TidyTuesday",
        x = "Number of times used", y = "Package name",
        caption = paste0("Total scripts: ", length(file_names),
                         "\nLast updated:",format(Sys.Date(), "%b %d, %Y")))+
@@ -293,7 +293,7 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 
 [^2]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you're concern you can use less depdencies than I have.
 
-That's it! Just upload the newly edited files, and activate the Action with the specific commit. Don't forget to reference it from your repository's README so it shows up.
+That's it! Just upload the newly edited files, and activate the Action with the specific commit. **Don't forget to reference it from your repository's README so it shows up.** If you're not sure how you can see how I did it [here](https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md).
 
 ```{r, echo = FALSE, fig.cap='The different steps the Action does when activated', fig.align='center'}
 knitr::include_graphics("success.png")
@@ -311,7 +311,7 @@ In order to debug, for example if the orange dot turn to a red x, go into the 'A
 **Disabling:** If you wish to disable the GitHub Action, you can either remove the `.yaml` file or disable the action from the repository's settings.
 
 ```{r echo = FALSE, fig.cap='Final outcome of a plot automatically updating in our README file.'}
-knitr::include_graphics("featured.png")
+knitr::include_graphics("outcome.png")
 ```
 
 ### Closing remarks
