@@ -7,7 +7,6 @@ categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
 summary: 'a light introduction to GitHub actions for automating a plot of frequently used R packages.'
-authors: []
 featured: yes
 image:
   caption: ''
@@ -203,7 +202,7 @@ An issue that's left is when calling `tidyverse` essentially we load packages su
 
 ![](https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif)
 
-GitHub actions provide an easy way to automate various *workflows*. **We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
+GitHub actions provide an easy way to automate various *workflows*. We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
 
 [^3]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
 
