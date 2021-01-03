@@ -195,7 +195,7 @@ A few specific things to note:
 
 2. I decided to only take the top 15 frequently used packages. You can play around with it to find a number you like or one that properly fits.
 
-3. In the caption I added to pieces of information. The first is the number of scripts used for the analysis, essentially the length of the object containing our scripts (`file_names`). Second, I added the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
+3. In the caption I added two additional pieces of information we can insert. The First part is the number of scripts used to produce the plot, in this case the length of the object containing our scripts (`file_names`). Second, I added the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
 
 An issue that's left is when calling `tidyverse` essentially we load packages such as `readr`, `ggplot2`, etc. We see that `readr` dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only using `tidyverse`. So do I want to leave `readr` or remove it if I already call `tidyverse`? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).
 
