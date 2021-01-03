@@ -192,7 +192,7 @@ A few specific things to note:
 
 1. In the GitHub Action I use [`showtext`](https://github.com/yixuan/showtext) as it enables to load a font that's not currently installed on the computer. You might need to play around with the text size if you use this package, as the appearance of graphs might vary across operating systems. Here I used the`{extrafont}` package since for some reason showtext wasn't properly rendering for me in this blog post.
 
-2. In the caption I added two additional pieces of information we can insert. The First part is the number of scripts used to produce the plot, in this case the length of the object containing our scripts (`file_names`). Second, I added the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
+2. In the caption I added two additional pieces of information we can insert to take advantage of the automation. The First part is the number of scripts used to produce the plot (`file_names`) when the Action ran. Second, the caption adds the current date on every render, i.e. every time we push to our #TidyTuesday repository and activate the GitHub Action.
 
 An issue that's left is when calling `tidyverse` essentially we load packages such as `readr`, `ggplot2`, etc. We see that `readr` dominates the plot of packages because I call it explicitly when loading the data, compared to ggplot2 that I only using `tidyverse`. So do I want to leave `readr` or remove it if I already call `tidyverse`? Here I leave it as is, but let me know if you decided to tackle it (One option was parsing all scripts and seeing which package is used, but that can take a good while).
 
