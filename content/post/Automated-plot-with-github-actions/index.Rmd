@@ -6,7 +6,7 @@ slug: Automated-plot-with-github-actions
 categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
-summary: 'a light introduction to GitHub actions for automating a plot of frequently used R packages.'
+summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
 featured: yes
 image:
   caption: ''
@@ -202,7 +202,7 @@ An issue that's left is when calling `tidyverse` essentially we load packages su
 
 ![](https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif)
 
-GitHub actions provide an easy way to automate various *workflows*. We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
+GitHub actions provide an easy way to automate various *workflows*. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
 
 [^3]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
 
@@ -210,7 +210,9 @@ We have our plot showcasing our most frequently used packages, but we want it re
 
 ### Action Setup 
 
-We'll use the `usethis` R package to create the Action workflow. The package makes it easy to work with GitHub Actions by providing great `yaml` templates and folder setups for various occasions. I found the `README` template adequate so we'll create that. Assuming you have the package installed, just type the following in the r console in the root folder of your Tidytuesday repository (or whatever repository you want the Action to run on):  
+If you're not an R user, or don't want to use the `usethis` R package to create the Action workflow (our set of instructions), you can setup an action manually. Just click on the Action tab in your repository  <i class="fas fa-arrow-right"></i> 'new workflow' and setup a workflow template yourself.
+
+The `{usethis}` package makes it easy to work with GitHub Actions by providing great `yaml` templates and folder setups for various occasions. I found the `README` template adequate so we'll create that. Assuming you have the package installed, just type the following in the r console in the root folder of your Tidytuesday repository (or whatever repository you want the Action to run on):  
 
 
 ```{r eval = FALSE}
@@ -303,7 +305,7 @@ When the Action is running you will see an orange dot at the top of the root fol
 If the above GitHub Action follows through with the workflow and produces a new plot, it will only be updated in your remote repository. You might be required to merge the remote content locally next time you want to push.
 {{% /alert %}}
 
-In order to debug, for example if the orange dot turn to a red x, go into the 'Actions' tab in your repository, click on 'Render library update' or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> 'build' and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I'm currently not the one to write it.
+In order to debug, i.e. if the orange dot turned to a red x, go into the 'Actions' tab in your repository, click on 'Render library update' or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> 'build' and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I'm currently not the one to write it.
 
 **Disabling:** If you wish to disable the GitHub Action, you can either remove the `.yaml` file or disable the action from the repository's settings.
 

@@ -6,7 +6,7 @@ slug: Automated-plot-with-github-actions
 categories: []
 tags: [TidyTuesday, GitHub]
 subtitle: ''
-summary: 'a light introduction to GitHub actions for automating a plot of frequently used R packages.'
+summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
 featured: yes
 image:
   caption: ''
@@ -178,11 +178,12 @@ file_packages %&gt;%
 <h2>GitHub Actions</h2>
 <p><em>See additional learning resources below</em></p>
 <p><img src="https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif" /></p>
-<p>GitHub actions provide an easy way to automate various <em>workflows</em>. We provide GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a ‘YAML’ file (Yet Another Markdown Language) with specific commands<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>GitHub actions provide an easy way to automate various <em>workflows</em>. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a ‘YAML’ file (Yet Another Markdown Language) with specific commands<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <p>We have our plot showcasing our most frequently used packages, but we want it rendered for us on every participation in #TidyTuesday. That’s exactly where GitHub Actions can help us by running the script for us. <strong>We setup the code once, like we did before, and have our workflow run it when we choose.</strong></p>
 <div id="action-setup" class="section level3">
 <h3>Action Setup</h3>
-<p>We’ll use the <code>usethis</code> R package to create the Action workflow. The package makes it easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups for various occasions. I found the <code>README</code> template adequate so we’ll create that. Assuming you have the package installed, just type the following in the r console in the root folder of your Tidytuesday repository (or whatever repository you want the Action to run on):</p>
+<p>If you’re not an R user, or don’t want to use the <code>usethis</code> R package to create the Action workflow (our set of instructions), you can setup an action manually. Just click on the Action tab in your repository <i class="fas fa-arrow-right"></i> ‘new workflow’ and setup a workflow template yourself.</p>
+<p>The <code>{usethis}</code> package makes it easy to work with GitHub Actions by providing great <code>yaml</code> templates and folder setups for various occasions. I found the <code>README</code> template adequate so we’ll create that. Assuming you have the package installed, just type the following in the r console in the root folder of your Tidytuesday repository (or whatever repository you want the Action to run on):</p>
 <pre class="r"><code>usethis::use_github_action()</code></pre>
 <p>And you should receive the following output, only with your information instead:</p>
 <pre class="yaml"><code>√ Setting active project to &#39;C:/Users/amitl/R_code/TidyTuesday&#39;
@@ -252,7 +253,7 @@ Figure 1: The different steps the Action does when activated
 <p>{{% alert warning %}}
 If the above GitHub Action follows through with the workflow and produces a new plot, it will only be updated in your remote repository. You might be required to merge the remote content locally next time you want to push.
 {{% /alert %}}</p>
-<p>In order to debug, for example if the orange dot turn to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m currently not the one to write it.</p>
+<p>In order to debug, i.e. if the orange dot turned to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m currently not the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
 <img src="outcome.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
