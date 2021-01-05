@@ -269,7 +269,7 @@ jobs:
 
 ### What's all this yaml
 
-Let's break break up the script piece by piece:
+Let's break up the script piece by piece:
 
 * `name: Render library update` - The name of the the GitHub Action. This is what will appear under the workflows section in the GitHub actions tab.
 
@@ -279,7 +279,7 @@ Let's break break up the script piece by piece:
 
 * `runs-on: macOS-latest` This tells GitHub on which operating system to run the r environment. You can also choose to run the action on several OS such as Ubuntu and Windows. It can be extremely useful when you're checking out packages and want to verify they work on various operating systems. I use on my own computer Windows and left it with `macOS-latest`.
 
-* `if: "contains(github.event.head_commit.message, 'initial commit')"` - Here we provide GitHub an 'exit' option when running the Action, and the condition on when to run it. `github.event.head_commit.message` captures the commit message you used before pushing using a regex we provide - 'initial commit'. Without a logical condition, the Action will follow through on every push.
+* `if: "contains(github.event.head_commit.message, 'initial commit')"` - Here we provide GitHub an 'exit' option when running the Action, and the condition on when to run it. `github.event.head_commit.message` captures the commit message you used before pushing using a regex we provide - 'initial commit'. Without a logical condition the Action will follow through on every push; however, we usually want it to run only when adding new scripts and not when modifying existing ones.
 
 {{% alert note %}}
 We use a conditional statement to tell GitHub when to run our Action. If the condition returns true, in this case matching our commit message, GitHub Actions will complete the workflow. Otherwise the Action will stop and exit before processing the following steps. 
@@ -317,7 +317,7 @@ knitr::include_graphics("outcome.png")
 
 This was my first time using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture -- GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.  
 
-You can find the above example live in [my #TidyTuesday repository](https://github.com/AmitLevinson/TidyTuesday), the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
+You can find the above example live in [my #TidyTuesday repository](https://github.com/AmitLevinson/TidyTuesday), the complete R script I used [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/extra/packages-plot.R), and the YAML script for the GitHub Action [here](https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml). 
 
 Lastly, I would like to highlight several resources I found extremely useful for learning more about GitHub Actions:
 

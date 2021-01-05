@@ -226,13 +226,13 @@ jobs:
 </div>
 <div id="whats-all-this-yaml" class="section level3">
 <h3>What’s all this yaml</h3>
-<p>Let’s break break up the script piece by piece:</p>
+<p>Let’s break up the script piece by piece:</p>
 <ul>
 <li><p><code>name: Render library update</code> - The name of the the GitHub Action. This is what will appear under the workflows section in the GitHub actions tab.</p></li>
 <li><p><code>on: [push]</code> - Tells GitHub when to activate the workflow. There’s a plethora of options to use here; for example, you can have it run on every commit, a pull request or both. In addition, you can have it run at a specific time frame using <code>schedule</code>.</p></li>
 <li><p><code>jobs: build:</code> - I’m not sure what exactly they do. I know that for rendering README files you’d have <code>render</code> instead of build, but honestly I don’t know what either does exactly.</p></li>
 <li><p><code>runs-on: macOS-latest</code> This tells GitHub on which operating system to run the r environment. You can also choose to run the action on several OS such as Ubuntu and Windows. It can be extremely useful when you’re checking out packages and want to verify they work on various operating systems. I use on my own computer Windows and left it with <code>macOS-latest</code>.</p></li>
-<li><p><code>if: "contains(github.event.head_commit.message, 'initial commit')"</code> - Here we provide GitHub an ‘exit’ option when running the Action, and the condition on when to run it. <code>github.event.head_commit.message</code> captures the commit message you used before pushing using a regex we provide - ‘initial commit’. Without a logical condition, the Action will follow through on every push.</p></li>
+<li><p><code>if: "contains(github.event.head_commit.message, 'initial commit')"</code> - Here we provide GitHub an ‘exit’ option when running the Action, and the condition on when to run it. <code>github.event.head_commit.message</code> captures the commit message you used before pushing using a regex we provide - ‘initial commit’. Without a logical condition the Action will follow through on every push; however, we usually want it to run only when adding new scripts and not when modifying existing ones.</p></li>
 </ul>
 <p>{{% alert note %}}
 We use a conditional statement to tell GitHub when to run our Action. If the condition returns true, in this case matching our commit message, GitHub Actions will complete the workflow. Otherwise the Action will stop and exit before processing the following steps.
@@ -265,7 +265,7 @@ Figure 2: Final outcome of a plot automatically updating in our README file.
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
 <p>This was my first time using GitHub actions and hopefully not the last. I used here only one example, and might be a little niche for some people, but I hope you got the big picture – GitHub Actions are easy to use, and they can automate a lot of your work. Do let me know if you made an Action as a result of reading the post, I would love to see what you came up with.</p>
-<p>You can find the above example live in <a href="https://github.com/AmitLevinson/TidyTuesday">my #TidyTuesday repository</a>, the complete R script I used <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/packages-plot.R">here</a>, and the YAML script for the GitHub Action <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml">here</a>.</p>
+<p>You can find the above example live in <a href="https://github.com/AmitLevinson/TidyTuesday">my #TidyTuesday repository</a>, the complete R script I used <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/extra/packages-plot.R">here</a>, and the YAML script for the GitHub Action <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/.github/workflows/render-plot.yaml">here</a>.</p>
 <p>Lastly, I would like to highlight several resources I found extremely useful for learning more about GitHub Actions:</p>
 <ol style="list-style-type: decimal">
 <li><p>Jim Hester’s <a href="https://www.jimhester.com/talk/2020-rsc-github-actions/">rstudio talk</a> on GitHub actions - Great introduction and to get you excited about the opportunities available with GitHub Actions.</p></li>
