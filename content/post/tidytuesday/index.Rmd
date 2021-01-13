@@ -43,6 +43,14 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
 </br>
 
+### **13.01.2020**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd)
+
+<p align = "center">
+<iframe width ="95%" height="525" name ="iframe" src="https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html"></iframe>
+</p>
+
+
 ### **29.12.2020**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R)
 
