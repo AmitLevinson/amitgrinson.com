@@ -44,7 +44,7 @@ Below are graphs I made, organized in a descending order by date. Some I'm more 
 </br>
 
 ### **13.01.2020**
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd)
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd) | [Full table](https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html)
 
 <p align = "center">
 <iframe width ="95%" height="525" name ="iframe" src="https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html"></iframe>
