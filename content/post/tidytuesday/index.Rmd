@@ -40,10 +40,20 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 
 ## Plots  
 
-Below are graphs I made, organized in a descending order by date. Some I'm more proud of than others, but I choose to display all of them in case someone finds anything useful :smile:
+Below are selected graphs I made, organized in a descending order by date. To see a more comprehensive list feel free to visit my corresponding repository :smile:
 </br>
 
-### **13.01.2020**
+
+### **19.01.2021**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week4_rkenya/rkenya.R)
+
+<p align = "center">
+<img alt = 'tidytuesday Kenya counties gender distribution' src = "/img/tt/rkenya.png" width = "700">
+</p>
+
+
+
+### **13.01.2021**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd) | [Full table](https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html)
 
 <p align = "center">
@@ -150,13 +160,6 @@ Beyonce's lyrics | [Link to code](https://github.com/AmitLevinson/TidyTuesday/bl
 <img alt = 'The Office bigram' src = "/img/tt/tt_schrute.png" width = "700">
 </p>
 
-### **06.03.2020**  
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week10_nhl/nhl.Rmd) | [Try the app](https://amit-levinson.shinyapps.io/tidytuesday_week_10_nhl/)
-
-<p align = "center">
-  <img alt = 'tidytuesday NHL shinyapp' src = "/img/tt/tt_nhl.gif" width = "700">
-</p>
-
 
 ### **20.01.2020**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week4_spotify_songs/spotify_songs.R)
@@ -165,19 +168,6 @@ Beyonce's lyrics | [Link to code](https://github.com/AmitLevinson/TidyTuesday/bl
   <img alt = 'sentiment analysis spotify titles' src = "/img/tt/spotify.png" width = "700">
 </p>
 
-### **22.12.2019**  
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week51_adopted_dogs/adopted_dogs.R)  
-
-<p align = "center">
-<img src = "/img/tt/total_breed.png" width = "700">
-</p>  
-
-### **11.12.2019**  
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week50_diseases/diseases.R)
-
-<p align = "center">
-<img src = "/img/tt/measles.gif" width = "700">
-</p>
 
 ### **5.12.2019**  
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week49_parking_tickets/parking_tickets.R)
@@ -186,9 +176,7 @@ Beyonce's lyrics | [Link to code](https://github.com/AmitLevinson/TidyTuesday/bl
 <img src = "/img/tt/parking_tickets_hours.png" width = "700">
 </p>
 
-### **20.11.2019**  
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week47_nz_birds/nz_birds.Rmd)
-  
+
 ![New zealand birds](/img/tt/nz_bird_vote.png)
 
 ### **6.11.2019**
@@ -212,31 +200,6 @@ Beyonce's lyrics | [Link to code](https://github.com/AmitLevinson/TidyTuesday/bl
 
 <p align = "center">
 <img src="/img/tt/horror_movie_length.png" width="700">
-</p>
-</br>
-
-### **9.10.2019**  
-
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week41_Power_lifting/ipf.R)
-<p align = "center">
-<img src="/img/tt/Max_lift.jpeg" width="700">
-</p>
-</br>
-
-### **6.10.2019**  
-
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/Week40_All%20the%20Pizza/Barstool_Top_2_Percent.R)
-<p align = "center">
-<img src="/img/tt/Barstool_rating.png" width="700">
-</p>
-</br>
-
-### **28.9.2019**  
-
-[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2_Week39_SchoolDiversity/School_Diversity_Updated.R)
-
-<p align = "center">
-<img src="/img/tt/Ethnic_div_revised.png" width="700">
 </p>
 </br>
 

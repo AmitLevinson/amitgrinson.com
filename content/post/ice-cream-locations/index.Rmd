@@ -1,0 +1,280 @@
+---
+title: Golda Ice Cream Locations in Israel
+author: Amit Levinson
+date: '2021-01-03'
+slug: exploring-ice-cream-locations
+categories: [R, GitHub]
+tags: [TidyTuesday, GitHub]
+subtitle: ''
+summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+draft: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+```{css, echo = FALSE}
+newcaption {
+  font-size: 0.9em;
+  text-align: center;
+}
+```
+
+```{r}
+library(dplyr)
+library(readr)
+library(purrr)
+library(leaflet)
+library(glue)
+library(htmltools)
+library(sf)
+library(here)
+library(ggplot2)
+library(ggspatial)
+```
+
+Let' explore the ice cream locations throughout the country
+
+```{r}
+golda_locations <- read_csv("content/post/ice-cream-locations/golda_locations.csv")
+```
+
+How many locations do we have?
+
+```{r}
+nrow(golda_locations)
+```
+
+Let's see where they are across Israel:
+
+```{r}
+make_label <- function(x, y, n){
+  glue("<p style='text-align:right;font-family:Calibri;font-size:14px;'>
+  <b>{x}</b></span><br/>
+  {y}</span><br/>
+  <span style='color:#808080'>{n}</p>") %>% 
+    HTML()
+}
+# Create labels
+ice_cream_labels <- pmap(list(golda_locations$city, golda_locations$street,golda_locations$number), make_label)
+# Use an icon for points
+ice_cream_icon <-  makeIcon("https://upload.wikimedia.org/wikipedia/commons/2/2c/Ice-cream-solid.svg", iconWidth = 12, iconHeight = 16)
+
+# Draw map
+leaflet() %>% 
+  addTiles(data = golda_locations) %>% 
+  addMarkers(data = golda_locations, icon = ice_cream_icon, label = ~ ice_cream_labels)# %>% 
+  #addPolygons(data = grid_wg, fill = "blue", fillOpacity = 0.1, weight = 0.3)
+```
+
+### Israel map
+
+```{r}
+golda_projected <- golda_locations %>% 
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+
+```{r}
+library(sf)
+
+isr_map_sf <- st_read("static/data/maps/israel/israel_borders.shp") %>% st_transform(crs = 4326)
+isr_map_rds <- readRDS("content/post/ice-cream-locations/maps/00_Israel_0_sf.rds")
+  
+st_crs(isr_map_rds)
+
+isr_map <- st_transform(isr_map_sf, crs = 2039)
+new_isr <- st_make_grid(isr_map,  cellsize = 5000)
+grid <- st_intersection(new_isr, isr_map)
+
+# write_rds(new_isr, "content/post/ice-cream-locations/new_isr.Rds")
+# write_rds(grid, "content/post/ice-cream-locations/grid.Rds")
+
+plot(grid)
+
+golda_meters <- st_transform(st_geometry(golda_projected), crs = 2039)
+
+dis_1 <- st_distance(golda_meters,grid) %>% 
+  as.tibble() %>% 
+  map_dbl(min) / 1000
+  
+dataum <- data.frame(
+  geometry = st_geometry(golda_projected[1:5,]),
+  location_grid = st_centroid(rep(grid[15,],5)))
+
+grid_wg <- st_transform(grid, crs = 4326)
+
+  #dist = st_distance(golda_projected[1:5,], grid_test[1,])/1000
+
+data_lines <- map_dfc(dataum, ~ st_transform(.x, crs = 2039)) 
+dist <-  map2_dbl(data_lines$geometry, data_lines$geometry.1,  st_distance)
+
+
+  # No need to convert to specific lat-long?? Just use sfc_Point:
+sample_data <- data_lines %>% 
+  map_dfc(~ st_transform(.x, crs = 4326) %>% st_coordinates(.x)) %>% 
+  #map_dfc(as.data.frame) %>% 
+  set_names(c("golda.x","golda.y", "us.x" ,"us.y")) %>% 
+  cbind(distance = dist,
+        location_polygon = st_transform(rep(grid[15,], 5), crs = 4326)) %>% 
+  mutate(relevant = ifelse(distance == min(distance), "yes", "no"),
+         square_label = "Divide the geographic locations\n into 1 km^2")
+
+sample_data <- data_lines %>% 
+  map_dfc(~ st_transform(.x, crs = 4326) %>% st_coordinates(.x)) %>% 
+  map_dfc(as.data.frame) %>% 
+  set_names(c("golda.x","golda.y", "us.x" ,"us.y")) %>% 
+  cbind(distance = dist,
+        location_polygon = st_transform(rep(grid[15,], 5), crs = 4326)) %>% 
+  mutate(relevant = ifelse(distance == min(distance), "yes", "no"))
+
+ggplot(isr_map_sf)+
+  geom_sf()+
+  geom_sf(data = grid[15,])+
+  geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y))+
+  geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = "red", size = 0.1)+
+  geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, color = relevant))+
+  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = paste0(round(distance/1000), "km")), crs = 4326, hjust = 0.5)+
+  theme_void()
+
+
+test <- st_join(st_transform(isr_map, 4326), st_as_sf(dataum[,1])) 
+st_crs(golda_projected)
+
+test$geometry  
+ggplot()+
+  geom_sf()+
+  geom_point(aes(geometry = geometry), stat = "sf_coordinates")
+
+st_crs(st_as_sf(dataum[,1]))
+
+?geom_spatial_label
+  
+?geom_spatial_segment
+ggplot(cities, aes(lon, lat, xend = lon_end, yend = lat_end)) +
+  geom_spatial_point(crs = 4326)
+
+geom_line()
+library(ggspatial)
+  
+stat_sf_coordinates()
+
+st_centroid(grid[1,])
+
+glimpse(grid)
+
+df <- data.frame(dist = as.vector(dist)/1000,
+                    st_coordinates(st_cast(grid, "MULTIPOLYGON")))
+
+```
+
+Tutorials:
+https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html
+
+# Example
+```{r}
+library(sf)
+library(dplyr)
+library(purrr)
+library(ggtext)
+library(extrafont)
+
+# Read map
+isr_map_sf <- st_read("~/amitlevinson.com/static/data/maps/israel/israel_borders.shp")
+
+# Sample 10 random points and 1 point 10 times:
+points_df <- data.frame(locations = st_sample(isr_map_sf, 10),
+              us = rep(st_sample(isr_map_sf,1), 10))
+
+# Convert to 4326 for Geodetic coordinates
+map_points <- points_df %>% 
+  map_dfc(st_transform, crs = 4326)
+
+# Make the label and segments:
+segment_info <- map_points[c("geometry", "geometry.1")] %>% 
+  # Convert to coordinates (long-lat)
+  map_dfc(~ st_coordinates (.x)) %>% 
+  map_dfc(as.data.frame) %>% 
+  # Change names for easier reading
+  set_names(c("loc.x","loc.y", "us.x" ,"us.y")) %>% 
+  # Get the distance from the one location to the other 10, convert to Km and round it
+  mutate(dist = round(map2_dbl(points_df$geometry, points_df$geometry.1, st_distance) / 1000, 0),
+         # Add conditional to color the segment
+         closest = ifelse(dist == min(dist), "yes", "no"),
+         # Add 'km' label to the highlighted value
+         dist = ifelse(closest == "yes", paste0(dist, "km"), dist))
+
+# Revert back to crs 4326 (orginaly it was UTM)
+isr_map_4326 <- st_transform(isr_map_sf, crs =4326)
+
+# Plot!
+ggplot(isr_map_4326)+
+  geom_sf()+
+  # Plotting the 10 locations
+  geom_sf(data = map_points, aes(geometry = geometry), size = 1.5, color = "gray45")+
+  # Add line segments
+  geom_spatial_segment(data = segment_info, mapping = aes(x = us.x, xend = loc.x, y = us.y, yend = loc.y,  color = closest))+
+  # Add text
+  geom_spatial_text_repel(data = segment_info, aes(x =loc.x, y = loc.y, label = dist, color = closest), size = 5)+
+  # Add our location (have it on top of the segments)
+  geom_sf(data = map_points, aes(geometry = geometry.1), color = "red", size = 2)+
+  # Edit color of text and segment line
+  scale_color_manual(values = c("yes" = "red", "no" = "gray45"))+
+  guides(color = "none")+
+  labs(title = "Calculating Distance to Various Points on a Map",
+       subtitle = "Using the sf_distance function from the {sf} R package we can calculate<br>distances from one set of points to another (many to many, one to many, etc).<br>Once we have all distances we can find the <span style='color:red'>nearest point.</span>")+
+  theme_void()+
+  theme(
+    text = element_text(family = "IBM Plex Sans"),
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_markdown(size = 11))
+
+ggsave("distances.png", width = 8, height = 8)
+```
+
+
+#TEST
+
+```{r}
+cities <- data.frame(
+  lon = c(-63.58595, 116.41214, 13.50, -149.75),
+  lat = c(44.64862, 40.19063, 52.51, 61.20),
+  city = c("Halifax", "Beijing", "Berlin", "Anchorage"),
+  city_to = c("Anchorage", "Beijing", "Berlin", "Halifax")
+)
+
+cities$lon_end <- cities$lon[c(4, 3, 1, 2)]
+cities$lat_end <- cities$lat[c(4, 3, 1, 2)]
+class(la_sfg)
+
+la_sfg <- st_point(c(-118.2615805, 34.1168926))
+amsterdam_sfg <- st_point(c(4.8979755, 52.3745403))
+
+
+multipoint_sfg <- st_multipoint(rbind(c(-118.2615805, 34.1168926), c(4.8979755, 52.3745403)))
+linestring_sfg <- st_linestring(rbind(c(-118.2615805, 34.1168926), c(4.8979755, 52.3745403)))
+ggplot(multipoint_sfg)+
+  geom_sf()
+
+
+
+coordinates_df <- points_df %>% 
+  map_dfc(st_transform, crs = 4326) %>% 
+  map_dfc(st_coordinates) %>% 
+
+class(coordinates_df$geometry)
+
+
+
+```
+
