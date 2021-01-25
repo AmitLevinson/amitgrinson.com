@@ -46,7 +46,8 @@ library(ggspatial)
 Let' explore the ice cream locations throughout the country
 
 ```{r}
-golda_locations <- read_csv("content/post/ice-cream-locations/golda_locations.csv")
+golda_locations <- read_csv("content/post/ice-cream-locations/golda_locations.csv") %>% 
+  mutate(id = 1:nrow(.))
 ```
 
 How many locations do we have?
@@ -82,199 +83,135 @@ leaflet() %>%
 ```{r}
 golda_projected <- golda_locations %>% 
   st_as_sf(coords = c("lon", "lat"), crs = 4326)
+golda_meters <- st_transform(golda_projected, crs = 2039)
 ```
 
 
 ```{r}
-library(sf)
-
 isr_map_sf <- st_read("static/data/maps/israel/israel_borders.shp") %>% st_transform(crs = 4326)
 isr_map_rds <- readRDS("content/post/ice-cream-locations/maps/00_Israel_0_sf.rds")
   
-st_crs(isr_map_rds)
-
 isr_map <- st_transform(isr_map_sf, crs = 2039)
 new_isr <- st_make_grid(isr_map,  cellsize = 5000)
 grid <- st_intersection(new_isr, isr_map)
 
-# write_rds(new_isr, "content/post/ice-cream-locations/new_isr.Rds")
+write_rds(grid, "content/post/ice-cream-locations/new_isr.Rds")
 # write_rds(grid, "content/post/ice-cream-locations/grid.Rds")
 
 plot(grid)
 
 golda_meters <- st_transform(st_geometry(golda_projected), crs = 2039)
 
-dis_1 <- st_distance(golda_meters,grid) %>% 
-  as.tibble() %>% 
-  map_dbl(min) / 1000
-  
 dataum <- data.frame(
-  geometry = st_geometry(golda_projected[1:5,]),
-  location_grid = st_centroid(rep(grid[15,],5)))
-
-grid_wg <- st_transform(grid, crs = 4326)
+  geometry = st_geometry(golda_projected[3:9,]),
+  location_grid = st_centroid(rep(grid[309,],7)))
 
   #dist = st_distance(golda_projected[1:5,], grid_test[1,])/1000
 
 data_lines <- map_dfc(dataum, ~ st_transform(.x, crs = 2039)) 
-dist <-  map2_dbl(data_lines$geometry, data_lines$geometry.1,  st_distance)
-
 
   # No need to convert to specific lat-long?? Just use sfc_Point:
-sample_data <- data_lines %>% 
-  map_dfc(~ st_transform(.x, crs = 4326) %>% st_coordinates(.x)) %>% 
-  #map_dfc(as.data.frame) %>% 
-  set_names(c("golda.x","golda.y", "us.x" ,"us.y")) %>% 
-  cbind(distance = dist,
-        location_polygon = st_transform(rep(grid[15,], 5), crs = 4326)) %>% 
-  mutate(relevant = ifelse(distance == min(distance), "yes", "no"),
-         square_label = "Divide the geographic locations\n into 1 km^2")
 
 sample_data <- data_lines %>% 
   map_dfc(~ st_transform(.x, crs = 4326) %>% st_coordinates(.x)) %>% 
   map_dfc(as.data.frame) %>% 
   set_names(c("golda.x","golda.y", "us.x" ,"us.y")) %>% 
-  cbind(distance = dist,
-        location_polygon = st_transform(rep(grid[15,], 5), crs = 4326)) %>% 
-  mutate(relevant = ifelse(distance == min(distance), "yes", "no"))
+  cbind(distance = map2_dbl(data_lines$geometry, data_lines$geometry.1,  st_distance),
+        location_polygon = st_transform(data_lines$geometry.1, crs = 4326)) %>% 
+  mutate(relevant = ifelse(distance == min(distance), "yes", "no"),
+         distance = ifelse(relevant == "yes", paste0(round(distance/1000, 0), "km"), round(distance/1000, 0)))
 
 ggplot(isr_map_sf)+
   geom_sf()+
-  geom_sf(data = grid[15,])+
-  geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y))+
+  geom_sf(data = grid[309,])+
+  geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y, color = relevant))+
+  geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
   geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = "red", size = 0.1)+
-  geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, color = relevant))+
-  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = paste0(round(distance/1000), "km")), crs = 4326, hjust = 0.5)+
+  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5)+
+  scale_color_manual(values = c("yes" = "red", "no" = "gray55"))+
+  scale_linetype_manual(values = c("dashed","solid"))+
+  # Remove legends
+  guides(color = "none")+
   theme_void()
-
-
-test <- st_join(st_transform(isr_map, 4326), st_as_sf(dataum[,1])) 
-st_crs(golda_projected)
-
-test$geometry  
-ggplot()+
-  geom_sf()+
-  geom_point(aes(geometry = geometry), stat = "sf_coordinates")
-
-st_crs(st_as_sf(dataum[,1]))
-
-?geom_spatial_label
-  
-?geom_spatial_segment
-ggplot(cities, aes(lon, lat, xend = lon_end, yend = lat_end)) +
-  geom_spatial_point(crs = 4326)
-
-geom_line()
-library(ggspatial)
-  
-stat_sf_coordinates()
-
-st_centroid(grid[1,])
-
-glimpse(grid)
-
-df <- data.frame(dist = as.vector(dist)/1000,
-                    st_coordinates(st_cast(grid, "MULTIPOLYGON")))
-
 ```
+
+Now that we split our geographic area into 5km^2, and showed how we find the near value for each section, we can do so for all areas. This will result in a map indicating the nearest Golda ice cream shop within a 5km^2 distance:
+
+```{r}
+distances <- st_distance(golda_meters, st_centroid(grid)) %>% 
+  as_tibble()
+
+golda_distances <- data.frame(
+  us = st_transform(grid, crs = 4326),
+  # Extract minimum distance for each grid
+  distance_km = map_dbl(distances, min)/1000,
+  # Extract the value's index for joining with the ice-cream loc info
+  location_id = map_dbl(distances, function(x) match(min(x), x))) %>% 
+  left_join(golda_projected, by = c("location_id" = "id"))
+```
+
+```{r}
+# Draw map
+grid_polygons <- golda_distances$geometry.x
+  
+ice_cream_icon <-  makeIcon("https://upload.wikimedia.org/wikipedia/commons/2/2c/Ice-cream-solid.svg", iconWidth = 6, iconHeight = 8)
+
+bins <- c(70,50,25,10,5,0)
+pal <- colorBin("OrRd", domain = golda_distances$distance_km, bins = bins)
+
+make_label_distances <- function(x, y, n){
+  glue("
+  <p style='text-align:right;font-family:Calibri;font-size:14px;'>
+  הסניף הקרוב במרחק של כ-<b>{round(x, 0)}</b></span>
+ ק'מ בכתובת<br>
+  {y}, {n}</span></p>") %>% 
+    HTML()
+}
+# Create labels
+
+ice_cream_labels <- pmap(list(golda_distances$distance_km, golda_distances$street,golda_distances$city ), make_label_distances)
+
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(data = golda_projected, icon = ice_cream_icon, group = "Ice-cream locations") %>% 
+  addPolygons(data = grid_polygons, fillColor = pal(golda_distances$distance_km), fillOpacity = 0.7, weight =0, opacity =1, color = "transparent", group = "Distances", popup = ice_cream_labels, 
+            highlight = highlightOptions(weight = 2.5, color = "#666", bringToFront = TRUE, opacity= 1),
+            popupOptions = popupOptions(autoPan = FALSE,closeOnClick = TRUE, textOnly = T, style = list("size" = "22"))) %>% 
+  addLegend(pal = pal, values = (golda_distances$distance_km), opacity = 0.8, 
+                         title = "Distance in Km", position= "bottomright") %>% 
+  addLayersControl(overlayGroups = c("Ice-cream locations", "Distances"),
+                   options = layersControlOptions(collapsed = FALSE))
+```
+
+
+### Static maps
+
+We can also visualize it on a static map, allowing us to export it if we wish.
+
+```{r}
+golda_distances_static <- golda_distances %>% 
+  mutate(binned_colors = cut(distance_km, breaks = c(70,50,25,10,5,0)))
+
+ggplot(golda_distances_static)+
+  geom_sf(data = isr_map_sf, aes(geometry = geometry))+
+  geom_sf(aes(geometry = geometry.x, fill =  binned_colors), color = "transparent")+
+  geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .5)+
+  scale_fill_brewer(name = "Distance (km)", palette = "OrRd", labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
+  xlim(34,36)+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Colors represent distance from the center of a 5km^2 area")+
+  guides(fill = guide_legend(reverse = TRUE))+
+  #theme_void()+
+  theme(text = element_text(),
+        plot.title = element_text(color = "#0C0C44", face = "bold", size = 18),
+        plot.title.position = "plot",
+        plot.subtitle = element_markdown(color = "gray35", size = 14),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
+ggsave("content/post/ice-cream-locations/israel_map.png", width = 5, height = 8)
+```
+
+
 
 Tutorials:
 https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html
-
-# Example
-```{r}
-library(sf)
-library(dplyr)
-library(purrr)
-library(ggtext)
-library(extrafont)
-
-# Read map
-isr_map_sf <- st_read("~/amitlevinson.com/static/data/maps/israel/israel_borders.shp")
-
-# Sample 10 random points and 1 point 10 times:
-points_df <- data.frame(locations = st_sample(isr_map_sf, 10),
-              us = rep(st_sample(isr_map_sf,1), 10))
-
-# Convert to 4326 for Geodetic coordinates
-map_points <- points_df %>% 
-  map_dfc(st_transform, crs = 4326)
-
-# Make the label and segments:
-segment_info <- map_points[c("geometry", "geometry.1")] %>% 
-  # Convert to coordinates (long-lat)
-  map_dfc(~ st_coordinates (.x)) %>% 
-  map_dfc(as.data.frame) %>% 
-  # Change names for easier reading
-  set_names(c("loc.x","loc.y", "us.x" ,"us.y")) %>% 
-  # Get the distance from the one location to the other 10, convert to Km and round it
-  mutate(dist = round(map2_dbl(points_df$geometry, points_df$geometry.1, st_distance) / 1000, 0),
-         # Add conditional to color the segment
-         closest = ifelse(dist == min(dist), "yes", "no"),
-         # Add 'km' label to the highlighted value
-         dist = ifelse(closest == "yes", paste0(dist, "km"), dist))
-
-# Revert back to crs 4326 (orginaly it was UTM)
-isr_map_4326 <- st_transform(isr_map_sf, crs =4326)
-
-# Plot!
-ggplot(isr_map_4326)+
-  geom_sf()+
-  # Plotting the 10 locations
-  geom_sf(data = map_points, aes(geometry = geometry), size = 1.5, color = "gray45")+
-  # Add line segments
-  geom_spatial_segment(data = segment_info, mapping = aes(x = us.x, xend = loc.x, y = us.y, yend = loc.y,  color = closest))+
-  # Add text
-  geom_spatial_text_repel(data = segment_info, aes(x =loc.x, y = loc.y, label = dist, color = closest), size = 5)+
-  # Add our location (have it on top of the segments)
-  geom_sf(data = map_points, aes(geometry = geometry.1), color = "red", size = 2)+
-  # Edit color of text and segment line
-  scale_color_manual(values = c("yes" = "red", "no" = "gray45"))+
-  guides(color = "none")+
-  labs(title = "Calculating Distance to Various Points on a Map",
-       subtitle = "Using the sf_distance function from the {sf} R package we can calculate<br>distances from one set of points to another (many to many, one to many, etc).<br>Once we have all distances we can find the <span style='color:red'>nearest point.</span>")+
-  theme_void()+
-  theme(
-    text = element_text(family = "IBM Plex Sans"),
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_markdown(size = 11))
-
-ggsave("distances.png", width = 8, height = 8)
-```
-
-
-#TEST
-
-```{r}
-cities <- data.frame(
-  lon = c(-63.58595, 116.41214, 13.50, -149.75),
-  lat = c(44.64862, 40.19063, 52.51, 61.20),
-  city = c("Halifax", "Beijing", "Berlin", "Anchorage"),
-  city_to = c("Anchorage", "Beijing", "Berlin", "Halifax")
-)
-
-cities$lon_end <- cities$lon[c(4, 3, 1, 2)]
-cities$lat_end <- cities$lat[c(4, 3, 1, 2)]
-class(la_sfg)
-
-la_sfg <- st_point(c(-118.2615805, 34.1168926))
-amsterdam_sfg <- st_point(c(4.8979755, 52.3745403))
-
-
-multipoint_sfg <- st_multipoint(rbind(c(-118.2615805, 34.1168926), c(4.8979755, 52.3745403)))
-linestring_sfg <- st_linestring(rbind(c(-118.2615805, 34.1168926), c(4.8979755, 52.3745403)))
-ggplot(multipoint_sfg)+
-  geom_sf()
-
-
-
-coordinates_df <- points_df %>% 
-  map_dfc(st_transform, crs = 4326) %>% 
-  map_dfc(st_coordinates) %>% 
-
-class(coordinates_df$geometry)
-
-
-
-```
-
