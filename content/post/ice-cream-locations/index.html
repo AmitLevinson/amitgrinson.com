@@ -1,0 +1,265 @@
+---
+title: Golda Ice Cream Locations in Israel
+author: Amit Levinson
+date: '2021-01-03'
+slug: exploring-ice-cream-locations
+categories: [R, GitHub]
+tags: [TidyTuesday, GitHub]
+subtitle: ''
+summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+draft: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+<p>This past November I participated on several occasions in the <a href="https://github.com/tjukanovt/30DayMapChallenge">#30DayMapChallenge</a>, a daily mapping visualization challenge. While I was satisfied with <a href="https://amitlevinson.com/blog/thirty-day-map-challenge/">what I came up with</a>, my main outcome was that I have no idea how to work with maps. That is, I might be able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I’ll be back to explore some additional geographic data, leading to the following post.</p>
+<p>In this blog post I’ll explore Golda Ice-cream locations throughout Israel. My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to the common ice-cream shops we came across. To follow through with my motivation to learn more about maps, I decided to explore Golda’s ice-cream locations, both as a means for the learning process and as a tribute to their really great ice-cream.</p>
+<p>Following a short overview of the data collection and ice-cream locations throughout Israel will address the important question pertaining distances:</p>
+<blockquote>
+<p>Where do you not want to be if you want an ice-cream <strong>now</strong>?</p>
+</blockquote>
+<p>That is, we’ll look at distances from various points in the country to the <em>nearest</em> ice-cream location. The post will contain outputs and some code here and there. However, I will not address any of the code, and some of it will not be displayed altogether. but you can find the source code for the following post [here].</p>
+<div id="golda-location-information" class="section level3">
+<h3>Golda location information</h3>
+<p>The full script for web-scarping Golda’s location can be found [here]. It was an interesting process in which I scraped the data, cleaned it and did some minor final aesthetics manually. To get the exact locations, I used the Hebrew addresses to geocode them and recieve a corresponding latitude &amp; longitutde coordinates. To mitigate any concerns I then reverse geocoded those longititude and latitude which returned the address of the location in English. Any addresses in English that didn’t match the Hebrew ones I manually checked for the correct location (about 2-3 that were 250m off). Some locations might still not be exact, but overall I think we’re good to go.</p>
+<p>Our final dataset looks as follows:</p>
+<pre class="r"><code>golda_locations</code></pre>
+<p>Each row represents a store, the city and street it’s located in, their phone number and a corresponding longitude and latitude. A few stores on the website were noted as currently closed, but for the sake of this post will treat them like all others.</p>
+<p>Let’s see where they are across Israel:</p>
+<pre class="r"><code>regular_map &lt;- leaflet() %&gt;% 
+  addTiles(data = golda_locations) %&gt;% 
+  addMarkers(data = golda_locations, icon = ice_cream_icon, label = ~ ice_cream_labels)</code></pre>
+<p align="center">
+<iframe width="95%" height="575px" name="iframe" src="widgets/simple_map.html">
+</iframe>
+<newcaption>Golda Ice-cream locations. Hover over a location for more info</newcaption>
+</p>
+<p>A quick overview of our map shows that majority of Golda’s location are near the center of Israel in the Tel-Aviv metropolitan area. Other locations are scattered across the country with several in the north and a few down south. At least there’s one in Eilat which we can visit when we go see my wife’s family.</p>
+</div>
+<div id="measuring-distances" class="section level3">
+<h3>Measuring distances</h3>
+<p>We want to measure distances from various locations to the nearest ice-cream location. However, ‘various locations’ is somewhat of an abstract phrase; we need specific locations. In order to tackle that piece we’ll use grids:</p>
+<pre class="r"><code>golda_projected &lt;- golda_locations %&gt;% 
+  st_as_sf(coords = c(&quot;lon&quot;, &quot;lat&quot;), crs = 4326)
+golda_meters &lt;- st_transform(golda_projected, crs = 2039)</code></pre>
+<pre class="r"><code>isr_map_sf &lt;- st_transform(st_read(&quot;maps/israel_borders.shp&quot;), 4326)
+# Project the map
+isr_map &lt;- st_transform(isr_map_sf, crs = 2039)
+# Make square grid
+new_isr &lt;- st_make_grid(isr_map,  cellsize = 2000)
+grid &lt;- st_intersection(new_isr, isr_map)</code></pre>
+<pre class="r"><code>library(extrafont)
+library(patchwork)
+
+theme_set(theme_void()+
+            theme(text = element_text(&quot;IBM Plex Sans&quot;)))
+
+patch_theme &lt;- function(){
+  theme(plot.title = element_markdown(size = 12, hjust = 0.5))
+}
+
+p1 &lt;- ggplot(isr_map_sf)+
+  geom_sf()+
+  labs(title = &quot;Map of Israel&quot;)+
+  patch_theme()
+
+p2 &lt;- ggplot(grid)+
+  geom_sf()+
+  labs(title = &quot;Map cut into 2km&lt;sup&gt;2&lt;/sup&gt; areas (grid)&lt;br&gt;&quot;)+
+  patch_theme()
+  
+both_maps &lt;- p1+p2
+
+ggsave(&quot;plots/both_maps.png&quot;, plot = both_maps, height = 5, width = 5)</code></pre>
+<p><img src="plots/both_maps.png" /></p>
+<p>On the left we have our original shape file of Israel and on the right the same map cut into 5 squared kilometers areas (5km<span class="math inline">\(^2\)</span>). By cutting the map into grids we can measure distances to the various ice-cream location. Considering the ice-cream shops are somewhat identical in what the offer, the nearest ice-cream location can suffice. In that case we’ll measure distances and take the <em>nearest</em> location, i.e. where the distance is at minimum. Let’s have a look at an example of one grid cell to several locations:</p>
+<pre class="r"><code>golda_meters &lt;- st_transform(st_geometry(golda_projected), crs = 2039)
+sample_grid &lt;- st_transform(grid, crs = 4326)
+
+dataum &lt;- data.frame(
+  geometry = st_geometry(golda_projected[3:9,]),
+  location_grid = st_centroid(rep(sample_grid[350,],7)))
+
+sample_grid_polygon&lt;- sample_grid[350,]
+
+data_lines &lt;- map_dfc(dataum, ~ st_transform(.x, crs = 2039)) 
+
+sample_data &lt;- data_lines %&gt;% 
+  map_dfc(~ st_transform(.x, crs = 4326) %&gt;% st_coordinates(.x)) %&gt;% 
+  map_dfc(as.data.frame) %&gt;% 
+  set_names(c(&quot;golda.x&quot;,&quot;golda.y&quot;, &quot;us.x&quot; ,&quot;us.y&quot;)) %&gt;% 
+  cbind(distance = map2_dbl(data_lines$geometry, data_lines$geometry.1,  st_distance),
+        location_polygon = st_transform(data_lines$geometry.1, crs = 4326)) %&gt;% 
+  mutate(relevant = ifelse(distance == min(distance), &quot;yes&quot;, &quot;no&quot;),
+         distance = ifelse(relevant == &quot;yes&quot;, paste0(round(distance/1000, 0), &quot;km&quot;), round(distance/1000, 0)))
+
+ggplot(isr_map_sf)+
+  geom_sf()+
+  geom_sf(data = sample_grid_polygon, aes(geometry = geometry))+
+  geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y, color = relevant), size = 1)+
+  geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
+  # geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = &quot;red&quot;, size = 0.1)+
+  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 4)+
+  scale_color_manual(values = c(&quot;yes&quot; = &quot;red&quot;, &quot;no&quot; = &quot;gray45&quot;))+
+  scale_linetype_manual(values = c(&quot;dashed&quot;,&quot;solid&quot;))+
+  xlim(34,36)+
+  # Remove legends
+  guides(color = &quot;none&quot;)+
+  labs(title = &quot;Example: calculating distances from a\ngrid to all ice-cream locations&quot;)+
+  theme(plot.title = element_text(size = 12))</code></pre>
+<pre class="r"><code>ggsave(&quot;plots/example.png&quot;, width = 5, height = 7)</code></pre>
+<pre class="r"><code>#knitr::include_graphics(&quot;plots/example.png&quot;)
+#![example of calculating distances](plots/example.png){height=250px}</code></pre>
+<p><img src="plots/example.png" width ="450" height="350" name ="image" ></p>
+<p>Our square represents a 5km<span class="math inline">\(^2\)</span> area somewhere in southern Israel. The various dashed lines and corresponding value represent the distance to all the ice-cream location in our subsample. Since we’re interested in minimal distance, I highlighted the location most nearest to our grid. The nearest ice-cream location to the center of our grid is 42km away.</p>
+<p>Once we understood how each grid’s nearest distance is achieved we can do so for all the areas we created. This will result in a map indicating the nearest Golda ice cream shop within a 5km^2 distance:</p>
+<pre class="r"><code>distances &lt;- st_distance(golda_meters, st_centroid(grid)) %&gt;% 
+  as_tibble()
+
+golda_distances &lt;- data.frame(
+  us = st_transform(grid, crs = 4326),
+  # Extract minimum distance for each grid
+  distance_km = map_dbl(distances, min)/1000,
+  # Extract the value&#39;s index for joining with the ice-cream loc info
+  location_id = map_dbl(distances, function(x) match(min(x), x))) %&gt;% 
+  left_join(golda_projected, by = c(&quot;location_id&quot; = &quot;id&quot;))</code></pre>
+<pre class="r"><code># Draw map
+grid_polygons &lt;- golda_distances$geometry.x
+
+ice_cream_icon &lt;-  makeIcon(&quot;ice-cream.png&quot;, iconWidth = 6, iconHeight = 8)
+
+bins &lt;- c(70,50,25,10,5,0)
+pal &lt;- colorBin(&quot;OrRd&quot;, domain = golda_distances$distance_km, bins = bins)
+
+Sys.setlocale(&quot;LC_ALL&quot;, &quot;Hebrew&quot;)
+#font-family:Calibri;font-size:14px;
+make_label_distances &lt;- function(x, y, n){
+  glue(&quot;
+  &lt;span style=&#39;text-align:left;&#39;&gt;
+  You are &lt;b&gt;{round(x, 0)} km&lt;/b&gt; from the nearest location at:&lt;/span&gt;
+  &lt;span style=&#39;text-align:right;dir=rtl;&#39;&gt;&lt;br&gt;
+  {y}, {n}&lt;/span&gt;&quot;) %&gt;% 
+    HTML()
+}
+# Create labels using a custom made function
+ice_cream_labels &lt;- pmap(list(golda_distances$distance_km, golda_distances$street,golda_distances$city ), make_label_distances)
+
+full_map &lt;- leaflet() %&gt;% 
+  addTiles() %&gt;% 
+  addMarkers(data = golda_projected, icon = ~ice_cream_icon, group = &quot;Ice-cream locations&quot;) %&gt;% 
+  addPolygons(data = grid_polygons, fillColor = pal(golda_distances$distance_km), fillOpacity = 0.8, weight =0,
+              opacity =1, color = &quot;transparent&quot;, group = &quot;Distances&quot;, popup = ice_cream_labels, 
+              highlight = highlightOptions(weight = 2.5, color = &quot;#666&quot;, bringToFront = TRUE, opacity= 1),
+              popupOptions = popupOptions(autoPan = FALSE,closeOnClick = TRUE, textOnly = T,
+                                          style = list(&quot;size&quot; = &quot;22&quot;))) %&gt;% 
+  addLegend(pal = pal, values = (golda_distances$distance_km), opacity = 0.8, 
+                         title = &quot;Distance in Km&quot;, position= &quot;bottomright&quot;) %&gt;% 
+  addLayersControl(overlayGroups = c(&quot;Ice-cream locations&quot;, &quot;Distances&quot;),
+                   options = layersControlOptions(collapsed = FALSE))
+
+# htmlwidgets::saveWidget(full_map, &quot;full_mape.html&quot;)</code></pre>
+<p align="center">
+<iframe width="95%" height="650px" name="iframe" src="full_mape.html">
+</iframe>
+<newcaption>Distance to the nearest Golda ice-cream location. Click on a grid for more info on the nearest location</newcaption>
+</p>
+<p>Beautiful! Well, mainly for those living near ice-cream locations.</p>
+<p>The main outcome is you don’t want to be stuck somewhere in the south or south of the dead sea with a sudden craving for ice-cream. We also see that similar to before, living in the Tel-Aviv metropolitan area you should be covered with a Golda location near you.</p>
+</div>
+<div id="static-maps" class="section level3">
+<h3>Static maps</h3>
+<p>We can also visualize it on a static map enabling us to easily share it as an image. This time around let’s make the grids (areas) even smaller, for example a 2km<span class="math inline">\(^2\)</span> area:</p>
+<pre class="r"><code># Project the map
+isr_map &lt;- st_transform(isr_map_sf, crs = 2039)
+# Make square grid
+new_isr &lt;- st_make_grid(isr_map,  cellsize = 2000)
+# 2000m grid.
+grid_2000 &lt;- st_intersection(new_isr, isr_map)
+
+# distances
+distances_2000 &lt;- st_distance(golda_meters, st_centroid(grid_2000)) %&gt;% 
+  as_tibble()
+
+golda_distances_2000 &lt;- data.frame(
+  us = st_transform(grid_2000, crs = 4326),
+  # Extract minimum distance for each grid
+  distance_km = map_dbl(distances_2000, min)/1000,
+  # Extract the value&#39;s index for joining with the ice-cream loc info
+  location_id = map_dbl(distances_2000, function(x) match(min(x), x))) %&gt;% 
+  left_join(golda_projected, by = c(&quot;location_id&quot; = &quot;id&quot;)) %&gt;% 
+  mutate(binned_colors = cut(distance_km, breaks = c(70,50,25,10,5,0)))
+
+ggplot(golda_distances_2000)+
+  geom_sf(data = isr_map_sf, aes(geometry = geometry))+
+  geom_sf(aes(geometry = geometry.x, fill =  binned_colors), color = &quot;transparent&quot;)+
+  geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .5)+
+  scale_fill_brewer(name = &quot;Distance (km)&quot;, palette = &quot;OrRd&quot;, labels = c(&quot;0-5&quot;, &quot;5-10&quot;, &quot;10-25&quot;, &quot;25-50&quot;, &quot;50-70&quot;))+
+  xlim(34,36)+
+  labs(title = &quot;Distance from Golda Ice-cream locations&quot;, subtitle = &quot;Colors represent distance from the center of a 2km&lt;sup&gt;2&lt;/sup&gt; area&quot;)+
+  guides(fill = guide_legend(reverse = TRUE))+
+  theme_void()+
+  theme(text = element_text(),
+        plot.title = element_text(color = &quot;#0C0C44&quot;, face = &quot;bold&quot;, size = 22),
+        plot.title.position = &quot;plot&quot;,
+        plot.subtitle = element_markdown(color = &quot;gray35&quot;, size = 14),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
+ggsave(&quot;israel_map_wgreen.png&quot;, width = 8, height = 11)</code></pre>
+<p><img src="israel_map_wgreen.png" /></p>
+<p>Beautiful!</p>
+<p>Results are similar in terms of overall distances, but we see the grids a little smoother. Our original process of cutting the map into 5km<span class="math inline">\(^2\)</span> grids resulted in 1255 areas (polygons representing our area). Using a 2km<span class="math inline">\(^2\)</span> the layout is smoother but at the cost of speed.</p>
+<p>Since I hope also Israelis will view this post, I’ll share another format of an Israel map. Considering the geo-political issues in Israel, which I won’t elaborate here, I’ll share another map with different borders. These borders represent the formal judicial boundaries of Israel. They also better reflect the feasibility of individuals to access these locations since people living in Gaza (measured in the above maps) can’t access the various locations.</p>
+<pre class="r"><code># Load data
+isr_map_rds_raw &lt;- readRDS(&quot;content/post/ice-cream-locations/00_Israel_0_sf.rds&quot;)
+# Project the data
+isr_map_rds &lt;- st_transform(isr_map_rds_raw, crs = 2039)
+# Make grids
+new_isr_rds &lt;- st_make_grid(isr_map_rds,  cellsize = 2000)
+# Get only intersecting grids
+grid_rds &lt;- st_intersection(new_isr_rds, isr_map_rds)
+
+
+# distances
+distances_rds &lt;- st_distance(golda_meters, st_centroid(grid_rds)) %&gt;% 
+  as_tibble()
+
+golda_distances_rds &lt;- data.frame(
+  us = st_transform(grid_rds, crs = 4326),
+  # Extract minimum distance for each grid
+  distance_km = map_dbl(distances_rds, min)/1000,
+  # Extract the value&#39;s index for joining with the ice-cream loc info
+  location_id = map_dbl(distances_rds, function(x) match(min(x), x))) %&gt;% 
+  left_join(golda_projected, by = c(&quot;location_id&quot; = &quot;id&quot;)) %&gt;% 
+  mutate(binned_colors = cut(distance_km, breaks = c(70,50,25,10,5,0)))
+
+ggplot(golda_distances_rds)+
+  geom_sf(data = isr_map_rds_raw)+
+  #geom_sf(aes(geometry = geometry.x))+
+  geom_sf(aes(geometry = geometry.x, fill =  binned_colors, color = &quot;black&quot;), color = &quot;transparent&quot;)+
+  geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .5)+
+  scale_fill_brewer(name = &quot;Distance (km)&quot;, palette = &quot;OrRd&quot;, labels = c(&quot;0-5&quot;, &quot;5-10&quot;, &quot;10-25&quot;, &quot;25-50&quot;, &quot;50-70&quot;))+
+  xlim(34,36)+
+  labs(title = &quot;Distance from Golda Ice-cream locations&quot;, subtitle = &quot;Colors represent distance from the center of a 2km&lt;sup&gt;2&lt;/sup&gt; area&quot;)+
+  guides(fill = guide_legend(reverse = TRUE))+
+  theme_void()+
+  theme(text = element_text(),
+        plot.title = element_text(color = &quot;#0C0C44&quot;, face = &quot;bold&quot;, size = 22),
+        plot.title.position = &quot;plot&quot;,
+        plot.subtitle = element_markdown(color = &quot;gray35&quot;, size = 14),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
+# ggsave(&quot;content/post/ice-cream-locations/israel_map_wogreen.png&quot;, width = 8, height = 11)</code></pre>
+<p><img src="israel_map_wogreen.png" /></p>
+<p>Tutorials:
+<a href="https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html" class="uri">https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html</a></p>
+</div>
