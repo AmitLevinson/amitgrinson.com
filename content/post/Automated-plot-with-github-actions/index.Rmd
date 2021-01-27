@@ -202,9 +202,9 @@ An issue that's left is when calling `tidyverse` essentially we load packages su
 
 ![](https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif)
 
-GitHub actions provide an easy way to automate various *workflows*. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file (Yet Another Markdown Language) with specific commands[^3].
+GitHub actions provide an easy way to automate various *workflows*. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a 'YAML' file with specific commands[^2].
 
-[^3]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)). 
+[^2]: For the purpose of this post, and if you don't use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans [here](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions). 
 
 We have our plot showcasing our most frequently used packages, but we want it rendered for us on every participation in #TidyTuesday. That's exactly where GitHub Actions can help us by running the script for us. **We setup the code once, like we did before, and have our workflow run it when we choose.**
 
@@ -288,9 +288,9 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 * `steps...` - Telling GitHub the exact steps we want the action to do. The script starts with `uses` and then transitions between `name` and `run`.   
 `uses` tells GitHub what to use: In the first one, [`actions/checkout@v2`](https://github.com/actions/checkout), GitHub checks out our repository on which the workflow will run. Next we set up a [remote r environment](https://github.com/jimhester/setup-r) using the `r-lib/actions/setup-r@v1` argument.  
 
-* In the following steps we provide a name for the step and the actual code. In the first step we install the packages we'll be using and in the next one we `source` the R code that produces our plot[^2], located in my 'extra' folder in the repository. Lastly we provide Git commands in which we config the built-in token (to run the git commands), add our rendered plot, commit and push the results. 
+* In the following steps we provide a name for the step and the actual code. In the first step we install the packages we'll be using and in the next one we `source` the R code that produces our plot[^3], located in my 'extra' folder in the repository. Lastly we provide Git commands in which we config the built-in token (to run the git commands), add our rendered plot, commit and push the results. 
 
-[^2]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you're concern you can use less depdencies than I have.
+[^3]: The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you're concerned you can use less dependencies than I have or try [Docker](https://colinfay.me/docker-r-reproducibility/).
 
 That's it! Just upload the newly edited files, and activate the Action with the specific commit. **Don't forget to reference the plot from your repository's README so it shows up.** If you're not sure how you can see how I did it [here](https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md).
 

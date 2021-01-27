@@ -178,7 +178,7 @@ file_packages %&gt;%
 <h2>GitHub Actions</h2>
 <p><em>See additional learning resources below</em></p>
 <p><img src="https://media.giphy.com/media/CmFMWpEa4IFtS/giphy.gif" /></p>
-<p>GitHub actions provide an easy way to automate various <em>workflows</em>. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a ‘YAML’ file (Yet Another Markdown Language) with specific commands<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>GitHub actions provide an easy way to automate various <em>workflows</em>. We give GitHub a set of instructions on when to run the Action, and what exactly does it need to do. Instructions are aggregated as a script, in our case a ‘YAML’ file with specific commands<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <p>We have our plot showcasing our most frequently used packages, but we want it rendered for us on every participation in #TidyTuesday. That’s exactly where GitHub Actions can help us by running the script for us. <strong>We setup the code once, like we did before, and have our workflow run it when we choose.</strong></p>
 <div id="action-setup" class="section level3">
 <h3>Action Setup</h3>
@@ -279,7 +279,7 @@ Figure 2: Final outcome of a plot automatically updating in our README file.
 <hr />
 <ol>
 <li id="fn1"><p>If you decide to automate this with GitHub Actions, be alert if file paths throw an error.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>For the purpose of this post, and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you’re concern you can use less depdencies than I have.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>For the purpose of this post, and if you don’t use GitHub Actions frequently, you should be good with the free plan (default unless you subscribed). In any case, you can read more about the plans <a href="https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">here</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The more dependencies you have, the more susceptible your code is to breaking, e.g. if a function was deprecated. If you’re concerned you can use less dependencies than I have or try <a href="https://colinfay.me/docker-r-reproducibility/">Docker</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
