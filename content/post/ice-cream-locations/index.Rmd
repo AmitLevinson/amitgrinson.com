@@ -29,20 +29,36 @@ newcaption {
   text-align: center;
 }
 
+.example_d {
+color: #20bf6b !important;
+text-transform: uppercase;
+background: #ffffff;
+padding: 20px;
+border: 4px solid #20bf6b !important;
+border-radius: 6px;
+display: inline-block;
+transition: all 0.3s ease 0s;
+}
 
+.example_d:hover {
+color: #494949 !important;
+border-radius: 50px;
+border-color: #494949 !important;
+transition: all 0.3s ease 0s;
+}
 ```
 
 This past November I participated on several days in the [#30DayMapChallenge](https://github.com/tjukanovt/30DayMapChallenge), a daily mapping visualization challenge. While I was satisfied with [what I came up with](https://amitlevinson.com/blog/thirty-day-map-challenge/), my main outcome was that I have no idea how to work with maps. That is, I was able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I'll be back to explore some additional geographic data, leading to the following post.
 
-In this blog post I'll explore Golda Ice-cream locations throughout Israel. My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to the common ice-cream shops we previously encountered in Israel. To follow through with my motivation to learn more about maps, I decided to explore Golda's ice-cream locations, both as a means for the learning process and as a tribute to their really great ice-cream.
+In this blog post I'll explore Golda Ice-cream locations throughout Israel. My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to the common ice-cream shops we previously encountered in Israel. Golda has a plethora of ice-cream flavors including fantastic Sorbe, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can have them drizzle on top. What a treat! for a topping.
 
-Following a short overview of the data collection and ice-cream locations throughout Israel will address the important question pertaining distances:
+To follow through with my motivation to learn more about maps, I decided to explore Golda's ice-cream locations, both as a means for the learning process and as a tribute to their really great ice-cream. Following a short overview of the data collection and ice-cream locations throughout Israel will address the important question pertaining distances:
 
 > **Where do you _not_ want to be if you want an ice-cream now**?
 
-We'll be looking at distances from various points in the country to the *nearest* ice-cream location. A huge thanks to Dominic Roye's blog post on [distances from the beach in Iceland](https://dominicroye.github.io/en/2019/calculating-the-distance-to-the-sea-in-r/) that helped me practically write this challenge. On a more theoretical level, I enjoyed and learned from Michael's Dorman ['Using R for Spatial Data Analysis'](https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html) workshop he gave.
+We'll be looking at distances from various points in the country to the *nearest* ice-cream location. A huge thanks to Dominic Roye's blog post on [distances from the beach in Iceland](https://dominicroye.github.io/en/2019/calculating-the-distance-to-the-sea-in-r/) that helped me practically write this challenge. On a more theoretical level, I enjoyed and learned from Michael Dorman's materials in his ['Using R for Spatial Data Analysis'](https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html) workshop he gave.
 
-The post will contain outputs and some code here and there. However, I will not address any of the code, and some of it will not be displayed altogether. I do invite you to explore the [full source code] to learn how things are calculated.
+The post will contain outputs and some code here and there. I will not address the code but I invite you to explore the [full source code] to learn what's done under the hood.
 
 ```{r echo = FALSE}
 library(dplyr)
@@ -364,7 +380,7 @@ ggplot(golda_distances_rds)+
   #geom_sf(aes(geometry = geometry.x))+
   geom_sf(aes(geometry = geometry.x, fill =  binned_colors, color = "black"), color = "transparent")+
   geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .3)+
-  scale_fill_brewer(name = "Distance (km)", palette = "OrRd", labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
+  scale_fill_brewer(name = "Distance (km)", palette = "Greens", labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.5,36)+
   labs(title = "Distance from Golda Ice-cream locations", subtitle = "Colors represent distance from the center of a 2km<sup>2</sup> area")+
   guides(fill = guide_legend(reverse = TRUE))+
@@ -376,6 +392,11 @@ ggplot(golda_distances_rds)+
         legend.text = element_text(size = 6),
         legend.key.size = unit(3,"mm"))
 ```
+
+<a download href="ice-cream.png">Download</a>
+<area shape="circle" coords="90,58,3" alt="Mercury" href="merglobe.gif" download>
+
+<div class="button_cont" align="center"><a download href="ice-cream.png" target="_blank" rel="nofollow noopener">Download</a></div>
 
 
 
