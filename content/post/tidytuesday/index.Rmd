@@ -40,8 +40,17 @@ Whenever I have some free time I like to join in and give it a go. If you're loo
 
 ## Plots  
 
-Below are selected graphs I made, organized in a descending order by date. To see a more comprehensive list feel free to visit my corresponding repository :smile:
+Below are selected graphs I made, organized in a descending order by date. To see a more comprehensive list feel free to visit my [#TidyTuesday GitHub repository](https://github.com/AmitLevinson/TidyTuesday) :smile:
 </br>
+
+
+### **03.02.2021**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R)
+
+<p align = "center">
+<img alt = 'HBCU student enrollment' src = "https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week6_hbcu/hbcu.png" width = "700">
+</p>
+
 
 
 ### **19.01.2021**
