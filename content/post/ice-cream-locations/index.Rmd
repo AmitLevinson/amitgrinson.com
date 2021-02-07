@@ -3,7 +3,7 @@ title: Golda Ice Cream Locations in Israel
 author: Amit Levinson
 date: '2021-02-07'
 slug: exploring-ice-cream-locations
-categories: [R]
+categories: []
 tags: [maps, rvest]
 subtitle: ''
 summary: 'Exploring mapping and distances to various Golda ice-cream locations through Israel'
