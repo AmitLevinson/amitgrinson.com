@@ -1,19 +1,19 @@
 ---
 title: Golda Ice Cream Locations in Israel
 author: Amit Levinson
-date: '2021-01-03'
+date: '2021-02-07'
 slug: exploring-ice-cream-locations
-categories: [R, GitHub]
+categories: [R]
 tags: [maps, rvest]
 subtitle: ''
-summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
-featured: no
+summary: 'Exploring mapping and distances to various Golda ice-cream locations through Israel'
+featured: yes
 image:
   caption: ''
   focal_point: ''
   preview_only: yes
 projects: []
-draft: true
+draft: false
 editor_options: 
   chunk_output_type: console
 ---
@@ -36,8 +36,12 @@ newcaption {
 <h3>Why write about Ice-cream</h3>
 <p>This past November I participated several times in the <a href="https://github.com/tjukanovt/30DayMapChallenge">#30DaysMapChallenge</a>, a daily mapping visualization challenge. While I was satisfied with <a href="https://amitlevinson.com/blog/thirty-day-map-challenge/">what I came up with</a>, my main outcome was that I have no idea how to work with maps. Well, to say it differently, I was able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I’ll be back to explore some additional geographic data, leading to the following blog post.</p>
 <p><strong>In this blog post I’ll explore <a href="https://www.goldaglida.co.il/">Golda Ice-cream</a> locations throughout Israel.</strong> My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to other ice-cream shops we previously encountered. Golda has a plethora of ice-cream flavors including fantastic Sorbe, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can drizzle on top, what a treat!</p>
-<p>{{<instagram B-rtY8bnKHx hidecaption >}}
-<img src="ice-cream.jpg" /></p>
+<center>
+<newcaption>
+<img width ="95%" src="imgs/ice-cream.jpg"></img>
+Golda’s delicious ice-cream flavors. Source: <a href="https://www.facebook.com/GLIDAGOLDAISRAEL">Golda Facebook page</a></newcaption>
+</center>
+<p><br></p>
 <p>To follow through with my motivation to learn more about maps and as a tribute to their great ice-cream I decided to explore Golda’s ice-cream locations. More specifically, we’ll be looking at distances from various points in the country to the <em>nearest</em> ice-cream location. Following a short overview of the data collection and ice-cream locations throughout Israel I will address the utmost important question pertaining distances and Golda locations:</p>
 <blockquote>
 <p><strong>Where do you <em>not</em> want to be if you want an ice-cream now</strong>?</p>
@@ -50,7 +54,7 @@ newcaption {
 <h3>Golda location information</h3>
 <p>I collected information about <a href="https://www.goldaglida.co.il/%d7%a1%d7%a0%d7%99%d7%a4%d7%99%d7%9d/">Golda locations street addresses</a> by web scraping their website. To get exact locations I geocoded street addresses using the <code>{ggmap}</code> package, extracting corresponding latitude &amp; longitutde coordinates. I then queried the recieved longititude and latitude for Golda’s addresses in English to validate the information initially extracted.</p>
 <p>Essentially, I geocoded the data twice. Any addresses in English that didn’t match the Hebrew ones I manually checked for the correct location. I identified about 2-3 that the extracted information was 250 meters off. Some locations might still not be exact, but overall I think we’re good to go. You can also explore the <a href="https://github.com/AmitLevinson/Datasets/tree/master/golda">scraping script and complete dataset with English locations</a> for further info.</p>
-<p>Our final dataset looks as follows:</p>
+<p><strong>Our Golda ice-cream dataset looks as follows:</strong></p>
 <p><div id="htmlwidget-1" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"city":["אור יהודה","אור עקיבא","אילת","אשדוד","אשקלון","באר יעקב","באר שבע","ביתן אהרון","בת ים","גבעת שמואל","גבעתיים","גבעתיים","גדרה","גן יבנה","הוד השרון","הרצליה","הרצליה","הרצליה","חדרה","חדרה","חולון","חיפה","חריש","טירת הכרמל","יבנה","יוקנעם","יפו","יפו","ירושלים","ירושלים","ירושלים","ירושלים","כרמיאל","כפר סבא","מודיעין","מודיעין","מעלה אדומים","מצפה רמון","נס ציונה","נתיבות","נצרת","נהריה","נתניה","נתניה","סביון","צומת גלילות","עפולה","פרדס חנה","פתח תקווה","קניון הקריון","קריית גת","קריית מוצקין","קרית אונו","ראש העין","ראש פינה","רמלה","רמת גן","רעננה","רעננה","ראשון לציון","ראשון לציון","ראשון לציון","רחובות","רחובות","שוהם","שפיים","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב"],"street":["אריק איינשטיין 1","השקמים 8","מתחם הספירל","אריק איינשטיין 4","שדרות אפריקה 65","יהלום 3","החיטה 1","מתחם ביתנ'ס","בן גוריון 85","הערבה 1","בורכוב 54","דרך השלום 53","מנחם בגין 12","המגינים 56","דרך רמתיים 24","השונית 2- קניון ארנה","חבצלת השרון 37","בן גוריון 22","אקו פארק","צומת חדרה כביש 4","פנחס איילון 13","דוברין 3","גפן 4","ששת הימים 1","הדוגית 16","שדרות יצחק רבין 9","עולי ציון 9","רציף העלייה השנייה 101, נמל יפו","שדרת אלרוב ממילא","אביזוהר 8","המעיין 25","אגריפס 72","מעלה כמון 2","מתחם G","עמק זבולון 24 – קייזר סנטר","קניון מודיעין","הרכס 31","שדרות בן גוריון 2","ויצמן 12","בעלי המלאכה 13","ביג פאשן נצרת","בלפור 1","סינמה סיטי המחקר 3","יכין סנטר","נתיב היובל 1","סינמה סיטי","שדרות יצחק רבין 20","גלעד 1","השחם 30","דרך עכו 192","דרך הדרום 20","שדרות ירושלים 1","המייסדים 3","רחוב שבזי 10","התפוח 1","משה אדרת 4","שדרות ירושלים 3","רחוב ויצמן 273","אחוזה 71, רעננה","הטיילת 14","סחרוב 26","גבעתי 1","מוטי קינד 10","חיים פקריס 3","עמק איילון 30","חוצות שפיים","מקווה ישראל 22","בן יהודה 110","מאיר יערי 19","ז'בוטינסקי 110","שמואל רודנסקי 5","מנחם בגין 144","קניון עזריאלי","חוף גורדון-הירקון 163","משה דיין 2","יחיאלי 9, סוזן דלל","דיזינגוף 245","ישכון 22","דיזנגוף 107"],"number":["03-7797577","04-646-0705","08-9428989","08-9775157","08-6869144","08-9555764","08-6445959","09-9661614","03-9441070","03-7775169","03-9441580","03-5090394","08-6565999","08-6913335","09-9775251","09-9601630","09-9799320","09-7921477","04-8692622","04-8801493","03-7792477","077-7060373","04-8164606","04-612-6444","08-6846192","04-6298822","03-6036275","03-6241041","02-5644496","02-9665661","02-6449253","02-5444077","052-7247441","09-8912336","08-6578945","052-8264820","02-5455570","08-9120806","08-9955289","08-6733343","04-6704343","04-6835333","09-8802035","09-9777555","03-7787088","03-9447269","04-7749599","04-8233660",null,"04-8885555","08-658-9026","04-641-2662","03-7786447","03-9024405","04-6190555","08-9711909","03-5367330","09-7882233","09-9591000","03-5080550","03-7745102","03-6099949","08-9447717","08-6875060","03-559-7967","09-9697969","03-6327766","03-9743322","03-6885836","03-6968581","03-6992770","03-5297797","03-6960405","03-5780170","03-5614016","03-5105545","03-5164014","03-5377887","03-6350409"],"lon":[34.8600193,34.91794008,34.9596765,34.6365283,34.570097,34.8261351,34.7994617,34.8680834,34.7389925,34.8556056,34.8096975,34.803277,34.7835822,34.704494,34.8940276,34.7968935,34.8048763,34.8420226,34.9340366,34.91021,34.7783752,34.9999173,35.0395,34.9729581,34.735896,35.0940528,34.7569213,34.7506434,35.2252087,35.1867225,35.161224,35.21137479,35.3208182,34.9284373,34.9982069,35.0076632,35.3113066,34.8027322,34.7982235,34.5952321,35.30125526,35.0910873,34.8616661,34.86202,34.877472,34.8044874,35.2998605,34.9743126,34.8587367,35.0903414,34.7772321,35.0652399,34.8579994,34.9418992,35.5503387,34.8891982,34.81934893,34.8450306,34.8806584,34.7325432,34.7741726,34.8170841,34.7894096,34.8045454,34.94685,34.8283333,34.7762768,34.7717,34.7877215,34.7866453,34.79277609,34.79484,34.7922028,34.7689540001264,34.799156,34.7642438,34.7761066,34.7674684,34.7736884],"lat":[32.0205064,32.50435742,29.5495247,31.7911936,31.680045,31.9362388,31.2341222,32.3615628,32.018181,32.084025,32.078906,32.066902,31.80029,31.7952815,32.1600277,32.1636494,32.1789864,32.1630141,32.4285114,32.437704,32.0087448,32.8181047,32.471,32.7596281,31.866917,32.6460421,32.0529073,32.0542555,31.7773657,31.7749335,31.764778,31.78468998,32.9271943,32.1720743,31.907639,31.8996612,31.7824447,30.6125647,31.9269473,31.4184847,32.69674366,33.0067673,32.2908142,32.2812249,32.0446395,32.1463675,32.6146772,32.4727894,32.0873026,32.8420813,31.6057407,32.8352351,32.0561635,32.0985708,32.970075,31.9298811,32.07502139,32.191239,32.1789452,31.9988297,31.9895843,31.9671292,31.8946742,31.9119146,31.9990278,32.2208333,32.0627021,32.0831387,32.0999275,32.0871902,32.12071803,32.079904,32.0740769,32.0848266319339,32.047187,32.0607159,32.0921838,32.0688802,32.0800888]},"columns":[{"accessor":"id","name":"id","type":"numeric"},{"accessor":"city","name":"city","type":"character"},{"accessor":"street","name":"street","type":"character"},{"accessor":"number","name":"number","type":"character"},{"accessor":"lon","name":"lon","type":"numeric"},{"accessor":"lat","name":"lat","type":"numeric"}],"defaultPageSize":6,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"2426b7b046f077a64c1b8f702dbe0f5e","key":"2426b7b046f077a64c1b8f702dbe0f5e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <br></p>
@@ -96,32 +100,24 @@ We divide Israel into grids and measure the distance between each grid cell to a
 <div id="version-1" class="section level4">
 <h4>Version 1</h4>
 <p>We can visualize it on a static map enabling us to easily share it as an image:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" alt="Static map of distances to Golda ice-cream locations" width="672" />
-<p class="caption">
-Figure 1: Static map of distances to Golda ice-cream locations
-</p>
-</div>
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+<center>
+<newcaption>Static map of distances to Golda ice-cream locations.
+<a download href="imgs/Golda.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
+</center>
 </div>
 <div id="version-2" class="section level4">
 <h4>Version 2</h4>
 <p>Considering the geo-political issues in Israel, which I won’t elaborate here, I’ll share another map with different borders. These borders represent the formal judicial boundaries of Israel. They also better reflect the feasibility of individuals to access these locations since people living in Gaza (plotted in previous maps) cannot access various locations.</p>
-<div class="figure"><span id="fig:unnamed-chunk-13"></span>
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" alt="Golda ice-cream locations for Israel's judicial borders" width="672" />
-<p class="caption">
-Figure 2: Golda ice-cream locations for Israel’s judicial borders
-</p>
-</div>
-<p><a download href="ice-cream.png">Download</a>
-<area shape="circle" coords="90,58,3" alt="Mercury" href="merglobe.gif" download></p>
-<div class="button_cont" align="center">
-<a download href="ice-cream.png" target="_blank" rel="nofollow noopener">Download</a>
-</div>
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<center>
+<newcaption>Static map of distances to Golda ice-cream locations for Israel’s judicial borders. <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
+</center>
 </div>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
-<p>All this talk about ice-cream sure got me craving for one. I hope I didn’t evoke too much ice-cream craving following this post, but at least now you know where to find the nearest location. I also invite you to explore the <a href="">full source code</a> or play with the [data] yourself.</p>
+<p>All this talk about ice-cream sure got me craving for one. I hope I didn’t evoke too much ice-cream craving following this post, but at least now you know where to find the nearest location. I also invite you to explore the <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd">full source code</a> or play with the <a href="https://github.com/AmitLevinson/Datasets/tree/master/golda">data</a> yourself.</p>
 <p>Although a short post, I’ve learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances and understanding what occurs under the hood and interactively displaying the final result. While I definitely still don’t know enough about working with spatial data in R, I fell like I don’t know a little less after completing this blog post.</p>
 <p>Hope you enjoyed this post and it helps you find the nearest ice-cream location!</p>
 </div>

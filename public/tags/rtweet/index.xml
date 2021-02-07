@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rtweet | Amit Levinson</title>
-    <link>/tags/rtweet/</link>
-      <atom:link href="/tags/rtweet/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/rtweet/</link>
+      <atom:link href="https://amitlevinson.com/tags/rtweet/index.xml" rel="self" type="application/rss+xml" />
     <description>rtweet</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>rtweet</title>
-      <link>/tags/rtweet/</link>
+      <link>https://amitlevinson.com/tags/rtweet/</link>
     </image>
     
     <item>
       <title>Israeli elections on Twitter</title>
-      <link>/post/israeli-elections-on-twitter/</link>
+      <link>https://amitlevinson.com/blog/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/israeli-elections-on-twitter/</guid>
+      <guid>https://amitlevinson.com/blog/israeli-elections-on-twitter/</guid>
       <description>
 
 
@@ -82,7 +82,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
             hjust = 0, size = 3, family = &amp;quot;Roboto Condensed&amp;quot;)+
   geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;, alpha = 5/10)+
   theme(plot.subtitle = element_text(color = &amp;quot;gray70&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
@@ -101,7 +101,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12),
         axis.title.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;We see that many news companies tweeted a lot using the word ‘elections’: ‘newisrael13’, ‘kann_news’, ‘MaarivOnline’, ‘RotterNews’, ‘bahazit_news’, ‘RotterNet’. I personnaly don’t recognize the rest, but on the other hand I use Twitter mostly to follow &lt;code&gt;R&lt;/code&gt; and academic related tweets, not necessarily Israeli politics.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;common-hashtags&#34; class=&#34;section level3&#34;&gt;
@@ -127,7 +127,7 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
   mini_theme()+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being ‘elections’ and ‘elections2020’. We also see a peculiar hashtag ‘right_following_right_people’, and others such as ‘Netanyahu’ (the Prime minister at the time), ‘Israel’ and others.&lt;br /&gt;
 I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;Corona&lt;/strong&gt;&lt;/font&gt; (in hebrew) and &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;coronavirus&lt;/strong&gt;&lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18, 2020, and only now we’re starting to get back to routine. Slowly)&lt;/p&gt;
 &lt;/div&gt;
@@ -234,7 +234,7 @@ ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 2: Word bigram excludes Hebrew stop words and the word ‘elections’
 &lt;/p&gt;

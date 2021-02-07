@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Recent &amp; Upcoming Talks | Amit Levinson</title>
-    <link>/talk/</link>
-      <atom:link href="/talk/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/talk/</link>
+      <atom:link href="https://amitlevinson.com/talk/index.xml" rel="self" type="application/rss+xml" />
     <description>Recent &amp; Upcoming Talks</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Tue, 14 Apr 2020 13:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Tue, 14 Apr 2020 13:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>Recent &amp; Upcoming Talks</title>
-      <link>/talk/</link>
+      <link>https://amitlevinson.com/talk/</link>
     </image>
     
     <item>
       <title>Wrangling and Visualizing Data in R</title>
-      <link>/talk/israel-2050/</link>
+      <link>https://amitlevinson.com/talk/israel-2050/</link>
       <pubDate>Tue, 14 Apr 2020 13:00:00 +0000</pubDate>
-      <guid>/talk/israel-2050/</guid>
+      <guid>https://amitlevinson.com/talk/israel-2050/</guid>
       <description>
 
 

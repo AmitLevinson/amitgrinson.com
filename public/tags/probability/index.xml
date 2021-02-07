@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>probability | Amit Levinson</title>
-    <link>/tags/probability/</link>
-      <atom:link href="/tags/probability/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/probability/</link>
+      <atom:link href="https://amitlevinson.com/tags/probability/index.xml" rel="self" type="application/rss+xml" />
     <description>probability</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Thu, 09 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Thu, 09 Jul 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>probability</title>
-      <link>/tags/probability/</link>
+      <link>https://amitlevinson.com/tags/probability/</link>
     </image>
     
     <item>
       <title>Defining uncertainty in the Israeli lottery</title>
-      <link>/post/uncertainty-in-the-israeli-lottery/</link>
+      <link>https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/</link>
       <pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>/post/uncertainty-in-the-israeli-lottery/</guid>
+      <guid>https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/</guid>
       <description>
 
 
@@ -70,7 +70,7 @@ lot_p &amp;lt;- ggplot()+
         plot.margin = margin(4,2,2,4, unit = &amp;quot;mm&amp;quot;))
 
 lot_p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Not easy is it?&lt;/p&gt;
 &lt;p&gt;Now that we know the probability of winning at each attempt, let’s see how it manifests across multiple attempts.&lt;/p&gt;
 &lt;/div&gt;

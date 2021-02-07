@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ggmap | Amit Levinson</title>
-    <link>/tags/ggmap/</link>
-      <atom:link href="/tags/ggmap/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/ggmap/</link>
+      <atom:link href="https://amitlevinson.com/tags/ggmap/index.xml" rel="self" type="application/rss+xml" />
     <description>ggmap</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Tue, 14 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Tue, 14 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>ggmap</title>
-      <link>/tags/ggmap/</link>
+      <link>https://amitlevinson.com/tags/ggmap/</link>
     </image>
     
     <item>
       <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
-      <link>/post/bomb-shelters/</link>
+      <link>https://amitlevinson.com/blog/bomb-shelters/</link>
       <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/post/bomb-shelters/</guid>
+      <guid>https://amitlevinson.com/blog/bomb-shelters/</guid>
       <description>
-&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/leaflet/leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/leaflet/leaflet.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/leafletfix/leafletfix.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet/leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet/leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/leafletfix/leafletfix.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;update-from-march-21-2020&#34; class=&#34;section level4&#34;&gt;
@@ -94,7 +94,7 @@ Let’s get Be’er-Sheva’s map:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggmap(b7_map)+
   geom_point(shelters, mapping = aes(long,lat),
             color = &amp;quot;red&amp;quot;, size = 0.3, shape = 15)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;What we did was pass the b7_map as an object into the &lt;code&gt;ggmap&lt;/code&gt; function and add a geom, in this case &lt;code&gt;geom_point&lt;/code&gt; representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show &lt;em&gt;my address&lt;/em&gt; clearly.&lt;/p&gt;
 &lt;p&gt;Let’s try zooming in so that we can see what we’re looking at:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#retreiving a new map with a greater `zoom`
@@ -105,7 +105,7 @@ p &amp;lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &amp;quot;red&amp;quot;,
            size = 3, shape = 15)
 p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Much nicer and clearer. Using the zoom option in &lt;code&gt;get_map&lt;/code&gt; enables to center more on where I want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p+  
 #for the title, caption and removing the X and Y axis
@@ -120,7 +120,7 @@ p&lt;/code&gt;&lt;/pre&gt;
     plot.caption = element_text(size = 9, face = &amp;quot;italic&amp;quot;, hjust = 0),
     panel.border = element_rect(color = &amp;quot;black&amp;quot;, size=2, fill = NA)
   )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Perfect, I can now save the plot and distribute it if someone needs it.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggsave(&amp;quot;shelters_b_eng.png&amp;quot;, width = 8, height = 8)&lt;/code&gt;&lt;/pre&gt;
 &lt;center&gt;

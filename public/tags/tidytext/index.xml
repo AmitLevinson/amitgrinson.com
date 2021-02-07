@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tidytext | Amit Levinson</title>
-    <link>/tags/tidytext/</link>
-      <atom:link href="/tags/tidytext/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/tidytext/</link>
+      <atom:link href="https://amitlevinson.com/tags/tidytext/index.xml" rel="self" type="application/rss+xml" />
     <description>tidytext</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>tidytext</title>
-      <link>/tags/tidytext/</link>
+      <link>https://amitlevinson.com/tags/tidytext/</link>
     </image>
     
     <item>
       <title>Learning Tfidf with Political Theorists</title>
-      <link>/post/learning-tfidf-with-political-theorists/</link>
+      <link>https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>/post/learning-tfidf-with-political-theorists/</guid>
+      <guid>https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/</guid>
       <description>
-&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;style&gt;
@@ -53,7 +53,7 @@ p.caption {
 &lt;p&gt;Once we have the term frequency and inverse document frequency for each word we can calculate the tf-idf by multiplying the two: &lt;span class=&#34;math inline&#34;&gt;\(tf(t,d) \cdot idf(t,D)\)&lt;/span&gt; where &lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt; is our corpus of documents.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;To summarize our explanation:&lt;/strong&gt; The two paramteres used to calculate the tf-idf provide each word with a value for its importance to that document in that corpus of text. Ideally We take &lt;strong&gt;words that are &lt;u&gt;common within a document&lt;/u&gt; and that are &lt;u&gt;rare across documents&lt;/u&gt;&lt;/strong&gt;. I write ideally because as we’ll see soon, we might have words that are extremely common in one document but are filtered out because they’re evident in all documents (can happen in a small corpus of documents). This also highlights the question as to what is &lt;em&gt;important&lt;/em&gt;; I define important as contributing to understanding a document in comparison to all other documents.&lt;/p&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-2&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-2-1.png&#34; alt=&#34;Using tf-idf we can calculate how common a word is within a document and how rare is it across documents&#34; width=&#34;85%&#34; /&gt;
+&lt;img src=&#34;https://amitlevinson.com/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-2-1.png&#34; alt=&#34;Using tf-idf we can calculate how common a word is within a document and how rare is it across documents&#34; width=&#34;85%&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Using tf-idf we can calculate how common a word is within a document and how rare is it across documents
 &lt;/p&gt;
@@ -118,7 +118,7 @@ books &amp;lt;- rbind(
 ## 11 Machiavelli to     1468     34821
 ## 12 Machiavelli and    1333     34821&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We see that stop-words dominant the frequency of occurrences. That makes sense as they are commonly used, but they’re not usually helpful for learning about a text, specifically here. &lt;strong&gt;We’ll start by exploring how the word frequencies occur within a text:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot above shows the frequency of terms across documents. We see some words that appear frequently (higher proportion = right side of the x-axis) and many words that are rarer (low proportion). Actually, I had to limit the x-axis or otherwise it would distort the plot with words that are extremely common.&lt;/p&gt;
 &lt;p&gt;To help find useful words with the highest tf-idf from each book, we’ll remove stop words before we extract the words with a high tf-idf value:&lt;/p&gt;
 &lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
@@ -266,7 +266,7 @@ true
   scale_fill_manual(values = plot_colors)+
   theme_post+
   theme(plot.title = element_markdown())&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Lovely!&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Let’s review each book and see what we can learn from our tf-idf analysis. My memory of these books is kind of rusty but I’ll try my best:&lt;/p&gt;
 &lt;ul&gt;
@@ -296,7 +296,7 @@ true
         plot.title = element_markdown(),
         strip.text = element_text(color = &amp;quot;grey50&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-13&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-13-1.png&#34; alt=&#34;Term frequency plot with words that are common across documents in bold&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;https://amitlevinson.com/post/learning-tfidf-with-political-theorists/index_files/figure-html/unnamed-chunk-13-1.png&#34; alt=&#34;Term frequency plot with words that are common across documents in bold&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 2: Term frequency plot with words that are common across documents in bold
 &lt;/p&gt;
@@ -334,9 +334,9 @@ The definition of ‘important’ here also highlights tf-idf heuristic quantify
     
     <item>
       <title>Israeli elections on Twitter</title>
-      <link>/post/israeli-elections-on-twitter/</link>
+      <link>https://amitlevinson.com/blog/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/israeli-elections-on-twitter/</guid>
+      <guid>https://amitlevinson.com/blog/israeli-elections-on-twitter/</guid>
       <description>
 
 
@@ -402,7 +402,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
             hjust = 0, size = 3, family = &amp;quot;Roboto Condensed&amp;quot;)+
   geom_vline(xintercept = as.POSIXct(&amp;quot;2020-03-02 22:00&amp;quot;),linetype = &amp;quot;dashed&amp;quot;, size = 0.5, color = &amp;quot;black&amp;quot;, alpha = 5/10)+
   theme(plot.subtitle = element_text(color = &amp;quot;gray70&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Interesting - we see the number of tweets during the closing time is equivalent to that of midday on March 4th. Most of the votes were counted by the end of March 3rd, so I can’t really put my finger on what this jump represents. After all, I collected tweets containing our word so it could have been that many people tweeted that specific term in that time slot. Anyway, I wasn’t able to find anything interesting that happened on the news that day but feel free to explore and offer suggestions.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;users-with-most-tweets&#34; class=&#34;section level3&#34;&gt;
@@ -421,7 +421,7 @@ library(extrafont)&lt;/code&gt;&lt;/pre&gt;
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12),
         axis.title.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;We see that many news companies tweeted a lot using the word ‘elections’: ‘newisrael13’, ‘kann_news’, ‘MaarivOnline’, ‘RotterNews’, ‘bahazit_news’, ‘RotterNet’. I personnaly don’t recognize the rest, but on the other hand I use Twitter mostly to follow &lt;code&gt;R&lt;/code&gt; and academic related tweets, not necessarily Israeli politics.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;common-hashtags&#34; class=&#34;section level3&#34;&gt;
@@ -447,7 +447,7 @@ ggplot(data = hashtags, aes(x = Count, y = value, fill = iscorona))+
   mini_theme()+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         axis.text = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The tweets include pretty much what we expect - hashtags about the elections - with the two leading ones being ‘elections’ and ‘elections2020’. We also see a peculiar hashtag ‘right_following_right_people’, and others such as ‘Netanyahu’ (the Prime minister at the time), ‘Israel’ and others.&lt;br /&gt;
 I highlighted in blue an interesting hashtag at the time - &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;Corona&lt;/strong&gt;&lt;/font&gt; (in hebrew) and &lt;font color=&#34;#1DA1F2&#34;&gt;&lt;strong&gt;coronavirus&lt;/strong&gt;&lt;/font&gt;. The elections were held on March 2, 2020, a little bit after the first cases reached Israel. Little did we know how it will affect us (I’m finalzing this post on April 18, 2020, and only now we’re starting to get back to routine. Slowly)&lt;/p&gt;
 &lt;/div&gt;
@@ -554,7 +554,7 @@ ggraph(elec_bigram, layout = &amp;quot;fr&amp;quot;)+
   theme(text = element_text(family = &amp;quot;Calibri&amp;quot;),
         plot.title = element_text(hjust = 0.5 , face = &amp;quot;bold&amp;quot;, size = 18))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-15&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;https://amitlevinson.com/post/elections-twitter/index_files/figure-html/unnamed-chunk-15-1.png&#34; alt=&#34;Word bigram excludes Hebrew stop words and the word &#39;elections&#39;&#34; width=&#34;672&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 2: Word bigram excludes Hebrew stop words and the word ‘elections’
 &lt;/p&gt;

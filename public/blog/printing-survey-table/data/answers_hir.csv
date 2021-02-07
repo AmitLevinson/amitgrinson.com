@@ -1,0 +1,50 @@
+question,value,rank
+q2,Female,
+q2,Male,
+q4,Salaried employee,
+q4,Self employed,
+q4,Student,
+q4,"Student,Salaried employee",
+q4,"Student,Unemployed",
+q4,Unemployed,
+q6,Above average,3
+q6,Below average,1
+q6,Similar to average,2
+q7,Center,
+q7,South,
+q11_1,Between once a week to once in a month,5
+q11_1,Less than once a month,6
+q11_1,Once a day,2
+q11_1,Once a week,4
+q11_1,Several times a day,1
+q11_1,Several times a week,3
+q11_1,NA,7
+q13_1,About every week,1
+q13_1,At least once a month,2
+q13_1,Every three months,3
+q13_1,Every three to six months,4
+q13_1,I've never bought,6
+q13_1,Last time I bought was over half a year ago,5
+q15,Last half a year,4
+q15,Last month,2
+q15,Last three months,3
+q15,Last week,1
+q15,Last year,5
+q15,Never,7
+q15,Over a year ago,6
+q26,No,
+q26,Yes,
+q26,NA,
+q27,2-3 times,1
+q27,5-7 times,2
+q27,Over 7 times,3
+q27,NA,4
+q30,No,
+q30,Yes,
+q30,NA,
+q32,No,
+q32,Yes,
+q32,NA,
+q37,No,
+q37,Yes,
+q37,NA,

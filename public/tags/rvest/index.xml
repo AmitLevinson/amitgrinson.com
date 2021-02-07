@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rvest | Amit Levinson</title>
-    <link>/tags/rvest/</link>
-      <atom:link href="/tags/rvest/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/rvest/</link>
+      <atom:link href="https://amitlevinson.com/tags/rvest/index.xml" rel="self" type="application/rss+xml" />
     <description>rvest</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>rvest</title>
-      <link>/tags/rvest/</link>
+      <link>https://amitlevinson.com/tags/rvest/</link>
     </image>
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
-      <link>/post/eliud-kichoge/</link>
+      <link>https://amitlevinson.com/blog/eliud-kichoge/</link>
       <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>/post/eliud-kichoge/</guid>
+      <guid>https://amitlevinson.com/blog/eliud-kichoge/</guid>
       <description>
 
 
@@ -120,7 +120,7 @@ str(runners_clean)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This brings us the following:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(runners_mutate,aes(x = run_year, y = run_duration))+
   geom_point()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Great, that’s a good start. Now we want to make it a little less crowded so we can easily insert an image of runners instead of points and not have it cluttered. In order to do that we’ll look at each several years and lastly at 2019, the current record. First, let’s look at the years we have:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;runners_mutate %&amp;gt;% 
   pull(run_year)&lt;/code&gt;&lt;/pre&gt;
@@ -147,7 +147,7 @@ str(runners_clean)&lt;/code&gt;&lt;/pre&gt;
   geom_image(aes(image = run_image), size = 0.05)+
   theme_ipsum_rc()
 g&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Not bad. I like the icons although the whole graph might be a bit misleading if readers perceive that these are the only records there are. However, this is a tutorial and we’ll also add that note into our plot momentarily. You can adjust the size and other parameters of the images we plot, here for example I chose to adjust the size from its default. I also added &lt;code&gt;theme_ipsum_rc&lt;/code&gt; from the &lt;code&gt;{hrbrthemes}&lt;/code&gt; package for a quick aesthetic theme I like.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plot-aesthetics&#34; class=&#34;section level3&#34;&gt;
@@ -191,7 +191,7 @@ g&lt;/code&gt;&lt;/pre&gt;
            color = &amp;quot;black&amp;quot;, size = 3, hjust = 0)
 
 g4&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/eliud-kichoge/index_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;And voila!&lt;/p&gt;
 &lt;p&gt;In our final touches we added both an arrow and text to explain what we’re seeing. I decided to go with a &lt;code&gt;geom_curve&lt;/code&gt; arrow where we can set the start and end of the arrow along with the kind of curve we want. We then set the curve to be &lt;code&gt;arrow&lt;/code&gt; and adjust its length. You can also use a closed head arrow, for more on that read on &lt;code&gt;?arrow&lt;/code&gt; as part of the &lt;code&gt;geom_curve&lt;/code&gt; or &lt;code&gt;geom_segment&lt;/code&gt; you can use here.&lt;/p&gt;
 &lt;p&gt;That’s it, seems like were good to go. &lt;strong&gt;Great job for Elihud Kipchoge&lt;/strong&gt; 👏&lt;br /&gt;
@@ -216,19 +216,19 @@ year.sub[11] &amp;lt;- 2019&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
-      <link>/post/bomb-shelters/</link>
+      <link>https://amitlevinson.com/blog/bomb-shelters/</link>
       <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/post/bomb-shelters/</guid>
+      <guid>https://amitlevinson.com/blog/bomb-shelters/</guid>
       <description>
-&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/leaflet/leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/leaflet/leaflet.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/leafletfix/leafletfix.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet/leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet/leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/leafletfix/leafletfix.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://amitlevinson.com/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;update-from-march-21-2020&#34; class=&#34;section level4&#34;&gt;
@@ -296,7 +296,7 @@ Let’s get Be’er-Sheva’s map:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggmap(b7_map)+
   geom_point(shelters, mapping = aes(long,lat),
             color = &amp;quot;red&amp;quot;, size = 0.3, shape = 15)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;What we did was pass the b7_map as an object into the &lt;code&gt;ggmap&lt;/code&gt; function and add a geom, in this case &lt;code&gt;geom_point&lt;/code&gt; representing our shelter coordinates. However, this map doesn’t really help me in a time of need since it doesn’t show &lt;em&gt;my address&lt;/em&gt; clearly.&lt;/p&gt;
 &lt;p&gt;Let’s try zooming in so that we can see what we’re looking at:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#retreiving a new map with a greater `zoom`
@@ -307,7 +307,7 @@ p &amp;lt;- ggmap(b7_map_zoom)+
 geom_point(shelters, mapping = aes(long,lat), color = &amp;quot;red&amp;quot;,
            size = 3, shape = 15)
 p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Much nicer and clearer. Using the zoom option in &lt;code&gt;get_map&lt;/code&gt; enables to center more on where I want. Great, this shows me some bomb shetlers I have around me in a time of need. Let’s add some fine tuning for our theme:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p+  
 #for the title, caption and removing the X and Y axis
@@ -322,7 +322,7 @@ p&lt;/code&gt;&lt;/pre&gt;
     plot.caption = element_text(size = 9, face = &amp;quot;italic&amp;quot;, hjust = 0),
     panel.border = element_rect(color = &amp;quot;black&amp;quot;, size=2, fill = NA)
   )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/bomb-shelters/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/post/bomb-shelters/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Perfect, I can now save the plot and distribute it if someone needs it.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggsave(&amp;quot;shelters_b_eng.png&amp;quot;, width = 8, height = 8)&lt;/code&gt;&lt;/pre&gt;
 &lt;center&gt;

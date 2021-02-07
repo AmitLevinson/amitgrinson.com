@@ -1,19 +1,19 @@
 ---
 title: Golda Ice Cream Locations in Israel
 author: Amit Levinson
-date: '2021-01-03'
+date: '2021-02-07'
 slug: exploring-ice-cream-locations
-categories: [R, GitHub]
+categories: [R]
 tags: [maps, rvest]
 subtitle: ''
-summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
-featured: no
+summary: 'Exploring mapping and distances to various Golda ice-cream locations through Israel'
+featured: yes
 image:
   caption: ''
   focal_point: ''
   preview_only: yes
 projects: []
-draft: true
+draft: false
 editor_options: 
   chunk_output_type: console
 ---
@@ -36,8 +36,10 @@ This past November I participated several times in the [#30DaysMapChallenge](htt
 
 **In this blog post I'll explore [Golda Ice-cream](https://www.goldaglida.co.il/) locations throughout Israel.** My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to other ice-cream shops we previously encountered. Golda has a plethora of ice-cream flavors including fantastic Sorbe, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can drizzle on top, what a treat!
 
-{{<instagram B-rtY8bnKHx hidecaption >}}
-![](ice-cream.jpg)
+<center><newcaption>
+<img width ="95%" src="imgs/ice-cream.jpg"></img>
+Golda's delicious ice-cream flavors. Source: [Golda Facebook page](https://www.facebook.com/GLIDAGOLDAISRAEL)</newcaption>
+</center><br>
 
 To follow through with my motivation to learn more about maps and as a tribute to their great ice-cream I decided to explore Golda's ice-cream locations. More specifically, we'll be looking at distances from various points in the country to the *nearest* ice-cream location. Following a short overview of the data collection and ice-cream locations throughout Israel I will address the utmost important question pertaining distances and Golda locations:
 
@@ -77,7 +79,7 @@ I collected information about [Golda locations street addresses](https://www.gol
 
 Essentially, I geocoded the data twice. Any addresses in English that didn't match the Hebrew ones I manually checked for the correct location. I identified about 2-3 that the extracted information was 250 meters off. Some locations might still not be exact, but overall I think we're good to go. You can also explore the [scraping script and complete dataset with English locations](https://github.com/AmitLevinson/Datasets/tree/master/golda) for further info.
 
-Our final dataset looks as follows:
+**Our Golda ice-cream dataset looks as follows:**
 
 ```{r echo = FALSE}
 reactable(golda_locations, defaultPageSize = 6)
@@ -309,7 +311,7 @@ We could also level up the map and have the distance measured from a specific lo
 
 We can visualize it on a static map enabling us to easily share it as an image:
 
-```{r fig.cap='Static map of distances to Golda ice-cream locations', echo = FALSE, fig.align='center'}
+```{r, echo = FALSE, fig.align='center'}
 # Project the map
 # isr_map <- st_transform(isr_map_sf, crs = 2039)
 # # Make square grid
@@ -333,27 +335,30 @@ golda_distances <- data.frame(
 pink_palette <- c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC")
 
 
-ggplot(golda_distances, color = "gray35")+
+ggplot(golda_distances, color = "gray55")+
   geom_sf(data = isr_map_sf, aes(geometry = geometry))+
   geom_sf(aes(geometry = geometry.x, fill =  binned_colors), color = NA)+
   geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .3)+
-  #scale_fill_binned(high = "#FF1554", low = "#FFE5EC", n.breaks = 7)+
-  scale_fill_manual(name = "Distance (km)", values = rev(pink_palette), labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
-  #scale_fill_gradient(high = "#FF1554", low = "#FFFFFF", breaks = seq(70,10,-10))+
-  xlim(34,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Colors represent distance from the center of a 2km<sup>2</sup> area")+
-  guides(fill = guide_legend(reverse = TRUE))+
+  scale_fill_manual(name = "Distance (km)", values = rev(pink_palette),
+                    labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
+  xlim(33.7,36)+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots are Golda ice-cream locations, and the Color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
-  theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 12),
+  theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
+        #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
         legend.title = element_text(size = 9),
         legend.text = element_text(size = 8),
         legend.key.size = unit(4,"mm"))
 
-
-ggsave("binned.png", width = 5, height = 8)
+# ggsave("binned.png", width = 4, height = 7)
 ```
+<center>
+<newcaption>Static map of distances to Golda ice-cream locations.
+<a download href="imgs/Golda.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
+</center>
 
 #### Version 2
 
@@ -375,7 +380,7 @@ distances_rds <- st_distance(golda_meters, st_centroid(grid_rds)) %>%
 ```
 
 
-```{r fig.cap='Golda ice-cream locations for Israel\'s judicial borders', echo = FALSE}
+```{r, echo = FALSE}
 # Israel map
 isr_map_rds_raw <- readRDS("maps/00_Israel_0_sf.rds")
 # write_rds(grid_rds, "rds/grid_green.rds")
@@ -393,34 +398,31 @@ golda_distances_rds <- data.frame(
   mutate(binned_colors = cut(distance_km, breaks = c(70,50,25,10,5,0)))
 
 ggplot(golda_distances_rds)+
-  geom_sf(data = isr_map_rds_raw, color = "gray35")+
-  #geom_sf(aes(geometry = geometry.x))+
+  geom_sf(data = isr_map_rds_raw, color = "gray55")+
   geom_sf(aes(geometry = geometry.x, fill =  binned_colors, color = "black"), color = "transparent")+
   geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .3)+
-  # scale_fill_gradient(high = "#FF1554", low = "#FFFFFF", breaks = seq(70,10,-10))+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette), labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
-  #scale_fill_brewer(name = "Distance (km)", palette = "Greens", labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
-  xlim(33.5,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Colors represent distance from the center of a 2km<sup>2</sup> area")+
-  guides(fill = guide_legend(reverse = TRUE))+
+  xlim(33.7,36)+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots are Golda ice-cream locations, and the Color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
-  theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 12),
+  theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
+        #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 6),
         legend.key.size = unit(3,"mm"))
+# ggsave("binned_wogreen.png", width = 4, height = 7)
 ```
-
-<a download href="ice-cream.png">Download</a>
-<area shape="circle" coords="90,58,3" alt="Mercury" href="merglobe.gif" download>
-
-<div class="button_cont" align="center"><a download href="ice-cream.png" target="_blank" rel="nofollow noopener">Download</a></div>
+<center>
+<newcaption>Static map of distances to Golda ice-cream locations for Israel's judicial borders. <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
+</center>
 
 
 ### Conclusion
 
-All this talk about ice-cream sure got me craving for one. I hope I didn't evoke too much ice-cream craving following this post, but at least now you know where to find the nearest location. I also invite you to explore the [full source code]() or play with the [data] yourself.
+All this talk about ice-cream sure got me craving for one. I hope I didn't evoke too much ice-cream craving following this post, but at least now you know where to find the nearest location. I also invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) or play with the [data](https://github.com/AmitLevinson/Datasets/tree/master/golda) yourself.
 
 Although a short post, I've learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances and understanding what occurs under the hood and interactively displaying the final result. While I definitely still don't know enough about working with spatial data in R, I fell like I don't know a little less after completing this blog post.
 

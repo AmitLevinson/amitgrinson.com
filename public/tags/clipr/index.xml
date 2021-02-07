@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>clipr | Amit Levinson</title>
-    <link>/tags/clipr/</link>
-      <atom:link href="/tags/clipr/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://amitlevinson.com/tags/clipr/</link>
+      <atom:link href="https://amitlevinson.com/tags/clipr/index.xml" rel="self" type="application/rss+xml" />
     <description>clipr</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2020</copyright><lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Amit Levinson 2021</copyright><lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
+      <url>https://amitlevinson.com/images/icon_hudc5a425b3e555d4faa8838526864126b_16079_512x512_fill_lanczos_center_2.png</url>
       <title>clipr</title>
-      <link>/tags/clipr/</link>
+      <link>https://amitlevinson.com/tags/clipr/</link>
     </image>
     
     <item>
       <title>Making updating exam grades easy with R</title>
-      <link>/post/update-exam-grades-easy-with-r/</link>
+      <link>https://amitlevinson.com/blog/update-exam-grades-easy-with-r/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>/post/update-exam-grades-easy-with-r/</guid>
+      <guid>https://amitlevinson.com/blog/update-exam-grades-easy-with-r/</guid>
       <description>
-&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://amitlevinson.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; Instead of each time searching for an id in the xlsx template the university provides we make our own xlsx and merge between the two. I then run through two options of either saving the new data frame as an &lt;code&gt;.xlsx&lt;/code&gt; using the &lt;code&gt;{xlsx}&lt;/code&gt; package, and I show another option where I extract the new column I need using &lt;code&gt;write_clip&lt;/code&gt; from the &lt;code&gt;{clipr}&lt;/code&gt; package.&lt;/p&gt;
@@ -204,7 +204,7 @@ So we now have several options:&lt;/p&gt;
 
 xlsx::write.xlsx(joined_tables, &amp;quot;010210078-29012020C.xlsx&amp;quot;, showNA = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below is a screen shot of our new table:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/ta_efficient/xl.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/img/ta_efficient/xl.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;However, going with this approach I encountered that the new .xlsx file is saved with a new column of id numbers that we see in the screenshot. We can just delete that column and have our file all ready to go.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;option-2---clip-the-sorted-column-into-the-excel-file&#34; class=&#34;section level3&#34;&gt;
@@ -219,7 +219,7 @@ xlsx::write.xlsx(joined_tables, &amp;quot;010210078-29012020C.xlsx&amp;quot;, sh
 
 clip_grades(messy, clean)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;which gives us the following:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/ta_efficient/clipgif.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://amitlevinson.com/img/ta_efficient/clipgif.gif&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;That’s it!&lt;/p&gt;
 &lt;p&gt;Well, more or less. We need to delete the ‘NA’ that are copied from the function. Unfortunately I wasn’t able to delete them from within &lt;code&gt;R&lt;/code&gt;, so I manually delete them.&lt;/p&gt;
 &lt;p&gt;As to which option is better, I think the first option is more efficient as we only need to delete the id column. However, using the &lt;code&gt;{xlsx}&lt;/code&gt; package is dependent on &lt;code&gt;{rJava}&lt;/code&gt;and having java installed on the computer from what I encountered. Option two can be a little messy and possibly yield mistakes if we copy and paste the new grades and then manually delete the &lt;code&gt;NA&lt;/code&gt; - your call.&lt;/p&gt;

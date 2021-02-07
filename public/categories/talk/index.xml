@@ -1,22 +1,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>talk on Amit Levinson</title>
-    <link>/categories/talk/</link>
+    <link>https://amitlevinson.com/categories/talk/</link>
     <description>Recent content in talk on Amit Levinson</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
     <lastBuildDate>Tue, 14 Apr 2020 13:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/categories/talk/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://amitlevinson.com/categories/talk/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Wrangling and Visualizing Data in R</title>
-      <link>/talk/israel-2050/</link>
+      <link>https://amitlevinson.com/talk/israel-2050/</link>
       <pubDate>Tue, 14 Apr 2020 13:00:00 +0000</pubDate>
       
-      <guid>/talk/israel-2050/</guid>
+      <guid>https://amitlevinson.com/talk/israel-2050/</guid>
       <description>
 
 

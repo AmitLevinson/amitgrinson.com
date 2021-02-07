@@ -1,42 +1,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Amit Levinson</title>
-    <link>/post/</link>
+    <link>https://amitlevinson.com/post/</link>
     <description>Recent content in Posts on Amit Levinson</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Amit Levinson {year}</copyright>
-    <lastBuildDate>Wed, 14 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Jan 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://amitlevinson.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>My year in R</title>
-      <link>/post/my-year-in-r/</link>
-      <pubDate>Wed, 14 Oct 2020 00:00:00 +0000</pubDate>
+      <title>Automatic Rendering of a Plot with GitHub Actions</title>
+      <link>https://amitlevinson.com/blog/automated-plot-with-github-actions/</link>
+      <pubDate>Sun, 03 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/my-year-in-r/</guid>
+      <guid>https://amitlevinson.com/blog/automated-plot-with-github-actions/</guid>
+      <description>a light introduction to GitHub Actions for automating a plot of frequently used R packages.</description>
+      
+            <category>TidyTuesday</category>
+      
+            <category>GitHub</category>
+      
+    </item>
+    
+    <item>
+      <title>Thirty Day Map Challenge</title>
+      <link>https://amitlevinson.com/blog/thirty-day-map-challenge/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amitlevinson.com/blog/thirty-day-map-challenge/</guid>
+      <description>My attempts at various days throughout the #30DayMapchallenge</description>
+      
+    </item>
+    
+    <item>
+      <title>My year in R</title>
+      <link>https://amitlevinson.com/blog/my-year-in-r/</link>
+      <pubDate>Thu, 15 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amitlevinson.com/blog/my-year-in-r/</guid>
       <description>Looking back at my year of learning R</description>
       
     </item>
     
     <item>
       <title>Survey categorical variables with KableExtra</title>
-      <link>/post/printing-survey-table/</link>
+      <link>https://amitlevinson.com/blog/printing-survey-table/</link>
       <pubDate>Tue, 01 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/printing-survey-table/</guid>
+      <guid>https://amitlevinson.com/blog/printing-survey-table/</guid>
       <description>Aestheticaly printing descriptive variables from your survey data</description>
       
     </item>
     
     <item>
       <title>Defining uncertainty in the Israeli lottery</title>
-      <link>/post/uncertainty-in-the-israeli-lottery/</link>
+      <link>https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/</link>
       <pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/uncertainty-in-the-israeli-lottery/</guid>
+      <guid>https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/</guid>
       <description>Exploring the probability of winning the lottery at and by a given trial with the Geometric distribution</description>
       
             <category>probability</category>
@@ -45,10 +69,10 @@
     
     <item>
       <title>Learning Tfidf with Political Theorists</title>
-      <link>/post/learning-tfidf-with-political-theorists/</link>
+      <link>https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/learning-tfidf-with-political-theorists/</guid>
+      <guid>https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/</guid>
       <description>Learning tf-idf through political theorists.</description>
       
             <category>tidytext</category>
@@ -57,20 +81,20 @@
     
     <item>
       <title>Hosting interactive graphs online</title>
-      <link>/post/sharing-interactive-charts/</link>
+      <link>https://amitlevinson.com/blog/sharing-interactive-charts/</link>
       <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/sharing-interactive-charts/</guid>
+      <guid>https://amitlevinson.com/blog/sharing-interactive-charts/</guid>
       <description>A walk through for sharing your interactive visualizations on GitHub Pages</description>
       
     </item>
     
     <item>
       <title>Israeli elections on Twitter</title>
-      <link>/post/israeli-elections-on-twitter/</link>
+      <link>https://amitlevinson.com/blog/israeli-elections-on-twitter/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/israeli-elections-on-twitter/</guid>
+      <guid>https://amitlevinson.com/blog/israeli-elections-on-twitter/</guid>
       <description>Analyzing tweets from the the Israeli elections week</description>
       
             <category>rtweet</category>
@@ -81,10 +105,10 @@
     
     <item>
       <title>Making updating exam grades easy with R</title>
-      <link>/post/update-exam-grades-easy-with-r/</link>
+      <link>https://amitlevinson.com/blog/update-exam-grades-easy-with-r/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/update-exam-grades-easy-with-r/</guid>
+      <guid>https://amitlevinson.com/blog/update-exam-grades-easy-with-r/</guid>
       <description>In this post I discuss my use of the xlsx and clipr packages for optimizing how I updated students exams</description>
       
             <category>xlsx</category>
@@ -95,10 +119,10 @@
     
     <item>
       <title>Visualizing Eliud Kichoge&#39;s new marathon record</title>
-      <link>/post/eliud-kichoge/</link>
+      <link>https://amitlevinson.com/blog/eliud-kichoge/</link>
       <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/eliud-kichoge/</guid>
+      <guid>https://amitlevinson.com/blog/eliud-kichoge/</guid>
       <description>In this post I plot Eliud Kichoge new marathon record using rvest to get data from wikipedia and ggimage for plotting images as points</description>
       
             <category>ggimage</category>
@@ -109,10 +133,10 @@
     
     <item>
       <title>Mapping bomb shelters in Be&#39;er-Sheva, IL</title>
-      <link>/post/bomb-shelters/</link>
+      <link>https://amitlevinson.com/blog/bomb-shelters/</link>
       <pubDate>Tue, 14 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/bomb-shelters/</guid>
+      <guid>https://amitlevinson.com/blog/bomb-shelters/</guid>
       <description>While rockets were fired towards Israel I decided to take the opportunity and plot  bomb shelters in Beer-Sheva.</description>
       
             <category>ggmap</category>
@@ -123,10 +147,10 @@
     
     <item>
       <title>The Tidytuesday project</title>
-      <link>/post/the-tidytuesday-project/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <link>https://amitlevinson.com/blog/the-tidytuesday-project/</link>
+      <pubDate>Sun, 22 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/the-tidytuesday-project/</guid>
+      <guid>https://amitlevinson.com/blog/the-tidytuesday-project/</guid>
       <description>Visualizations from the Tidytuesday project - A weekly data project intended to practice summarizing, arranging and visualizing data.</description>
       
     </item>
