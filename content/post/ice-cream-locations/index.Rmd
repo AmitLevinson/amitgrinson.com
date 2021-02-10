@@ -362,7 +362,7 @@ ggplot(golda_distances, color = "gray55")+
 # ggsave("imgs/Golda.png", width = 4, height = 7)
 ```
 <center>
-<newcaption>Static map of distances to Golda ice-cream locations.
+<newcaption>Static map of distances to Golda ice-cream locations
 <a download href="imgs/Golda.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
 </center>
 
@@ -424,7 +424,7 @@ ggplot(golda_distances_rds)+
 # ggsave("imgs/Golda_wo.png", width = 4, height = 7)
 ```
 <center>
-<newcaption>Static map of distances to Golda ice-cream locations for Israel's judicial borders. <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
+<newcaption>Static map of distances to Golda ice-cream locations within Israel's pre-67 borders <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
 </center>
 
 
