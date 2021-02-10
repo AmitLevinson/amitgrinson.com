@@ -1,19 +1,19 @@
 ---
-title: Golda Ice Cream Locations in Israel
+title: Distances to Golda Ice-Cream Locations in Israel
 author: Amit Levinson
 date: '2021-02-07'
 slug: exploring-ice-cream-locations
 categories: []
 tags: [maps, rvest]
 subtitle: ''
-summary: 'Exploring mapping and distances to various Golda ice-cream locations through Israel'
+summary: 'Exploring maps and distances to various Golda ice-cream locations throughout Israel'
 featured: yes
 image:
   caption: ''
   focal_point: ''
   preview_only: yes
 projects: []
-draft: true
+draft: false
 editor_options: 
   chunk_output_type: console
 ---
@@ -30,11 +30,11 @@ newcaption {
 }
 ```
 
-### Why write about Ice-cream
+### What's this all about
 
 This past November I participated several times in the [#30DaysMapChallenge](https://github.com/tjukanovt/30DayMapChallenge), a daily mapping visualization challenge. While I was satisfied with [what I came up with](https://amitlevinson.com/blog/thirty-day-map-challenge/), my main outcome was that I have no idea how to work with maps. Well, to say it differently, I was able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I'll be back to explore some additional geographic data, leading to the following blog post.
 
-**In this blog post I'll explore [Golda Ice-cream](https://www.goldaglida.co.il/) locations throughout Israel.** My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to other ice-cream shops we previously encountered. Golda has a plethora of ice-cream flavors including fantastic Sorbe, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can drizzle on top, what a treat!
+**In this blog post I'll explore [Golda Ice-cream](https://www.goldaglida.co.il/) locations throughout Israel.** My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to other ice-cream shops we previously visited. Golda has a plethora of ice-cream flavors including fantastic Sorbets, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can drizzle on top, what a treat!
 
 <center><newcaption>
 <img width ="95%" src="imgs/ice-cream.jpg"></img>
@@ -45,12 +45,11 @@ To follow through with my motivation to learn more about maps and as a tribute t
 
 > **Where do you _not_ want to be if you want an ice-cream now**?
 
-I will say that I have no affiliation or got any compinsation for this post. I'm genuinely writing this as a means to learn about maps and write about ice-cream. **Stick with me if you want to learn about the nearest ice-cream location to you**.
+I will say that I have no affiliation nor received any compensation for this post. I'm genuinely writing this as a means to learn about maps by exploring ice-cream locations. **Stick with me if you want to learn about the nearest ice-cream shop to you.**
 
+Before we begin, a big thank you goes to Dominic Roye's blog post on [distances from the shore in Iceland](https://dominicroye.github.io/en/2019/calculating-the-distance-to-the-sea-in-r/) for inspiration and practical help with the code. On a more theoretical level, I enjoyed and learned from Michael Dorman's ['Using R for Spatial Data Analysis'](https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html) materials from a workshop he gave. I highly recommend exploring both.
 
-A huge thanks goes to Dominic Roye's blog post on [distances from the shore in Iceland](https://dominicroye.github.io/en/2019/calculating-the-distance-to-the-sea-in-r/) for inspiration and practical help with the code. On a more theoretical level, I enjoyed and learned from Michael Dorman's ['Using R for Spatial Data Analysis'](https://michaeldorman.github.io/R-Spatial-Workshop-at-CBS-2021/main.html) materials from a workshop he gave.
-
-In contrary to previous blog posts of mine this one will have limited code in it. I will not address the code, and a lot of it will not be displayed, but I invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) to learn what's done under the hood.
+In contrast to previous blog posts of mine this one will not display code or raw data. However, I invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) to learn what's done under the hood.
 
 ```{r echo = FALSE}
 library(dplyr)
@@ -62,6 +61,7 @@ library(htmltools)
 library(sf)
 library(ggplot2)
 library(ggspatial)
+library(ggrepel)
 library(reactable)
 library(ggtext)
 library(extrafont)
@@ -75,9 +75,9 @@ golda_locations <- read_csv("golda_locations.csv") %>%
 
 ### Golda location information
 
-I collected information about [Golda locations street addresses](https://www.goldaglida.co.il/%d7%a1%d7%a0%d7%99%d7%a4%d7%99%d7%9d/) by web scraping their website. To get exact locations I geocoded street addresses using the `{ggmap}` package, extracting corresponding latitude & longitutde coordinates. I then queried the recieved longititude and latitude for Golda's addresses in English to validate the information initially extracted. 
+I web-scraped [Golda's website]((https://www.goldaglida.co.il/%d7%a1%d7%a0%d7%99%d7%a4%d7%99%d7%9d/)) to extract relevant information such as street addresses in Hebrew. To get exact locations I geocoded those street addresses using the [{ggmap}](https://github.com/dkahle/ggmap) R package, extracting corresponding latitude & longitude coordinates for each scraped address. I then queried the received longitude and latitude for Golda's addresses in English to validate the information initially extracted. 
 
-Essentially, I geocoded the data twice. Any addresses in English that didn't match the Hebrew ones I manually checked for the correct location. I identified about 2-3 that the extracted information was 250 meters off. Some locations might still not be exact, but overall I think we're good to go. You can also explore the [scraping script and complete dataset with English locations](https://github.com/AmitLevinson/Datasets/tree/master/golda) for further info.
+Essentially, I geocoded the data twice. Any addresses in English that didn't match the Hebrew ones I manually checked for the correct location. I identified about 2-3 locations that the extracted information was 250 meters off. Some locations might still not be exact, but overall I think we're good to go. You can explore the [scraping script and complete dataset with English locations](https://github.com/AmitLevinson/Datasets/tree/master/golda) for further info.
 
 **Our Golda ice-cream dataset looks as follows:**
 
@@ -86,7 +86,7 @@ reactable(golda_locations, defaultPageSize = 6)
 ```
 <br>
 
-We have a total of 79 locations throughout Israel. Each row represents a store, the city and street it's located in, their phone number and a corresponding longitude and latitude. A few stores on the website were noted as currently closed, but for the sake of this post will treat them like all others.
+We have a total of 79 locations throughout Israel. Each row represents a store, the city and street it's located in, their phone number and a corresponding longitude and latitude point. A few stores on the website were noted as currently closed, but for the sake of this post will treat them like all others.
 
 Let's see where they are across Israel:
 
@@ -123,9 +123,9 @@ A quick overview of our map shows that **majority of Golda locations are in the 
 
 We (well, I) want to calculate the distances to each Ice-cream location from various points on the map. Doing so requires us to project our map to a different coordinate reference system than the current. That is, our current CRS uses geographic coordinates that account for earth's curvature, when we want a flat surface to measure distances. Think of it as cutting open a basketball, flattening it and then measuring a distance from two points.
 
-Furthermore, We want to measure distances from various locations on the map to the nearest Golda ice-cream location. However, **distance from 'various locations' is somewhat abstract; we want the distance from something a little more specific.** To tackle that, we'll divide the geographical area of Israel into grids.
+Furthermore, We want to measure distances from various locations on the map to the nearest Golda ice-cream location. However, **distance from 'various locations' is somewhat abstract; we want the distance from something a little more specific.** To tackle that query, we'll divide the geographical area of Israel into grids.
 
-Grids... what? Let's have a look:
+Grids... What? Let's have a look:
 
 ```{r echo = FALSE}
 # Convert locations into a wgs 84 crs:
@@ -169,7 +169,7 @@ p1+p2+
 
 On the left we have our map of Israel, and on the right the same map after we 'cut' it horizontally and vertically. Each grid represents a square polygon (except those on the borders) with specific geographic references to plot it, creating a 2 squared kilometers area (2km$^2$). **We can measure the distance from each 2km$^2$ grid to the nearest ice-cream location.** 
 
-In practical terms, here's an example of distances from one random grid to several few Golda locations:
+In practical terms, here's an example of distances from one random grid to a few random Golda locations:
 
 ```{r echo = FALSE}
 # Create a sampled dataframe
@@ -189,20 +189,26 @@ sample_data <- data_lines %>%
   mutate(relevant = ifelse(distance == min(distance), "yes", "no"),
          distance = ifelse(relevant == "yes", paste0(round(distance/1000, 0), "km"), round(distance/1000, 0)))
 
+point_labels <- data.frame(x = c(34.802,34.95968, 34.79946),
+                           y = c(30.04696, 29.54952, 31.23412),
+                           label = c("Example grid", "Nearest Golda", "Golda locations"))
+
 ggplot(isr_map_sf)+
   geom_sf()+
-  geom_sf(data = grid_wgs[350,], aes(geometry = geometry), fill = "red")+
   geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y, color = relevant), size = 1.2)+
+  geom_sf(data = grid_wgs[350,], aes(geometry = geometry), fill = "red", color = "red")+
   geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
   # geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = "red", size = 0.1)+
-  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 4)+
-  scale_color_manual(values = c("yes" = "red", "no" = "gray45"))+
+  geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 3.5)+
+  geom_text_repel(data = point_labels, mapping = aes(x = x, y = y, label = label), xlim = c(35.5,36), point.padding = 0.1,  arrow = arrow(length = unit(0.015, "npc"), type = "closed"), segment.linetype = 8, color = "gray60", segment.color = "gray80", size = 3)+
+  scale_color_manual(values = c("yes" = "red", "no" = "gray60"))+
   scale_linetype_manual(values = c("dashed","solid"))+
-  xlim(33.7,36)+
+  xlim(33.5,36)+
+  coord_sf(clip = "off")+
   # Remove legends
-  #guides(color = "none")+
-  labs(title = "Finding the nearest Golda location for each grid cell")+
-  theme(plot.title = element_text(size = 12),
+  guides(color = "none")+
+  labs(title = "Finding the nearest Golda location for each grid")+
+  theme(plot.title = element_text(size = 13),
         plot.title.position = "plot")
 ```
 
@@ -212,11 +218,11 @@ Our small square represents a 2km$^2$ area somewhere in southern Israel. **The l
 We divide Israel into grids and measure the distance between each grid cell to all 79 Golda locations. To extract the distance to the nearest Golda location we find the minimum distance value for each grid, i.e. the distance to the nearest Golda ice-cream location. 
 {{% /alert %}}
 
-
+![](https://media.giphy.com/media/AGGz7y0rCYxdS/giphy.gif)
 
 ### Where's Our Ice-cream
 
-Once we understand how each grid's nearest ice-cream location distance is found we can measure accordingly. We calculate the distance from each grid to all ice-cream locations. Following that we can create a map of our grid cells with color indicating the distance to the nearest Golda ice-cream location:
+Once we understand how each grid's nearest ice-cream location distance is found we can measure accordingly for all grids. Following that we can create a map of our grid cells filled with color indicating the distance to the nearest Golda ice-cream location:
 
 ```{r echo = FALSE}
 # Commented out and loaded as an rds instead. Calculate distances:
@@ -292,17 +298,17 @@ full_map <- leaflet() %>%
 ```
 
 <p align = "center">
-<iframe width ="95%" height="575px" name ="iframe" src="widgets/full_map.html"></iframe>
+<iframe width ="95%" height="550px" name ="iframe" src="widgets/full_map.html"></iframe>
 <newcaption>Distance to the nearest Golda ice-cream location from the center of a 2km$^2$ grid cell. Zoom in and click on a grid for more info on the nearest ice-cream location</newcaption>
 </p>
 
-Beautiful! Well, mainly for those living near ice-cream locations.
+**Beautiful! Well, mainly for those living near ice-cream locations.**
 
-The main outcome is you don't want to be stuck somewhere in southern Israel or south of the dead sea with a sudden craving for ice-cream. We also see that similar to before, those living in the Tel-Aviv metropolitan area are safe with a Golda location near by.
+The main conclusion is you don't want to be stuck somewhere in southern Israel or south of the dead sea with a sudden craving for ice-cream. We also see that similar to before, those living in the Tel-Aviv metropolitan area are safe with a Golda location near by.
 
-I've also added another twist to the map in which you can click on a grid cell to see how far is the nearest Ice cream location. The distance is measured from the center of a grid, and therefore might not be exact. 
+I've added a twist to the map in which you can click on a grid cell to see how far is the nearest ice cream location. The distance is measured from the center of a grid so we'll treat the grid cell as one unit.
 
-We could also level up the map and have the distance measured from a specific location the user clicks on. For that we'll need something reactable such as a shiny app providing the eact distance from a clicked point on the map. However, I wanted to explore distances more generally and found the above more appropriate. 
+We could also level up the map and have the distance measured from a specific location the user clicks on, not a whole grid cell. For that we'll need something reactable such as an interactive web app (e.g. R Shiny) providing exact distances from a point clicked on the map. It seems pretty straight forward but for the purpose of the post I found the above appropriate and a great learning experience. 
 
 
 ### Static maps
@@ -342,7 +348,7 @@ ggplot(golda_distances, color = "gray55")+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette),
                     labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots are Golda ice-cream locations, and the Color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black represent Golda ice-cream locations, and the filled color<br>represents distance from the center of a 2km<sup>2</sup> area")+
   #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
@@ -362,7 +368,7 @@ ggplot(golda_distances, color = "gray55")+
 
 #### Version 2
 
-Considering the geo-political issues in Israel, which I won't elaborate here, I'll share another map with different borders. These borders represent the formal judicial boundaries of Israel. They also better reflect the feasibility of individuals to access these locations since people living in Gaza (plotted in previous maps) cannot access various locations.
+Considering the geo-political issues in Israel, which I won't elaborate here, I'll share another map with different borders. These borders better reflect the feasibility of individuals to access these locations since people living in, say, Gaza (plotted in previous maps), cannot access any of the locations.
 
 ```{r echo=FALSE, eval = FALSE}
 # Load data
@@ -403,7 +409,7 @@ ggplot(golda_distances_rds)+
   geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .3)+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette), labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots are Golda ice-cream locations, and the Color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black represent Golda ice-cream locations, and the filled color<br>represents distance from the center of a 2km<sup>2</sup> area")+
   #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
@@ -422,8 +428,8 @@ ggplot(golda_distances_rds)+
 
 ### Conclusion
 
-All this talk about ice-cream sure got me craving for one. I hope I didn't evoke too much ice-cream craving following this post, but at least now you know where to find the nearest location. I also invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) or play with the [data](https://github.com/AmitLevinson/Datasets/tree/master/golda) yourself.
+All this talk about ice-cream sure got me craving for some. I hope I didn't instill too much ice-cream craving in you following this post, but at least now you know where to find the nearest location. I also invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) or play with the [data](https://github.com/AmitLevinson/Datasets/tree/master/golda) yourself.
 
-Although a short post, I've learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances and understanding what occurs under the hood and interactively displaying the final result. While I definitely still don't know enough about working with spatial data in R, I fell like I don't know a little less after completing this blog post.
+Although a short post, I've learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances, understanding what occurs under the hood and learning how to interactively display the final result. **While I definitely still don't know enough about working with spatial data in R, I felt like I don't know a little less after completing this blog post.**
 
-Hope you enjoyed this post and it helps you find the nearest ice-cream location!
+I hope you enjoyed this post and it helps you find the nearest ice-cream location next time you're subject to an ice-cream frenzy!
