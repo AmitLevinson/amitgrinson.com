@@ -167,7 +167,7 @@ p1+p2+
     theme = theme(plot.title = element_markdown(size = 12)))
 ```
 
-On the left we have our map of Israel, and on the right the same map after we 'cut' it horizontally and vertically. Each grid represents a square polygon (except those on the borders) with specific geographic references to plot it, creating a 2 squared kilometers area (2km$^2$). **We can measure the distance from each 2km$^2$ grid to the nearest ice-cream location.** 
+On the left we have our map of Israel, and on the right the same map after we 'cut' it horizontally and vertically. Each grid represents a square polygon (except those on the borders) with specific geographic references to plot it, creating a 2 squared kilometers area (2km$^2$). **We can measure the distance from the center of each 2km$^2$ grid to the nearest ice-cream location.** 
 
 In practical terms, here's an example of distances from one random grid to a few random Golda locations:
 
@@ -212,7 +212,7 @@ ggplot(isr_map_sf)+
         plot.title.position = "plot")
 ```
 
-Our small square represents a 2km$^2$ area somewhere in southern Israel. **The lines and corresponding values indicate the distance to each ice-cream location from our example grid.** To be specific, I measure the air distance from the *center* of a grid cell to the various locations. In the above graph our sampled grid is connected with a red line to the nearest ice-cream location located in Eilat, 42km away.
+Our small square represents a 2km$^2$ area somewhere in southern Israel. **The lines and corresponding values indicate the distance to each ice-cream location from our example grid.** To be specific, I measure the air distance from the *center* of a grid cell to the various locations. In the above graph our sampled grid is connected with a red line to the nearest ice-cream location located in Eilat, 57km away.
 
 {{% alert note %}}
 We divide Israel into grids and measure the distance between each grid cell to all 79 Golda locations. To extract the distance to the nearest Golda location we find the minimum distance value for each grid, i.e. the distance to the nearest Golda ice-cream location. 
@@ -432,6 +432,6 @@ ggplot(golda_distances_rds)+
 
 All this talk about ice-cream sure got me craving for some. I hope I didn't instill too much ice-cream craving in you following this post, but at least now you know where to find the nearest location. I also invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) or play with the [data](https://github.com/AmitLevinson/Datasets/tree/master/golda) yourself.
 
-Although a short post, I've learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances, understanding what occurs under the hood and learning how to interactively display the final result. **While I definitely still don't know enough about working with spatial data in R, I felt like I don't know a little less after completing this blog post.**
+Although a short post, I've learned a plenty on using maps, distances and reference systems. From a technical level it required learning about transitioning from various reference systems, calculating distances, understanding what occurs under the hood and learning how to interactively display the final result. **While I definitely still don't know enough about working with spatial data in R, I feel like I don't know a little less after completing this blog post.**
 
 I hope you enjoyed this post and it helps you find the nearest ice-cream location next time you're subject to an ice-cream frenzy!
