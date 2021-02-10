@@ -244,7 +244,7 @@ mean(rgeom(2e6, p))
 
 Pretty close to our expected value!  
 
-So what does the $E(X)$ mean in terms of the lottery? **You'd have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!**
+So what does the $E(X)$ mean in terms of the lottery? **You'd have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~&#36;13,483,747) to win approximately NIS 5M (~1.42M dollars)!**
 
 ### Conclusion
 
@@ -254,7 +254,7 @@ Unfortunately, the numbers aren't in our favor. You'd find yourself spending a g
 
 ### Further reading \\ exploring
 
-Two resources I found extremely valuable in learning more about the geometric distribution:
+Three resources I found extremely valuable in learning more about the geometric distribution:
 
 - The [Geometric distribution Wikipedia's page](https://en.wikipedia.org/wiki/Geometric_distribution). I'm constantly amazed at the vast amount and well articulated statistical pages they have.  
 

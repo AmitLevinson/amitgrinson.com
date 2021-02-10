@@ -46,8 +46,9 @@ editor_options:
 <p>Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:</p>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
-library(scattermore)
-library(extrafont)
+library(scattermore)</code></pre>
+<pre><code>## Warning: package &#39;scattermore&#39; was built under R version 4.0.3</code></pre>
+<pre class="r"><code>library(extrafont)
 library(ggtext)
 
 set.seed(123)
@@ -70,7 +71,7 @@ lot_p &lt;- ggplot()+
         plot.margin = margin(4,2,2,4, unit = &quot;mm&quot;))
 
 lot_p</code></pre>
-<p><img src="/post/uncertainty-in-the-israeli-lottery/index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Not easy is it?</p>
 <p>Now that we know the probability of winning at each attempt, let’s see how it manifests across multiple attempts.</p>
 </div>
@@ -142,6 +143,8 @@ head(df_prob)</code></pre>
   margin-right: auto;
   color: #333333;
   font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
@@ -300,10 +303,6 @@ head(df_prob)</code></pre>
   vertical-align: middle;
 }
 
-#hvuocxzswv .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
 #hvuocxzswv .gt_from_md > :first-child {
   margin-top: 0;
 }
@@ -381,6 +380,10 @@ head(df_prob)</code></pre>
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #D3D3D3;
+}
+
+#hvuocxzswv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
 }
 
 #hvuocxzswv .gt_table_body {
@@ -590,7 +593,7 @@ head(df_prob)</code></pre>
 <pre class="r"><code>mean(rgeom(2e6, p))</code></pre>
 <pre><code>## [1] 8129065</code></pre>
 <p>Pretty close to our expected value!</p>
-<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>You’d have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (approximately 1.42M dollars)!</strong></p>
+<p>So what does the <span class="math inline">\(E(X)\)</span> mean in terms of the lottery? <strong>You’d have to play approximately 8,136,744 games to win the lottery, spending a total of NIS 47,193,115 (~$13,483,747) to win approximately NIS 5M (~1.42M dollars)!</strong></p>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
@@ -599,7 +602,7 @@ head(df_prob)</code></pre>
 </div>
 <div id="further-reading-exploring" class="section level3">
 <h3>Further reading \ exploring</h3>
-<p>Two resources I found extremely valuable in learning more about the geometric distribution:</p>
+<p>Three resources I found extremely valuable in learning more about the geometric distribution:</p>
 <ul>
 <li><p>The <a href="https://en.wikipedia.org/wiki/Geometric_distribution">Geometric distribution Wikipedia’s page</a>. I’m constantly amazed at the vast amount and well articulated statistical pages they have.</p></li>
 <li><p>Continuing on that, I found the resource that the Wikipedia page relies on extremely helpful: “A modern introduction to probability and statistics : understanding why and how”.</p></li>
