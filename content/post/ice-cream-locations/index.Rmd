@@ -348,18 +348,18 @@ ggplot(golda_distances, color = "gray55")+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette),
                     labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black represent Golda ice-cream locations, and the filled color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots represent Golda ice-cream locations, and the filled<br>color indicates distances from the center of a 2km<sup>2</sup> area")+
   #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
         #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
-        legend.title = element_text(size = 9),
-        legend.text = element_text(size = 8),
-        legend.key.size = unit(4,"mm"))
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 7),
+        legend.key.size = unit(3,"mm"))
 
-# ggsave("binned.png", width = 4, height = 7)
+# ggsave("imgs/Golda.png", width = 4, height = 7)
 ```
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations.
@@ -371,6 +371,8 @@ ggplot(golda_distances, color = "gray55")+
 Considering the geo-political issues in Israel, which I won't elaborate here, I'll share another map with different borders. These borders better reflect the feasibility of individuals to access these locations since people living in, say, Gaza (plotted in previous maps), cannot access any of the locations.
 
 ```{r echo=FALSE, eval = FALSE}
+# Pre-processing that isn't run when the post is rendered
+
 # Load data
 isr_map_rds_raw <- readRDS("maps/00_Israel_0_sf.rds")
 # Project the data
@@ -409,7 +411,7 @@ ggplot(golda_distances_rds)+
   geom_point(golda_locations, mapping = aes(x = lon, y= lat), size = .3)+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette), labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
-  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black represent Golda ice-cream locations, and the filled color<br>represents distance from the center of a 2km<sup>2</sup> area")+
+  labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots represent Golda ice-cream locations, and the filled<br>color indicates distances from the center of a 2km<sup>2</sup> area")+
   #labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
@@ -417,9 +419,9 @@ ggplot(golda_distances_rds)+
         plot.subtitle = element_markdown(color = "gray35", size = 10),
         #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
         legend.title = element_text(size = 8),
-        legend.text = element_text(size = 6),
+        legend.text = element_text(size = 7),
         legend.key.size = unit(3,"mm"))
-# ggsave("binned_wogreen.png", width = 4, height = 7)
+# ggsave("imgs/Golda_wo.png", width = 4, height = 7)
 ```
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations for Israel's judicial borders. <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
