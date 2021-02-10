@@ -1,7 +1,7 @@
 ---
 title: Distances to Golda Ice-Cream Locations in Israel
 author: Amit Levinson
-date: '2021-02-07'
+date: '2021-02-10'
 slug: exploring-ice-cream-locations
 categories: []
 tags: [maps, rvest]
@@ -200,16 +200,14 @@ ggplot(isr_map_sf)+
   geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
   # geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = "red", size = 0.1)+
   geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 3.5)+
-  geom_text_repel(data = point_labels, mapping = aes(x = x, y = y, label = label), xlim = c(35.5,36), point.padding = 0.1,  arrow = arrow(length = unit(0.015, "npc"), type = "closed"), segment.linetype = 8, color = "gray60", segment.color = "gray80", size = 3)+
+  geom_text_repel(data = point_labels, mapping = aes(x = x, y = y, label = label), xlim = c(35.5,36), point.padding = 0.1,  arrow = arrow(length = unit(0.015, "npc"), type = "closed"), segment.linetype = 8, color = "gray55", segment.color = "gray80", size = 3)+
   scale_color_manual(values = c("yes" = "red", "no" = "gray60"))+
   scale_linetype_manual(values = c("dashed","solid"))+
-  xlim(33.5,36)+
+  xlim(34,36)+
   coord_sf(clip = "off")+
-  # Remove legends
   guides(color = "none")+
   labs(title = "Finding the nearest Golda location for each grid")+
-  theme(plot.title = element_text(size = 13),
-        plot.title.position = "plot")
+  theme(plot.title = element_text(size = 13, hjust = 0.5))
 ```
 
 Our small square represents a 2km$^2$ area somewhere in southern Israel. **The lines and corresponding values indicate the distance to each ice-cream location from our example grid.** To be specific, I measure the air distance from the *center* of a grid cell to the various locations. In the above graph our sampled grid is connected with a red line to the nearest ice-cream location located in Eilat, 57km away.
@@ -349,12 +347,13 @@ ggplot(golda_distances, color = "gray55")+
                     labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
   labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots represent Golda ice-cream locations, and the filled<br>color indicates distances from the center of a 2km<sup>2</sup> area")+
-  #labs(caption = "Data: Golda | @Amit_Levinson")+
+  # labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
-        #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
+        # plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
+        # plot.margin = margin(3,4,0,4,"mm"),
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 7),
         legend.key.size = unit(3,"mm"))
@@ -412,15 +411,18 @@ ggplot(golda_distances_rds)+
   scale_fill_manual(name = "Distance (km)", values = rev(pink_palette), labels = c("0-5", "5-10", "10-25", "25-50", "50-70"))+
   xlim(33.7,36)+
   labs(title = "Distance from Golda Ice-cream locations", subtitle = "Black dots represent Golda ice-cream locations, and the filled<br>color indicates distances from the center of a 2km<sup>2</sup> area")+
-  #labs(caption = "Data: Golda | @Amit_Levinson")+
+  # labs(caption = "Data: Golda | @Amit_Levinson")+
   theme_void()+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
-        #plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
+        # Uncomment for a downloadble map:
+        # plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
+        # plot.margin = margin(3,4,0,4,"mm"),
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 7),
         legend.key.size = unit(3,"mm"))
+
 # ggsave("imgs/Golda_wo.png", width = 4, height = 7)
 ```
 <center>
