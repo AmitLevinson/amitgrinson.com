@@ -198,7 +198,6 @@ ggplot(isr_map_sf)+
   geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y, color = relevant), size = 1.2)+
   geom_sf(data = grid_wgs[350,], aes(geometry = geometry), fill = "red", color = "red")+
   geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
-  # geom_point(data = sample_data,mapping= aes(x = us.x, y = us.y), color = "red", size = 0.1)+
   geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 3.5)+
   geom_text_repel(data = point_labels, mapping = aes(x = x, y = y, label = label), xlim = c(35.5,36), point.padding = 0.1,  arrow = arrow(length = unit(0.015, "npc"), type = "closed"), segment.linetype = 8, color = "gray55", segment.color = "gray80", size = 3)+
   scale_color_manual(values = c("yes" = "red", "no" = "gray60"))+
@@ -253,13 +252,6 @@ bins <- c(0,5,15,30,50,70)
 # Create a binned color palette
 pal <- colorBin(c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC"), domain = golda_distances$distance_km, bins = bins, reverse = TRUE)
 
-
-# Blue to white
-c("#0B0C43", "#484972", "#8586A1", "#C2C2D0", "#FFFFFF")
-# Golda Blue to gold
-c("#0B0C43", "#3A3958", "#6A676D", "#999481", "#C8C196")
-# Pink colors:
-c("#FF084A", "#FF3F72", "#FF769A", "#FFADC3", "#FFE4EB")
 #Pink colors more vary:
 c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC")
 
@@ -287,11 +279,7 @@ full_map <- leaflet() %>%
   addLayersControl(overlayGroups = c("Ice-cream locations", "Distances"),
                    options = layersControlOptions(collapsed = FALSE))
 
-# 
-#  pal <- colorNumeric(c("#FF084A","#FFFFFF"), reverse = TRUE, 
-#    domain = golda_distances$distance_km)
-
-
+# Save the widget to use as an iframe:
 # htmlwidgets::saveWidget(full_map, "widgets/full_map.html")
 ```
 
@@ -316,17 +304,9 @@ We could also level up the map and have the distance measured from a specific lo
 We can visualize it on a static map enabling us to easily share it as an image:
 
 ```{r, echo = FALSE, fig.align='center'}
-# Project the map
-# isr_map <- st_transform(isr_map_sf, crs = 2039)
-# # Make square grid
-# new_isr <- st_make_grid(isr_map,  cellsize = 2000)
-# # 2000m grid.
-# grid_2000 <- st_intersection(new_isr, isr_map)
-# 
-# # distances
-# distances_2000 <- st_distance(golda_meters, st_centroid(grid_2000)) %>% 
-#   as_tibble()
 
+# Using the interactive original object we can create a
+# static map:
 golda_distances <- data.frame(
   us = st_transform(grid, crs = 4326),
   # Extract minimum distance for each grid
@@ -371,6 +351,8 @@ Considering the geo-political issues in Israel, which I won't elaborate here, I'
 
 ```{r echo=FALSE, eval = FALSE}
 # Pre-processing that isn't run when the post is rendered
+# Instead it was originally run and saved as an rds (This is the
+# version of the 2nd map)
 
 # Load data
 isr_map_rds_raw <- readRDS("maps/00_Israel_0_sf.rds")
@@ -416,7 +398,6 @@ ggplot(golda_distances_rds)+
   theme(plot.title = element_text(color = "#0C0C44", face = "bold", size = 13),
         plot.title.position = "plot",
         plot.subtitle = element_markdown(color = "gray35", size = 10),
-        # Uncomment for a downloadble map:
         # plot.caption = element_text(color = "gray55", hjust = 1, size = 6, face = "italic"),
         # plot.margin = margin(3,4,0,4,"mm"),
         legend.title = element_text(size = 8),
