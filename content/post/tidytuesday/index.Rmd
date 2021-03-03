@@ -44,6 +44,15 @@ Below are selected graphs I made, organized in a descending order by date. To se
 </br>
 
 
+### **03.03.2021**
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week10_superbowl/superbowl.R)
+
+<p align = "center">
+<img alt = 'Super Bowl ad view count' src = "https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week10_superbowl/superbowl.png" width = "700">
+</p>
+
+
+
 ### **03.02.2021**
 [Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R)
 
