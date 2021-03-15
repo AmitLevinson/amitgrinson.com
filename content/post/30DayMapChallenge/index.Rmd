@@ -22,15 +22,6 @@ projects: []
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-```{css, echo = FALSE}
-.img {
-    float: left;
-    width:  75%;
-    height: 75%;
-    object-fit: contain;
-}
-```
-
 
 ### What's this project all about?
 
