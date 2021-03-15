@@ -19,11 +19,22 @@ projects: []
 
 
 
-<script>
-  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
-</script>
+<style type="text/css">
+.img {
+    float: left;
+    width:  75%;
+    height: 75%;
+    object-fit: contain;
+}
+</style>
+<style>
+.long {
+    float: left;
+    width:  75%;
+    height: 75%;
+    object-fit: fill;
+}
+</style>
 <div id="whats-this-project-all-about" class="section level3">
 <h3>What’s this project all about?</h3>
 <p>Taken from the <a href="https://github.com/tjukanovt/30DayMapChallenge">GitHub page</a> of the project:</p>
@@ -40,7 +51,7 @@ projects: []
 <h3>Day 20 - Population</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/20_population/population.R">Link to code</a></p>
 <p align="center">
-<img src="/img/30daymap/20_map.gif" alt="gif of israel map and a cartogram" width="700" height="450">
+<img class="zoom long" src="/img/30daymap/20_map.gif" alt="gif of israel map and a cartogram">
 </p>
 <p></br></p>
 </div>
@@ -48,7 +59,7 @@ projects: []
 <h3>Day 08 - Yellow</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R">Link to code</a></p>
 <p align="center">
-<img src="/img/30daymap/08_yellow.png" alt="Map of light posts in beer-sheva" width="700">
+<img class="zoom" src="/img/30daymap/08_yellow.png" alt="Map of light posts in beer-sheva">
 </p>
 <p></br></p>
 </div>
@@ -56,7 +67,7 @@ projects: []
 <h3>Day 07 - Green</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R">Link to code</a></p>
 <p align="center">
-<img src="/img/30daymap/07_green.png" alt="Mapping trees in San Francisco" width="700">
+<img class='zoom' src="/img/30daymap/07_green.png" alt="Mapping trees in San Francisco">
 </p>
 <p></br></p>
 </div>
@@ -64,23 +75,23 @@ projects: []
 <h3>Day 03 - Polygon</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/03_Polygons/03_polygons.R">Link to code</a></p>
 <p align="center">
-<img src="/img/30daymap/03_polygons.png" width="700" height="350">
+<img class="zoom" src="/img/30daymap/03_polygons.png">
 </p>
 <p></br></p>
 </div>
 <div id="day-02---lines" class="section level3">
 <h3>Day 02 - Lines</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/02_lines/02_lines.R">Link to code</a></p>
-<p align="center">
-<img src="/img/30daymap/02_lines.png" width="700" height="300">
-</p>
-<p></br></p>
+<p><img class="zoom" src="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/02_lines/02_lines.png?raw=true">
+</br></p>
 </div>
 <div id="day-01---points" class="section level3">
 <h3>Day 01 - Points</h3>
 <p><a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/01_points/01_points.R">Link to code</a></p>
 <p align="center">
-<img src="/img/30daymap/01_points.png" width="700">
+<img class="zoom" src="https://raw.githubusercontent.com/AmitLevinson/30daymapchallenge/main/Code/01_points/01_points.png">
 </p>
 <p><a href="#top"> Back to top</a></p>
+<script src='js/medium-zoom.min.js'></script>
+<script src='js/main.js'></script>
 </div>
