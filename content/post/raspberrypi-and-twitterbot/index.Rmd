@@ -1,0 +1,20 @@
+---
+title: raspberrypi-and-twitterbot
+author: Amit Levinson
+date: '2021-03-16'
+slug: raspberrypi-and-twitterbot
+categories: []
+tags: []
+subtitle: ''
+summary: 'An overview of setting up a Twitterbot on a Raspberry pi and MySql database'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+draft: true
+editor_options: 
+  chunk_output_type: console
+---
+
