@@ -28,3 +28,4 @@ projects: []
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+A page containing various visualizations of mine.
