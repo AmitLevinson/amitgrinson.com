@@ -6,7 +6,6 @@ layout: docs
 title: Data Visualization
 author: Amit Levinson
 date: '2019-09-22'
-slug: the-tidytuesday-project
 categories: []
 tags: []
 subtitle: ''
