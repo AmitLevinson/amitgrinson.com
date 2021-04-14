@@ -28,4 +28,12 @@ projects: []
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-A page containing various visualizations of mine.
+A page containing various visualizations of mine. 
+
+1. Various vizualizations  
+
+2. #TidyTuesday project
+
+3. #30DayChartChallenge
+
+4. #30DayMapChallenge
