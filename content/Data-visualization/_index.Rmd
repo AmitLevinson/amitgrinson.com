@@ -9,7 +9,6 @@ categories: []
 tags: []
 subtitle: ''
 authors: []
-lastmod: ''
 featured: no
 image:
   caption: ''
