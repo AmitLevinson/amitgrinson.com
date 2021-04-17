@@ -40,8 +40,8 @@ A page containing visualizations for various projects and occasions.
 4. 30DayMapChallenge
 
 
-Visualizations will most commonly be accompanied with a link to the source code (shown as <i class="fas fa-code"></i>) and sometimes an interactive version for you to explore (<i class="fas fa-desktop"></i>)
-
+Visualizations will be accompanied with a link to the source code (shown as <i class="fas fa-code"></i>) and sometimes an interactive version or further reading in a blog post for you to explore (<i class="fas fa-desktop"></i>)
+<br>
 <hr>
 <br>
 
@@ -56,10 +56,20 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 <img alt = 'Visualization showing women who won the Nobel prize' src = "https://github.com/AmitLevinson/single_visualizations/raw/master/nobel-women/nobel-women.png" width = "700">
 </p>
 
+
+#### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+[Link to code](https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd) | [Full table](https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html)
+
+<p align = "center">
+<iframe width ="700" height="525" name ="iframe" src="addins/golda.html"></iframe>
+</p>
+
+
+
 #### Israel's Vaccine Admission <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/israel-vaccinated/isr_vaccinated.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
-<img alt = 'Map of Israel with part of filled representing the number of individuals who vaccinated' src = "https://github.com/AmitLevinson/single_visualizations/raw/master/israel-vaccinated/israel-vaccinated.png" width = "550">
+<img alt = 'Map of Israel with part of filled representing the number of individuals who vaccinated' src ="https://github.com/AmitLevinson/single_visualizations/raw/master/israel-vaccinated/israel-vaccinated.png" width = "550">
 </p>
 
 
