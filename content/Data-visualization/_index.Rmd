@@ -35,11 +35,9 @@ A page containing visualizations for various projects and occasions.
 
 1. [TidyTuesday project](#tidytuesday)
 
-1. 30DayMapChallenge[]()
+1. [30DayMapChallenge](#mapchallenge)
 
-1. [30DayChartChallenge]()
-
-
+1. [30DayChartChallenge](#chartchallenge)
 
 
 Visualizations will be accompanied with a link to the source code (shown as <i class="fas fa-code"></i>) and sometimes an interactive version or further reading in a blog post (<i class="fas fa-desktop"></i>).
@@ -78,7 +76,7 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 ### Defining uncertainty in the Israeli lottery <a href="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
 
 <p align = "center">
-<img width="700" alt="img of over 8 million points and one of them in red, representing the low probability of winning the lottery." src="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png"></img>
+<img width="750" alt="img of over 8 million points and one of them in red, representing the low probability of winning the lottery." src="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png"></img>
 </p>
 
 <a href="#top"><i class="fas fa-arrow-up" style='float: right;color:black;'></i></a>
@@ -97,7 +95,7 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 
 
 <p align = "center">
-<img alt = 'Super Bowl ad view count' src = "https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week10_superbowl/superbowl.png" width = "700">
+<img alt = 'Super Bowl ad view count' src = "https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week10_superbowl/superbowl.png" width = "750">
 </p>
 
 
@@ -106,7 +104,7 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 
 
 <p align = "center">
-<img alt = 'HBCU student enrollment' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week6_hbcu/hbcu.png" width = "700">
+<img alt = 'HBCU student enrollment' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week6_hbcu/hbcu.png" width = "750">
 </p>
 
 
@@ -121,28 +119,28 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 
 
 <p align = "center">
-<img alt = 'Gif of a table displaying Tate art collection' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week3_tate/Tate-artists.gif" width = "700">
+<img alt = 'Gif of a table displaying Tate art collection' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week3_tate/Tate-artists.gif" width = "750">
 </p>
 
 
 #### Ninja Warrior <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
-<img alt = 'ninja warrior obstacles' src="/img/tt/week51_ninja.png" width = "700">
+<img alt = 'ninja warrior obstacles' src="/img/tt/week51_ninja.png" width = "750">
 </p>
 
 
 #### Volcano Eruptions <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
-<img alt = 'Tidytuesday-volcano-eruption' src = "/img/tt/vc.png" width = "700">
+<img alt = 'Tidytuesday-volcano-eruption' src = "/img/tt/vc.png" width = "750">
 </p>
 
 
 #### Best Rap Artists <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
-<img alt = 'tidytuesday rap artists' src = "/img/tt/rap_points.png" width = "700">
+<img alt = 'tidytuesday rap artists' src = "/img/tt/rap_points.png" width = "750">
 </p>
 
 <a href="#top"><i class="fas fa-arrow-up" style='float: right;color:black;'></i></a>
@@ -151,21 +149,21 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 <br>
 
 
-## 30DayMapChallenge
+## 30DayMapChallenge {#mapchallenge}
 
 A daily mapping visualization challenged aimed at the spatial community throughout November (read more [here](https://github.com/tjukanovt/30DayMapChallenge)). I only participated on some of the days but it was a great experience learning more about maps.
 
-### Population <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/20_population/population.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Population <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/20_population/population.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center>
-<img src="https://github.com/AmitLevinson/30daymapchallenge/raw/main/Code/20_population/20_map.gif" alt="gif of israel map and a cartogram" width = "350" style="float:left;"><img src="https://github.com/AmitLevinson/30daymapchallenge/raw/main/Code/20_population/20_map-img.png" width = "350" style="float: right;"/>
+<img src="https://github.com/AmitLevinson/30daymapchallenge/raw/main/Code/20_population/20_map.gif" alt="gif of israel map and a cartogram" width = "350" style="float:left;"></img><img src="https://github.com/AmitLevinson/30daymapchallenge/raw/main/Code/20_population/20_map-img.png" width = "350" style="float: right"/>
 </p>
 
 </br>
 </br>
 
 
-### Yellow <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Yellow <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align="center">
 <img src="/img/30daymap/08_yellow.png" alt="Map of light posts in beer-sheva" width = "500">
@@ -173,7 +171,7 @@ A daily mapping visualization challenged aimed at the spatial community througho
 
 
 
-### Green <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Green <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 
 <p align = "center">
@@ -181,7 +179,7 @@ A daily mapping visualization challenged aimed at the spatial community througho
 </p>
 
 
-### Polygon <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Polygon <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 [Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/03_Polygons/03_polygons.R)
 
@@ -190,16 +188,16 @@ A daily mapping visualization challenged aimed at the spatial community througho
 </p>
 
 
-### Lines <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/02_lines/02_lines.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+#### Lines <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/02_lines/02_lines.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
 
 <img src="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/02_lines/02_lines.png?raw=true" width = "400">
 
 
-### Points <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/01_points/01_points.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>    
 
+#### Points <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/01_points/01_points.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>    
 
 <p align = "center">
-<img src="https://raw.githubusercontent.com/AmitLevinson/30daymapchallenge/main/Code/01_points/01_points.png" width ="700">
+<img src="https://raw.githubusercontent.com/AmitLevinson/30daymapchallenge/main/Code/01_points/01_points.png" width ="750">
 </p>
 
 
@@ -207,3 +205,53 @@ A daily mapping visualization challenged aimed at the spatial community througho
 <br>
 <hr>
 <br>
+
+## 30DayChartChallenge {#chartchallenge}
+
+A daily visualization challenge across several themes throughout April using any tool. [Learn more about the project](https://github.com/Z3tt/30DayChartChallenge_Collection2021).
+
+
+##### [All contributions <i class="fas fa-code-branch"></i>](https://github.com/AmitLevinson/30day-chart-challenge) 
+
+#### Circular <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/11_circular/balls.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/11_circular/balls.png?raw=true" width ="700">
+</p>
+
+
+
+#### Statistics <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/09_statistics/uniform.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/09_statistics/uniform.png?raw=true" width ="650">
+</p>
+
+
+#### Experimental <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/06/experimental.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/06/experimental.png?raw=true" width ="750">
+</p>
+
+#### Slope <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/05_slope/slope.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/05_slope/vdem.png?raw=true" width ="700">
+</p>
+
+
+#### Magical <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/04_magical/magic.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/04_magical/magic.png?raw=true" width ="700">
+</p>
+
+
+#### Pictogram <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/02_pictogram/pm.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>  
+
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/02_pictogram/pm.png?raw=true" width ="700">
+</p>
+
+#### Part-to-whole <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/01_part_to_whole/01_part_to_whole.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> 
+<p align = "center">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/01_part_to_whole/retweet.png?raw=true" width ="700">
+</p>
+
