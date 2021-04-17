@@ -257,6 +257,6 @@ A daily visualization challenge across several themes throughout April using any
 
 #### Part-to-whole <a href="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/01_part_to_whole/01_part_to_whole.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> 
 <p align = "center">
-<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/01_part_to_whole/retweet.png?raw=true" width ="700">
+<img src="https://github.com/AmitLevinson/30day-chart-challenge/blob/main/code_and_plots/01_part_to_whole/retweet.png?raw=true" width ="650">
 </p>
 
