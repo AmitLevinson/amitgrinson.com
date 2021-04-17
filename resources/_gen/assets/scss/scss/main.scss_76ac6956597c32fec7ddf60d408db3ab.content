@@ -9289,7 +9289,7 @@ iframe {
 
 /* change article layout to a little wider */
 .article-container {
-  max-width: 775px; }
+  max-width: 800px; }
 
 .carousel-indicators li {
   background-color: #06805E80; }

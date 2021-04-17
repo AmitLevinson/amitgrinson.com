@@ -40,7 +40,9 @@ A page containing visualizations for various projects and occasions.
 1. [30DayChartChallenge](#chartchallenge)
 
 
-Visualizations will be accompanied with a link to the source code (shown as <i class="fas fa-code"></i>) and sometimes an interactive version or further reading in a blog post (<i class="fas fa-desktop"></i>).
+Visualizations will be accompanied with a link to the source code (<i class="fas fa-code"></i>) and sometimes an interactive version or further reading in a blog post (<i class="fas fa-desktop"></i>).
+
+Enjoy!
 
 <br>
 <hr>
@@ -50,6 +52,13 @@ Visualizations will be accompanied with a link to the source code (shown as <i c
 ## Miscellaneous visualizations {#miscellaneous-visualizations}
 
 Visualizations I created for random occasions (e.g. leisure, interest)  
+
+#### Job Search <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/job-search/my-network.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+<p align = "center">
+<img alt = "Visualization of a network showing the importance of sharing on social media that you're searching for a job" src ="https://github.com/AmitLevinson/single_visualizations/raw/master/job-search/network.png" width = "700">
+</p>
+
+
 
 #### International Women's Day (IWD) <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
@@ -158,8 +167,6 @@ A daily mapping visualization challenged aimed at the spatial community througho
 <img src="/img/30daymap/20_map.gif" alt="gif of israel map and a cartogram"> <img src="https://github.com/AmitLevinson/30daymapchallenge/raw/main/Code/20_population/20_map-img.png" width = "400">
 </p>
 
-</br>
-</br>
 
 
 #### Yellow <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/08_yellow/08_yellow.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
