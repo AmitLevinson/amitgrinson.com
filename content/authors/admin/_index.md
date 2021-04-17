@@ -1,21 +1,22 @@
 ---
 authors:
 - admin
-bio: I'm an avid R user interested in R analysis, visualizations, drug markets and political participation.
+bio: I'm an avid R user interested in data analysis, visualizations and helping individuals understand their data.
 education:
   courses:
   - course: MA in Sociology & Anthropology
     institution: Ben-Gurion University
-    year: 2018-Present
+    year: 2018-2021
   - course: BA in Sociology, Anthropology & Political Science
     institution: Ben-Gurion University
     year: 2018
 email: "amitlevinson1@gmail.com"
 interests:
-- Online drug markets and technology
+- Data analytics
+- Storytelling and data visualization
 - Trust & privacy
-- Online and offline political participation
-- R analysis and visualizations
+
+
 name: Amit Levinson
 organizations:
 - name: Ben-Gurion University
@@ -43,6 +44,6 @@ user_groups:
 - Visitors
 ---
 
-**Hi!** I'm Amit Levinson, I'm an MA student for [Sociology & Anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Tel-Aviv, Israel. My interests include my nearing-submission thesis topic, privacy and trust in the online cannabis market, other fields such as political participation, statistics and `R`. I'm currently looking for my next role, one that'll entail analyzing and visualizing data ([see the graph I made for the occasion](https://amitlevinson.com/img/job-search/network.png)). Feel free to reach out if you know of any opportunities!
+**Hi!** I'm Amit Levinson, I'm an MA student for [Sociology & Anthropology](https://in.bgu.ac.il/humsos/soc-ant/en/Pages/default.aspx) at [Ben-Gurion University of the Negev](https://in.bgu.ac.il/en/Pages/default.aspx). I currently live with my wife in Tel-Aviv, Israel. My interests include my waiting approval thesis topic, privacy and trust in the online cannabis market, political participation, statistics and `R`. I'm currently looking for my next role, one that'll entail analyzing and visualizing data ([see the graph I made for the occasion](https://amitlevinson.com/img/job-search/network.png)). Feel free to reach out if you know of any opportunities!
 
 Make sure to visit [R-bloggers](https://www.r-bloggers.com/) & [R-weely](https://rweekly.org/) to explore many more tutorials and resources. Enjoy!
