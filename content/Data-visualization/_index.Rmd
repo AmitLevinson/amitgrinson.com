@@ -61,7 +61,7 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 #### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
 
 <p align = "center">
-<iframe width ="75%" height="535" name ="iframe" src="addins/golda.html"></iframe>
+<iframe width = "80%" height="535" name ="iframe" src="addins/golda.html"></iframe>
 </p>
 
 
@@ -182,7 +182,7 @@ A daily mapping visualization challenged aimed at the spatial community througho
 
 
 <p align = "center">
-<img src="/img/30daymap/03_polygons.png" width ="400">
+<img src="/img/30daymap/03_polygons.png" width ="450">
 </p>
 
 
