@@ -51,29 +51,29 @@ Visualizations will be accompanied with a link to the source code (shown as <i c
 
 Visualizations I created for random occasions (e.g. leisure, interest)  
 
-### International Women's Day (IWD) <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### International Women's Day (IWD) <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
 <img alt = 'Visualization showing women who won the Nobel prize' src = "https://github.com/AmitLevinson/single_visualizations/raw/master/nobel-women/nobel-women.png" width = "700">
 </p>
 
 
-### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
+#### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
 
 <p align = "center">
-<iframe width ="95%" height="535" name ="iframe" src="addins/golda.html"></iframe>
+<iframe width ="75%" height="535" name ="iframe" src="addins/golda.html"></iframe>
 </p>
 
 
 
-### Israel's Vaccine Admission <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/israel-vaccinated/isr_vaccinated.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Israel's Vaccine Admission <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/israel-vaccinated/isr_vaccinated.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
 <img alt = 'Map of Israel with part of filled representing the number of individuals who vaccinated' src ="https://github.com/AmitLevinson/single_visualizations/raw/master/israel-vaccinated/israel-vaccinated.png" width = "550">
 </p>
 
 
-### Defining uncertainty in the Israeli lottery <a href="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
+#### Defining uncertainty in the Israeli lottery <a href="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
 
 <p align = "center">
 <img width="750" alt="img of over 8 million points and one of them in red, representing the low probability of winning the lottery." src="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png"></img>
@@ -85,13 +85,13 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 <br>
 
 
-### TidyTuesday Project {#tidytuesday}
+#### TidyTuesday Project {#tidytuesday}
 
 "A weekly data project aimed at the R ecosystem... [A]n emphasis was placed on understanding how  to summarize and arrange data to make meaningful charts". Fantastic project to practice data visualization. See the [Project's GitHub page](https://github.com/rfordatascience/tidytuesday) for more info.
 
 #####  [All contributions <i class="fas fa-code-branch"></i>](https://github.com/AmitLevinson/TidyTuesday)
 
-### SuperBowl Ads <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week10_superbowl/superbowl.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### SuperBowl Ads <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week10_superbowl/superbowl.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 
 <p align = "center">
@@ -100,15 +100,14 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 
 
 
-### HBCU Enrollment <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
-
+#### HBCU Enrollment <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
 <img alt = 'HBCU student enrollment' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week6_hbcu/hbcu.png" width = "750">
 </p>
 
 
-### Kenya's Census <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week4_rkenya/rkenya.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Kenya's Census <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week4_rkenya/rkenya.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
 <p align = "center">
 <img alt='tidytuesday Kenya counties gender distribution' src = "/img/tt/rkenya.png" width="600" height="300">
@@ -179,9 +178,8 @@ A daily mapping visualization challenged aimed at the spatial community througho
 </p>
 
 
-#### Polygon <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/07_green/07_green.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### Polygon <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/03_Polygons/03_polygons.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
-[Link to code](https://github.com/AmitLevinson/30daymapchallenge/blob/main/Code/03_Polygons/03_polygons.R)
 
 <p align = "center">
 <img src="/img/30daymap/03_polygons.png" width ="400">
