@@ -1,4 +1,5 @@
 <footer class="site-footer">
+{{ partial "google/analytics" . }}
   {{ if or (site.GetPage "terms.md") (site.GetPage "privacy.md") }}
   <p class="powered-by">
     {{ with site.GetPage "privacy.md" }}

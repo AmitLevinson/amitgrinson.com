@@ -21,3 +21,8 @@ projects: []
 
 The secrets in the Action:
 [GitHub automatically creates a `GITHUB_TOKEN` secret to use in your workflow once you set up an Action](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) in a repository. The token's permission are limited to the specific repository, but for our case it's adequate. 
+
+\ ---
+
+further adding of google analytics tags:
+https://bash-prompt.net/guides/custom-html-jugo/
