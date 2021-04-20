@@ -1,0 +1,23 @@
+---
+title: Dear visitor\, help me decide\: AB testing my own website.
+author: Amit Levinson
+date: '2021-06-10'
+slug: ab-testing-my-website
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: ''
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+draft: true
+projects: []
+---
+
+
+The secrets in the Action:
+[GitHub automatically creates a `GITHUB_TOKEN` secret to use in your workflow once you set up an Action](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) in a repository. The token's permission are limited to the specific repository, but for our case it's adequate. 
