@@ -25,6 +25,11 @@
         </span>
       </a>
     </span>
+	<script>
+  ga('send', 'pageview', {
+    'Branch':  '{{ getenv "BRANCH" }}'
+  });
+</script>
     {{ end }}
   </p>
 </footer>
