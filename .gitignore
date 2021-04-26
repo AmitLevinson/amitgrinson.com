@@ -4,7 +4,7 @@
 .Ruserdata
 *.Rproj
 .Rprofile
-/.Rproj.user
+.Rproj.user
 .Rproj.user/
 /content/post/printing-categorical-variables-questions-with-kableextra/data/
 resources/
