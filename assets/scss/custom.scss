@@ -13,133 +13,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/*----Easy and amazing CSS implementation for animating about page from https://www.connorrothschild.com/post/animate-hugo-academic/ -----*/
 
-#about {
-
-/* Create setting and animate title and main content from the right */
-
-  @-webkit-keyframes slide-from-right {
-    0% {-webkit-transform: translateX(150%);transform: translateX(150%)}
-    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
-  }
-  
-  @keyframes slide-from-right {
-    0% {-webkit-transform: translateX(150%);transform: translateX(150%)}
-    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
-  }
-  
-  .biography-title {
-    -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-  }
-
-  .main-content {
-    -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-  }
-
-  .navbar {
-   -webkit-animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-            animation: slide-from-right 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+#profile .network-icon {    
+    margin-top: 5px;
+    padding: 2px;
 }
- 
-
-/* Create setting and animate profile and details from the left */
-
-  @-webkit-keyframes slide-from-left {
-    0% {-webkit-transform: translateX(-150%);transform: translateX(-150%)}
-    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
-  }
-  
-  @keyframes slide-from-left {
-    0% {-webkit-transform: translateX(-150%);transform: translateX(-150%)}
-    100% { -webkit-transform: translateX(0%); transform: translateX(0%); }
-  }
-  
-#profile {
-    -webkit-animation: slide-from-left 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-            animation: slide-from-left 1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
-  }
-
-/* Create setting and animate education and interest to fade in */
-
-  @-webkit-keyframes fade-in {
-    0% {opacity: 0}
-    100% {opacity: 1}
-  }
-  
-  @keyframes fade-in {
-    0% {opacity: 0}
-    100% {opacity: 1}
-  }
-  
-  .interests-div {
-    opacity: 0;
-    -webkit-animation: fade-in 1s forwards;
-            animation: fade-in 1s forwards;
-    -webkit-animation-delay: 1.25s;
-            animation-delay: 1.25s;
-  }
-  
-  .education-div {
-    opacity: 0;
-    -webkit-animation: fade-in 1s forwards;
-            animation: fade-in 1s forwards;
-    -webkit-animation-delay: 1.5s;
-            animation-delay: 1.5s;
-  }
-  .network-icon {
     
-    margin-top: 15px;
-    padding: 5px;
     
-    .fa-envelope {
-      opacity: 0;
-      -webkit-animation: grow 1s ease forwards;
-              animation: grow 1s ease forwards;
-      -webkit-animation-delay: 0.5s;
-              animation-delay: 0.5s;
-    }
     
-    .fa-twitter {
-      opacity: 0;
-      -webkit-animation: grow 1s ease forwards;
-              animation: grow 1s ease forwards;
-      -webkit-animation-delay: 0.75s;
-              animation-delay: 0.75s;
-    }
-    
-    .fa-github {
-      opacity: 0;
-      -webkit-animation: grow 1s ease forwards;
-              animation: grow 1s ease forwards;
-      -webkit-animation-delay: 1s;
-              animation-delay: 1s;
-    }
-    .fa-linkedin {
-      opacity: 0;
-      -webkit-animation: grow 1s ease forwards;
-              animation: grow 1s ease forwards;
-      -webkit-animation-delay: 1.25s;
-              animation-delay: 1.25s;
-    }
-    .ai-cv {
-      opacity: 0;
-      -webkit-animation: grow 1s ease forwards;
-              animation: grow 1s ease forwards;
-      -webkit-animation-delay: 1.5s;
-              animation-delay: 1.5s;
-    }
- @-webkit-keyframes grow {
-        100% { opacity: 1; }
-    }
-    
-    @keyframes grow {
-        100% { opacity: 1; }
-    } 
-  }
-}
 /* links */
 
 a:active, 
@@ -211,7 +92,7 @@ a.nav-link:hover:after {
 }
 
 .network-icon li:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .home-section:first-of-type {
