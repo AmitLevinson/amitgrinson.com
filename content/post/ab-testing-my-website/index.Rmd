@@ -29,3 +29,5 @@ https://bash-prompt.net/guides/custom-html-jugo/
 
 Site doesn't build from the public folder:
 https://github.com/rstudio/blogdown/issues/495
+
+If you find yourself getting weird commit requirements for stuff in the folder `resources` or `.Rporj.user` when just changing between branches then just gitignore them. This is defninitely not from professional knowledge, just my experience when searching for the issue online.
