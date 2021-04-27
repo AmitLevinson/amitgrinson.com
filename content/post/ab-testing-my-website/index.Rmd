@@ -49,3 +49,5 @@ When Hugo builds the site it parses all partials, and while parsing the `site_he
 
 What we want to do is edit the Google Analytics tag so it accounts for another branch. However, since I like to move any partials I edited from the themes, so I know in the future I've already edited it in the past, we'll just cut the `marketing` folder to our `partials/layout`. Now Hugo will render it from there and we'll know where to edit when we decide to stop the test.
 
+After looking around for how to approach this, while trying some attempts for a Gatsby freamwork and not succedding, I came across a Hugo approach found here.
+
