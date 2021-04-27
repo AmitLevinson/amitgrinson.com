@@ -38,7 +38,7 @@ Essentially Hugo searches its [partials](https://gohugo.io/templates/partials/) 
 2. `themes/<THEME>/layouts/partials/*<PARTIALNAME>.html` (We'll call this default)
 
 If it won't find anything in our `layouts/partials`, it'll go to its default in the themes folder. My workflow is if I edit something, e.g. a site footer, I add it to my `layouts/partials`.  
-Now, if you're like me, your porbably jsut set up Google Analytics through your `config.toml`, specifically under `GoogleAnalytics = "UA-XXXXXXXXX-X"`.
+Now, if you're like me, your probably just set up Google Analytics through your `config.toml`, specifically under `GoogleAnalytics = "UA-XXXXXXXXX-X"`.
 
 When Hugo builds the site it parses all partials, and while parsing the `site_head.html` it'll [call the Google Analytics tag](https://github.com/AmitLevinson/amitlevinson.com/blob/e229045f6f90fe6221cddc6508743cfc8e269a1a/themes/hugo-academic/layouts/partials/site_head.html#L137-L138). More specifically, it runs:
 

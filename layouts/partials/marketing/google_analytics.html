@@ -38,6 +38,6 @@
   document.addEventListener('click', onClickCallback, false);
 
 {{ $site := $.Site.BaseURL | replaceRE "^https?://(www\\.)?([^/]+).*" "$2" }}
-gtag('config', '{{ . }}', {'dimension1': '{{ $site }}', 'dimension2': '{{ getenv "BRANCH" }}'});
+gtag('config', '{{$ga}}', {'dimension1': '{{ $site }}', 'dimension2': '{{ getenv "BRANCH" }}'});
 </script>
 {{ end }}
