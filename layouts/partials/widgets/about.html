@@ -41,13 +41,13 @@
         {{ end }}
       </div>
 
-      <ul class="network-icon" aria-hidden="true">
+      <ul class="network-icon"  aria-hidden="true">
         {{ range $person.social }}
         {{ $pack := or .icon_pack "fas" }}
         {{ $pack_prefix := $pack }}
         {{ if in (slice "fab" "fas" "far" "fal") $pack }}
           {{ $pack_prefix = "fa" }}
-        {{ end }}
+        {{ end }} 
         {{ $link := .link }}
         {{ $scheme := (urls.Parse $link).Scheme }}
         {{ $target := "" }}
@@ -69,16 +69,16 @@
   <div class="col-12 col-lg-8">
 
     {{/* Only display widget title in explicit instances of about widget, not in author pages. */}}
-    {{ if and $page.Params.widget $page.Title }}<h1 class='biography-title'>{{ $page.Title | markdownify | emojify }}</h1>{{ end }}
+    {{ if and $page.Params.widget $page.Title }}<h1>{{ $page.Title | markdownify | emojify }}</h1>{{ end }}
 
-  <div class='main-content'>
+  <div>
   {{ $person_page.Content }}
   </div>
 
     <div class="row">
 
   {{ with $person.interests }}
-  <div class="interests-div col-md-5">
+  <div class="col-md-5">
     <h3>{{ i18n "interests" | markdownify }}</h3>
     <ul class="ul-interests">
       {{ range . }}
@@ -89,7 +89,7 @@
   {{ end }}
 
   {{ with $person.education }}
-  <div class="education-div col-md-7">
+  <div class="col-md-7">
     <h3>{{ i18n "education" | markdownify }}</h3>
     <ul class="ul-edu fa-ul">
       {{ range .courses }}
