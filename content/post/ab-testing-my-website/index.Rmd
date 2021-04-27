@@ -1,5 +1,5 @@
 ---
-title: Dear visitor\, help me decide\: AB testing my own website.
+title: Dear visitor, help me decide - AB testing my own website.
 author: Amit Levinson
 date: '2021-06-10'
 slug: ab-testing-my-website
@@ -26,3 +26,6 @@ BREAK
 
 further adding of google analytics tags:
 https://bash-prompt.net/guides/custom-html-jugo/
+
+Site doesn't build from the public folder:
+https://github.com/rstudio/blogdown/issues/495
