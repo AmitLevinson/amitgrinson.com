@@ -51,3 +51,21 @@ What we want to do is edit the Google Analytics tag so it accounts for another b
 
 After looking around for how to approach this, while trying some attempts for a Gatsby freamwork and not succedding, I came across a Hugo approach found here.
 
+
+We'll add the following snippet (ADD IT):
+
+
+==== 
+
+
+### Conenct Google Anayltics to our branching system
+
+Now we're going to connect our branching system to Google Analytics. Every time our page loads it renders either the branch or our main page. In our example there's a 50% chance someone will see a larger font and 50% chance they'll see a smaller font page. We want Google Analytics to recognize which branch the individual loaded so that it can be categorized accordingly to that branch.
+
+To do that we create a 'custom dimension' under Google Analytics:
+
+1. Click on Admin -> Custom definitions -> Custom dimensions -> New custom dimension.
+
+2. Name however you like it, I use 'Branch' so that when Hugo returns whatever branch the site rendered it appears in that format. Leave the scope on Hit and Active checked (Which we'll remove later when we're finished).
+
+In order to see the categorization by branch go to the main page's reports section, click on Behavior -> Site Content -> All page. In the middle you'll see a gray box 
