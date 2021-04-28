@@ -68,4 +68,6 @@ To do that we create a 'custom dimension' under Google Analytics:
 
 2. Name however you like it, I use 'Branch' so that when Hugo returns whatever branch the site rendered it appears in that format. Leave the scope on Hit and Active checked (Which we'll remove later when we're finished).
 
-In order to see the categorization by branch go to the main page's reports section, click on Behavior -> Site Content -> All page. In the middle you'll see a gray box 
+In order to see the categorization by branch go to the main page's reports section, click on Behavior -> Site Content -> All page. In the middle you'll see a gray expandable box. We'll want to click that, scroll to Custom dimensions and click on the dimension we just created. It could take 24-48 hours until you see actual results so be patient if nothing happens (Trust me, this patience wasn't easy when testing how to do it).
+
+
