@@ -36,6 +36,11 @@ knitr::opts_chunk$set(echo = FALSE)
     margin-right: auto;
     margin-left: auto;
 }
+
+.viz iframe {
+    margin-right: auto;
+    margin-left: auto;
+}
 ```
 
 
@@ -79,26 +84,26 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 </div>
 
 
-#### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
+<div class="viz">
+#### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code"></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop"></i></a>
 
-<p align = "center">
+
 <iframe width = "80%" height="535" name ="iframe" src="addins/golda.html"></iframe>
-</p>
+<div>
 
 
+<div class="viz">
+#### Israel's Vaccine Admission <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/israel-vaccinated/isr_vaccinated.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-#### Israel's Vaccine Admission <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/israel-vaccinated/isr_vaccinated.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
-
-<p align = "center">
 <img alt = 'Map of Israel with part of filled representing the number of individuals who vaccinated' src ="https://github.com/AmitLevinson/single_visualizations/raw/master/israel-vaccinated/israel-vaccinated.png" width = "550">
-</p>
+</div>
 
 
-#### Defining uncertainty in the Israeli lottery <a href="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
+<div class="viz">
+#### Defining uncertainty in the Israeli lottery <a href="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png" target="_blank" rel="noopener"><i class="fas fa-code"></i></a> <a href="https://amitlevinson.com/blog/uncertainty-in-the-israeli-lottery/" target="_blank" rel="noopener"><i class="fas fa-desktop"></i></a>
 
-<p align = "center">
-<img width="750" alt="img of over 8 million points and one of them in red, representing the low probability of winning the lottery." src="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png"></img>
-</p>
+<img width="750" alt="img of over 8 million points and one of them in red, representing the low probability of winning the lottery." src="https://github.com/AmitLevinson/amitlevinson.com/raw/master/content/post/uncertainty-in-the-israeli-lottery/featured.png">
+</div>
 
 <a href="#top"><i class="fas fa-arrow-up" style='float: right;color:black;'></i></a>
 <br>
