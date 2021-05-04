@@ -17,16 +17,28 @@ image:
 projects: []
 ---
 
-<script>
-  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
-</script>
-
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
+
+```{css}
+# Add some custom css:
+.viz {
+  color: black;
+}
+
+.viz a {
+  color: #313131;
+}
+
+.viz img {
+    margin-right: auto;
+    margin-left: auto;
+}
+```
+
+
 
 A page containing visualizations for various projects and occasions.
 
@@ -52,19 +64,19 @@ Enjoy!
 ## Miscellaneous visualizations {#miscellaneous-visualizations}
 
 Visualizations I created for random occasions (e.g. leisure, interest)  
+<div class="viz">
+#### Job Search <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/job-search/my-network.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-#### Job Search <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/job-search/my-network.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
-<p align = "center">
 <img alt = "Visualization of a network showing the importance of sharing on social media that you're searching for a job" src ="https://github.com/AmitLevinson/single_visualizations/raw/master/job-search/network.png" width = "700">
-</p>
+</div>
 
 
+<div class="viz">
+#### International Women's Day (IWD) <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-#### International Women's Day (IWD) <a href="https://github.com/AmitLevinson/single_visualizations/blob/master/nobel-women/women-timeline.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
 
-<p align = "center">
 <img alt = 'Visualization showing women who won the Nobel prize' src = "https://github.com/AmitLevinson/single_visualizations/raw/master/nobel-women/nobel-women.png" width = "700">
-</p>
+</div>
 
 
 #### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
