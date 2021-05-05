@@ -4,8 +4,8 @@ header:
   image: ""
 title: Data Visualization
 author: Amit Levinson
-date: '2021-04-14'
-categories: []
+description: Collection of visualizations from challenges, blog posts and miscellaneous.
+categories: [Visualization]
 tags: []
 subtitle: ''
 authors: []
