@@ -111,62 +111,60 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 <br>
 
 
+<div class="viz">
 #### TidyTuesday Project {#tidytuesday}
 
 "A weekly data project aimed at the R ecosystem... [A]n emphasis was placed on understanding how  to summarize and arrange data to make meaningful charts". Fantastic project to practice data visualization. See the [Project's GitHub page](https://github.com/rfordatascience/tidytuesday) for more info.
 
 #####  [All contributions <i class="fas fa-code-branch"></i>](https://github.com/AmitLevinson/TidyTuesday)
 
-#### SuperBowl Ads <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week10_superbowl/superbowl.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+#### SuperBowl Ads <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week10_superbowl/superbowl.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-
-<p align = "center">
 <img alt = 'Super Bowl ad view count' src = "https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week10_superbowl/superbowl.png" width = "750">
-</p>
+</div>
 
 
+<div class="viz">
+#### HBCU Enrollment <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-#### HBCU Enrollment <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week6_hbcu/hbcu.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
-
-<p align = "center">
 <img alt = 'HBCU student enrollment' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week6_hbcu/hbcu.png" width = "750">
-</p>
+</div>
 
 
-#### Kenya's Census <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week4_rkenya/rkenya.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+<div class="viz">
+#### Kenya's Census <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week4_rkenya/rkenya.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-<p align = "center">
 <img alt='tidytuesday Kenya counties gender distribution' src = "/img/tt/rkenya.png" width="600" height="300">
-</p>
+</div>
 
 
-#### Art Collections <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a> <a href="https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html" target="_blank" rel="noopener"><i class="fas fa-desktop" style='color:black'></i></a>
+<div class="viz">
+#### Art Collections <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2021/week3_tate/tate_art.Rmd" target="_blank" rel="noopener"><i class="fas fa-code"></i></a> <a href="https://amitlevinson.github.io/TidyTuesday/2021/week3_tate/tate_art.html" target="_blank" rel="noopener"><i class="fas fa-desktop"></i></a>
 
 
-<p align = "center">
 <img alt = 'Gif of a table displaying Tate art collection' src="https://github.com/AmitLevinson/TidyTuesday/raw/master/2021/week3_tate/Tate-artists.gif" width = "750">
-</p>
+</div>
 
 
-#### Ninja Warrior <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+<div class="viz">
+#### Ninja Warrior <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week_41/week41_ncaa.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-<p align = "center">
 <img alt = 'ninja warrior obstacles' src="/img/tt/week51_ninja.png" width = "750">
-</p>
+</div>
 
 
-#### Volcano Eruptions <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+<div class="viz">
+#### Volcano Eruptions <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week20_volcano/week20_volcano.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-<p align = "center">
 <img alt = 'Tidytuesday-volcano-eruption' src = "/img/tt/vc.png" width = "750">
-</p>
+</div>
 
 
-#### Best Rap Artists <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R" target="_blank" rel="noopener"><i class="fas fa-code" style='color:black'></i></a>
+<div class="viz">
+#### Best Rap Artists <a href="https://github.com/AmitLevinson/TidyTuesday/blob/master/2020/week16_rapartists/rapartists.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
 
-<p align = "center">
 <img alt = 'tidytuesday rap artists' src = "/img/tt/rap_points.png" width = "750">
-</p>
+</div>
 
 <a href="#top"><i class="fas fa-arrow-up" style='float: right;color:black;'></i></a>
 <br>
