@@ -38,8 +38,7 @@ knitr::opts_chunk$set(echo = FALSE)
 }
 
 .viz iframe {
-    margin-right: auto;
-    margin-left: auto;
+  display:block;
 }
 ```
 
@@ -93,7 +92,7 @@ Visualizations I created for random occasions (e.g. leisure, interest)
 <div class="viz">
 #### Distance to the nearest Golda ice-cream location <a href="https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd" target="_blank" rel="noopener"><i class="fas fa-code"></i></a> <a href="https://amitlevinson.com/blog/exploring-ice-cream-locations/" target="_blank" rel="noopener"><i class="fas fa-desktop"></i></a>
 
-<iframe width = "80%" height="535" name ="iframe" src="addins/golda.html"></iframe>
+<iframe class="iframe" width = "80%" height="535" name ="iframe" src="addins/golda.html"></iframe>
 </div>
 
 
