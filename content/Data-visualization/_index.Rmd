@@ -38,7 +38,7 @@ knitr::opts_chunk$set(echo = FALSE)
 }
 
 # Iframe holder when loading
-.holds-the-iframe { background:url(/img/loader.gif) center center no-repeat; }
+.holds-the-iframe { background:url(addins/loader.gif) center center no-repeat; }
 ```
 
 
