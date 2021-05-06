@@ -41,3 +41,19 @@ Now, if you’re like me, your probably just set up Google Analytics through you
 <pre><code>{{ partial &quot;marketing/google_analytics&quot; . }}
 {{ partial &quot;marketing/google_tag_manager&quot; . }}</code></pre>
 <p>What we want to do is edit the Google Analytics tag so it accounts for another branch. However, since I like to move any partials I edited from the themes, so I know in the future I’ve already edited it in the past, we’ll just cut the <code>marketing</code> folder to our <code>partials/layout</code>. Now Hugo will render it from there and we’ll know where to edit when we decide to stop the test.</p>
+<p>After looking around for how to approach this, while trying some attempts for a Gatsby freamwork and not succedding, I came across a Hugo approach found here.</p>
+<p>We’ll add the following snippet (ADD IT):</p>
+<p>{{% alert note %}}
+Netlify presents one of our website to a visitor. We use a Hugo function to identify what branch is rendered to the user (i.e., our control or experiment), which is then documented in Google Analytics as a dimension we can further explore.
+{{% /alert %}}</p>
+<p>====</p>
+<div id="conenct-google-anayltics-to-our-branching-system" class="section level3">
+<h3>Conenct Google Anayltics to our branching system</h3>
+<p>Now we’re going to connect our branching system to Google Analytics. Every time our page loads it renders either the branch or our main page. In our example there’s a 50% chance someone will see a larger font and 50% chance they’ll see a smaller font page. We want Google Analytics to recognize which branch the individual loaded so that it can be categorized accordingly to that branch.</p>
+<p>To do that we create a ‘custom dimension’ under Google Analytics:</p>
+<ol style="list-style-type: decimal">
+<li><p>Click on Admin -&gt; Custom definitions -&gt; Custom dimensions -&gt; New custom dimension.</p></li>
+<li><p>Name however you like it, I use ‘Branch’ so that when Hugo returns whatever branch the site rendered it appears in that format. Leave the scope on Hit and Active checked (Which we’ll remove later when we’re finished).</p></li>
+</ol>
+<p>In order to see the categorization by branch go to the main page’s reports section, click on Behavior -&gt; Site Content -&gt; All page. In the middle you’ll see a gray expandable box. We’ll want to click that, scroll to Custom dimensions and click on the dimension we just created. It could take 24-48 hours until you see actual results so be patient if nothing happens (Trust me, this patience wasn’t easy when testing how to do it).</p>
+</div>

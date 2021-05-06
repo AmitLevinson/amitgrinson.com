@@ -55,6 +55,10 @@ After looking around for how to approach this, while trying some attempts for a 
 We'll add the following snippet (ADD IT):
 
 
+{{% alert note %}}
+Netlify presents one of our website to a visitor. We use a Hugo function to identify what branch is rendered to the user (i.e., our control or experiment), which is then documented in Google Analytics as a dimension we can further explore. 
+{{% /alert %}}
+
 ==== 
 
 
