@@ -1,5 +1,5 @@
 ---
-date: "2016-04-27T00:00:00Z"
+date: "2021-03-23T00:00:00Z"
 external_link: ""
 image:
   caption: Photo by rawpixel on Unsplash
@@ -13,7 +13,7 @@ slides: example
 summary: An example of using the in-built project page.
 tags:
 - Deep Learning
-title: Internal Project
+title: Israeli Twitter bot
 url_code: ""
 url_pdf: ""
 url_slides: ""
