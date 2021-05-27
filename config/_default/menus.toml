@@ -17,11 +17,15 @@
   url = "#talks"
   weight = 30
   
+[[main]]
+  name = "Projects"
+  url = "#projects"
+  weight = 40
   
 [[main]]
   name = "Visualizations"
   url = "/Data-visualization"
-  weight = 40
+  weight = 50
 
 #[[main]]
 #  name = "Contact"
