@@ -25,9 +25,9 @@ url_video: ""
 
 ### Why the Pi
 
-After some recent learning of [automating workflows with GitHub Actions](https://amitlevinson.com/blog/automated-plot-with-github-actions/), I wanted to take automating one step further. In January 2021 I bought myself a Raspberry Pi 4 (a small computer) and was pondering about what to do with it.
+After some recent learning of [automating workflows with GitHub Actions](https://amitlevinson.com/blog/automated-plot-with-github-actions/), I wanted to take automating one step further. In January 2021 I bought myself a Raspberry Pi 4 (a small computer) and was pondering what to do with it.
 
-At the time Israel was preparing for its 4th consecutive election and I decided to create a corresponding Twitter bot that will operate on the Raspberry Pi. I use Twitter mainly to follow individuals that post about R and data visualization, and saw it a great opportunity to collect information about the elections so I can view it in one place.
+At the time Israel was preparing for its fourth consecutive election and I decided to create a corresponding Twitter bot that will operate on the Raspberry Pi. I use Twitter mainly to follow individuals that post about R and data visualization, and saw it as a great opportunity to collect information about the elections so I can view it in one place.
 
 
 ### How it works
@@ -40,7 +40,7 @@ If you want a more technical overview checkout the [project's GitHub repository]
 
 2. It then **filters any tweets** that don't meet a specific criteria (too many hashtags, tagged as spam, etc).
 
-3. Once the data is filtered, the **Raspberry Pi posts the valid tweets back to Twitter** as retweets on behalf of the [@bchirot2021](https://twitter.com/bchirot2021) twitter account.
+3. Once the data is filtered, the **Raspberry Pi posts the valid tweets back to Twitter** as retweets on behalf of the [@bchirot2021](https://twitter.com/bchirot2021) Twitter account.
 
 4. While this happens every 10 minutes, I also setup a MySQL database that updates every night at 11PM with the data.
 
