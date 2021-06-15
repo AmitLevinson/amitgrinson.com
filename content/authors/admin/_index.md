@@ -47,3 +47,4 @@ user_groups:
 **Hi!** I'm Amit Levinson, a self-taught coder and an avid data wrangler. I currently live with my wife and our dog Milo in Tel-Aviv, Israel. My interests include Privacy & Trust, Data analytics, Visualizations, Statistics and `R`. That's also what you'll probably find me writing about on this website :smile:
 
 Make sure to visit [R-bloggers](https://www.r-bloggers.com/) & [R-weely](https://rweekly.org/) to explore many more tutorials and resources. Enjoy!
+
