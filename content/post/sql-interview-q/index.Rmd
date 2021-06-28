@@ -1,5 +1,5 @@
 ---
-title: The SQL question that taught me fundamentals
+title: An SQL interview question to learn from
 author: Amit Levinson
 date: '2021-07-08'
 slug: a-great-sql-questions
@@ -17,4 +17,33 @@ image:
 draft: true
 projects: []
 ---
+
+Structure:
+
+## Intro
+
+- Intro on job search process
+
+During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it. So 
+
+
+  - various questions
+  
+  - Not representing my employer
+
+  - Some basic knowledge of SQL (or R also if you ask me) can help
+
+## The case
+
+- show the case with the question
+
+- provide the question with another one - reframed
+
+## Solutions
+
+### 1. Window functions
+
+### 2. Self Join
+
+### 3. Correlated subquery
 
