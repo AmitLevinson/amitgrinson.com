@@ -1,0 +1,20 @@
+---
+title: The SQL question that taught me fundamentals
+author: Amit Levinson
+date: '2021-07-08'
+slug: a-great-sql-questions
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: ''
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+draft: true
+projects: []
+---
+
