@@ -19,9 +19,9 @@ interests:
 
 name: Amit Levinson
 organizations:
-- name: 
-  url:
-role: Data Analyst
+- name: Payoneer
+  url: https://www.payoneer.com/
+role: Risk Data Analyst
 social:
 - icon: envelope
   icon_pack: fa
