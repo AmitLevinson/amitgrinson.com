@@ -24,8 +24,35 @@ Structure:
 
 - Intro on job search process
 
-During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it. So 
+During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it.
 
+Most of the SQL interview questions were pretty good. They cheked if you knew how to solve A or use something such as a window function, Having, LEAD, etc. But one question I was really fond of and thought about it since; this blog post details the question and several answers to it.
+
+**The question and data do not represent my current employer.** The data used here is made up and the question came from a different company. While not necessary, some SQL knowledge is useful to understanding the answers' syntax.
+
+## The Interview question
+
+You receive a dataset with sellers' names, products they sell, and the total sum of sales for each of their products. For each seller, return their name, the highest amount sold and the product corresponding to that amount.
+
+In other words, given the following data:
+
+
+```{r}
+
+```
+
+
+return the following table:
+
+```{r}
+
+```
+
+### Why not just a simple GROUP BY?
+
+A question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. The issue is using `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we won't get the product name. Alternatively, if we `GROUP BY` the seller and product name and return the `MAX` value we'll get the information for each seller and every product of theirs.
+
+SHOW BOTH Queries
 
   - various questions
   
