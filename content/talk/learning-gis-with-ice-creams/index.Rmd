@@ -1,0 +1,31 @@
+---
+title: Learning GIS with ice-cream parlors
+authors: []
+date: '2021-06-09T13:00:00'
+publishdate: '2021-06-09'
+event: 'Open Source in Gis'
+event_url:
+location: Zoom, Online
+abstract: ''
+categories: [talk]
+tags: [talk]
+subtitle: ''
+summary: ' '
+lastmod: '2021-06-14T18:00:01-07:00'
+featured: no
+image:
+  caption: '[Image by Alexas_Fotos]'
+  focal_point: 'center'
+  preview_only: no
+projects: []
+links:
+- icon: images
+  icon_pack: fas
+  name: slides
+  url: https://amitlevinson.github.io/talks/open-source-in-gis/#1
+- icon: github
+  icon_pack: fab
+  name: code
+  url: https://github.com/AmitLevinson/talks/tree/main/open-source-in-gis
+---
+
