@@ -18,6 +18,15 @@ draft: true
 projects: []
 ---
 
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tibble)
+```
+
+
 Structure:
 
 ## Intro
@@ -35,6 +44,32 @@ Most of the SQL interview questions were pretty good. They cheked if you knew ho
 You receive a dataset with sellers' names, products they sell, and the total sum of sales for each of their products. For each seller, return their name, the highest amount sold and the product corresponding to that amount.
 
 In other words, given the following data:
+
+```{r}
+# create the data
+sales <- tribble (
+  ~name, ~product, ~payment_method,
+  "Danny", "Checks", 300,
+  "Danny", "Bank transfer", 200,
+  "Danny", "Cash", 400,
+  "Danny", "Credit card", 300,
+  "Barbra", "Checks", 500,
+  "Barbra", "Bank transfer", 300,
+  "Barbra", "Cash", 400,
+  "Barbra", "Credit card", 200,
+  "Leo", "Checks", 200,
+  "Leo", "Bank transfer", 400,
+  "Leo", "Cash", 200,
+  "Leo", "Credit card", 100,
+  
+)
+
+```
+
+
+```{r}
+
+```
 
 
 ```{r}
