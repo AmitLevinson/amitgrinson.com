@@ -23,7 +23,6 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
 ```{r}
-library(tibble)
 ```
 
 
@@ -46,9 +45,10 @@ You receive a dataset with sellers' names, products they sell, and the total sum
 In other words, given the following data:
 
 ```{r}
+library(tibble)
 # create the data
 sales <- tribble (
-  ~name, ~product, ~payment_method,
+  ~User, ~Product, ~payment_method,
   "Danny", "Checks", 300,
   "Danny", "Bank transfer", 200,
   "Danny", "Cash", 400,
@@ -61,14 +61,30 @@ sales <- tribble (
   "Leo", "Bank transfer", 400,
   "Leo", "Cash", 200,
   "Leo", "Credit card", 100,
-  
 )
 
+library(dbplyr)
+library(dplyr)
+conn <- src_memdb()
+conn_isolated <- conn$con
+copy_to(conn, sales,overwrite = TRUE)
+
+# Close connection
+# DBI::dbDisconnect(conn_isolated)
 ```
 
 
-```{r}
-
+```{sql connection=conn_isolated, echo = TRUE}
+SELECT User,
+  Product,
+  payment_method
+  FROM sales s
+  WHERE payment_method = (SELECT payment_method
+                          FROM sales ss
+                          WHERE ss.User = s.User -- Notice the relation to the parent table
+                          ORDER By payment_method DESC
+                          limit 1)
+  GROUP BY User;
 ```
 
 

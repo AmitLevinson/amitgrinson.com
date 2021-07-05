@@ -35,6 +35,45 @@ projects: []
 <h2>The Interview question</h2>
 <p>You receive a dataset with sellers’ names, products they sell, and the total sum of sales for each of their products. For each seller, return their name, the highest amount sold and the product corresponding to that amount.</p>
 <p>In other words, given the following data:</p>
+<pre class="sql"><code>SELECT User,
+  Product,
+  payment_method
+  FROM sales s
+  WHERE payment_method = (SELECT payment_method
+                          FROM sales ss
+                          WHERE ss.User = s.User -- Notice the relation to the parent table
+                          ORDER By payment_method DESC
+                          limit 1)
+  GROUP BY User;</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="left">Product</th>
+<th align="right">payment_method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Barbra</td>
+<td align="left">Checks</td>
+<td align="right">500</td>
+</tr>
+<tr class="even">
+<td align="left">Danny</td>
+<td align="left">Cash</td>
+<td align="right">400</td>
+</tr>
+<tr class="odd">
+<td align="left">Leo</td>
+<td align="left">Bank transfer</td>
+<td align="right">400</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>return the following table:</p>
 <div id="why-not-just-a-simple-group-by" class="section level3">
 <h3>Why not just a simple GROUP BY?</h3>
