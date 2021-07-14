@@ -33,48 +33,472 @@ projects: []
 </div>
 <div id="the-interview-question" class="section level2">
 <h2>The Interview question</h2>
-<p>You receive a dataset with sellers’ names, products they sell, and the total sum of sales for each of their products. For each seller, return their name, the highest amount sold and the product corresponding to that amount.</p>
-<p>In other words, given the following data:</p>
-<pre class="sql"><code>SELECT User,
-  Product,
-  payment_method
-  FROM sales s
-  WHERE payment_method = (SELECT payment_method
-                          FROM sales ss
-                          WHERE ss.User = s.User -- Notice the relation to the parent table
-                          ORDER By payment_method DESC
-                          limit 1)
-  GROUP BY User;</code></pre>
+<p>Let’s say you have a table with payments information. The table has users’ names, the date of their last payment and the amount they received. For each seller, return their name, the last date of their payment and the amount received on that date.</p>
+<p>Considering the following raw data:</p>
+<div id="fybehlmray" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#fybehlmray .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fybehlmray .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fybehlmray .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fybehlmray .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fybehlmray .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fybehlmray .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fybehlmray .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fybehlmray .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fybehlmray .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fybehlmray .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fybehlmray .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fybehlmray .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fybehlmray .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fybehlmray .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fybehlmray .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fybehlmray .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fybehlmray .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#fybehlmray .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fybehlmray .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#fybehlmray .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fybehlmray .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fybehlmray .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fybehlmray .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fybehlmray .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fybehlmray .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fybehlmray .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fybehlmray .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fybehlmray .gt_left {
+  text-align: left;
+}
+
+#fybehlmray .gt_center {
+  text-align: center;
+}
+
+#fybehlmray .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fybehlmray .gt_font_normal {
+  font-weight: normal;
+}
+
+#fybehlmray .gt_font_bold {
+  font-weight: bold;
+}
+
+#fybehlmray .gt_font_italic {
+  font-style: italic;
+}
+
+#fybehlmray .gt_super {
+  font-size: 65%;
+}
+
+#fybehlmray .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">User</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Payment_Date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">amount</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Tom</td>
+<td class="gt_row gt_left">2021-06-27</td>
+<td class="gt_row gt_right">7</td></tr>
+    <tr><td class="gt_row gt_left">Barbra</td>
+<td class="gt_row gt_left">2021-06-29</td>
+<td class="gt_row gt_right">9</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-06-06</td>
+<td class="gt_row gt_right">25</td></tr>
+    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Tom</td>
+<td class="gt_row gt_left" style="background-color: #90EE90;">2021-06-12</td>
+<td class="gt_row gt_right" style="background-color: #90EE90;">26</td></tr>
+    <tr><td class="gt_row gt_left">Tom</td>
+<td class="gt_row gt_left">2021-07-04</td>
+<td class="gt_row gt_right">42</td></tr>
+    <tr><td class="gt_row gt_left">Barbra</td>
+<td class="gt_row gt_left">2021-06-17</td>
+<td class="gt_row gt_right">57</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-05-20</td>
+<td class="gt_row gt_right">69</td></tr>
+    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Tom</td>
+<td class="gt_row gt_left" style="background-color: #90EE90;">2021-06-18</td>
+<td class="gt_row gt_right" style="background-color: #90EE90;">72</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-05-21</td>
+<td class="gt_row gt_right">90</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-06-26</td>
+<td class="gt_row gt_right">91</td></tr>
+    <tr><td class="gt_row gt_left">Barbra</td>
+<td class="gt_row gt_left">2021-06-25</td>
+<td class="gt_row gt_right">92</td></tr>
+    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Barbra</td>
+<td class="gt_row gt_left" style="background-color: #90EE90;">2021-05-09</td>
+<td class="gt_row gt_right" style="background-color: #90EE90;">98</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>return the following table:</p>
+<pre class="sql"><code>SELECT User, Payment_Date as &#39;Payment Date&#39;, amount
+FROM (
+  SELECT *,
+    DENSE_RANK() OVER(Partition BY User Order by Payment_Date DESC) as rnk
+  FROM payments)
+WHERE rnk = 1;  </code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-3">Table 1: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-4">Table 1: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">User</th>
-<th align="left">Product</th>
-<th align="right">payment_method</th>
+<th align="right">Payment Date</th>
+<th align="right">amount</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Barbra</td>
-<td align="left">Checks</td>
-<td align="right">500</td>
+<td align="right">18807</td>
+<td align="right">9</td>
 </tr>
 <tr class="even">
 <td align="left">Danny</td>
-<td align="left">Cash</td>
-<td align="right">400</td>
+<td align="right">18804</td>
+<td align="right">91</td>
 </tr>
 <tr class="odd">
-<td align="left">Leo</td>
-<td align="left">Bank transfer</td>
-<td align="right">400</td>
+<td align="left">Tom</td>
+<td align="right">18812</td>
+<td align="right">42</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>return the following table:</p>
+<pre class="sql"><code>SELECT User,
+  Payment_Date,
+  amount
+  FROM Payments p
+  WHERE amount = (SELECT amount
+                          FROM Payments pp
+                          WHERE pp.User = p.User -- Notice the relation to the parent table
+                          ORDER By amount DESC
+                          limit 1)
+  GROUP BY User;</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 2: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="right">Payment_Date</th>
+<th align="right">amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Barbra</td>
+<td align="right">18756</td>
+<td align="right">98</td>
+</tr>
+<tr class="even">
+<td align="left">Danny</td>
+<td align="right">18804</td>
+<td align="right">91</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom</td>
+<td align="right">18796</td>
+<td align="right">72</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="why-not-just-a-simple-group-by" class="section level3">
 <h3>Why not just a simple GROUP BY?</h3>
 <p>A question that might come to mind is why not use a simple <code>GROUP BY</code> and return the <code>MAX</code> value. The issue is using <code>GROUP BY</code> we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we won’t get the product name. Alternatively, if we <code>GROUP BY</code> the seller and product name and return the <code>MAX</code> value we’ll get the information for each seller and every product of theirs.</p>

@@ -40,63 +40,73 @@ Most of the SQL interview questions were pretty good. They cheked if you knew ho
 
 ## The Interview question
 
-You receive a dataset with sellers' names, products they sell, and the total sum of sales for each of their products. For each seller, return their name, the highest amount sold and the product corresponding to that amount.
+Let's say you have a table with payments information. The table has users' names, the date of their last payment and the amount they received. For each seller, return their name, the last date of their payment and the amount received on that date. 
 
-In other words, given the following data:
+Considering the following raw data:
 
 ```{r}
-library(tibble)
-# create the data
-sales <- tribble (
-  ~User, ~Product, ~payment_method,
-  "Danny", "Checks", 300,
-  "Danny", "Bank transfer", 200,
-  "Danny", "Cash", 400,
-  "Danny", "Credit card", 300,
-  "Barbra", "Checks", 500,
-  "Barbra", "Bank transfer", 300,
-  "Barbra", "Cash", 400,
-  "Barbra", "Credit card", 200,
-  "Leo", "Checks", 200,
-  "Leo", "Bank transfer", 400,
-  "Leo", "Cash", 200,
-  "Leo", "Credit card", 100,
-)
-
 library(dbplyr)
 library(dplyr)
+library(gt)
+
+set.seed(123)
+
+# create the data
+payments <- data.frame(
+  User = rep(c("Danny", "Barbra", "Tom"), each = 4),
+  Payment_Date = sample(seq(as.Date('2021-05-07'), as.Date('2021-07-07'), by = 'day'), 12),
+  amount = sample.int(100, 12)
+)
+
+
 conn <- src_memdb()
 conn_isolated <- conn$con
-copy_to(conn, sales,overwrite = TRUE)
+copy_to(conn, payments, overwrite = TRUE)
 
 # Close connection
 # DBI::dbDisconnect(conn_isolated)
 ```
 
 
-```{sql connection=conn_isolated, echo = TRUE}
-SELECT User,
-  Product,
-  payment_method
-  FROM sales s
-  WHERE payment_method = (SELECT payment_method
-                          FROM sales ss
-                          WHERE ss.User = s.User -- Notice the relation to the parent table
-                          ORDER By payment_method DESC
-                          limit 1)
-  GROUP BY User;
+```{r, fig.align = 'left'}
+raw_payments <- payments %>% 
+  arrange(amount, Payment_Date)
+  gt() %>% 
+    tab_style(
+      style = cell_fill(color = 'lightgreen'),
+      locations = cells_body (
+        rows = c(4,8,12)
+      )
+    )
 ```
-
-
-```{r}
-
-```
-
 
 return the following table:
 
-```{r}
 
+```{sql connection=conn_isolated, echo = TRUE}
+SELECT User, Payment_Date as 'Payment Date', amount
+FROM (
+  SELECT *,
+    DENSE_RANK() OVER(Partition BY User Order by Payment_Date DESC) as rnk
+  FROM payments)
+WHERE rnk = 1;  
+```
+
+
+
+
+
+```{sql connection=conn_isolated, echo = TRUE}
+SELECT User,
+  Payment_Date,
+  amount
+  FROM Payments p
+  WHERE amount = (SELECT amount
+                          FROM Payments pp
+                          WHERE pp.User = p.User -- Notice the relation to the parent table
+                          ORDER By amount DESC
+                          limit 1)
+  GROUP BY User;
 ```
 
 ### Why not just a simple GROUP BY?
