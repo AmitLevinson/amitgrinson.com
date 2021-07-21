@@ -40,9 +40,9 @@ Most of the SQL interview questions were pretty good. They cheked if you knew ho
 
 ## The Interview question
 
-Let's say you have a table with payments information. The table has users' names, the date of their last payment and the amount they received. For each seller, return their name, the last date of their payment and the amount received on that date. 
+Let's say you have a table with payments information. The table has users' names, the date of their last payment and the amount they received. For each seller, return their name, the last date of their payment and the amount received on that date. I'll be using R to setup a connection in memory but power through with SQL for the rest of the post.
 
-Considering the following raw data:
+Now to our question, Considering the following raw data:
 
 ```{r}
 library(dbplyr)
@@ -71,7 +71,7 @@ copy_to(conn, payments, overwrite = TRUE)
 ```{r, fig.align = 'left'}
 raw_payments <- payments %>% 
   arrange(amount, Payment_Date)
-  gt() %>% 
+  gt(raw_payments) %>% 
     tab_style(
       style = cell_fill(color = 'lightgreen'),
       locations = cells_body (
@@ -82,6 +82,15 @@ raw_payments <- payments %>%
 
 return the following table:
 
+```{r}
+payments %>% 
+  group_by(User) %>% 
+  filter(amount == max(amount)) %>% 
+  ungroup() %>% 
+  gt()
+```
+
+All right. So we know what we have to do. But before we do it, let's see how not to do it.
 
 ```{sql connection=conn_isolated, echo = TRUE}
 SELECT User, Payment_Date as 'Payment Date', amount
@@ -111,7 +120,26 @@ SELECT User,
 
 ### Why not just a simple GROUP BY?
 
-A question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. The issue is using `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we won't get the product name. Alternatively, if we `GROUP BY` the seller and product name and return the `MAX` value we'll get the information for each seller and every product of theirs.
+An immediate question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. I.e., just filter each group by the max value according to one of the variables.  
+
+The issue is when we use `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we only get those two columns -- User and max amount (without the date). Alternatively, if we `GROUP BY` the seller and product name and return the `MAX` value we'll get the information for each seller and every product of theirs.
+
+For example, let's show both approaches here:
+
+```{sql connection=conn_isolated, echo = TRUE}
+SELECT USER,
+  MAX(amount)
+FROM Payments 
+GROUP BY User
+```
+```{sql connection=conn_isolated, echo = TRUE}
+SELECT User,
+  Payment_Date,
+  max(amount)
+FROM Payments
+GROUP BY User
+```
+
 
 SHOW BOTH Queries
 
