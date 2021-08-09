@@ -22,9 +22,6 @@ projects: []
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
-```{r}
-```
-
 
 Structure:
 
@@ -96,20 +93,12 @@ gt(raw_payments) %>%
 
 return the following table:
 
-```{r}
+```{r, fig.align='center'}
 payments %>% 
   group_by(user) %>% 
   filter(amount == max(amount)) %>% 
   ungroup() %>% 
   gt()
-
-DBI::dbGetQuery(conn, "SELECT USER,
-  payment_date,
-  MAX(amount)
-FROM payments 
-GROUP BY User")
-
-
 ```
 
 ```{sql connection=conn_code_chunks, echo = TRUE}
@@ -122,25 +111,6 @@ GROUP BY User
 
 
 All right. So we know what we have to do. But before we do it, let's see how not to do it.
-
-
-
-
-
-
-
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT User,
-  Payment_Date,
-  amount
-  FROM Payments p
-  WHERE amount = (SELECT amount
-                          FROM Payments pp
-                          WHERE pp.User = p.User -- Notice the relation to the parent table
-                          ORDER By amount DESC
-                          limit 1)
-  GROUP BY User;
-```
 
 ### Why not just a simple GROUP BY?
 
@@ -185,9 +155,9 @@ SHOW BOTH Queries
 
 ### 1. Window functions
 
-One solution that might come to mind is using a Window Function. If you're not familiar with them, I suggest you do learn a little more about them. To borrow from [PostgreSQL's description](https://www.postgresql.org/docs/9.1/tutorial-window.html), "A window function performs a calculation across a set of table rows that are somehow related to the current row.". In different from aggregate oeprations (sum, avg, etc), using window functions doesn't cause rows to become grouped into single row outputs.  
+The first solution that might come to mind is using a Window Function. If you're not familiar with them, I suggest you read up about them. To borrow from [PostgreSQL's description](https://www.postgresql.org/docs/9.1/tutorial-window.html), a window function "performs a calculation across a set of table rows that are somehow related to the current row". In different from aggregate operations (sum, avg, etc), using window functions doesn't cause rows to become grouped into single row outputs.  
 
-We can use the window function `[DENSE_RANK()](https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15)`/`RANK()` to retrieve the rank of each value within each user in a sub-query, and extract the relevant row from the outer query:
+We can use the window function `[DENSE_RANK()](https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15)`/`RANK()` (given were intereseted in the top value) to retrieve the rank of each value for a user within a sub-query, and extract the relevant row with an outer query:
 
 ```{sql connection=conn_code_chunks, echo = TRUE}
 SELECT user, Payment_Date as 'Payment Date', amount
@@ -198,33 +168,69 @@ FROM (
 WHERE rnk = 1;  
 ```
 
-OK, that was pretty straight forward. But the interveiw question doesn't end there but ask for another approach. Let's move on.
+OK, that was pretty straight forward. But the interveiw question doesn't end there but asks for another approach. Let's move on.
 
 ### 2. Self Join
 
 `JOIN` are key functions when querying data. Considering the large amount of data a company has, and the normalization procedures it does you'll be expected to be doing a lot of joins. In this specific case we can leverage the arithmetic features of a `JOIN` to retrieve the relevant value.
 
-While we're all familiar with the regular `JOIN` using the equality sign `=`, we can also use it check for inequality, or as I'm interested here, using a smaller than -- `<`. We can do a cartesian join of the table on itself by the user and by values that are smaller than other values. our max value won't find any relevant rows to join (considering it's not smaller than anything), which will result with a `NULL` value we can use to filter. 
 
 ```{r}
-tbl(conn, sql("
-SELECT *
+test <- tbl(conn, sql("
+SELECT p.user, p.payment_date, p.amount
 FROM payments p
-LEFT OUTER JOIN payments pp ON p.user = pp.user
+LEFT JOIN payments pp ON p.user = pp.user
   AND p.amount < pp.amount
-WHERE pp.amount NOT BETWEEN 0 AND 100"))
+WHERE p.amount NOT BETWEEN 0 AND 100"))
 ```
 
+
+```{sql connection=conn_code_chunks, echo = FALSE}
+-- This Code chunk is just because I'm having issues running the self-join and filter NULL values in R.
+-- essentially the WHERE Should include WHERE pp.amount IS NULL 
+SELECT DISTINCT p.user, p.payment_date, p.amount
+FROM payments p
+LEFT JOIN payments pp ON p.user = pp.user
+  AND p.amount < pp.amount
+WHERE p.amount IN (85, 87, 95);
+```
+
+
+```{sql eval = FALSE, echo = TRUE}
+SELECT DISTINCT p.user, p.payment_date, p.amount
+FROM payments p
+LEFT JOIN payments pp ON p.user = pp.user
+  AND p.amount < pp.amount
+WHERE pp.amount IS NULL;
+```
+
+While we're all familiar with a 'regular' `* JOIN` using an equality sign `=`, we can check for *inequality* such as smaller than `<`. Essentially we do a cartesian join of the table on itself by user, and filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join (considering it's not smaller than anything), which will result with a `NULL` value we can use to filter. If you want to see the the intermediate step just remove the `WHERE` clause and select all columns.
+
+### 3. Correlated subquery
+
+We've come to my final approach for this blog post. I've come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in `R` such as the apply family and the `purrr` library.
+
+A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from [GeeksforGeeks](https://www.geeksforgeeks.org/sql-correlated-subqueries/)). Let's look at the answer and explain it more clearly:
 
 
 ```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT *
-FROM payments p
-LEFT OUTER JOIN payments pp ON p.user = pp.user
-  AND p.amount < pp.amount;
-WHERE pp.user NOT IN ('Danny ');
+SELECT User,
+  Payment_Date,
+  amount
+  FROM Payments p
+  WHERE amount = (SELECT MAX(amount)
+                          FROM Payments pp
+                          WHERE pp.User = p.User -- Notice the relation to the parent table
+                          )
+  GROUP BY User;
 ```
 
+To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the User is equal to the user in the outer query, grab the maximum amount. Now the outer query goes *row by row* for each user and compares whether that rows amounbt is equal to that user's max amount retrieved from the inner query. Essentially, for each user the outer query goes row by row comparing its value to the inner query result which doesn't change.
 
-### 3. Correlated subquery
+### Closing remarks
+
+This was a pretty short post on some SQL approaches to solving a question. You can probably think (or thought) of different approaches which is also great. At the end I did feel like this question required me to utilize different SQL code to solve the same question. I didn't get the job (though I did solve using two approaches, the third one here is bonus) but that's OK. Eventually that's how I ended up where I am today :)
+
+Hope you find this useful and learned something new!
+
 
