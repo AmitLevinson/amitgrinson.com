@@ -1,7 +1,7 @@
 ---
 title: An SQL interview question to learn from
 author: Amit Levinson
-date: '2021-07-08'
+date: '2021-08-26'
 slug: a-great-sql-questions
 categories: []
 tags: []
@@ -22,38 +22,41 @@ projects: []
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
+http://sqlfiddle.com/#!9/423702/12
 
-## The setting
 
 During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it.
 
-Fast forward to interviewing, most of the SQL interview questions were pretty good. They checked if you could explain X or use other common operators something such as window functions, Having (though not common), LEAD, etc. There was one question I was really fond of and had thought about it since; this blog post details the question and several answers to it.
+Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about it since; this blog post details that question and several answers to it.
 
 
 **An important caveat: The question and data do not represent my current employer.** The data used here is made up and the question came from a different company. 
 
-Note that I'll be using R to setup an SQL connection in memory but power through with SQL. While not necessary, some SQL knowledge is useful to understanding the answers' syntax.
+Note that I'll be using R to setup an SQL connection in memory but power through the blogpost with SQL. While not necessary, some SQL knowledge is useful to understanding the various answers' syntax.
 
 ## The Interview question
 
 So here it goes:
 
-> Let's say you have a table of sellers' (henceforth: users) payments. The table has the user's name, date of payment and the amount they received. Users have multiple records with different amounts and dates. You are asked for each user to return the user name, the maximum amount they received and the date of that payment.
+> Let's say you have a table of users' payments. The table has the user's name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user return the user name, the maximum amount they received and the date of that payment.
 
-> And now for the second part: Now that you've solved it, solve it again using a different approach.
+And now for the second part:
 
-For a more practical example (though the interview didn't have one), considering the following raw data:
+> Once you solve that, solve it again using a different approach.
+
+For a more practical example, considering the following raw data:
 
 ```{r}
 library(dbplyr)
 library(dplyr)
 library(gt)
 library(tibble)
-
+library(DBI)
+library(keyring)
 
 # create the data
 payments <- tribble(
-  ~user,    ~payment_date,    ~amount,
+  ~username,    ~payment_date,    ~amount,
   "Danny",  "2021-07-05",     42,
   "Danny",  "2021-05-12",     62,
   "Danny",  "2021-08-01",     80,
@@ -69,47 +72,42 @@ payments <- tribble(
 ) %>% 
   mutate(payment_date = as.character(payment_date))
 
+# payments %>% clipr::write_clip()
 
-conn <- src_memdb()
-conn_code_chunks <- conn$con
-copy_to(conn, payments, overwrite = TRUE)
+# Setup a connection with localhost
+localhost_con <- dbConnect(RMariaDB::MariaDB(),
+                  host = 'localhost',
+                  dbname = "sql_interview",
+                  username = key_get("mysql-local-user"),
+                  password = key_get("mysql-local-password"),
+                  port = 3306)
 
-# Close connection
-# DBI::dbDisconnect(conn_code_chunks)
+# dbWriteTable(localhost_con, "payments", payments, overwrite = TRUE)
 ```
 
 
 ```{r, fig.align = 'left'}
 raw_payments <- payments %>% 
-  arrange(user, amount, payment_date)
-
+  arrange( payment_date)
 
 gt(raw_payments) %>% 
     tab_style(
-      style = cell_fill(color = 'lightgreen'),
+      style = cell_fill(color = '#90ee90'),
       locations = cells_body (
-        rows = c(4,8,12)
+        rows = c(3,5,11)
       )
     )
-
 ```
 
 Return the following table:
 
 ```{r, fig.align='center'}
 payments %>% 
-  group_by(user) %>% 
+  group_by(username) %>% 
   filter(amount == max(amount)) %>% 
   ungroup() %>% 
+  arrange(username) %>% 
   gt()
-```
-
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT USER,
-  payment_date,
-  MAX(amount)
-FROM payments 
-GROUP BY User
 ```
 
 
@@ -117,41 +115,36 @@ All right. So we know what we have to do. But before we do it, let's see how not
 
 ### Why not just a simple GROUP BY?
 
-An immediate question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. I.e., just filter each group by the max value according to one of the variables.  
+If your new to SQL, an immediate question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. I.e., just filter each group by the max value according to one of the variables.  
 
-The issue is when we use `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we only get those two columns -- User and max amount (without the date). Alternatively, if we `GROUP BY` the User, date and return the `MAX` value we'll get the information for each User and date (considering we have distinct dates for each user).
+The issue is when we use `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name, and the payment date when we return the max we get the value for each distinct user and date. In other words, all are original values as we can see in the table below:
 
-For example, let's show both approaches here:
-
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT USER,
-  MAX(amount)
+```{sql connection=localhost_con, echo = TRUE}
+SELECT UserName,
+  MAX(amount) AS amount
 FROM Payments 
-GROUP BY User
+GROUP BY UserName
+```
+
+Alternatively, if we `GROUP BY` the UserName and return the `MAX` value (along with the date) the result depends on the Relational database management system (RDBMS) you use. If you're using SQL server you'll get an error as you have a column which is selected but is not contained in an Aggregate function nor in the GROUP BY clause. In other RDMBS (e.g. MySQL I use here) we'll get the information for each User, their max value and the top appearing date, **but not the correct one**:
+
+```{sql connection=localhost_con, echo = TRUE}
+SELECT UserName,
+  payment_date,
+  MAX(amount)
+FROM payments 
+GROUP BY UserName
 ```
 
 
-
-
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT User,
+```{sql connection=localhost_con, echo = TRUE}
+SELECT UserName,
   Payment_Date,
-  max(amount)
+  max(amount) AS amount
 FROM payments
-GROUP BY User
+GROUP BY UserName
 
 ```
-
-
-
-
-SHOW BOTH Queries
-
-  - various questions
-  
-  - Not representing my employer
-
-  - Some basic knowledge of SQL (or R also if you ask me) can help
 
 
 ## Solutions
@@ -160,17 +153,17 @@ SHOW BOTH Queries
 
 The first solution that might come to mind is using a Window Function. If you don't know them, I suggest you familiarize yourself. To borrow from [PostgreSQL's description](https://www.postgresql.org/docs/9.1/tutorial-window.html), a window function "performs a calculation across a set of table rows that are somehow related to the current row". In different from aggregate operations (sum, avg, etc), using window functions doesn't cause rows to become grouped into single row outputs.  
 
-We can use the window function `[DENSE_RANK()](https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15)`/`RANK()`[^1] to retrieve the rank of each value for a user within a sub-query, and extract the relevant row with an outer query:
+We can use the window function [DENSE_RANK()](https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15)/`RANK()`[^1] to retrieve the rank of values for each users, and extract the relevant row with an outer query:
 
 [^1]: One reason I'm not going for ROW_NUMBER here is that were interested in the top value that could have multiple appearances for a user. ROW NUMBER will only give us one value, here I'm interested in the max value that could appear several times.
 
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT user, Payment_Date as 'Payment Date', amount
+```{sql connection=localhost_con, echo = TRUE}
+SELECT UserName, Payment_Date as 'Payment Date', amount
 FROM (
   SELECT *,
-    DENSE_RANK() OVER(Partition BY User Order by amount DESC) as rnk
-  FROM payments)
-WHERE rnk = 1;  
+    DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
+  FROM payments) AS ranked_table
+WHERE rnk = 1;
 ```
 
 OK, that was pretty straight forward. But the interview question doesn't end there but asks for another approach. Let's move on.
@@ -180,33 +173,14 @@ OK, that was pretty straight forward. But the interview question doesn't end the
 `JOIN` are key functions when querying data. Considering the large amount of data a company has, and the normalization procedures it does you'll be expected to join a lot. In this specific case we can leverage the arithmetic features of a `JOIN` to retrieve the relevant value.
 
 
-```{r}
-test <- tbl(conn, sql("
-SELECT p.user, p.payment_date, p.amount
+```{sql connection=localhost_con, echo = TRUE}
+SELECT DISTINCT p.UserName, p.payment_date, p.amount
 FROM payments p
-LEFT JOIN payments pp ON p.user = pp.user
-  AND p.amount < pp.amount
-WHERE p.amount NOT BETWEEN 0 AND 100"))
-```
-
-
-```{sql connection=conn_code_chunks, echo = FALSE}
--- This Code chunk is just because I'm having issues running the self-join and filter NULL values in R.
--- essentially the WHERE should bw "WHERE pp.amount IS NULL" 
-SELECT DISTINCT p.user, p.payment_date, p.amount
-FROM payments p
-LEFT JOIN payments pp ON p.user = pp.user
-  AND p.amount < pp.amount
-WHERE p.amount IN (85, 87, 95);
-```
-
-
-```{sql eval = FALSE, echo = TRUE}
-SELECT DISTINCT p.user, p.payment_date, p.amount
-FROM payments p
-LEFT JOIN payments pp ON p.user = pp.user
+LEFT JOIN payments pp ON p.UserName = pp.UserName
   AND p.amount < pp.amount
 WHERE pp.amount IS NULL;
+
+
 ```
 
 While we're all familiar with a 'regular' `* JOIN` using an equality sign `=`, we can check for *inequality* such as smaller than `<`. Essentially we do a cartesian join of the table on itself by user, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result with a `NULL` value we can use to filter. If you want to see the the intermediate step just remove the `WHERE` clause and select all columns.
@@ -218,16 +192,16 @@ We've come to my final approach for this blog post. Thought not requested, I tho
 A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from [GeeksforGeeks](https://www.geeksforgeeks.org/sql-correlated-subqueries/)). Let's look at the answer and explain it more clearly:
 
 
-```{sql connection=conn_code_chunks, echo = TRUE}
-SELECT User,
+```{sql corr-subqeury, connection=localhost_con, echo = TRUE}
+SELECT UserName,
   Payment_Date,
   amount
   FROM Payments p
   WHERE amount = (SELECT MAX(amount)
                           FROM Payments pp
-                          WHERE pp.User = p.User -- Notice the relation to the parent table
+                          WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
                           )
-  GROUP BY User;
+  GROUP BY UserName;
 ```
 
 To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the User is equal to the user in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that rows' amount is equal to that user's max amount retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result which doesn't change.
@@ -238,4 +212,8 @@ This was a pretty short post on some SQL approaches to solving a question. You c
 
 Hope you find this useful and learned something new!
 
+```{r echo = FALSE}
+# Close our SQL connection
+dbDisconnect(localhost_con)
+```
 

@@ -1,7 +1,7 @@
 ---
 title: An SQL interview question to learn from
 author: Amit Levinson
-date: '2021-07-08'
+date: '2021-08-26'
 slug: a-great-sql-questions
 categories: []
 tags: []
@@ -21,26 +21,28 @@ projects: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Structure:</p>
-<div id="intro" class="section level2">
-<h2>Intro</h2>
-<ul>
-<li>Intro on job search process</li>
-</ul>
+<p><a href="http://sqlfiddle.com/#!9/423702/12" class="uri">http://sqlfiddle.com/#!9/423702/12</a></p>
 <p>During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. <a href="https://amitlevinson.com/blog/my-year-in-r/">My journey into analytics was through learning R</a> and I realized I had to learn some SQL, or at least familiarize myself with it.</p>
-<p>Most of the SQL interview questions were pretty good. They cheked if you knew how to solve A or use something such as a window function, Having, LEAD, etc. But one question I was really fond of and thought about it since; this blog post details the question and several answers to it.</p>
-<p><strong>The question and data do not represent my current employer.</strong> The data used here is made up and the question came from a different company. While not necessary, some SQL knowledge is useful to understanding the answers’ syntax.</p>
-</div>
+<p>Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about it since; this blog post details that question and several answers to it.</p>
+<p><strong>An important caveat: The question and data do not represent my current employer.</strong> The data used here is made up and the question came from a different company.</p>
+<p>Note that I’ll be using R to setup an SQL connection in memory but power through the blogpost with SQL. While not necessary, some SQL knowledge is useful to understanding the various answers’ syntax.</p>
 <div id="the-interview-question" class="section level2">
 <h2>The Interview question</h2>
-<p>Let’s say you have a table with payments information. The table has users’ names, the date of their last payment and the amount they received. For each seller, return their name, the last date of their payment and the amount received on that date.</p>
-<p>Considering the following raw data:</p>
-<div id="fybehlmray" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<p>So here it goes:</p>
+<blockquote>
+<p>Let’s say you have a table of users’ payments. The table has the user’s name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user return the user name, the maximum amount they received and the date of that payment.</p>
+</blockquote>
+<p>And now for the second part:</p>
+<blockquote>
+<p>Once you solve that, solve it again using a different approach.</p>
+</blockquote>
+<p>For a more practical example, considering the following raw data:</p>
+<div id="nrtetodgig" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fybehlmray .gt_table {
+#nrtetodgig .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -65,7 +67,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#fybehlmray .gt_heading {
+#nrtetodgig .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -77,7 +79,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#fybehlmray .gt_title {
+#nrtetodgig .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -87,7 +89,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#fybehlmray .gt_subtitle {
+#nrtetodgig .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -97,13 +99,13 @@ projects: []
   border-top-width: 0;
 }
 
-#fybehlmray .gt_bottom_border {
+#nrtetodgig .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fybehlmray .gt_col_headings {
+#nrtetodgig .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -118,7 +120,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#fybehlmray .gt_col_heading {
+#nrtetodgig .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -138,7 +140,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#fybehlmray .gt_column_spanner_outer {
+#nrtetodgig .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -150,15 +152,15 @@ projects: []
   padding-right: 4px;
 }
 
-#fybehlmray .gt_column_spanner_outer:first-child {
+#nrtetodgig .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fybehlmray .gt_column_spanner_outer:last-child {
+#nrtetodgig .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fybehlmray .gt_column_spanner {
+#nrtetodgig .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -170,7 +172,7 @@ projects: []
   width: 100%;
 }
 
-#fybehlmray .gt_group_heading {
+#nrtetodgig .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -192,7 +194,7 @@ projects: []
   vertical-align: middle;
 }
 
-#fybehlmray .gt_empty_group_heading {
+#nrtetodgig .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -207,15 +209,15 @@ projects: []
   vertical-align: middle;
 }
 
-#fybehlmray .gt_from_md > :first-child {
+#nrtetodgig .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fybehlmray .gt_from_md > :last-child {
+#nrtetodgig .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fybehlmray .gt_row {
+#nrtetodgig .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -234,7 +236,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#fybehlmray .gt_stub {
+#nrtetodgig .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -246,7 +248,7 @@ projects: []
   padding-left: 12px;
 }
 
-#fybehlmray .gt_summary_row {
+#nrtetodgig .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -256,7 +258,7 @@ projects: []
   padding-right: 5px;
 }
 
-#fybehlmray .gt_first_summary_row {
+#nrtetodgig .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -266,7 +268,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#fybehlmray .gt_grand_summary_row {
+#nrtetodgig .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -276,7 +278,7 @@ projects: []
   padding-right: 5px;
 }
 
-#fybehlmray .gt_first_grand_summary_row {
+#nrtetodgig .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -286,11 +288,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#fybehlmray .gt_striped {
+#nrtetodgig .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fybehlmray .gt_table_body {
+#nrtetodgig .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -299,7 +301,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#fybehlmray .gt_footnotes {
+#nrtetodgig .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -313,13 +315,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#fybehlmray .gt_footnote {
+#nrtetodgig .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#fybehlmray .gt_sourcenotes {
+#nrtetodgig .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -333,41 +335,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#fybehlmray .gt_sourcenote {
+#nrtetodgig .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#fybehlmray .gt_left {
+#nrtetodgig .gt_left {
   text-align: left;
 }
 
-#fybehlmray .gt_center {
+#nrtetodgig .gt_center {
   text-align: center;
 }
 
-#fybehlmray .gt_right {
+#nrtetodgig .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fybehlmray .gt_font_normal {
+#nrtetodgig .gt_font_normal {
   font-weight: normal;
 }
 
-#fybehlmray .gt_font_bold {
+#nrtetodgig .gt_font_bold {
   font-weight: bold;
 }
 
-#fybehlmray .gt_font_italic {
+#nrtetodgig .gt_font_italic {
   font-style: italic;
 }
 
-#fybehlmray .gt_super {
+#nrtetodgig .gt_super {
   font-size: 65%;
 }
 
-#fybehlmray .gt_footnote_marks {
+#nrtetodgig .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -377,155 +379,658 @@ projects: []
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">User</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Payment_Date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">username</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">payment_date</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">amount</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td class="gt_row gt_left">Tom</td>
-<td class="gt_row gt_left">2021-06-27</td>
-<td class="gt_row gt_right">7</td></tr>
-    <tr><td class="gt_row gt_left">Barbra</td>
-<td class="gt_row gt_left">2021-06-29</td>
-<td class="gt_row gt_right">9</td></tr>
+<td class="gt_row gt_left">2021-05-11</td>
+<td class="gt_row gt_right">75</td></tr>
     <tr><td class="gt_row gt_left">Danny</td>
-<td class="gt_row gt_left">2021-06-06</td>
-<td class="gt_row gt_right">25</td></tr>
-    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Tom</td>
+<td class="gt_row gt_left">2021-05-12</td>
+<td class="gt_row gt_right">62</td></tr>
+    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Alice</td>
+<td class="gt_row gt_left" style="background-color: #90EE90;">2021-05-12</td>
+<td class="gt_row gt_right" style="background-color: #90EE90;">85</td></tr>
+    <tr><td class="gt_row gt_left">Alice</td>
+<td class="gt_row gt_left">2021-05-29</td>
+<td class="gt_row gt_right">72</td></tr>
+    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Danny</td>
 <td class="gt_row gt_left" style="background-color: #90EE90;">2021-06-12</td>
-<td class="gt_row gt_right" style="background-color: #90EE90;">26</td></tr>
+<td class="gt_row gt_right" style="background-color: #90EE90;">87</td></tr>
+    <tr><td class="gt_row gt_left">Alice</td>
+<td class="gt_row gt_left">2021-06-24</td>
+<td class="gt_row gt_right">45</td></tr>
     <tr><td class="gt_row gt_left">Tom</td>
-<td class="gt_row gt_left">2021-07-04</td>
+<td class="gt_row gt_left">2021-06-28</td>
+<td class="gt_row gt_right">80</td></tr>
+    <tr><td class="gt_row gt_left">Alice</td>
+<td class="gt_row gt_left">2021-07-03</td>
+<td class="gt_row gt_right">60</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-07-05</td>
 <td class="gt_row gt_right">42</td></tr>
-    <tr><td class="gt_row gt_left">Barbra</td>
-<td class="gt_row gt_left">2021-06-17</td>
-<td class="gt_row gt_right">57</td></tr>
-    <tr><td class="gt_row gt_left">Danny</td>
-<td class="gt_row gt_left">2021-05-20</td>
-<td class="gt_row gt_right">69</td></tr>
+    <tr><td class="gt_row gt_left">Tom</td>
+<td class="gt_row gt_left">2021-07-12</td>
+<td class="gt_row gt_right">56</td></tr>
     <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Tom</td>
-<td class="gt_row gt_left" style="background-color: #90EE90;">2021-06-18</td>
-<td class="gt_row gt_right" style="background-color: #90EE90;">72</td></tr>
+<td class="gt_row gt_left" style="background-color: #90EE90;">2021-07-19</td>
+<td class="gt_row gt_right" style="background-color: #90EE90;">95</td></tr>
     <tr><td class="gt_row gt_left">Danny</td>
-<td class="gt_row gt_left">2021-05-21</td>
-<td class="gt_row gt_right">90</td></tr>
-    <tr><td class="gt_row gt_left">Danny</td>
-<td class="gt_row gt_left">2021-06-26</td>
-<td class="gt_row gt_right">91</td></tr>
-    <tr><td class="gt_row gt_left">Barbra</td>
-<td class="gt_row gt_left">2021-06-25</td>
-<td class="gt_row gt_right">92</td></tr>
-    <tr><td class="gt_row gt_left" style="background-color: #90EE90;">Barbra</td>
-<td class="gt_row gt_left" style="background-color: #90EE90;">2021-05-09</td>
-<td class="gt_row gt_right" style="background-color: #90EE90;">98</td></tr>
+<td class="gt_row gt_left">2021-08-01</td>
+<td class="gt_row gt_right">80</td></tr>
   </tbody>
   
   
 </table>
 </div>
-<p>return the following table:</p>
-<pre class="sql"><code>SELECT User, Payment_Date as &#39;Payment Date&#39;, amount
-FROM (
-  SELECT *,
-    DENSE_RANK() OVER(Partition BY User Order by Payment_Date DESC) as rnk
-  FROM payments)
-WHERE rnk = 1;  </code></pre>
+<p>Return the following table:</p>
+<div id="dsshtwkusm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dsshtwkusm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dsshtwkusm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dsshtwkusm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dsshtwkusm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dsshtwkusm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dsshtwkusm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dsshtwkusm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dsshtwkusm .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dsshtwkusm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dsshtwkusm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dsshtwkusm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dsshtwkusm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dsshtwkusm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#dsshtwkusm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dsshtwkusm .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dsshtwkusm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dsshtwkusm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#dsshtwkusm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dsshtwkusm .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#dsshtwkusm .gt_left {
+  text-align: left;
+}
+
+#dsshtwkusm .gt_center {
+  text-align: center;
+}
+
+#dsshtwkusm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dsshtwkusm .gt_font_normal {
+  font-weight: normal;
+}
+
+#dsshtwkusm .gt_font_bold {
+  font-weight: bold;
+}
+
+#dsshtwkusm .gt_font_italic {
+  font-style: italic;
+}
+
+#dsshtwkusm .gt_super {
+  font-size: 65%;
+}
+
+#dsshtwkusm .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">username</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">payment_date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">amount</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Alice</td>
+<td class="gt_row gt_left">2021-05-12</td>
+<td class="gt_row gt_right">85</td></tr>
+    <tr><td class="gt_row gt_left">Danny</td>
+<td class="gt_row gt_left">2021-06-12</td>
+<td class="gt_row gt_right">87</td></tr>
+    <tr><td class="gt_row gt_left">Tom</td>
+<td class="gt_row gt_left">2021-07-19</td>
+<td class="gt_row gt_right">95</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>All right. So we know what we have to do. But before we do it, let’s see how not to do it.</p>
+<div id="why-not-just-a-simple-group-by" class="section level3">
+<h3>Why not just a simple GROUP BY?</h3>
+<p>If your new to SQL, an immediate question that might come to mind is why not use a simple <code>GROUP BY</code> and return the <code>MAX</code> value. I.e., just filter each group by the max value according to one of the variables.</p>
+<p>The issue is when we use <code>GROUP BY</code> we retrieve only the information that is aggregated. That is, if we group by the sellers name, and the payment date when we return the max we get the value for each distinct user and date. In other words, all are original values as we can see in the table below:</p>
+<pre class="sql"><code>SELECT UserName,
+  MAX(amount) AS amount
+FROM Payments 
+GROUP BY UserName</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-4">Table 1: </span>3 records</caption>
 <thead>
 <tr class="header">
-<th align="left">User</th>
-<th align="right">Payment Date</th>
+<th align="left">UserName</th>
 <th align="right">amount</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Barbra</td>
-<td align="right">18807</td>
-<td align="right">9</td>
+<td align="left">Danny</td>
+<td align="right">87</td>
 </tr>
 <tr class="even">
-<td align="left">Danny</td>
-<td align="right">18804</td>
-<td align="right">91</td>
+<td align="left">Alice</td>
+<td align="right">85</td>
 </tr>
 <tr class="odd">
 <td align="left">Tom</td>
-<td align="right">18812</td>
-<td align="right">42</td>
+<td align="right">95</td>
 </tr>
 </tbody>
 </table>
 </div>
-<pre class="sql"><code>SELECT User,
-  Payment_Date,
-  amount
-  FROM Payments p
-  WHERE amount = (SELECT amount
-                          FROM Payments pp
-                          WHERE pp.User = p.User -- Notice the relation to the parent table
-                          ORDER By amount DESC
-                          limit 1)
-  GROUP BY User;</code></pre>
+<p>Alternatively, if we <code>GROUP BY</code> the UserName and return the <code>MAX</code> value (along with the date) the result depends on the Relational database management system (RDBMS) you use. If you’re using SQL server you’ll get an error as you have a column which is selected but is not contained in an Aggregate function nor in the GROUP BY clause. In other RDMBS (e.g. MySQL I use here) we’ll get the information for each User, their max value and the top appearing date, <strong>but not the correct one</strong>:</p>
+<pre class="sql"><code>SELECT UserName,
+  payment_date,
+  MAX(amount)
+FROM payments 
+GROUP BY UserName</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-5">Table 2: </span>3 records</caption>
 <thead>
 <tr class="header">
-<th align="left">User</th>
-<th align="right">Payment_Date</th>
+<th align="left">UserName</th>
+<th align="left">payment_date</th>
+<th align="right">MAX(amount)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Danny</td>
+<td align="left">2021-07-05</td>
+<td align="right">87</td>
+</tr>
+<tr class="even">
+<td align="left">Alice</td>
+<td align="left">2021-07-03</td>
+<td align="right">85</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom</td>
+<td align="left">2021-06-28</td>
+<td align="right">95</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="sql"><code>SELECT UserName,
+  Payment_Date,
+  max(amount) AS amount
+FROM payments
+GROUP BY UserName
+</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 3: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">UserName</th>
+<th align="left">Payment_Date</th>
 <th align="right">amount</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Barbra</td>
-<td align="right">18756</td>
-<td align="right">98</td>
+<td align="left">Danny</td>
+<td align="left">2021-07-05</td>
+<td align="right">87</td>
 </tr>
 <tr class="even">
-<td align="left">Danny</td>
-<td align="right">18804</td>
-<td align="right">91</td>
+<td align="left">Alice</td>
+<td align="left">2021-07-03</td>
+<td align="right">85</td>
 </tr>
 <tr class="odd">
 <td align="left">Tom</td>
-<td align="right">18796</td>
-<td align="right">72</td>
+<td align="left">2021-06-28</td>
+<td align="right">95</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="why-not-just-a-simple-group-by" class="section level3">
-<h3>Why not just a simple GROUP BY?</h3>
-<p>A question that might come to mind is why not use a simple <code>GROUP BY</code> and return the <code>MAX</code> value. The issue is using <code>GROUP BY</code> we retrieve only the information that is aggregated. That is, if we group by the sellers name and return the max we won’t get the product name. Alternatively, if we <code>GROUP BY</code> the seller and product name and return the <code>MAX</code> value we’ll get the information for each seller and every product of theirs.</p>
-<p>SHOW BOTH Queries</p>
-<ul>
-<li><p>various questions</p></li>
-<li><p>Not representing my employer</p></li>
-<li><p>Some basic knowledge of SQL (or R also if you ask me) can help</p></li>
-</ul>
 </div>
-</div>
-<div id="the-case" class="section level2">
-<h2>The case</h2>
-<ul>
-<li><p>show the case with the question</p></li>
-<li><p>provide the question with another one - reframed</p></li>
-</ul>
 </div>
 <div id="solutions" class="section level2">
 <h2>Solutions</h2>
 <div id="window-functions" class="section level3">
 <h3>1. Window functions</h3>
+<p>The first solution that might come to mind is using a Window Function. If you don’t know them, I suggest you familiarize yourself. To borrow from <a href="https://www.postgresql.org/docs/9.1/tutorial-window.html">PostgreSQL’s description</a>, a window function “performs a calculation across a set of table rows that are somehow related to the current row”. In different from aggregate operations (sum, avg, etc), using window functions doesn’t cause rows to become grouped into single row outputs.</p>
+<p>We can use the window function <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15">DENSE_RANK()</a>/<code>RANK()</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to retrieve the rank of values for each users, and extract the relevant row with an outer query:</p>
+<pre class="sql"><code>SELECT UserName, Payment_Date as &#39;Payment Date&#39;, amount
+FROM (
+  SELECT *,
+    DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
+  FROM payments) AS ranked_table
+WHERE rnk = 1;</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-7">Table 4: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">UserName</th>
+<th align="left">Payment Date</th>
+<th align="right">amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alice</td>
+<td align="left">2021-05-12</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="left">Danny</td>
+<td align="left">2021-06-12</td>
+<td align="right">87</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom</td>
+<td align="left">2021-07-19</td>
+<td align="right">95</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>OK, that was pretty straight forward. But the interview question doesn’t end there but asks for another approach. Let’s move on.</p>
 </div>
 <div id="self-join" class="section level3">
 <h3>2. Self Join</h3>
+<p><code>JOIN</code> are key functions when querying data. Considering the large amount of data a company has, and the normalization procedures it does you’ll be expected to join a lot. In this specific case we can leverage the arithmetic features of a <code>JOIN</code> to retrieve the relevant value.</p>
+<pre class="sql"><code>SELECT DISTINCT p.UserName, p.payment_date, p.amount
+FROM payments p
+LEFT JOIN payments pp ON p.UserName = pp.UserName
+  AND p.amount &lt; pp.amount
+WHERE pp.amount IS NULL;
+</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-8">Table 5: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">UserName</th>
+<th align="left">payment_date</th>
+<th align="right">amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Danny</td>
+<td align="left">2021-06-12</td>
+<td align="right">87</td>
+</tr>
+<tr class="even">
+<td align="left">Alice</td>
+<td align="left">2021-05-12</td>
+<td align="right">85</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom</td>
+<td align="left">2021-07-19</td>
+<td align="right">95</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>While we’re all familiar with a ‘regular’ <code>* JOIN</code> using an equality sign <code>=</code>, we can check for <em>inequality</em> such as smaller than <code>&lt;</code>. Essentially we do a cartesian join of the table on itself by user, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won’t find any relevant rows to join, considering it’s not smaller than anything, which will result with a <code>NULL</code> value we can use to filter. If you want to see the the intermediate step just remove the <code>WHERE</code> clause and select all columns.</p>
 </div>
 <div id="correlated-subquery" class="section level3">
 <h3>3. Correlated subquery</h3>
+<p>We’ve come to my final approach for this blog post. Thought not requested, I thought of this approach only after the interview and thought of sharing it. I’ve come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in <code>R</code> such as the apply family and the <code>purrr</code> library.</p>
+<p>A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from <a href="https://www.geeksforgeeks.org/sql-correlated-subqueries/">GeeksforGeeks</a>). Let’s look at the answer and explain it more clearly:</p>
+<pre class="sql"><code>SELECT UserName,
+  Payment_Date,
+  amount
+  FROM Payments p
+  WHERE amount = (SELECT MAX(amount)
+                          FROM Payments pp
+                          WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
+                          )
+  GROUP BY UserName;</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:corr-subqeury">Table 6: </span>3 records</caption>
+<thead>
+<tr class="header">
+<th align="left">UserName</th>
+<th align="left">Payment_Date</th>
+<th align="right">amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Danny</td>
+<td align="left">2021-06-12</td>
+<td align="right">87</td>
+</tr>
+<tr class="even">
+<td align="left">Alice</td>
+<td align="left">2021-05-12</td>
+<td align="right">85</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom</td>
+<td align="left">2021-07-19</td>
+<td align="right">95</td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>To easily read the query and understand correlated subqueries, let’s start from the inside. From the payments tables where the User is equal to the user in the outer query, grab the maximum amount. Now the outer query goes <em>row by row for each user</em> and compares whether that rows’ amount is equal to that user’s max amount retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result which doesn’t change.</p>
+</div>
+<div id="closing-remarks" class="section level3">
+<h3>Closing remarks</h3>
+<p>This was a pretty short post on some SQL approaches to solving a question. You can probably think (or thought) of different approaches which is also great, or of the same idea but different syntax. At the end I did feel like this question required me to utilize different SQL code to solve the same question so I’m glad I came across it. I didn’t get the job but that’s OK. Eventually that’s how I ended up where I am today :)</p>
+<p>Hope you find this useful and learned something new!</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>One reason I’m not going for ROW_NUMBER here is that were interested in the top value that could have multiple appearances for a user. ROW NUMBER will only give us one value, here I’m interested in the max value that could appear several times.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
