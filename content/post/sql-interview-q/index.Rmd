@@ -46,14 +46,23 @@ And now for the second part:
 
 For a more practical example, considering the following raw data:
 
-```{r}
-library(dbplyr)
+```{r echo = TRUE}
+# library(dbplyr)
 library(dplyr)
 library(gt)
 library(tibble)
 library(DBI)
 library(keyring)
+library(stringr)
+library(ggplot2)
+library(gt)
+library(forcats)
+library(dplyr)
 
+```
+
+
+```{r}
 # create the data
 payments <- tribble(
   ~username,    ~payment_date,    ~amount,
@@ -72,9 +81,7 @@ payments <- tribble(
 ) %>% 
   mutate(payment_date = as.character(payment_date))
 
-# payments %>% clipr::write_clip()
-
-# Setup a connection with localhost
+# Setup a localhost connection
 localhost_con <- dbConnect(RMariaDB::MariaDB(),
                   host = 'localhost',
                   dbname = "sql_interview",
@@ -87,6 +94,9 @@ localhost_con <- dbConnect(RMariaDB::MariaDB(),
 
 
 ```{r, fig.align = 'left'}
+
+# payments %>% clipr::write_clip()
+
 raw_payments <- payments %>% 
   arrange( payment_date)
 
@@ -213,51 +223,107 @@ SELECT UserName,
 
 To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that rows' amount is equal to that user's max amount, which is retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result.
 
-### Benchmarking
+## Benchmarking
 
-```{r eval = FALSE}
-window_function <- dbGetQuery(localhost_con, "SELECT UserName, Payment_Date as 'Payment Date', amount
-FROM (
-  SELECT *,
-    DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
-  FROM payments) AS ranked_table
-WHERE rnk = 1")
-microbenchmark::microbenchmark(dbGetQuery(localhost_con, "SELECT UserName, Payment_Date as 'Payment Date', amount
-FROM (
-  SELECT *,
-    DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
-  FROM payments) AS ranked_table
-WHERE rnk = 1"),
+A question that arose to me is, for this specific case, which method is faster? Let's try and answer it using a bit larger dataset.
 
-
-dbGetQuery(localhost_con, "SELECT DISTINCT p.UserName, p.payment_date, p.amount
-FROM payments p
-LEFT JOIN payments pp ON p.UserName = pp.UserName
-  AND p.amount < pp.amount
-WHERE pp.amount IS NULL")
+```{r echo = TRUE}
+payments_big <- data.frame(
+  username = sample(c("Danny", "Alice", "Tom"), size = 2e3, replace = TRUE),
+  payment_date = sample(seq(as.Date("2018/01/01"), as.Date("2021/08/01"), by = "day"), 2e3, replace = T),
+  amount = sample.int(c(1e4), 2e3, replace = T)
 )
 
-eval_query <- function (x) {
-  
- (dbGetQuery(localhost_con, x))
-}
+glimpse(payments_big)
+```
 
-window_function <- expression((dbGetQuery(localhost_con,"SELECT UserName, Payment_Date as 'Payment Date', amount
+```{r eval= FALSE, echo = FALSE}
+# Write table
+# dbWriteTable(localhost_con, "payments_big", payments_big, overwrite = TRUE)
+```
+
+
+Great, a total of 1,000 rows for all the three users. Since we'll be benchmarking using R, let's write a function to evaluate the SQL queries:
+
+Great. Using the above queries adapted for our 'payments_big' dataset, we'll benchmark the difference across all three:
+
+```{r eval = FALSE}
+Window_script <- "SELECT UserName, Payment_Date as 'Payment Date', amount
 FROM (
   SELECT *,
     DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
-  FROM payments) AS ranked_table
-WHERE rnk = 1")))
+  FROM payments_big) AS ranked_table
+WHERE rnk = 1"
 
-join_clause <- expression((dbGetQuery(localhost_con,"SELECT DISTINCT p.UserName, p.payment_date, p.amount
-FROM payments p
-LEFT JOIN payments pp ON p.UserName = pp.UserName
+Join_script <- "SELECT DISTINCT p.UserName, p.payment_date, p.amount
+FROM payments_big p
+LEFT JOIN payments_big pp ON p.UserName = pp.UserName
   AND p.amount < pp.amount
-WHERE pp.amount IS NULL")))
+WHERE pp.amount IS NULL"
 
-microbenchmark::microbenchmark(window_function, join_clause)
+Correlated_subquery_script <- "SELECT UserName,
+  Payment_Date,
+  amount
+  FROM payments_big p
+  WHERE amount = (SELECT MAX(amount)
+                          FROM payments_big pp
+                          WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
+                          )
+  GROUP BY UserName;"
 ```
 
+
+```{r eval = FALSE, echo = TRUE}
+runquery <- function (x) dbGetQuery(localhost_con, x)
+
+benchmarking <- microbenchmark::microbenchmark("Window function" = runquery(Window_script),
+                                               "Join clause" = runquery(Join_script),
+                                               "Correlated subquery" = runquery(Correlated_subquery_script),
+                                               unit = "ms")
+summary(benchmarking) %>% 
+  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
+  gt() %>% 
+  tab_options(table.align = 'center')
+```
+
+```{r echo=FALSE}
+# saveRDS(benchmarking, "benchmark.Rds")
+benchmarking <- readRDS("benchmark.Rds")
+
+summary(benchmarking) %>% 
+  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
+  gt() %>% 
+  tab_options(table.align = 'center')
+```
+
+
+
+```{r echo=FALSE}
+summary(benchmarking) %>% 
+  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
+  gt() %>% 
+  tab_options(table.align = 'center')
+```
+
+```{r}
+theme_set(theme_minimal()+
+            theme(
+              plot.title.position = "plot",
+              panel.grid.minor = element_blank()
+          ))
+
+
+ggplot(data = data.frame(expr = benchmarking$expr, time = benchmarking$time))+
+  geom_boxplot(aes(x = fct_reorder(expr, time), y = time))+
+  scale_y_continuous(name = "time (ms)\n",labels = function(x) x / 1e6)+
+  labs(title = "Benchmarking the different solutions",
+       x = NULL)
+```
+
+
+We can see that for the current question, the window function is most efficient. One ceaveat is that maybe something setsback when I query the local database through R, but if so I'd imagine it would affect all options.
+
+The window function is best here, but I think knowing all apporaches can help you write better SQL. That is, sometimes one approach is a better fit to specific use case, without the ability / the relevancy of other instances. I definitely wrote a correlated subquery at work since it was the best fit (in terms of readability and as an immediate answer) given the specific problem I had at the time.
 
 ### Closing remarks
 
