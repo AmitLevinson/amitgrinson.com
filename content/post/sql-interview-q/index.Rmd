@@ -1,5 +1,5 @@
 ---
-title: An SQL interview question to learn from
+title: Reviewing an SQL interview question
 author: Amit Levinson
 date: '2021-08-26'
 slug: a-great-sql-questions
@@ -66,6 +66,7 @@ library(ggplot2)
 library(gt)
 library(forcats)
 library(dplyr)
+library(extrafont)
 
 ```
 
@@ -131,7 +132,7 @@ payments %>%
 
 All right. So we know what we have to do. But before we do it, let's see how not to do it.
 
-### Why not just a simple GROUP BY?
+### &#10006; Why not just a simple GROUP BY? &#10006;
 
 If your new to SQL, an immediate question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. I.e., just filter each group by the max value according to one of the variables.  
 
@@ -318,18 +319,26 @@ summary(benchmarking) %>%
 ```{r}
 theme_set(theme_minimal()+
             theme(
+              text = element_text(family = "Segoe UI"),
+              plot.title = element_text(size = 14, face = "bold"),
+              plot.subtitle = element_text(size = 12, color = "gray15"),
               plot.title.position = "plot",
               panel.grid.minor = element_blank(),
-              axis.text.x = element_text(size = 12)
+              axis.text.x = element_text(size = 12),
+              axis.text.y = element_text(size = 9, color = "gray25"),
+              axis.title = element_text(size = 10, color = "gray15"),
+              plot.margin = margin(8,2,8,5)
           ))
 
 
 ggplot(data = data.frame(expr = benchmarking$expr, time = benchmarking$time / 1e6))+
   geom_boxplot(aes(x = fct_reorder(expr, time), y = time))+
-  scale_y_continuous(name = "time (ms)\n", labels = scales::label_comma())+
+  scale_y_continuous(name = "Time (ms)\n", labels = scales::label_comma())+
   labs(title = "Benchmarking different solutions",
-       subtitle = "Values are from 100 iterations of each solution on a 2,000 observation table",
+       subtitle = "Values from 100 iterations of each solution on a 2,000 row table",
        x = NULL)
+
+
 ```
 
 
