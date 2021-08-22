@@ -14,7 +14,7 @@ image:
   caption: ''
   focal_point: ''
   preview_only: yes
-draft: true
+draft: false
 projects: []
 ---
 
@@ -289,17 +289,10 @@ benchmarking <- microbenchmark::microbenchmark("Window function" = runquery(Wind
                                                "Join clause" = runquery(Join_script),
                                                "Correlated subquery" = runquery(Correlated_subquery_script),
                                                unit = "ms")
-
-summary(benchmarking) %>% 
-  mutate(across(where(is.numeric), function(x) round(x, 1))) %>% 
-  rename(`25%` = lq,
-         `75%` = uq,
-         N = neval) %>% 
-  gt() %>% 
-  tab_options(table.align = 'center')
 ```
 
 ```{r echo=FALSE, fig.cap='Descriptive statistics benchmarking 100 iterations of each possible answer'}
+# Reading it manually as it is too big to run on every knit.
 # saveRDS(benchmarking, "benchmark.Rds")
 benchmarking <- readRDS("benchmark.Rds")
 
