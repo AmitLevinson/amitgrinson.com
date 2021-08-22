@@ -24,6 +24,14 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 http://sqlfiddle.com/#!9/423702/12
 
+Things to do:
+
+- Add table header for benchmarking
+
+- remove summary code, not interesting
+
+- Prepare the fiddle.
+
 
 During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it.
 
@@ -280,50 +288,54 @@ benchmarking <- microbenchmark::microbenchmark("Window function" = runquery(Wind
                                                "Join clause" = runquery(Join_script),
                                                "Correlated subquery" = runquery(Correlated_subquery_script),
                                                unit = "ms")
+
 summary(benchmarking) %>% 
-  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
+  mutate(across(where(is.numeric), function(x) round(x, 1))) %>% 
+  rename(`25%` = lq,
+         `75%` = uq,
+         N = neval) %>% 
   gt() %>% 
   tab_options(table.align = 'center')
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.cap='Descriptive statistics benchmarking 100 iterations of each possible answer'}
 # saveRDS(benchmarking, "benchmark.Rds")
 benchmarking <- readRDS("benchmark.Rds")
 
+library(microbenchmark)
+
 summary(benchmarking) %>% 
-  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
+  mutate(across(where(is.numeric), function(x) round(x, 1))) %>% 
+  rename(`25%` = lq,
+         `75%` = uq,
+         N = neval) %>% 
   gt() %>% 
   tab_options(table.align = 'center')
+
 ```
 
-
-
-```{r echo=FALSE}
-summary(benchmarking) %>% 
-  mutate(across(is.numeric, function(x) round(x, 1))) %>% 
-  gt() %>% 
-  tab_options(table.align = 'center')
-```
 
 ```{r}
 theme_set(theme_minimal()+
             theme(
               plot.title.position = "plot",
-              panel.grid.minor = element_blank()
+              panel.grid.minor = element_blank(),
+              axis.text.x = element_text(size = 12)
           ))
 
 
-ggplot(data = data.frame(expr = benchmarking$expr, time = benchmarking$time))+
+ggplot(data = data.frame(expr = benchmarking$expr, time = benchmarking$time / 1e6))+
   geom_boxplot(aes(x = fct_reorder(expr, time), y = time))+
-  scale_y_continuous(name = "time (ms)\n",labels = function(x) x / 1e6)+
-  labs(title = "Benchmarking the different solutions",
+  scale_y_continuous(name = "time (ms)\n", labels = scales::label_comma())+
+  labs(title = "Benchmarking different solutions",
+       subtitle = "Values are from 100 iterations of each solution on a 2,000 observation table",
        x = NULL)
 ```
 
 
-We can see that for the current question, the window function is most efficient. One ceaveat is that maybe something setsback when I query the local database through R, but if so I'd imagine it would affect all options.
+We can see that for the current question, the window function is most efficient. One ceaveat is that maybe a slowdown occured when I queried the local database through R on my local machine, but if so I'd imagine it would affect all options.
 
-The window function is best here, but I think knowing all apporaches can help you write better SQL. That is, sometimes one approach is a better fit to specific use case, without the ability / the relevancy of other instances. I definitely wrote a correlated subquery at work since it was the best fit (in terms of readability and as an immediate answer) given the specific problem I had at the time.
+The window function is best here, but I think knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it's least efficient here it's worth knowing.
 
 ### Closing remarks
 

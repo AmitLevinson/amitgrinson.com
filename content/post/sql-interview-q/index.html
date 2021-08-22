@@ -37,12 +37,23 @@ projects: []
 <p>Once you solve that, solve it again using a different approach.</p>
 </blockquote>
 <p>For a more practical example, considering the following raw data:</p>
-<div id="sirsfylxfk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<pre class="r"><code># library(dbplyr)
+library(dplyr)
+library(gt)
+library(tibble)
+library(DBI)
+library(keyring)
+library(stringr)
+library(ggplot2)
+library(gt)
+library(forcats)
+library(dplyr)</code></pre>
+<div id="fbonejvdut" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#sirsfylxfk .gt_table {
+#fbonejvdut .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -67,7 +78,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_heading {
+#fbonejvdut .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -79,7 +90,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_title {
+#fbonejvdut .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -89,7 +100,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#sirsfylxfk .gt_subtitle {
+#fbonejvdut .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -99,13 +110,13 @@ projects: []
   border-top-width: 0;
 }
 
-#sirsfylxfk .gt_bottom_border {
+#fbonejvdut .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_col_headings {
+#fbonejvdut .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -120,7 +131,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_col_heading {
+#fbonejvdut .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -140,7 +151,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#sirsfylxfk .gt_column_spanner_outer {
+#fbonejvdut .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -152,15 +163,15 @@ projects: []
   padding-right: 4px;
 }
 
-#sirsfylxfk .gt_column_spanner_outer:first-child {
+#fbonejvdut .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sirsfylxfk .gt_column_spanner_outer:last-child {
+#fbonejvdut .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sirsfylxfk .gt_column_spanner {
+#fbonejvdut .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -172,7 +183,7 @@ projects: []
   width: 100%;
 }
 
-#sirsfylxfk .gt_group_heading {
+#fbonejvdut .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -194,7 +205,7 @@ projects: []
   vertical-align: middle;
 }
 
-#sirsfylxfk .gt_empty_group_heading {
+#fbonejvdut .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -209,15 +220,15 @@ projects: []
   vertical-align: middle;
 }
 
-#sirsfylxfk .gt_from_md > :first-child {
+#fbonejvdut .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sirsfylxfk .gt_from_md > :last-child {
+#fbonejvdut .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sirsfylxfk .gt_row {
+#fbonejvdut .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -236,7 +247,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#sirsfylxfk .gt_stub {
+#fbonejvdut .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -248,7 +259,7 @@ projects: []
   padding-left: 12px;
 }
 
-#sirsfylxfk .gt_summary_row {
+#fbonejvdut .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -258,7 +269,7 @@ projects: []
   padding-right: 5px;
 }
 
-#sirsfylxfk .gt_first_summary_row {
+#fbonejvdut .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -268,7 +279,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_grand_summary_row {
+#fbonejvdut .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -278,7 +289,7 @@ projects: []
   padding-right: 5px;
 }
 
-#sirsfylxfk .gt_first_grand_summary_row {
+#fbonejvdut .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -288,11 +299,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_striped {
+#fbonejvdut .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sirsfylxfk .gt_table_body {
+#fbonejvdut .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -301,7 +312,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_footnotes {
+#fbonejvdut .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -315,13 +326,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_footnote {
+#fbonejvdut .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#sirsfylxfk .gt_sourcenotes {
+#fbonejvdut .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -335,41 +346,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#sirsfylxfk .gt_sourcenote {
+#fbonejvdut .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#sirsfylxfk .gt_left {
+#fbonejvdut .gt_left {
   text-align: left;
 }
 
-#sirsfylxfk .gt_center {
+#fbonejvdut .gt_center {
   text-align: center;
 }
 
-#sirsfylxfk .gt_right {
+#fbonejvdut .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sirsfylxfk .gt_font_normal {
+#fbonejvdut .gt_font_normal {
   font-weight: normal;
 }
 
-#sirsfylxfk .gt_font_bold {
+#fbonejvdut .gt_font_bold {
   font-weight: bold;
 }
 
-#sirsfylxfk .gt_font_italic {
+#fbonejvdut .gt_font_italic {
   font-style: italic;
 }
 
-#sirsfylxfk .gt_super {
+#fbonejvdut .gt_super {
   font-size: 65%;
 }
 
-#sirsfylxfk .gt_footnote_marks {
+#fbonejvdut .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -427,12 +438,12 @@ projects: []
 </table>
 </div>
 <p>Return the following table:</p>
-<div id="pgffuqcmbf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mnaiegyluk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pgffuqcmbf .gt_table {
+#mnaiegyluk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -457,7 +468,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_heading {
+#mnaiegyluk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -469,7 +480,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_title {
+#mnaiegyluk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -479,7 +490,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#pgffuqcmbf .gt_subtitle {
+#mnaiegyluk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -489,13 +500,13 @@ projects: []
   border-top-width: 0;
 }
 
-#pgffuqcmbf .gt_bottom_border {
+#mnaiegyluk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_col_headings {
+#mnaiegyluk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -510,7 +521,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_col_heading {
+#mnaiegyluk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,7 +541,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#pgffuqcmbf .gt_column_spanner_outer {
+#mnaiegyluk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -542,15 +553,15 @@ projects: []
   padding-right: 4px;
 }
 
-#pgffuqcmbf .gt_column_spanner_outer:first-child {
+#mnaiegyluk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pgffuqcmbf .gt_column_spanner_outer:last-child {
+#mnaiegyluk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pgffuqcmbf .gt_column_spanner {
+#mnaiegyluk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -562,7 +573,7 @@ projects: []
   width: 100%;
 }
 
-#pgffuqcmbf .gt_group_heading {
+#mnaiegyluk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -584,7 +595,7 @@ projects: []
   vertical-align: middle;
 }
 
-#pgffuqcmbf .gt_empty_group_heading {
+#mnaiegyluk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -599,15 +610,15 @@ projects: []
   vertical-align: middle;
 }
 
-#pgffuqcmbf .gt_from_md > :first-child {
+#mnaiegyluk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pgffuqcmbf .gt_from_md > :last-child {
+#mnaiegyluk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pgffuqcmbf .gt_row {
+#mnaiegyluk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -626,7 +637,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#pgffuqcmbf .gt_stub {
+#mnaiegyluk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -638,7 +649,7 @@ projects: []
   padding-left: 12px;
 }
 
-#pgffuqcmbf .gt_summary_row {
+#mnaiegyluk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -648,7 +659,7 @@ projects: []
   padding-right: 5px;
 }
 
-#pgffuqcmbf .gt_first_summary_row {
+#mnaiegyluk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -658,7 +669,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_grand_summary_row {
+#mnaiegyluk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -668,7 +679,7 @@ projects: []
   padding-right: 5px;
 }
 
-#pgffuqcmbf .gt_first_grand_summary_row {
+#mnaiegyluk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -678,11 +689,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_striped {
+#mnaiegyluk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pgffuqcmbf .gt_table_body {
+#mnaiegyluk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -691,7 +702,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_footnotes {
+#mnaiegyluk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -705,13 +716,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_footnote {
+#mnaiegyluk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pgffuqcmbf .gt_sourcenotes {
+#mnaiegyluk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -725,41 +736,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#pgffuqcmbf .gt_sourcenote {
+#mnaiegyluk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pgffuqcmbf .gt_left {
+#mnaiegyluk .gt_left {
   text-align: left;
 }
 
-#pgffuqcmbf .gt_center {
+#mnaiegyluk .gt_center {
   text-align: center;
 }
 
-#pgffuqcmbf .gt_right {
+#mnaiegyluk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pgffuqcmbf .gt_font_normal {
+#mnaiegyluk .gt_font_normal {
   font-weight: normal;
 }
 
-#pgffuqcmbf .gt_font_bold {
+#mnaiegyluk .gt_font_bold {
   font-weight: bold;
 }
 
-#pgffuqcmbf .gt_font_italic {
+#mnaiegyluk .gt_font_italic {
   font-style: italic;
 }
 
-#pgffuqcmbf .gt_super {
+#mnaiegyluk .gt_super {
   font-size: 65%;
 }
 
-#pgffuqcmbf .gt_footnote_marks {
+#mnaiegyluk .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -800,7 +811,7 @@ FROM Payments
 GROUP BY UserName</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-4">Table 1: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-5">Table 1: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -832,7 +843,7 @@ FROM payments
 GROUP BY UserName</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-5">Table 2: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-6">Table 2: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -867,7 +878,7 @@ GROUP BY UserName
 </code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-6">Table 3: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-7">Table 3: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -912,7 +923,7 @@ FROM (
 WHERE rnk = 1;</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-7">Table 4: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-8">Table 4: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -952,7 +963,7 @@ WHERE pp.amount IS NULL;
 </code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-8">Table 5: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-9">Table 5: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -1039,25 +1050,410 @@ WHERE pp.amount IS NULL;
 glimpse(payments_big)</code></pre>
 <pre><code>## Rows: 2,000
 ## Columns: 3
-## $ username     &lt;chr&gt; &quot;Alice&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Alice&quot;, &quot;Da~
-## $ payment_date &lt;date&gt; 2019-02-02, 2018-01-06, 2020-06-16, 2018-02-11, 2020-12-~
-## $ amount       &lt;int&gt; 1582, 9561, 8169, 3783, 3833, 6142, 5143, 9472, 6450, 275~</code></pre>
+## $ username     &lt;chr&gt; &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Alice&quot;, &quot;Danny&quot;, &quot;To~
+## $ payment_date &lt;date&gt; 2018-03-06, 2021-01-21, 2019-03-30, 2020-11-22, 2018-02-~
+## $ amount       &lt;int&gt; 4277, 1055, 5884, 7430, 5591, 4905, 3131, 6415, 7678, 786~</code></pre>
 <p>Great, a total of 1,000 rows for all the three users. Since we’ll be benchmarking using R, let’s write a function to evaluate the SQL queries:</p>
 <p>Great. Using the above queries adapted for our ‘payments_big’ dataset, we’ll benchmark the difference across all three:</p>
 <pre class="r"><code>runquery &lt;- function (x) dbGetQuery(localhost_con, x)
 
-benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(Window_script),
-                                               &quot;Join&quot; = runquery(Join_script),
+benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window function&quot; = runquery(Window_script),
+                                               &quot;Join clause&quot; = runquery(Join_script),
                                                &quot;Correlated subquery&quot; = runquery(Correlated_subquery_script),
-                                               unit = &quot;ms&quot;)</code></pre>
-<pre><code>##                   expr          time          
-##  Window             :100   Min.   :4.472e+06  
-##  Join               :100   1st Qu.:5.426e+06  
-##  Correlated subquery:100   Median :2.482e+08  
-##                            Mean   :6.818e+08  
-##                            3rd Qu.:1.701e+09  
-##                            Max.   :1.967e+09</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+                                               unit = &quot;ms&quot;)
+
+summary(benchmarking) %&gt;% 
+  mutate(across(is.numeric, function(x) round(x, 1))) %&gt;% 
+  rename(`25%` = lq,
+         `75%` = uq,
+         N = neval) %&gt;% 
+  gt() %&gt;% 
+  tab_options(table.align = &#39;center&#39;)</code></pre>
+<div id="njtirqigii" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#njtirqigii .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#njtirqigii .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#njtirqigii .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#njtirqigii .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#njtirqigii .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#njtirqigii .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#njtirqigii .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#njtirqigii .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#njtirqigii .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#njtirqigii .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#njtirqigii .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#njtirqigii .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#njtirqigii .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#njtirqigii .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#njtirqigii .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#njtirqigii .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#njtirqigii .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#njtirqigii .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#njtirqigii .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#njtirqigii .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#njtirqigii .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#njtirqigii .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#njtirqigii .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#njtirqigii .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#njtirqigii .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#njtirqigii .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#njtirqigii .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#njtirqigii .gt_left {
+  text-align: left;
+}
+
+#njtirqigii .gt_center {
+  text-align: center;
+}
+
+#njtirqigii .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#njtirqigii .gt_font_normal {
+  font-weight: normal;
+}
+
+#njtirqigii .gt_font_bold {
+  font-weight: bold;
+}
+
+#njtirqigii .gt_font_italic {
+  font-style: italic;
+}
+
+#njtirqigii .gt_super {
+  font-size: 65%;
+}
+
+#njtirqigii .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">expr</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">min</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">25%</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">median</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">75%</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">max</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">N</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_center">Window</td>
+<td class="gt_row gt_right">4.5</td>
+<td class="gt_row gt_right">4.8</td>
+<td class="gt_row gt_right">5.1</td>
+<td class="gt_row gt_right">5.0</td>
+<td class="gt_row gt_right">5.4</td>
+<td class="gt_row gt_right">6.6</td>
+<td class="gt_row gt_right">100</td></tr>
+    <tr><td class="gt_row gt_center">Join</td>
+<td class="gt_row gt_right">235.0</td>
+<td class="gt_row gt_right">240.9</td>
+<td class="gt_row gt_right">273.3</td>
+<td class="gt_row gt_right">248.2</td>
+<td class="gt_row gt_right">282.5</td>
+<td class="gt_row gt_right">432.0</td>
+<td class="gt_row gt_right">100</td></tr>
+    <tr><td class="gt_row gt_center">Correlated subquery</td>
+<td class="gt_row gt_right">1651.4</td>
+<td class="gt_row gt_right">1701.6</td>
+<td class="gt_row gt_right">1767.0</td>
+<td class="gt_row gt_right">1756.4</td>
+<td class="gt_row gt_right">1824.7</td>
+<td class="gt_row gt_right">1966.9</td>
+<td class="gt_row gt_right">100</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We can see that for the current question, the window function is most efficient. One ceaveat is that maybe a slowdown occured when I queried the local database through R on my local machine, but if so I’d imagine it would affect all options.</p>
+<p>The window function is best here, but I think knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it’s least efficient here it’s worth knowing.</p>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
 <p>This was a pretty short post on some SQL approaches to solving a question. You can probably think of different approaches, or variants of the current ones. When contemplating this question I felt that it required me to utilize different SQL functions to solve the same question, so overall I’m glad I came across it. I didn’t get the job but that’s OK. Eventually that’s how I ended up where I am today :)</p>
