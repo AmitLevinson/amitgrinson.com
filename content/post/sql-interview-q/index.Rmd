@@ -54,7 +54,7 @@ And now for the second part:
 
 For a more practical example, considering the following raw data:
 
-```{r echo = TRUE}
+```{r echo = FALSE}
 # library(dbplyr)
 library(dplyr)
 library(gt)
@@ -111,14 +111,14 @@ raw_payments <- payments %>%
 
 gt(raw_payments) %>% 
     tab_style(
-      style = cell_fill(color = '#90ee90'),
+      style = cell_fill(color = '#E5F6DF'),
       locations = cells_body (
         rows = c(3,5,11)
       )
     )
 ```
 
-Return the following table:
+Return the following table (rows highlighted in light green):
 
 ```{r, fig.align='center'}
 payments %>% 
@@ -132,17 +132,19 @@ payments %>%
 
 All right. So we know what we have to do. But before we do it, let's see how not to do it.
 
-### &#10006; Why not just a simple GROUP BY? &#10006;
+### &#10006; Why not just GROUP BY? &#10006;
 
-If your new to SQL, an immediate question that might come to mind is why not use a simple `GROUP BY` and return the `MAX` value. I.e., just filter each group by the max value according to one of the variables.  
+If your new to SQL, an immediate question that might come to mind is why not use a `GROUP BY` for the UserName, date and select the `MAX` value. I.e., just filter each observation by the max value according to one of the variables.  
 
-The issue is when we use `GROUP BY` we retrieve only the information that is aggregated. That is, if we group by the sellers name, and the payment date when we return the max we get the value for each distinct user and date. In other words, all are original values as we can see in the table below:
+The issue is when we use `GROUP BY` we retrieve the information that is aggregated. That is, if we group by the seller name and the payment date when we select the max we'll get the value for each distinct user and date:
+
 
 ```{sql connection=localhost_con, echo = TRUE}
 SELECT UserName,
+  payment_date,
   MAX(amount) AS amount
 FROM Payments 
-GROUP BY UserName
+GROUP BY UserName, payment_date
 ```
 
 Alternatively, if we `GROUP BY` the UserName and `SELECT` the `MAX` value and the date, the result will depend on the Relational database management system (RDBMS) you use. If you're using SQL server you'll get an error as you have a column which is selected but is not contained in an Aggregate function nor in the GROUP BY clause.   
@@ -232,6 +234,11 @@ SELECT UserName,
 
 To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that rows' amount is equal to that user's max amount, which is retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result.
 
+And there we have it, three different approaches to the same problem.
+
+![](https://media.giphy.com/media/YRuFixSNWFVcXaxpmX/giphy.gif?cid=ecf05e47x2u6c65w26gljefosulh4xiu3xds5gz55z0cq8li&rid=giphy.gif&ct=g)
+
+
 ## Benchmarking
 
 A question that arose to me is, for this specific case, which method is faster? Let's try and answer it using a bit larger dataset.
@@ -252,9 +259,7 @@ glimpse(payments_big)
 ```
 
 
-Great, a total of 1,000 rows for all the three users. Since we'll be benchmarking using R, let's write a function to evaluate the SQL queries:
-
-Great. Using the above queries adapted for our 'payments_big' dataset, we'll benchmark the difference across all three:
+A total of 2,000 rows for all the three users. Since we'll be benchmarking using R, let's write a function to evaluate the SQL queries and run it across all three approaches:
 
 ```{r eval = FALSE}
 Window_script <- "SELECT UserName, Payment_Date as 'Payment Date', amount
@@ -285,29 +290,35 @@ Correlated_subquery_script <- "SELECT UserName,
 ```{r eval = FALSE, echo = TRUE}
 runquery <- function (x) dbGetQuery(localhost_con, x)
 
-benchmarking <- microbenchmark::microbenchmark("Window function" = runquery(Window_script),
-                                               "Join clause" = runquery(Join_script),
+benchmarking <- microbenchmark::microbenchmark("Window" = runquery(Window_script),
+                                               "Join" = runquery(Join_script),
                                                "Correlated subquery" = runquery(Correlated_subquery_script),
                                                unit = "ms")
 ```
 
-```{r echo=FALSE, fig.cap='Descriptive statistics benchmarking 100 iterations of each possible answer'}
+Finally, let's explore the benchmarking scores:
+
+
+```{r echo=FALSE}
 # Reading it manually as it is too big to run on every knit.
 # saveRDS(benchmarking, "benchmark.Rds")
 benchmarking <- readRDS("benchmark.Rds")
 
 library(microbenchmark)
 
+
 summary(benchmarking) %>% 
+  rename(approach = expr) %>% 
   mutate(across(where(is.numeric), function(x) round(x, 1))) %>% 
   rename(`25%` = lq,
          `75%` = uq,
          N = neval) %>% 
   gt() %>% 
-  tab_options(table.align = 'center')
+  tab_options(table.align = 'center',
+              column_labels.text_transform = "Capitalize",
+              column_labels.font.weight = "bold")
 
 ```
-
 
 ```{r}
 theme_set(theme_minimal()+
