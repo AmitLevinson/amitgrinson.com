@@ -316,7 +316,12 @@ summary(benchmarking) %>%
   gt() %>% 
   tab_options(table.align = 'center',
               column_labels.text_transform = "Capitalize",
-              column_labels.font.weight = "bold")
+              column_labels.font.weight = "bold") %>% 
+  tab_style(cell_text(font = "Lora"),
+            locations = cells_body()) %>% 
+  tab_style(cell_text(font = "Lora"),
+            locations = cells_column_labels()) 
+
 
 ```
 
