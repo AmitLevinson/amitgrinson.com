@@ -22,17 +22,6 @@ projects: []
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
-http://sqlfiddle.com/#!9/423702/12
-
-Things to do:
-
-- Add table header for benchmarking
-
-- remove summary code, not interesting
-
-- Prepare the fiddle.
-
-
 During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it.
 
 Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about it since; this blog post details that question and several answers to it.
@@ -40,7 +29,7 @@ Fast forward to interviewing, most of the SQL interview questions were pretty go
 
 **An important caveat: The question and data do not represent my current employer.** The data used here is made up and the question came from a different company. 
 
-Note that I'll be using R to setup an SQL connection in memory but power through the blogpost with SQL. While not necessary, some SQL knowledge is useful to understanding the various answers' syntax.
+Note that I'll be using R to setup an SQL connection in memory but power through the blog post with SQL. While not necessary, some SQL knowledge is useful to understanding the various answers' syntax.
 
 ## The Interview question
 
@@ -65,7 +54,6 @@ library(stringr)
 library(ggplot2)
 library(gt)
 library(forcats)
-library(dplyr)
 library(extrafont)
 
 ```
@@ -131,6 +119,12 @@ payments %>%
 
 
 All right. So we know what we have to do. But before we do it, let's see how not to do it.
+
+{{% alert note %}}
+Want to first try solving it yourself? Solve it [here](http://sqlfiddle.com/#!18/c9308e/3) and compare with the answers below.
+{{% /alert %}}
+
+
 
 ### &#10006; Why not just GROUP BY? &#10006;
 
@@ -226,10 +220,9 @@ SELECT UserName,
   amount
   FROM Payments p
   WHERE amount = (SELECT MAX(amount)
-                          FROM Payments pp
-                          WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
-                          )
-  GROUP BY UserName;
+                  FROM Payments pp
+                  WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
+                  )
 ```
 
 To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that rows' amount is equal to that user's max amount, which is retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result.
