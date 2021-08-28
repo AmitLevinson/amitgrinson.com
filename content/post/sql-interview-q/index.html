@@ -21,27 +21,31 @@ projects: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 <p>During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. <a href="https://amitlevinson.com/blog/my-year-in-r/">My journey into analytics was through learning R</a> and I realized I had to learn some SQL, or at least familiarize myself with it.</p>
-<p>Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about it since; this blog post details that question and several answers to it.</p>
-<p><strong>An important caveat: The question and data do not represent my current employer.</strong> The data used here is made up and the question came from a different company.</p>
-<p>Note that I’ll be using R to setup an SQL connection in memory but power through the blogpost with SQL. While not necessary, some SQL knowledge is useful to understanding the various answers’ syntax.</p>
+<p>Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about since; this blog post details that question and several answers to it.</p>
+<p><strong>The question and data do not represent my current employer.</strong> The data used here is made up and the question came from a different company altogether.</p>
+<p>I’ll be using R to setup a local SQL connection but power through the blog post with actual SQL code. While not necessary, some SQL knowledge is useful to understanding the various answers’, and more so the syntax.</p>
+</div>
 <div id="the-interview-question" class="section level2">
 <h2>The Interview question</h2>
 <p>So here it goes:</p>
 <blockquote>
 <p>Let’s say you have a table of users’ payments. The table has the user’s name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user return the user name, the maximum amount they received and the date of that payment.</p>
 </blockquote>
-<p>And now for the second part:</p>
 <blockquote>
-<p>Once you solve that, solve it again using a different approach.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Once you solve that, solve it again using a different approach.</li>
+</ol>
 </blockquote>
 <p>For a more practical example, considering the following raw data:</p>
-<div id="bgoeweprnq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kdkkvgamfg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bgoeweprnq .gt_table {
+#kdkkvgamfg .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -66,7 +70,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_heading {
+#kdkkvgamfg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -78,7 +82,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_title {
+#kdkkvgamfg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -88,7 +92,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#bgoeweprnq .gt_subtitle {
+#kdkkvgamfg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -98,13 +102,13 @@ projects: []
   border-top-width: 0;
 }
 
-#bgoeweprnq .gt_bottom_border {
+#kdkkvgamfg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_col_headings {
+#kdkkvgamfg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -119,7 +123,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_col_heading {
+#kdkkvgamfg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -139,7 +143,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#bgoeweprnq .gt_column_spanner_outer {
+#kdkkvgamfg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -151,15 +155,15 @@ projects: []
   padding-right: 4px;
 }
 
-#bgoeweprnq .gt_column_spanner_outer:first-child {
+#kdkkvgamfg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bgoeweprnq .gt_column_spanner_outer:last-child {
+#kdkkvgamfg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bgoeweprnq .gt_column_spanner {
+#kdkkvgamfg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -171,7 +175,7 @@ projects: []
   width: 100%;
 }
 
-#bgoeweprnq .gt_group_heading {
+#kdkkvgamfg .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -193,7 +197,7 @@ projects: []
   vertical-align: middle;
 }
 
-#bgoeweprnq .gt_empty_group_heading {
+#kdkkvgamfg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -208,15 +212,15 @@ projects: []
   vertical-align: middle;
 }
 
-#bgoeweprnq .gt_from_md > :first-child {
+#kdkkvgamfg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bgoeweprnq .gt_from_md > :last-child {
+#kdkkvgamfg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bgoeweprnq .gt_row {
+#kdkkvgamfg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -235,7 +239,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#bgoeweprnq .gt_stub {
+#kdkkvgamfg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -247,7 +251,7 @@ projects: []
   padding-left: 12px;
 }
 
-#bgoeweprnq .gt_summary_row {
+#kdkkvgamfg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -257,7 +261,7 @@ projects: []
   padding-right: 5px;
 }
 
-#bgoeweprnq .gt_first_summary_row {
+#kdkkvgamfg .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -267,7 +271,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_grand_summary_row {
+#kdkkvgamfg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -277,7 +281,7 @@ projects: []
   padding-right: 5px;
 }
 
-#bgoeweprnq .gt_first_grand_summary_row {
+#kdkkvgamfg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -287,11 +291,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_striped {
+#kdkkvgamfg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bgoeweprnq .gt_table_body {
+#kdkkvgamfg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -300,7 +304,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_footnotes {
+#kdkkvgamfg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -314,13 +318,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_footnote {
+#kdkkvgamfg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bgoeweprnq .gt_sourcenotes {
+#kdkkvgamfg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -334,41 +338,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#bgoeweprnq .gt_sourcenote {
+#kdkkvgamfg .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bgoeweprnq .gt_left {
+#kdkkvgamfg .gt_left {
   text-align: left;
 }
 
-#bgoeweprnq .gt_center {
+#kdkkvgamfg .gt_center {
   text-align: center;
 }
 
-#bgoeweprnq .gt_right {
+#kdkkvgamfg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bgoeweprnq .gt_font_normal {
+#kdkkvgamfg .gt_font_normal {
   font-weight: normal;
 }
 
-#bgoeweprnq .gt_font_bold {
+#kdkkvgamfg .gt_font_bold {
   font-weight: bold;
 }
 
-#bgoeweprnq .gt_font_italic {
+#kdkkvgamfg .gt_font_italic {
   font-style: italic;
 }
 
-#bgoeweprnq .gt_super {
+#kdkkvgamfg .gt_super {
   font-size: 65%;
 }
 
-#bgoeweprnq .gt_footnote_marks {
+#kdkkvgamfg .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -426,12 +430,12 @@ projects: []
 </table>
 </div>
 <p>Return the following table (rows highlighted in light green):</p>
-<div id="gxkbdwmrpi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kcpsptruxa" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gxkbdwmrpi .gt_table {
+#kcpsptruxa .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -456,7 +460,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_heading {
+#kcpsptruxa .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -468,7 +472,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_title {
+#kcpsptruxa .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -478,7 +482,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#gxkbdwmrpi .gt_subtitle {
+#kcpsptruxa .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -488,13 +492,13 @@ projects: []
   border-top-width: 0;
 }
 
-#gxkbdwmrpi .gt_bottom_border {
+#kcpsptruxa .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_col_headings {
+#kcpsptruxa .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -509,7 +513,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_col_heading {
+#kcpsptruxa .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -529,7 +533,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#gxkbdwmrpi .gt_column_spanner_outer {
+#kcpsptruxa .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -541,15 +545,15 @@ projects: []
   padding-right: 4px;
 }
 
-#gxkbdwmrpi .gt_column_spanner_outer:first-child {
+#kcpsptruxa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gxkbdwmrpi .gt_column_spanner_outer:last-child {
+#kcpsptruxa .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gxkbdwmrpi .gt_column_spanner {
+#kcpsptruxa .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -561,7 +565,7 @@ projects: []
   width: 100%;
 }
 
-#gxkbdwmrpi .gt_group_heading {
+#kcpsptruxa .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -583,7 +587,7 @@ projects: []
   vertical-align: middle;
 }
 
-#gxkbdwmrpi .gt_empty_group_heading {
+#kcpsptruxa .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -598,15 +602,15 @@ projects: []
   vertical-align: middle;
 }
 
-#gxkbdwmrpi .gt_from_md > :first-child {
+#kcpsptruxa .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gxkbdwmrpi .gt_from_md > :last-child {
+#kcpsptruxa .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gxkbdwmrpi .gt_row {
+#kcpsptruxa .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,7 +629,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#gxkbdwmrpi .gt_stub {
+#kcpsptruxa .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -637,7 +641,7 @@ projects: []
   padding-left: 12px;
 }
 
-#gxkbdwmrpi .gt_summary_row {
+#kcpsptruxa .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -647,7 +651,7 @@ projects: []
   padding-right: 5px;
 }
 
-#gxkbdwmrpi .gt_first_summary_row {
+#kcpsptruxa .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -657,7 +661,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_grand_summary_row {
+#kcpsptruxa .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -667,7 +671,7 @@ projects: []
   padding-right: 5px;
 }
 
-#gxkbdwmrpi .gt_first_grand_summary_row {
+#kcpsptruxa .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -677,11 +681,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_striped {
+#kcpsptruxa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gxkbdwmrpi .gt_table_body {
+#kcpsptruxa .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -690,7 +694,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_footnotes {
+#kcpsptruxa .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -704,13 +708,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_footnote {
+#kcpsptruxa .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#gxkbdwmrpi .gt_sourcenotes {
+#kcpsptruxa .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -724,41 +728,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#gxkbdwmrpi .gt_sourcenote {
+#kcpsptruxa .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#gxkbdwmrpi .gt_left {
+#kcpsptruxa .gt_left {
   text-align: left;
 }
 
-#gxkbdwmrpi .gt_center {
+#kcpsptruxa .gt_center {
   text-align: center;
 }
 
-#gxkbdwmrpi .gt_right {
+#kcpsptruxa .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gxkbdwmrpi .gt_font_normal {
+#kcpsptruxa .gt_font_normal {
   font-weight: normal;
 }
 
-#gxkbdwmrpi .gt_font_bold {
+#kcpsptruxa .gt_font_bold {
   font-weight: bold;
 }
 
-#gxkbdwmrpi .gt_font_italic {
+#kcpsptruxa .gt_font_italic {
   font-style: italic;
 }
 
-#gxkbdwmrpi .gt_super {
+#kcpsptruxa .gt_super {
   font-size: 65%;
 }
 
-#gxkbdwmrpi .gt_footnote_marks {
+#kcpsptruxa .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -788,13 +792,13 @@ projects: []
   
 </table>
 </div>
-<p>All right. So we know what we have to do. But before we do it, let’s see how not to do it.</p>
 <p>{{% alert note %}}
 Want to first try solving it yourself? Solve it <a href="http://sqlfiddle.com/#!18/c9308e/3">here</a> and compare with the answers below.
 {{% /alert %}}</p>
+<p>So we know what we have to do. Before we do it, let’s see how not to do it.</p>
 <div id="why-not-just-group-by" class="section level3">
 <h3>✖ Why not just GROUP BY? ✖</h3>
-<p>If your new to SQL, an immediate question that might come to mind is why not use a <code>GROUP BY</code> for the UserName, date and select the <code>MAX</code> value. I.e., just filter each observation by the max value according to one of the variables.</p>
+<p>If your new to SQL, an immediate question that might come to mind is why not use a <code>GROUP BY</code> for the UserName, date and select the <code>MAX</code> value. In other words, just filter each observation by the max value according to one of the variables.</p>
 <p>The issue is when we use <code>GROUP BY</code> we retrieve the information that is aggregated. That is, if we group by the seller name and the payment date when we select the max we’ll get the value for each distinct user and date:</p>
 <pre class="sql"><code>SELECT UserName,
   payment_date,
@@ -865,8 +869,8 @@ GROUP BY UserName, payment_date</code></pre>
 </tbody>
 </table>
 </div>
-<p>Alternatively, if we <code>GROUP BY</code> the UserName and <code>SELECT</code> the <code>MAX</code> value and the date, the result will depend on the Relational database management system (RDBMS) you use. If you’re using SQL server you’ll get an error as you have a column which is selected but is not contained in an Aggregate function nor in the GROUP BY clause.</p>
-<p>In other RDMBS, e.g. MySQL which I use here, we’ll get the information for each User, their max value and some date (here the top date value), <strong>but not the correct one</strong>:</p>
+<p>Alternatively, if we <code>GROUP BY</code> the UserName and <code>SELECT</code> the <code>MAX</code> value and the date, the result will depend on the Relational Database Management System (RDBMS) you use. For example, if you’re using Microsoft SQL server you’ll get an error since you have a column which is selected but not contained in an aggregate function, nor in the GROUP BY clause.</p>
+<p>In other RDMBS, e.g. MySQL which I use here, we’ll get the information for each User, their max value and some date (here the top date value), <strong>but not the correct date!</strong>:</p>
 <pre class="sql"><code>SELECT UserName,
   payment_date,
   MAX(amount)
@@ -905,8 +909,7 @@ GROUP BY UserName</code></pre>
   Payment_Date,
   max(amount) AS amount
 FROM payments
-GROUP BY UserName
-</code></pre>
+GROUP BY UserName</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-7">Table 3: </span>3 records</caption>
@@ -944,14 +947,14 @@ GROUP BY UserName
 <h2>Solutions</h2>
 <div id="window-functions" class="section level3">
 <h3>1. Window functions</h3>
-<p>The first solution that might come to mind is using a Window Function. If you don’t know them I suggest you familiarize yourself with their abilities. To borrow from <a href="https://www.postgresql.org/docs/9.1/tutorial-window.html">PostgreSQL’s description</a>, a window function “performs a calculation across a set of table rows that are somehow related to the current row”. In different from aggregate operations (sum, avg, etc), using window functions doesn’t cause rows to become grouped into single row outputs.</p>
-<p>We can use the window function <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15">DENSE_RANK()</a>/RANK()<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to retrieve the amount’s rank within each users observations, and extract the relevant row with an outer query:</p>
+<p>The first solution that might come to mind is using a Window Function. If you don’t know Window Functions I suggest you familiarize yourself with their abilities. To borrow from <a href="https://www.postgresql.org/docs/9.1/tutorial-window.html">PostgreSQL’s description</a>, a window function “performs a calculation across a set of table rows that are somehow related to the current row”. In different from aggregate operations (sum, avg, etc), using window functions doesn’t cause rows to become grouped into single row outputs.</p>
+<p>We can use the window function <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15">DENSE_RANK()</a>/RANK()<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to retrieve the rank of each amount for each user, and extract the relevant row with an outer query:</p>
 <pre class="sql"><code>SELECT UserName, Payment_Date as &#39;Payment Date&#39;, amount
 FROM (
   SELECT *,
     DENSE_RANK() OVER(Partition BY UserName Order by amount DESC) as rnk
   FROM payments) AS ranked_table
-WHERE rnk = 1;</code></pre>
+WHERE rnk = 1</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-8">Table 4: </span>3 records</caption>
@@ -990,8 +993,7 @@ WHERE rnk = 1;</code></pre>
 FROM payments p
 LEFT JOIN payments pp ON p.UserName = pp.UserName
   AND p.amount &lt; pp.amount
-WHERE pp.amount IS NULL;
-</code></pre>
+WHERE pp.amount IS NULL;</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-9">Table 5: </span>3 records</caption>
@@ -1021,21 +1023,20 @@ WHERE pp.amount IS NULL;
 </tbody>
 </table>
 </div>
-<p>While we’re all familiar with ‘regular’ <code>* JOIN</code> using equality signs <code>=</code>, we can check for other operations such as smaller than <code>&lt;</code>. Essentially we do a cartesian join of the table on itself by user, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won’t find any relevant rows to join, considering it’s not smaller than anything, which will result with a <code>NULL</code> value we can use to filter.</p>
+<p>While we’re all familiar with ‘regular’ <code>* JOIN</code> using an equality sign <code>=</code>, we can check for other operations such as smaller than <code>&lt;</code>. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won’t find any relevant rows to join, considering it’s not smaller than anything, which will result with a <code>NULL</code> value we can use to filter.</p>
 <p>If you want to see the intermediate step just copy the above code to the snippet example, remove the <code>WHERE</code> clause and select all columns.</p>
 </div>
 <div id="correlated-subquery" class="section level3">
 <h3>3. Correlated subquery</h3>
-<p>We’ve come to my final approach for this blog post. I’ve come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in <code>R</code> such as the <code>apply</code> family and <code>purrr</code> library.</p>
-<p>A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from <a href="https://www.geeksforgeeks.org/sql-correlated-subqueries/">GeeksforGeeks</a>). Let’s look at the code and answer and explain it more clearly:</p>
+<p>We’ve come to my final approach for this blog post. I’ve come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in <code>R</code> such as the <code>apply</code> family and the <code>purrr</code> library.</p>
+<p>A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from <a href="https://www.geeksforgeeks.org/sql-correlated-subqueries/">GeeksforGeeks</a>). Let’s look at the code and explain it more clearly:</p>
 <pre class="sql"><code>SELECT UserName,
   Payment_Date,
   amount
   FROM Payments p
   WHERE amount = (SELECT MAX(amount)
                   FROM Payments pp
-                  WHERE pp.UserName = p.UserName -- Notice the relation to the parent table
-                  )</code></pre>
+                  WHERE pp.UserName = p.UserName) -- Notice the relation to the parent table</code></pre>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:corr-subqeury">Table 6: </span>3 records</caption>
@@ -1065,40 +1066,32 @@ WHERE pp.amount IS NULL;
 </tbody>
 </table>
 </div>
-<p>To easily read the query and understand correlated subqueries, let’s start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes <em>row by row for each user</em> and compares whether that rows’ amount is equal to that user’s max amount, which is retrieved from the inner query. In other words, for each user the outer query goes row by row comparing its value to the inner query result.</p>
+<p>To easily read the query and understand correlated subqueries, let’s start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes <em>row by row for each user</em> and compares whether that rows’ amount is equal to that user’s max amount, which is retrieved from the inner query.</p>
 <p>And there we have it, three different approaches to the same problem.</p>
 <p><img src="https://media.giphy.com/media/YRuFixSNWFVcXaxpmX/giphy.gif?cid=ecf05e47x2u6c65w26gljefosulh4xiu3xds5gz55z0cq8li&amp;rid=giphy.gif&amp;ct=g" /></p>
 </div>
 </div>
 <div id="benchmarking" class="section level2">
 <h2>Benchmarking</h2>
-<p>A question that arose to me is, for this specific case, which method is faster? Let’s try and answer it using a bit larger dataset.</p>
-<pre class="r"><code>payments_big &lt;- data.frame(
-  username = sample(c(&quot;Danny&quot;, &quot;Alice&quot;, &quot;Tom&quot;), size = 2e3, replace = TRUE),
-  payment_date = sample(seq(as.Date(&quot;2018/01/01&quot;), as.Date(&quot;2021/08/01&quot;), by = &quot;day&quot;), 2e3, replace = T),
-  amount = sample.int(c(1e4), 2e3, replace = T)
-)
-
-glimpse(payments_big)</code></pre>
+<p>A question that arose to me is, for this specific case, which method is faster? Let’s try and answer it using a bit larger dataset:</p>
+<pre class="r"><code>glimpse(payments_big)</code></pre>
 <pre><code>## Rows: 2,000
 ## Columns: 3
-## $ username     &lt;chr&gt; &quot;Alice&quot;, &quot;Tom&quot;, &quot;Danny&quot;, &quot;Alice&quot;, &quot;Tom&quot;, &quot;Alice&quot;, &quot;Danny&quot;~
-## $ payment_date &lt;date&gt; 2018-11-21, 2018-12-13, 2020-12-04, 2021-01-27, 2018-06-~
-## $ amount       &lt;int&gt; 5492, 3739, 4189, 1444, 932, 8158, 7721, 8341, 5143, 3785~</code></pre>
-<p>A total of 2,000 rows for all the three users. Since we’ll be benchmarking using R, let’s write a function to evaluate the SQL queries and run it across all three approaches:</p>
-<pre class="r"><code>runquery &lt;- function (x) dbGetQuery(localhost_con, x)
-
-benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(Window_script),
-                                               &quot;Join&quot; = runquery(Join_script),
-                                               &quot;Correlated subquery&quot; = runquery(Correlated_subquery_script),
+## $ username     &lt;chr&gt; &quot;Alice&quot;, &quot;Alice&quot;, &quot;Tom&quot;, &quot;Alice&quot;, &quot;Tom&quot;, &quot;Danny&quot;, &quot;Tom&quot;, ~
+## $ payment_date &lt;date&gt; 2020-12-09, 2021-02-19, 2019-08-04, 2019-09-17, 2020-08-~
+## $ amount       &lt;int&gt; 9537, 1202, 766, 1544, 1252, 9151, 443, 8457, 9092, 1929,~</code></pre>
+<p>A total of 2,000 rows for all the three users. Now then let’s benchmark using The R packaege <code>{sqldf}</code> which passes the SQL statements to a temporally created Database:</p>
+<pre class="r"><code>benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = sqldf(Window_script),
+                                               &quot;Join&quot; = sqldf(Join_script),
+                                               &quot;Correlated subquery&quot; = sqldf(Correlated_subquery_script),
                                                unit = &quot;ms&quot;)</code></pre>
 <p>Finally, let’s explore the benchmarking scores:</p>
-<div id="dvwooruvjj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jaiczglqbk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dvwooruvjj .gt_table {
+#jaiczglqbk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1123,7 +1116,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-left-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_heading {
+#jaiczglqbk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1135,7 +1128,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-right-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_title {
+#jaiczglqbk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1145,7 +1138,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-bottom-width: 0;
 }
 
-#dvwooruvjj .gt_subtitle {
+#jaiczglqbk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1155,13 +1148,13 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-top-width: 0;
 }
 
-#dvwooruvjj .gt_bottom_border {
+#jaiczglqbk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_col_headings {
+#jaiczglqbk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1176,7 +1169,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-right-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_col_heading {
+#jaiczglqbk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1196,7 +1189,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   overflow-x: hidden;
 }
 
-#dvwooruvjj .gt_column_spanner_outer {
+#jaiczglqbk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1208,15 +1201,15 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   padding-right: 4px;
 }
 
-#dvwooruvjj .gt_column_spanner_outer:first-child {
+#jaiczglqbk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dvwooruvjj .gt_column_spanner_outer:last-child {
+#jaiczglqbk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dvwooruvjj .gt_column_spanner {
+#jaiczglqbk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1228,7 +1221,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   width: 100%;
 }
 
-#dvwooruvjj .gt_group_heading {
+#jaiczglqbk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1250,7 +1243,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   vertical-align: middle;
 }
 
-#dvwooruvjj .gt_empty_group_heading {
+#jaiczglqbk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1265,15 +1258,15 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   vertical-align: middle;
 }
 
-#dvwooruvjj .gt_from_md > :first-child {
+#jaiczglqbk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dvwooruvjj .gt_from_md > :last-child {
+#jaiczglqbk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dvwooruvjj .gt_row {
+#jaiczglqbk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1292,7 +1285,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   overflow-x: hidden;
 }
 
-#dvwooruvjj .gt_stub {
+#jaiczglqbk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1304,7 +1297,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   padding-left: 12px;
 }
 
-#dvwooruvjj .gt_summary_row {
+#jaiczglqbk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1314,7 +1307,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   padding-right: 5px;
 }
 
-#dvwooruvjj .gt_first_summary_row {
+#jaiczglqbk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1324,7 +1317,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-top-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_grand_summary_row {
+#jaiczglqbk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1334,7 +1327,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   padding-right: 5px;
 }
 
-#dvwooruvjj .gt_first_grand_summary_row {
+#jaiczglqbk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1344,11 +1337,11 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-top-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_striped {
+#jaiczglqbk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dvwooruvjj .gt_table_body {
+#jaiczglqbk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1357,7 +1350,7 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-bottom-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_footnotes {
+#jaiczglqbk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1371,13 +1364,13 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-right-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_footnote {
+#jaiczglqbk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#dvwooruvjj .gt_sourcenotes {
+#jaiczglqbk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1391,41 +1384,41 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   border-right-color: #D3D3D3;
 }
 
-#dvwooruvjj .gt_sourcenote {
+#jaiczglqbk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#dvwooruvjj .gt_left {
+#jaiczglqbk .gt_left {
   text-align: left;
 }
 
-#dvwooruvjj .gt_center {
+#jaiczglqbk .gt_center {
   text-align: center;
 }
 
-#dvwooruvjj .gt_right {
+#jaiczglqbk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dvwooruvjj .gt_font_normal {
+#jaiczglqbk .gt_font_normal {
   font-weight: normal;
 }
 
-#dvwooruvjj .gt_font_bold {
+#jaiczglqbk .gt_font_bold {
   font-weight: bold;
 }
 
-#dvwooruvjj .gt_font_italic {
+#jaiczglqbk .gt_font_italic {
   font-style: italic;
 }
 
-#dvwooruvjj .gt_super {
+#jaiczglqbk .gt_super {
   font-size: 65%;
 }
 
-#dvwooruvjj .gt_footnote_marks {
+#jaiczglqbk .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1447,37 +1440,38 @@ benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = runquery(
   </thead>
   <tbody class="gt_table_body">
     <tr><td class="gt_row gt_center" style="font-family: Lora;">Window</td>
-<td class="gt_row gt_right" style="font-family: Lora;">4.5</td>
-<td class="gt_row gt_right" style="font-family: Lora;">4.8</td>
-<td class="gt_row gt_right" style="font-family: Lora;">5.1</td>
-<td class="gt_row gt_right" style="font-family: Lora;">5.0</td>
-<td class="gt_row gt_right" style="font-family: Lora;">5.4</td>
-<td class="gt_row gt_right" style="font-family: Lora;">6.6</td>
+<td class="gt_row gt_right" style="font-family: Lora;">14.2</td>
+<td class="gt_row gt_right" style="font-family: Lora;">15.4</td>
+<td class="gt_row gt_right" style="font-family: Lora;">18.3</td>
+<td class="gt_row gt_right" style="font-family: Lora;">16.6</td>
+<td class="gt_row gt_right" style="font-family: Lora;">18.7</td>
+<td class="gt_row gt_right" style="font-family: Lora;">43.4</td>
 <td class="gt_row gt_right" style="font-family: Lora;">100</td></tr>
     <tr><td class="gt_row gt_center" style="font-family: Lora;">Join</td>
-<td class="gt_row gt_right" style="font-family: Lora;">235.0</td>
-<td class="gt_row gt_right" style="font-family: Lora;">240.9</td>
-<td class="gt_row gt_right" style="font-family: Lora;">273.3</td>
-<td class="gt_row gt_right" style="font-family: Lora;">248.2</td>
-<td class="gt_row gt_right" style="font-family: Lora;">282.5</td>
-<td class="gt_row gt_right" style="font-family: Lora;">432.0</td>
+<td class="gt_row gt_right" style="font-family: Lora;">102.4</td>
+<td class="gt_row gt_right" style="font-family: Lora;">108.4</td>
+<td class="gt_row gt_right" style="font-family: Lora;">132.1</td>
+<td class="gt_row gt_right" style="font-family: Lora;">120.0</td>
+<td class="gt_row gt_right" style="font-family: Lora;">146.3</td>
+<td class="gt_row gt_right" style="font-family: Lora;">325.8</td>
 <td class="gt_row gt_right" style="font-family: Lora;">100</td></tr>
     <tr><td class="gt_row gt_center" style="font-family: Lora;">Correlated subquery</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1651.4</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1701.6</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1767.0</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1756.4</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1824.7</td>
-<td class="gt_row gt_right" style="font-family: Lora;">1966.9</td>
+<td class="gt_row gt_right" style="font-family: Lora;">294.6</td>
+<td class="gt_row gt_right" style="font-family: Lora;">310.8</td>
+<td class="gt_row gt_right" style="font-family: Lora;">370.4</td>
+<td class="gt_row gt_right" style="font-family: Lora;">354.9</td>
+<td class="gt_row gt_right" style="font-family: Lora;">416.2</td>
+<td class="gt_row gt_right" style="font-family: Lora;">575.6</td>
 <td class="gt_row gt_right" style="font-family: Lora;">100</td></tr>
   </tbody>
   
   
 </table>
 </div>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>We can see that for the current question, the window function is most efficient. One ceaveat is that maybe a slowdown occured when I queried the local database through R on my local machine, but if so I’d imagine it would affect all options.</p>
-<p>The window function is best here, but I think knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it’s least efficient here it’s worth knowing.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>One caveat is that some noise might have occurred when I queried the data: Since we used the <code>{sqldf}</code> R package to benchmark, the table is loaded to a temporarily created database and the SQL statement is run on it. With that said, I imagine that if would have caused some issues, it would have done so across all statements.</p>
+<p>As to our results, we can see that for the current question, the window function is most efficient. I think it’s also the most friendly for beginners and commonly used.</p>
+<p>However, I believe knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it’s least efficient here I’m sure it’s worth knowing.</p>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
 <p>This was a pretty short post on some SQL approaches to solving a question. You can probably think of different approaches, or variants of the current ones. When contemplating this question I felt that it required me to utilize different SQL functions to solve the same question, so overall I’m glad I came across it. I didn’t get the job but that’s OK. Eventually that’s how I ended up where I am today :)</p>
