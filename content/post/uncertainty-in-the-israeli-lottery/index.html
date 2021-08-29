@@ -18,6 +18,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <blockquote>
@@ -46,9 +47,8 @@ editor_options:
 <p>Sometimes when we receive a probability it’s hard to grasp the odds and numbers thrown at us. Therefore, I’ll try to visualize it for us. Imagine there’s a pool filled with 8,136,744 balls. One of those balls is red and choosing that exact red ball blindly will win you the lottery:</p>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
-library(scattermore)</code></pre>
-<pre><code>## Warning: package &#39;scattermore&#39; was built under R version 4.0.3</code></pre>
-<pre class="r"><code>library(extrafont)
+library(scattermore)
+library(extrafont)
 library(ggtext)
 
 set.seed(123)
@@ -132,6 +132,9 @@ head(df_prob)</code></pre>
 <p>Looks good!</p>
 <p>We see our top 6 observations with 3 columns we just defined (from left to right): the lottery raffle (trial), the probability of winning at a given trial until that point (cdf) and the money spent by that trial. Our probability of winning at <em>any</em> trial is constant (<span class="math inline">\(p\)</span>), so it’ll be redundant to add that in here.</p>
 <p>Now let’s look at specific points along our data frame and see how much money is spent reaching there. More specifically, let’s look at the details of some attempts such as 1; 10; 100; 1000; 2500, 5000, <span class="math inline">\(...\)</span>, 1,000,000, 10,000,000; 50,000,000:</p>
+<pre><code>## Warning: `columns = vars(...)` has been deprecated in gt 0.3.0:
+## * please use `columns = c(...)` instead</code></pre>
+<div id="hvuocxzswv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -465,10 +468,11 @@ head(df_prob)</code></pre>
 
 #hvuocxzswv .gt_footnote_marks {
   font-style: italic;
+  font-weight: normal;
   font-size: 65%;
 }
 </style>
-<div id="hvuocxzswv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal" style><b><span style='font-family:Roboto Condensed'>Lottery probabilities with the geometric distribution</span></b></th>
@@ -485,81 +489,51 @@ head(df_prob)</code></pre>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr>
-      <td class="gt_row gt_left">1</td>
-      <td class="gt_row gt_left">$2</td>
-      <td class="gt_row gt_left">0.00001%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">10</td>
-      <td class="gt_row gt_left">$17</td>
-      <td class="gt_row gt_left">0.00012%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">100</td>
-      <td class="gt_row gt_left">$166</td>
-      <td class="gt_row gt_left">0.00123%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">500</td>
-      <td class="gt_row gt_left">$829</td>
-      <td class="gt_row gt_left">0.00614%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">1,000</td>
-      <td class="gt_row gt_left">$1,657</td>
-      <td class="gt_row gt_left">0.01229%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">2,500</td>
-      <td class="gt_row gt_left">$4,143</td>
-      <td class="gt_row gt_left">0.03072%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">5,000</td>
-      <td class="gt_row gt_left">$8,286</td>
-      <td class="gt_row gt_left">0.06143%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">10,000</td>
-      <td class="gt_row gt_left">$16,571</td>
-      <td class="gt_row gt_left">0.12282%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">25,000</td>
-      <td class="gt_row gt_left">$41,429</td>
-      <td class="gt_row gt_left">0.30678%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">100,000</td>
-      <td class="gt_row gt_left">$165,714</td>
-      <td class="gt_row gt_left">1.22147%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">250,000</td>
-      <td class="gt_row gt_left">$414,286</td>
-      <td class="gt_row gt_left">3.02576%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">500,000</td>
-      <td class="gt_row gt_left">$828,571</td>
-      <td class="gt_row gt_left">5.95997%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">1,000,000</td>
-      <td class="gt_row gt_left">$1,657,143</td>
-      <td class="gt_row gt_left">11.56473%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">10,000,000</td>
-      <td class="gt_row gt_left">$16,571,429</td>
-      <td class="gt_row gt_left">70.74129%</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">50,000,000</td>
-      <td class="gt_row gt_left">$82,857,143</td>
-      <td class="gt_row gt_left">99.78557%</td>
-    </tr>
+    <tr><td class="gt_row gt_left">1</td>
+<td class="gt_row gt_left">$2</td>
+<td class="gt_row gt_left">0.00001%</td></tr>
+    <tr><td class="gt_row gt_left">10</td>
+<td class="gt_row gt_left">$17</td>
+<td class="gt_row gt_left">0.00012%</td></tr>
+    <tr><td class="gt_row gt_left">100</td>
+<td class="gt_row gt_left">$166</td>
+<td class="gt_row gt_left">0.00123%</td></tr>
+    <tr><td class="gt_row gt_left">500</td>
+<td class="gt_row gt_left">$829</td>
+<td class="gt_row gt_left">0.00614%</td></tr>
+    <tr><td class="gt_row gt_left">1,000</td>
+<td class="gt_row gt_left">$1,657</td>
+<td class="gt_row gt_left">0.01229%</td></tr>
+    <tr><td class="gt_row gt_left">2,500</td>
+<td class="gt_row gt_left">$4,143</td>
+<td class="gt_row gt_left">0.03072%</td></tr>
+    <tr><td class="gt_row gt_left">5,000</td>
+<td class="gt_row gt_left">$8,286</td>
+<td class="gt_row gt_left">0.06143%</td></tr>
+    <tr><td class="gt_row gt_left">10,000</td>
+<td class="gt_row gt_left">$16,571</td>
+<td class="gt_row gt_left">0.12282%</td></tr>
+    <tr><td class="gt_row gt_left">25,000</td>
+<td class="gt_row gt_left">$41,429</td>
+<td class="gt_row gt_left">0.30678%</td></tr>
+    <tr><td class="gt_row gt_left">100,000</td>
+<td class="gt_row gt_left">$165,714</td>
+<td class="gt_row gt_left">1.22147%</td></tr>
+    <tr><td class="gt_row gt_left">250,000</td>
+<td class="gt_row gt_left">$414,286</td>
+<td class="gt_row gt_left">3.02576%</td></tr>
+    <tr><td class="gt_row gt_left">500,000</td>
+<td class="gt_row gt_left">$828,571</td>
+<td class="gt_row gt_left">5.95997%</td></tr>
+    <tr><td class="gt_row gt_left">1,000,000</td>
+<td class="gt_row gt_left">$1,657,143</td>
+<td class="gt_row gt_left">11.56473%</td></tr>
+    <tr><td class="gt_row gt_left">10,000,000</td>
+<td class="gt_row gt_left">$16,571,429</td>
+<td class="gt_row gt_left">70.74129%</td></tr>
+    <tr><td class="gt_row gt_left">50,000,000</td>
+<td class="gt_row gt_left">$82,857,143</td>
+<td class="gt_row gt_left">99.78557%</td></tr>
   </tbody>
   
   <tfoot>
@@ -576,7 +550,8 @@ head(df_prob)</code></pre>
       </td>
     </tr>
   </tfoot>
-</table></div>
+</table>
+</div>
 <p>In the above table I printed specific observations along the lottery’s cumulative geometric distribution. In our left column we have the trial number, next the approximate amount of money spent up to that trial and lastly the percent of winning by that given trial. Notice that I converted the New Israeli Shekels to dollars ($1 dollar = ~ NIS 3.5).</p>
 <p>If we played 100 consecutive games with the same number, we would spend 166 dollars by that point and have only a 0.00123% chance of winning. We only pass the 1% (!) chance of winning after buying more than 100,000 tickets, spending a total of $165,714 dollars.<br />
 <strong>To pass the 10% chance of winning you’d have to play 1,000,000 games and spend ~1,600,000 dollars! Reminder: the default prize is only some $1,412,000!</strong></p>

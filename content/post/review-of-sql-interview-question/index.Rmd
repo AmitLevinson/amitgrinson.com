@@ -2,7 +2,7 @@
 title: Reviewing an SQL interview question
 author: Amit Levinson
 date: '2021-08-26'
-slug: a-great-sql-questions
+slug: review-of-sql-interview-question
 categories: []
 tags: []
 subtitle: ''
@@ -175,7 +175,7 @@ We can use the window function [DENSE_RANK()](https://docs.microsoft.com/en-us/s
 
 [^1]: One reason I'm not going for ROW_NUMBER here is that were interested in the top value that could have multiple appearances for a user. ROW NUMBER will only give us one value, here I'm interested in the max value that could appear several times.
 
-```{sql connection=localhost_con, echo = TRUE}
+```{sql connection=localhost_con, echo = TRUE, eval = FALSE}
 SELECT UserName, Payment_Date as 'Payment Date', amount
 FROM (
   SELECT *,
@@ -191,7 +191,7 @@ OK, that was pretty straight forward. But the interview question doesn't end the
 `JOIN` are key functions when querying data. Considering the large amount of data a company has, and the normalization procedures it does you'll be expected to join a lot. In this specific case we can leverage the arithmetic features of a `JOIN` to retrieve the relevant value:
 
 
-```{sql connection=localhost_con, echo = TRUE}
+```{sql connection=localhost_con, echo = TRUE, eval = FALSE}
 SELECT DISTINCT p.UserName, p.payment_date, p.amount
 FROM payments p
 LEFT JOIN payments pp ON p.UserName = pp.UserName
@@ -201,7 +201,18 @@ WHERE pp.amount IS NULL;
 
 While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we can check for other operations such as smaller than `<`. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result with a `NULL` value we can use to filter.  
 
-If you want to see the intermediate step just copy the above code to the snippet example, remove the `WHERE` clause and select all columns.
+**We can also explore the intermediate step** of the above code by looking at one of the users' observations:
+
+```{sql connection=localhost_con, echo = TRUE, echo = FALSE}
+SELECT p.UserName, p.payment_date, p.amount, pp.amount
+FROM payments p
+LEFT JOIN payments pp ON p.UserName = pp.UserName
+  AND p.amount < pp.amount
+  WHERE p.UserName = 'Danny'
+  ORDER BY p.amount DESC
+  LIMIT 3;
+```
+As we can see from the top 3 observations (though 7 are returned per user), values that are not smaller than other values, i.e. our max value, return a NUll value we can use to filter. If you want to explore it more just copy the above code to the snippet example, remove the `WHERE` clause and also select `pp.amount`.
 
 ### 3. Correlated subquery
 
@@ -210,7 +221,7 @@ We've come to my final approach for this blog post. I've come to like Correlated
 A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from [GeeksforGeeks](https://www.geeksforgeeks.org/sql-correlated-subqueries/)). Let's look at the code and explain it more clearly:
 
 
-```{sql corr-subqeury, connection=localhost_con, echo = TRUE}
+```{sql corr-subqeury, connection=localhost_con, echo = TRUE, eval = FALSE}
 SELECT UserName,
   Payment_Date,
   amount
