@@ -1,12 +1,12 @@
 ---
 title: Reviewing an SQL interview question
 author: Amit Levinson
-date: '2021-08-26'
+date: '2021-08-31'
 slug: review-of-sql-interview-question
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: 'Reviewing and solving an SQL interview question using three different approaches.'
 authors: []
 lastmod: ''
 featured: no
@@ -24,28 +24,28 @@ projects: []
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. <a href="https://amitlevinson.com/blog/my-year-in-r/">My journey into analytics was through learning R</a> and I realized I had to learn some SQL, or at least familiarize myself with it.</p>
-<p>Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about since; this blog post details that question and several answers to it.</p>
-<p><strong>The question and data do not represent my current employer.</strong> The data used here is made up and the question came from a different company altogether.</p>
+<p>Fast forward to interviewing, and most of the SQL interview questions were relevant and interesting, with one question particularly motivating further thoughts; this blog post details that question and several answers to it.</p>
+<p><strong>The question and data have no connection my current employer.</strong> The data used here is made up and the question came from a different company altogether.</p>
 <p>I’ll be using R to setup a local SQL connection but power through the blog post with actual SQL code. While not necessary, some SQL knowledge is useful to understanding the various answers’, and more so the syntax.</p>
 </div>
 <div id="the-interview-question" class="section level2">
 <h2>The Interview question</h2>
 <p>So here it goes:</p>
 <blockquote>
-<p>Let’s say you have a table of users’ payments. The table has the user’s name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user return the user name, the maximum amount they received and the date of that payment.</p>
+<p>Let’s say you have a table of users’ payments. The table has the user’s name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user, return: the user name, the maximum amount they received and the date of that payment.</p>
 </blockquote>
 <blockquote>
 <ol start="2" style="list-style-type: decimal">
 <li>Once you solve that, solve it again using a different approach.</li>
 </ol>
 </blockquote>
-<p>For a more practical example, considering the following raw data:</p>
-<div id="apyzhoflfp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<p>For a more practical example, consider the following raw data:</p>
+<div id="aarxomxawk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#apyzhoflfp .gt_table {
+#aarxomxawk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -70,7 +70,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_heading {
+#aarxomxawk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -82,7 +82,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_title {
+#aarxomxawk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -92,7 +92,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#apyzhoflfp .gt_subtitle {
+#aarxomxawk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -102,13 +102,13 @@ projects: []
   border-top-width: 0;
 }
 
-#apyzhoflfp .gt_bottom_border {
+#aarxomxawk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_col_headings {
+#aarxomxawk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -123,7 +123,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_col_heading {
+#aarxomxawk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -143,7 +143,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#apyzhoflfp .gt_column_spanner_outer {
+#aarxomxawk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -155,15 +155,15 @@ projects: []
   padding-right: 4px;
 }
 
-#apyzhoflfp .gt_column_spanner_outer:first-child {
+#aarxomxawk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#apyzhoflfp .gt_column_spanner_outer:last-child {
+#aarxomxawk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#apyzhoflfp .gt_column_spanner {
+#aarxomxawk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -175,7 +175,7 @@ projects: []
   width: 100%;
 }
 
-#apyzhoflfp .gt_group_heading {
+#aarxomxawk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -197,7 +197,7 @@ projects: []
   vertical-align: middle;
 }
 
-#apyzhoflfp .gt_empty_group_heading {
+#aarxomxawk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -212,15 +212,15 @@ projects: []
   vertical-align: middle;
 }
 
-#apyzhoflfp .gt_from_md > :first-child {
+#aarxomxawk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#apyzhoflfp .gt_from_md > :last-child {
+#aarxomxawk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#apyzhoflfp .gt_row {
+#aarxomxawk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -239,7 +239,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#apyzhoflfp .gt_stub {
+#aarxomxawk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -251,7 +251,7 @@ projects: []
   padding-left: 12px;
 }
 
-#apyzhoflfp .gt_summary_row {
+#aarxomxawk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -261,7 +261,7 @@ projects: []
   padding-right: 5px;
 }
 
-#apyzhoflfp .gt_first_summary_row {
+#aarxomxawk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -271,7 +271,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_grand_summary_row {
+#aarxomxawk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -281,7 +281,7 @@ projects: []
   padding-right: 5px;
 }
 
-#apyzhoflfp .gt_first_grand_summary_row {
+#aarxomxawk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -291,11 +291,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_striped {
+#aarxomxawk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#apyzhoflfp .gt_table_body {
+#aarxomxawk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -304,7 +304,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_footnotes {
+#aarxomxawk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -318,13 +318,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_footnote {
+#aarxomxawk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#apyzhoflfp .gt_sourcenotes {
+#aarxomxawk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -338,41 +338,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#apyzhoflfp .gt_sourcenote {
+#aarxomxawk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#apyzhoflfp .gt_left {
+#aarxomxawk .gt_left {
   text-align: left;
 }
 
-#apyzhoflfp .gt_center {
+#aarxomxawk .gt_center {
   text-align: center;
 }
 
-#apyzhoflfp .gt_right {
+#aarxomxawk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#apyzhoflfp .gt_font_normal {
+#aarxomxawk .gt_font_normal {
   font-weight: normal;
 }
 
-#apyzhoflfp .gt_font_bold {
+#aarxomxawk .gt_font_bold {
   font-weight: bold;
 }
 
-#apyzhoflfp .gt_font_italic {
+#aarxomxawk .gt_font_italic {
   font-style: italic;
 }
 
-#apyzhoflfp .gt_super {
+#aarxomxawk .gt_super {
   font-size: 65%;
 }
 
-#apyzhoflfp .gt_footnote_marks {
+#aarxomxawk .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -430,12 +430,12 @@ projects: []
 </table>
 </div>
 <p>Return the following table (rows highlighted in light green):</p>
-<div id="kfomerzuoi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mpybnhtexj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kfomerzuoi .gt_table {
+#mpybnhtexj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -460,7 +460,7 @@ projects: []
   border-left-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_heading {
+#mpybnhtexj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -472,7 +472,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_title {
+#mpybnhtexj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -482,7 +482,7 @@ projects: []
   border-bottom-width: 0;
 }
 
-#kfomerzuoi .gt_subtitle {
+#mpybnhtexj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -492,13 +492,13 @@ projects: []
   border-top-width: 0;
 }
 
-#kfomerzuoi .gt_bottom_border {
+#mpybnhtexj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_col_headings {
+#mpybnhtexj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -513,7 +513,7 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_col_heading {
+#mpybnhtexj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -533,7 +533,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#kfomerzuoi .gt_column_spanner_outer {
+#mpybnhtexj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -545,15 +545,15 @@ projects: []
   padding-right: 4px;
 }
 
-#kfomerzuoi .gt_column_spanner_outer:first-child {
+#mpybnhtexj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kfomerzuoi .gt_column_spanner_outer:last-child {
+#mpybnhtexj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kfomerzuoi .gt_column_spanner {
+#mpybnhtexj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -565,7 +565,7 @@ projects: []
   width: 100%;
 }
 
-#kfomerzuoi .gt_group_heading {
+#mpybnhtexj .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -587,7 +587,7 @@ projects: []
   vertical-align: middle;
 }
 
-#kfomerzuoi .gt_empty_group_heading {
+#mpybnhtexj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -602,15 +602,15 @@ projects: []
   vertical-align: middle;
 }
 
-#kfomerzuoi .gt_from_md > :first-child {
+#mpybnhtexj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kfomerzuoi .gt_from_md > :last-child {
+#mpybnhtexj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kfomerzuoi .gt_row {
+#mpybnhtexj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -629,7 +629,7 @@ projects: []
   overflow-x: hidden;
 }
 
-#kfomerzuoi .gt_stub {
+#mpybnhtexj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -641,7 +641,7 @@ projects: []
   padding-left: 12px;
 }
 
-#kfomerzuoi .gt_summary_row {
+#mpybnhtexj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -651,7 +651,7 @@ projects: []
   padding-right: 5px;
 }
 
-#kfomerzuoi .gt_first_summary_row {
+#mpybnhtexj .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -661,7 +661,7 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_grand_summary_row {
+#mpybnhtexj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -671,7 +671,7 @@ projects: []
   padding-right: 5px;
 }
 
-#kfomerzuoi .gt_first_grand_summary_row {
+#mpybnhtexj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -681,11 +681,11 @@ projects: []
   border-top-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_striped {
+#mpybnhtexj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kfomerzuoi .gt_table_body {
+#mpybnhtexj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -694,7 +694,7 @@ projects: []
   border-bottom-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_footnotes {
+#mpybnhtexj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -708,13 +708,13 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_footnote {
+#mpybnhtexj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#kfomerzuoi .gt_sourcenotes {
+#mpybnhtexj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -728,41 +728,41 @@ projects: []
   border-right-color: #D3D3D3;
 }
 
-#kfomerzuoi .gt_sourcenote {
+#mpybnhtexj .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#kfomerzuoi .gt_left {
+#mpybnhtexj .gt_left {
   text-align: left;
 }
 
-#kfomerzuoi .gt_center {
+#mpybnhtexj .gt_center {
   text-align: center;
 }
 
-#kfomerzuoi .gt_right {
+#mpybnhtexj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kfomerzuoi .gt_font_normal {
+#mpybnhtexj .gt_font_normal {
   font-weight: normal;
 }
 
-#kfomerzuoi .gt_font_bold {
+#mpybnhtexj .gt_font_bold {
   font-weight: bold;
 }
 
-#kfomerzuoi .gt_font_italic {
+#mpybnhtexj .gt_font_italic {
   font-style: italic;
 }
 
-#kfomerzuoi .gt_super {
+#mpybnhtexj .gt_super {
   font-size: 65%;
 }
 
-#kfomerzuoi .gt_footnote_marks {
+#mpybnhtexj .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -798,8 +798,8 @@ Want to first try solving it yourself? Solve it <a href="http://sqlfiddle.com/#!
 <p>So we know what we have to do. Before we do it, let’s see how not to do it.</p>
 <div id="why-not-just-group-by" class="section level3">
 <h3>✖ Why not just GROUP BY? ✖</h3>
-<p>If your new to SQL, an immediate question that might come to mind is why not use a <code>GROUP BY</code> for the UserName, date and select the <code>MAX</code> value. In other words, just filter each observation by the max value according to one of the variables.</p>
-<p>The issue is when we use <code>GROUP BY</code> we retrieve the information that is aggregated. That is, if we group by the seller name and the payment date when we select the max we’ll get the value for each distinct user and date:</p>
+<p>If you’re new to SQL, an immediate question that might come to mind is why not use a <code>GROUP BY</code> for the UserName, date and select the <code>MAX</code> value. In other words, just filter each observation by the max value according to one of the variables.</p>
+<p>The issue is that when we use <code>GROUP BY</code> we retrieve the information that is already aggregated. That is, if we group by the seller name and the payment date when we select the max, then we’ll get the value for each distinct user and date:</p>
 <pre class="sql"><code>SELECT UserName,
   payment_date,
   MAX(amount) AS amount
@@ -870,7 +870,7 @@ GROUP BY UserName, payment_date</code></pre>
 </table>
 </div>
 <p>Alternatively, if we <code>GROUP BY</code> the UserName and <code>SELECT</code> the <code>MAX</code> value and the date, the result will depend on the Relational Database Management System (RDBMS) you use. For example, if you’re using Microsoft SQL server you’ll get an error since you have a column which is selected but not contained in an aggregate function, nor in the GROUP BY clause.</p>
-<p>In other RDMBS, e.g. MySQL which I use here, we’ll get the information for each User, their max value and some date (here the top date value), <strong>but not the correct date!</strong>:</p>
+<p>In other RDMBS, e.g. MySQL (which I use here), we’ll get the information for each User, their max value and some date (here the top date value), <strong>but not the correct date!</strong></p>
 <pre class="sql"><code>SELECT UserName,
   payment_date,
   MAX(amount)
@@ -905,40 +905,6 @@ GROUP BY UserName</code></pre>
 </tbody>
 </table>
 </div>
-<pre class="sql"><code>SELECT UserName,
-  Payment_Date,
-  max(amount) AS amount
-FROM payments
-GROUP BY UserName</code></pre>
-<div class="knitsql-table">
-<table>
-<caption><span id="tab:unnamed-chunk-7">Table 3: </span>3 records</caption>
-<thead>
-<tr class="header">
-<th align="left">UserName</th>
-<th align="left">Payment_Date</th>
-<th align="right">amount</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Danny</td>
-<td align="left">2021-07-05</td>
-<td align="right">87</td>
-</tr>
-<tr class="even">
-<td align="left">Alice</td>
-<td align="left">2021-07-03</td>
-<td align="right">85</td>
-</tr>
-<tr class="odd">
-<td align="left">Tom</td>
-<td align="left">2021-06-28</td>
-<td align="right">95</td>
-</tr>
-</tbody>
-</table>
-</div>
 <p>So How do we solve this? Let’s dive in.</p>
 <p><br></p>
 </div>
@@ -947,7 +913,7 @@ GROUP BY UserName</code></pre>
 <h2>Solutions</h2>
 <div id="window-functions" class="section level3">
 <h3>1. Window functions</h3>
-<p>The first solution that might come to mind is using a Window Function. If you don’t know Window Functions I suggest you familiarize yourself with their abilities. To borrow from <a href="https://www.postgresql.org/docs/9.1/tutorial-window.html">PostgreSQL’s description</a>, a window function “performs a calculation across a set of table rows that are somehow related to the current row”. In different from aggregate operations (sum, avg, etc), using window functions doesn’t cause rows to become grouped into single row outputs.</p>
+<p>The first solution that might come to mind is using a Window function. If you don’t know window functions I suggest you familiarize yourself with their abilities. To borrow from <a href="https://www.postgresql.org/docs/9.1/tutorial-window.html">PostgreSQL’s description</a>, a window function “performs a calculation across a set of table rows that are somehow related to the current row”. In contrast to aggregate operations (sum, avg, etc), using window functions doesn’t cause rows to become grouped into single row outputs.</p>
 <p>We can use the window function <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15">DENSE_RANK()</a>/RANK()<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to retrieve the rank of each amount for each user, and extract the relevant row with an outer query:</p>
 <pre class="sql"><code>SELECT UserName, Payment_Date as &#39;Payment Date&#39;, amount
 FROM (
@@ -965,11 +931,11 @@ FROM payments p
 LEFT JOIN payments pp ON p.UserName = pp.UserName
   AND p.amount &lt; pp.amount
 WHERE pp.amount IS NULL;</code></pre>
-<p>While we’re all familiar with ‘regular’ <code>* JOIN</code> using an equality sign <code>=</code>, we can check for other operations such as smaller than <code>&lt;</code>. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won’t find any relevant rows to join, considering it’s not smaller than anything, which will result with a <code>NULL</code> value we can use to filter.</p>
-<p><strong>We can also explore the intermediate step</strong> of the above code by looking at one of the users’ observations:</p>
+<p>While we’re all familiar with ‘regular’ <code>* JOIN</code> using an equality sign <code>=</code>, we can check for other operations such as smaller than <code>&lt;</code>. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won’t find any relevant rows to join, considering it’s not smaller than anything, which will result in a <code>NULL</code> value we can use to filter.</p>
+<p><strong>We can also explore the intermediate step</strong> of the above-code by looking at one of the users’ observations:</p>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-10">Table 4: </span>3 records</caption>
+<caption><span id="tab:unnamed-chunk-9">Table 3: </span>3 records</caption>
 <thead>
 <tr class="header">
 <th align="left">UserName</th>
@@ -1000,11 +966,11 @@ WHERE pp.amount IS NULL;</code></pre>
 </tbody>
 </table>
 </div>
-<p>As we can see from the top 3 observations (though 7 are returned per user), values that are not smaller than other values, i.e. our max value, return a NUll value we can use to filter. If you want to explore it more just copy the above code to the snippet example, remove the <code>WHERE</code> clause and also select <code>pp.amount</code>.</p>
+<p>As we can see from the top 3 observations (though 7 are returned per user), values that are not smaller than other values, i.e. our max value, return a null value we can use to filter. If you want to explore it more just copy the above code to the snippet example, remove the <code>WHERE</code> clause and also select <code>pp.amount</code>.</p>
 </div>
 <div id="correlated-subquery" class="section level3">
 <h3>3. Correlated subquery</h3>
-<p>We’ve come to my final approach for this blog post. I’ve come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in <code>R</code> such as the <code>apply</code> family and the <code>purrr</code> library.</p>
+<p>We’ve come to my final approach for this blog post. I’ve come to apprecfiate correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in <code>R</code> such as the <em><code>apply</code></em> family and the <em><code>purrr</code></em> library.</p>
 <p>A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from <a href="https://www.geeksforgeeks.org/sql-correlated-subqueries/">GeeksforGeeks</a>). Let’s look at the code and explain it more clearly:</p>
 <pre class="sql"><code>SELECT UserName,
   Payment_Date,
@@ -1013,32 +979,32 @@ WHERE pp.amount IS NULL;</code></pre>
   WHERE amount = (SELECT MAX(amount)
                   FROM Payments pp
                   WHERE pp.UserName = p.UserName) -- Notice the relation to the parent table</code></pre>
-<p>To easily read the query and understand correlated subqueries, let’s start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes <em>row by row for each user</em> and compares whether that rows’ amount is equal to that user’s max amount, which is retrieved from the inner query.</p>
+<p>To easily read the query and understand correlated subqueries, let’s start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes <em>row by row for each user</em> and compares whether that row’s amount is equal to that user’s max amount, which is retrieved from the inner query.</p>
 <p>And there we have it, three different approaches to the same problem.</p>
 <p><img src="https://media.giphy.com/media/YRuFixSNWFVcXaxpmX/giphy.gif?cid=ecf05e47x2u6c65w26gljefosulh4xiu3xds5gz55z0cq8li&amp;rid=giphy.gif&amp;ct=g" /></p>
 </div>
 </div>
 <div id="benchmarking" class="section level2">
 <h2>Benchmarking</h2>
-<p>A question that arose to me is, for this specific case, which method is faster? Let’s try and answer it using a bit larger dataset:</p>
+<p>A question that arose for me is, for this specific case, which method is faster? Let’s try and answer it using a bit larger dataset:</p>
 <pre class="r"><code>glimpse(payments_big)</code></pre>
 <pre><code>## Rows: 2,000
 ## Columns: 3
-## $ username     &lt;chr&gt; &quot;Tom&quot;, &quot;Alice&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Alice&quot;, &quot;Dann~
-## $ payment_date &lt;date&gt; 2019-09-29, 2021-08-01, 2020-03-10, 2021-04-30, 2019-02-~
-## $ amount       &lt;int&gt; 8333, 8024, 158, 8032, 5546, 317, 211, 1058, 6685, 5533, ~</code></pre>
-<p>A total of 2,000 rows for all the three users. Now then let’s benchmark using The R packaege <code>{sqldf}</code> which passes the SQL statements to a temporally created Database:</p>
+## $ username     &lt;chr&gt; &quot;Alice&quot;, &quot;Tom&quot;, &quot;Alice&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Danny&quot;, &quot;Alic~
+## $ payment_date &lt;date&gt; 2019-12-13, 2020-05-27, 2020-02-22, 2018-12-15, 2021-02-~
+## $ amount       &lt;int&gt; 2951, 4981, 5062, 979, 4907, 5882, 358, 8326, 6900, 3769,~</code></pre>
+<p>A total of 2,000 rows for all the three users. Now, let’s benchmark using The R package <code>{sqldf}</code> which passes the SQL statements to a temporally created database:</p>
 <pre class="r"><code>benchmarking &lt;- microbenchmark::microbenchmark(&quot;Window&quot; = sqldf(Window_script),
                                                &quot;Join&quot; = sqldf(Join_script),
                                                &quot;Correlated subquery&quot; = sqldf(Correlated_subquery_script),
                                                unit = &quot;ms&quot;)</code></pre>
 <p>Finally, let’s explore the benchmarking scores:</p>
-<div id="upcuoxnysu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="tpjoduszzj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#upcuoxnysu .gt_table {
+#tpjoduszzj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1063,7 +1029,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_heading {
+#tpjoduszzj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1075,7 +1041,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_title {
+#tpjoduszzj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1085,7 +1051,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-bottom-width: 0;
 }
 
-#upcuoxnysu .gt_subtitle {
+#tpjoduszzj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1095,13 +1061,13 @@ WHERE pp.amount IS NULL;</code></pre>
   border-top-width: 0;
 }
 
-#upcuoxnysu .gt_bottom_border {
+#tpjoduszzj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_col_headings {
+#tpjoduszzj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1116,7 +1082,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_col_heading {
+#tpjoduszzj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1136,7 +1102,7 @@ WHERE pp.amount IS NULL;</code></pre>
   overflow-x: hidden;
 }
 
-#upcuoxnysu .gt_column_spanner_outer {
+#tpjoduszzj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1148,15 +1114,15 @@ WHERE pp.amount IS NULL;</code></pre>
   padding-right: 4px;
 }
 
-#upcuoxnysu .gt_column_spanner_outer:first-child {
+#tpjoduszzj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#upcuoxnysu .gt_column_spanner_outer:last-child {
+#tpjoduszzj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#upcuoxnysu .gt_column_spanner {
+#tpjoduszzj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1168,7 +1134,7 @@ WHERE pp.amount IS NULL;</code></pre>
   width: 100%;
 }
 
-#upcuoxnysu .gt_group_heading {
+#tpjoduszzj .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1190,7 +1156,7 @@ WHERE pp.amount IS NULL;</code></pre>
   vertical-align: middle;
 }
 
-#upcuoxnysu .gt_empty_group_heading {
+#tpjoduszzj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1205,15 +1171,15 @@ WHERE pp.amount IS NULL;</code></pre>
   vertical-align: middle;
 }
 
-#upcuoxnysu .gt_from_md > :first-child {
+#tpjoduszzj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#upcuoxnysu .gt_from_md > :last-child {
+#tpjoduszzj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#upcuoxnysu .gt_row {
+#tpjoduszzj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1232,7 +1198,7 @@ WHERE pp.amount IS NULL;</code></pre>
   overflow-x: hidden;
 }
 
-#upcuoxnysu .gt_stub {
+#tpjoduszzj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1244,7 +1210,7 @@ WHERE pp.amount IS NULL;</code></pre>
   padding-left: 12px;
 }
 
-#upcuoxnysu .gt_summary_row {
+#tpjoduszzj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1254,7 +1220,7 @@ WHERE pp.amount IS NULL;</code></pre>
   padding-right: 5px;
 }
 
-#upcuoxnysu .gt_first_summary_row {
+#tpjoduszzj .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1264,7 +1230,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_grand_summary_row {
+#tpjoduszzj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1274,7 +1240,7 @@ WHERE pp.amount IS NULL;</code></pre>
   padding-right: 5px;
 }
 
-#upcuoxnysu .gt_first_grand_summary_row {
+#tpjoduszzj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1284,11 +1250,11 @@ WHERE pp.amount IS NULL;</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_striped {
+#tpjoduszzj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#upcuoxnysu .gt_table_body {
+#tpjoduszzj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1297,7 +1263,7 @@ WHERE pp.amount IS NULL;</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_footnotes {
+#tpjoduszzj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1311,13 +1277,13 @@ WHERE pp.amount IS NULL;</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_footnote {
+#tpjoduszzj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#upcuoxnysu .gt_sourcenotes {
+#tpjoduszzj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1331,41 +1297,41 @@ WHERE pp.amount IS NULL;</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#upcuoxnysu .gt_sourcenote {
+#tpjoduszzj .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#upcuoxnysu .gt_left {
+#tpjoduszzj .gt_left {
   text-align: left;
 }
 
-#upcuoxnysu .gt_center {
+#tpjoduszzj .gt_center {
   text-align: center;
 }
 
-#upcuoxnysu .gt_right {
+#tpjoduszzj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#upcuoxnysu .gt_font_normal {
+#tpjoduszzj .gt_font_normal {
   font-weight: normal;
 }
 
-#upcuoxnysu .gt_font_bold {
+#tpjoduszzj .gt_font_bold {
   font-weight: bold;
 }
 
-#upcuoxnysu .gt_font_italic {
+#tpjoduszzj .gt_font_italic {
   font-style: italic;
 }
 
-#upcuoxnysu .gt_super {
+#tpjoduszzj .gt_super {
   font-size: 65%;
 }
 
-#upcuoxnysu .gt_footnote_marks {
+#tpjoduszzj .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1415,10 +1381,10 @@ WHERE pp.amount IS NULL;</code></pre>
   
 </table>
 </div>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>One caveat is that some noise might have occurred when I queried the data: Since we used the <code>{sqldf}</code> R package to benchmark, the table is loaded to a temporarily created database and the SQL statement is run on it. With that said, I imagine that if would have caused some issues, it would have done so across all statements.</p>
 <p>As to our results, we can see that for the current question, the window function is most efficient. I think it’s also the most friendly for beginners and commonly used.</p>
-<p>However, I believe knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it’s least efficient here I’m sure it’s worth knowing.</p>
+<p>However, I believe that knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use-case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it’s least efficient here I’m sure it’s worth knowing.</p>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
 <p>This was a pretty short post on some SQL approaches to solving a question. You can probably think of different approaches, or variants of the current ones. When contemplating this question I felt that it required me to utilize different SQL functions to solve the same question, so overall I’m glad I came across it. I didn’t get the job but that’s OK. Eventually that’s how I ended up where I am today :)</p>

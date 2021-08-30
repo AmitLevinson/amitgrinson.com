@@ -1,12 +1,12 @@
 ---
 title: Reviewing an SQL interview question
 author: Amit Levinson
-date: '2021-08-26'
+date: '2021-08-31'
 slug: review-of-sql-interview-question
 categories: []
 tags: []
 subtitle: ''
-summary: ''
+summary: 'Reviewing and solving an SQL interview question using three different approaches.'
 authors: []
 lastmod: ''
 featured: no
@@ -26,10 +26,10 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 During the first half of 2021, as I was finishing up my M.A. thesis, I started searching for a job in Data Analytics. [My journey into analytics was through learning R](https://amitlevinson.com/blog/my-year-in-r/) and I realized I had to learn some SQL, or at least familiarize myself with it.
 
-Fast forward to interviewing, most of the SQL interview questions were pretty good. There was one question I was really fond of and had thought about since; this blog post details that question and several answers to it.
+Fast forward to interviewing, and most of the SQL interview questions were relevant and interesting, with one question particularly motivating further thoughts; this blog post details that question and several answers to it.
 
 
-**The question and data do not represent my current employer.** The data used here is made up and the question came from a different company altogether. 
+**The question and data have no connection my current employer.** The data used here is made up and the question came from a different company altogether. 
 
 I'll be using R to setup a local SQL connection but power through the blog post with actual SQL code. While not necessary, some SQL knowledge is useful to understanding the various answers', and more so the syntax.
 
@@ -37,11 +37,11 @@ I'll be using R to setup a local SQL connection but power through the blog post 
 
 So here it goes:
 
-> Let's say you have a table of users' payments. The table has the user's name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user return the user name, the maximum amount they received and the date of that payment.
+> Let's say you have a table of users' payments. The table has the user's name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user, return: the user name, the maximum amount they received and the date of that payment.
 
 > 2. Once you solve that, solve it again using a different approach.
 
-For a more practical example, considering the following raw data:
+For a more practical example, consider the following raw data:
 
 ```{r echo = FALSE}
 library(dplyr)
@@ -127,9 +127,9 @@ So we know what we have to do. Before we do it, let's see how not to do it.
 
 ### &#10006; Why not just GROUP BY? &#10006;
 
-If your new to SQL, an immediate question that might come to mind is why not use a `GROUP BY` for the UserName, date and select the `MAX` value. In other words, just filter each observation by the max value according to one of the variables.  
+If you're new to SQL, an immediate question that might come to mind is why not use a `GROUP BY` for the UserName, date and select the `MAX` value. In other words, just filter each observation by the max value according to one of the variables.  
 
-The issue is when we use `GROUP BY` we retrieve the information that is aggregated. That is, if we group by the seller name and the payment date when we select the max we'll get the value for each distinct user and date:
+The issue is that when we use `GROUP BY` we retrieve the information that is already aggregated. That is, if we group by the seller name and the payment date when we select the max, then we'll get the value for each distinct user and date:
 
 
 ```{sql connection=localhost_con, echo = TRUE}
@@ -142,7 +142,7 @@ GROUP BY UserName, payment_date
 
 Alternatively, if we `GROUP BY` the UserName and `SELECT` the `MAX` value and the date, the result will depend on the Relational Database Management System (RDBMS) you use. For example, if you're using Microsoft SQL server you'll get an error since you have a column which is selected but not contained in an aggregate function, nor in the GROUP BY clause.   
 
-In other RDMBS, e.g. MySQL which I use here, we'll get the information for each User, their max value and some date (here the top date value), **but not the correct date!**:
+In other RDMBS, e.g. MySQL (which I use here), we'll get the information for each User, their max value and some date (here the top date value), **but not the correct date!**
 
 ```{sql connection=localhost_con, echo = TRUE}
 SELECT UserName,
@@ -153,14 +153,6 @@ GROUP BY UserName
 ```
 
 
-```{sql connection=localhost_con, echo = TRUE}
-SELECT UserName,
-  Payment_Date,
-  max(amount) AS amount
-FROM payments
-GROUP BY UserName
-```
-
 So How do we solve this? Let's dive in.  
 
 <br>
@@ -169,7 +161,7 @@ So How do we solve this? Let's dive in.
 
 ### 1. Window functions
 
-The first solution that might come to mind is using a Window Function. If you don't know Window Functions I suggest you familiarize yourself with their abilities. To borrow from [PostgreSQL's description](https://www.postgresql.org/docs/9.1/tutorial-window.html), a window function "performs a calculation across a set of table rows that are somehow related to the current row". In different from aggregate operations (sum, avg, etc), using window functions doesn't cause rows to become grouped into single row outputs.  
+The first solution that might come to mind is using a Window function. If you don't know window functions I suggest you familiarize yourself with their abilities. To borrow from [PostgreSQL's description](https://www.postgresql.org/docs/9.1/tutorial-window.html), a window function "performs a calculation across a set of table rows that are somehow related to the current row". In contrast to aggregate operations (sum, avg, etc), using window functions doesn't cause rows to become grouped into single row outputs.  
 
 We can use the window function [DENSE_RANK()](https://docs.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver15)/RANK()[^1] to retrieve the rank of each amount for each user, and extract the relevant row with an outer query:
 
@@ -199,9 +191,9 @@ LEFT JOIN payments pp ON p.UserName = pp.UserName
 WHERE pp.amount IS NULL;
 ```
 
-While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we can check for other operations such as smaller than `<`. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result with a `NULL` value we can use to filter.  
+While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we can check for other operations such as smaller than `<`. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result in a `NULL` value we can use to filter.  
 
-**We can also explore the intermediate step** of the above code by looking at one of the users' observations:
+**We can also explore the intermediate step** of the above-code by looking at one of the users' observations:
 
 ```{sql connection=localhost_con, echo = TRUE, echo = FALSE}
 SELECT p.UserName, p.payment_date, p.amount, pp.amount
@@ -212,11 +204,11 @@ LEFT JOIN payments pp ON p.UserName = pp.UserName
   ORDER BY p.amount DESC
   LIMIT 3;
 ```
-As we can see from the top 3 observations (though 7 are returned per user), values that are not smaller than other values, i.e. our max value, return a NUll value we can use to filter. If you want to explore it more just copy the above code to the snippet example, remove the `WHERE` clause and also select `pp.amount`.
+As we can see from the top 3 observations (though 7 are returned per user), values that are not smaller than other values, i.e. our max value, return a null value we can use to filter. If you want to explore it more just copy the above code to the snippet example, remove the `WHERE` clause and also select `pp.amount`.
 
 ### 3. Correlated subquery
 
-We've come to my final approach for this blog post. I've come to like Correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in `R` such as the `apply` family and the `purrr` library.
+We've come to my final approach for this blog post. I've come to apprecfiate correlated subqueries since learning them, as I find them somewhat similar to vectorized operations in `R` such as the *`apply`* family and the *`purrr`* library.
 
 A correlated subquery is a row-by-row process, in which each subquery is executed once for the outer query (adapted from [GeeksforGeeks](https://www.geeksforgeeks.org/sql-correlated-subqueries/)). Let's look at the code and explain it more clearly:
 
@@ -231,7 +223,7 @@ SELECT UserName,
                   WHERE pp.UserName = p.UserName) -- Notice the relation to the parent table
 ```
 
-To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that rows' amount is equal to that user's max amount, which is retrieved from the inner query. 
+To easily read the query and understand correlated subqueries, let's start from the inside. From the payments tables where the UserName is equal to the UserName in the outer query, grab the maximum amount. Now the outer query goes *row by row for each user* and compares whether that row's amount is equal to that user's max amount, which is retrieved from the inner query. 
 
 And there we have it, three different approaches to the same problem.
 
@@ -240,7 +232,7 @@ And there we have it, three different approaches to the same problem.
 
 ## Benchmarking
 
-A question that arose to me is, for this specific case, which method is faster? Let's try and answer it using a bit larger dataset:
+A question that arose for me is, for this specific case, which method is faster? Let's try and answer it using a bit larger dataset:
 
 ```{r echo = FALSE}
 payments_big <- data.frame(
@@ -262,7 +254,7 @@ glimpse(payments_big)
 ```
 
 
-A total of 2,000 rows for all the three users. Now then let's benchmark using The R packaege `{sqldf}` which passes the SQL statements to a temporally created Database:
+A total of 2,000 rows for all the three users. Now, let's benchmark using The R package `{sqldf}` which passes the SQL statements to a temporally created database:
 
 ```{r eval = FALSE}
 Window_script <- "SELECT UserName, Payment_Date as 'Payment Date', amount
@@ -354,7 +346,7 @@ One caveat is that some noise might have occurred when I queried the data: Since
 
 As to our results, we can see that for the current question, the window function is most efficient. I think it's also the most friendly for beginners and commonly used.
 
-However, I believe knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it's least efficient here I'm sure it's worth knowing.
+However, I believe that knowing all approaches can help you write better SQL. That is, sometimes one approach is a better fit to a specific use-case. I definitely wrote a correlated subquery at work as it was the best fit at the time (in terms of readability and as an immediate answer), so though it's least efficient here I'm sure it's worth knowing.
 
 ### Closing remarks
 
