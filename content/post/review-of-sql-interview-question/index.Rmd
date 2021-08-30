@@ -6,7 +6,7 @@ slug: review-of-sql-interview-question
 categories: []
 tags: []
 subtitle: ''
-summary: 'Reviewing and solving an SQL interview question using three different approaches.'
+summary: 'Solving an SQL interview question using three different approaches.'
 authors: []
 lastmod: ''
 featured: no
