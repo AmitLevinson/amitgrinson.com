@@ -60,6 +60,7 @@ ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$",  
 #  extensions = ["backslashLineBreak"]
 
 [markup]
+  defaultMarkdownHandler = "goldmark"
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
