@@ -118,11 +118,10 @@ payments %>%
 
 
 {{% alert note %}}
-Want to first try solving it yourself? Solve it [here](http://sqlfiddle.com/#!18/c9308e/3) and compare with the answers below.
+Want to first try solving it yourself? Solve it <a href="http://sqlfiddle.com/#!18/c9308e/8" target="_blank">here</a> and compare with the answers below.
 {{% /alert %}}
 
 So we know what we have to do. Before we do it, let's see how not to do it.
-
 
 
 ### &#10006; Why not just GROUP BY? &#10006;
