@@ -102,7 +102,8 @@ gt(raw_payments) %>%
       locations = cells_body (
         rows = c(3,5,11)
       )
-    )
+    ) %>% 
+  tab_options(column_labels.text_transform = "Capitalize")
 ```
 
 Return the following table (rows highlighted in light green):
