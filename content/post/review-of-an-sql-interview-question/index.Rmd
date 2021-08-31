@@ -2,7 +2,7 @@
 title: Reviewing an SQL interview question
 author: Amit Levinson
 date: '2021-08-31'
-slug: review-of-sql-interview-question
+slug: review-of-an-sql-interview-question
 categories: []
 tags: []
 subtitle: ''
