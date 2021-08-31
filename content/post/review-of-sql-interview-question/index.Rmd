@@ -39,7 +39,7 @@ So here it goes:
 
 > Let's say you have a table of users' payments. The table has the user's name, date of payment and the amount they received. Users have multiple records with different amounts and dates. For each user, return: the user name, the maximum amount they received and the date of that payment.
 
-> 2. Once you solve that, solve it again using a different approach.
+> Once you solve that, solve it again using a different approach.
 
 For a more practical example, consider the following raw data:
 
