@@ -195,7 +195,7 @@ While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we 
 **We can also explore the intermediate step** of the above-code by looking at one of the users' observations:
 
 ```{sql connection=localhost_con, echo = TRUE, echo = FALSE}
-SELECT p.UserName, p.payment_date, p.amount, pp.amount
+SELECT p.UserName, p.payment_date, p.amount, pp.amount as amount2
 FROM payments p
 LEFT JOIN payments pp ON p.UserName = pp.UserName
   AND p.amount < pp.amount
