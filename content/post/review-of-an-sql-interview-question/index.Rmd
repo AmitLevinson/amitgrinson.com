@@ -191,7 +191,7 @@ LEFT JOIN payments pp ON p.UserName = pp.UserName
 WHERE pp.amount IS NULL;
 ```
 
-While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we can check for other operations such as smaller than `<`. Essentially we do a cartesian join of the table on itself by UserName, and then filter rows where values (p.amount) are smaller than other values (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result in a `NULL` value we can use to filter.  
+While we're all familiar with 'regular' `* JOIN` using an equality sign `=`, we can check for other operations such as smaller than `<`. Essentially we do a cartesian join of the table on itself by UserName, and match rows where values (p.amount) are smaller than other values in the table we join on (pp.amount). Our max value won't find any relevant rows to join, considering it's not smaller than anything, which will result in a `NULL` value we can use to filter.  
 
 **We can also explore the intermediate step** of the above-code by looking at one of the users' observations:
 
