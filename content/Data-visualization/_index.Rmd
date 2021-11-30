@@ -197,6 +197,13 @@ A daily mapping visualization challenged aimed at the spatial community througho
 
 
 
+<div class="viz">
+#### Movement <a href="https://github.com/AmitLevinson/30daymapchallenge/tree/main/2021/20_movement" target="_blank" rel="noopener"><i class="fas fa-code"></i></a> <a href="https://amitlevinson.github.io/30daymapchallenge/2021/20_movement/ice-cream.html" target="_blank" rel="noopener"><i class="fas fa-desktop"></i></a>
+
+<img src="/img/30daymap/2021/ice-cream_farthest.png" alt="Map of the fastest route between Golda ice-cream locations in Tel-Aviv" width="600">
+</div>
+
+
 
 <div class="viz">
 #### Land <a href="https://github.com/AmitLevinson/30daymapchallenge/blob/main/2021/17_land/land.R" target="_blank" rel="noopener"><i class="fas fa-code"></i></a>
