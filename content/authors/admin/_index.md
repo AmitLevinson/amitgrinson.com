@@ -21,7 +21,7 @@ name: Amit Levinson
 organizations:
 - name: Payoneer
   url: https://www.payoneer.com/
-role: Research Analyst
+role: Risk Strategy Analyst
 social:
 - icon: envelope
   icon_pack: fa
