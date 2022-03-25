@@ -14,6 +14,7 @@ image:
   preview_only: yes
 projects: []
 draft: false
+codefolding_show: hide
 editor_options: 
   chunk_output_type: console
 ---
@@ -52,6 +53,7 @@ Before we begin, a big thank you goes to Dominic Roye's blog post on [distances 
 In contrast to previous blog posts of mine this one will not display code or raw data. However, I invite you to explore the [full source code](https://github.com/AmitLevinson/amitlevinson.com/blob/master/content/post/ice-cream-locations/index.Rmd) to learn what's done under the hood.
 
 ```{r echo = FALSE}
+# Note - when evaluating code run from local project, otherwise files aren't identified properly.
 library(dplyr)
 library(readr)
 library(purrr)
@@ -150,7 +152,7 @@ grid <- readRDS("rds/grid.rds")
 grid_wgs <- read_rds("rds/grid_wgs.rds")
 ```
 
-```{r echo = FALSE}
+```{r echo = TRUE}
 theme_set(theme_void()+
             theme(text = element_text("IBM Plex Sans"),
                   plot.title = element_text(color = "#0C0C44", face = "bold")))
@@ -171,11 +173,12 @@ On the left we have our map of Israel, and on the right the same map after we 'c
 
 In practical terms, here's an example of distances from one random grid to a few random Golda locations:
 
-```{r echo = FALSE}
+```{r echo = TRUE}
 # Create a sampled dataframe
 dataum <- data.frame(
   geometry = st_geometry(golda_projected[3:9,]),
-  location_grid = st_centroid(rep(grid_wgs[350,],7)))
+  location_grid = st_centroid(rep(grid_wgs[350],7)))
+
 
 # Our data points projected to a 
 data_lines <- map_dfc(dataum, ~ st_transform(.x, crs = 2039)) 
@@ -196,7 +199,7 @@ point_labels <- data.frame(x = c(34.802,34.95968, 34.79946),
 ggplot(isr_map_sf)+
   geom_sf()+
   geom_point(data = sample_data,mapping= aes(x = golda.x, y = golda.y, color = relevant), size = 1.2)+
-  geom_sf(data = grid_wgs[350,], aes(geometry = geometry), fill = "red", color = "red")+
+  geom_sf(data = grid_wgs[350], aes(geometry = geometry), fill = "red", color = "red")+
   geom_spatial_segment(data = sample_data, mapping = aes(x = us.x, xend = golda.x, y = us.y, yend = golda.y, linetype = relevant, color = relevant), show.legend = FALSE)+
   geom_spatial_text_repel(data = sample_data, mapping = aes(x = golda.x,  y = golda.y, label = distance, color = relevant), crs = 4326, hjust = 0.5, size = 3.5)+
   geom_text_repel(data = point_labels, mapping = aes(x = x, y = y, label = label), xlim = c(35.5,36), point.padding = 0.1,  arrow = arrow(length = unit(0.015, "npc"), type = "closed"), segment.linetype = 8, color = "gray55", segment.color = "gray80", size = 3)+
@@ -221,7 +224,8 @@ We divide Israel into grids and measure the distance between each grid cell to a
 
 Once we understand how each grid's nearest ice-cream location distance is found we can measure accordingly for all grids. Following that we can create a map of our grid cells filled with color indicating the distance to the nearest Golda ice-cream location:
 
-```{r echo = FALSE}
+
+```{r, echo = TRUE}
 # Commented out and loaded as an rds instead. Calculate distances:
 # distances <- st_distance(golda_meters, st_centroid(grid)) %>% 
 # as_tibble()
@@ -238,9 +242,8 @@ golda_distances <- data.frame(
   location_id = map_dbl(distances, function(x) match(min(x), x))) %>% 
   # Join with the ice-cream table
   left_join(golda_projected, by = c("location_id" = "id"))
-```
 
-```{r, eval = FALSE, echo = FALSE}
+
 # We don't evaluate this as I saved it as a widget instead.
 # ice_cream_icon <-  makeIcon("ice-cream.png", iconWidth = 6, iconHeight = 8)
 
@@ -252,8 +255,8 @@ bins <- c(0,5,15,30,50,70)
 # Create a binned color palette
 pal <- colorBin(c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC"), domain = golda_distances$distance_km, bins = bins, reverse = TRUE)
 
-#Pink colors more vary:
-c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC")
+#Pink colors more variance:
+# c("#FF1554", "#FF3C70", "#FF7096", "#FFA4BC", "#FFE5EC")
 
 	#ff084a
 # Function to create the labels indicating distances
@@ -283,6 +286,7 @@ full_map <- leaflet() %>%
 # htmlwidgets::saveWidget(full_map, "widgets/full_map.html")
 ```
 
+
 <p align = "center">
 <iframe width ="95%" height="550px" name ="iframe" src="widgets/full_map.html"></iframe>
 <newcaption>Distance to the nearest Golda ice-cream location from the center of a 2km$^2$ grid cell. Zoom in and click on a grid for more info on the nearest ice-cream location</newcaption>
@@ -303,8 +307,7 @@ We could also level up the map and have the distance measured from a specific lo
 
 We can visualize it on a static map enabling us to easily share it as an image:
 
-```{r, echo = FALSE, fig.align='center'}
-
+```{r, echo = TRUE, fig.align='center'}
 # Using the interactive original object we can create a
 # static map:
 golda_distances <- data.frame(
@@ -337,7 +340,10 @@ ggplot(golda_distances, color = "gray55")+
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 7),
         legend.key.size = unit(3,"mm"))
+```
 
+
+```{r, echo = FALSE, fig.align='center'}
 # ggsave("imgs/Golda.png", width = 4, height = 7)
 ```
 <center>
@@ -369,7 +375,7 @@ distances_rds <- st_distance(golda_meters, st_centroid(grid_rds)) %>%
 ```
 
 
-```{r, echo = FALSE}
+```{r, echo = TRUE}
 # Israel map
 isr_map_rds_raw <- readRDS("maps/00_Israel_0_sf.rds")
 # write_rds(grid_rds, "rds/grid_green.rds")
@@ -403,7 +409,10 @@ ggplot(golda_distances_rds)+
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 7),
         legend.key.size = unit(3,"mm"))
+```
 
+
+```{r, echo = FALSE}
 # ggsave("imgs/Golda_wo.png", width = 4, height = 7)
 ```
 <center>

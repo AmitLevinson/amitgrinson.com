@@ -22,7 +22,7 @@ font = "amit"
 
 # Choose a font size.
 # Sizes: XS (extra small), S (small), M (medium), L (large - DEFAULT), XL (extra large)
-font_size = "M"
+font_size = "L"
 
 ############################
 ## Basic Info
@@ -272,3 +272,15 @@ link_authors = true
 [marketing]
   google_analytics = "UA-156329952-1"
   google_tag_manager = ""
+
+
+############################
+## Code folding
+############################
+
+# Set to true to disable code folding
+disable_codefolding = false
+# Set to "hide" or "show" all codes by default
+codefolding_show = "show"
+# Set to true to exclude the "Show/hide all" button
+codefolding_nobutton = false

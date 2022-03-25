@@ -16,6 +16,7 @@ image:
   preview_only: yes
 draft: false
 projects: []
+disable_codefolding: true
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
