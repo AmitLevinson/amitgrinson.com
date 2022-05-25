@@ -1,0 +1,49 @@
+---
+title: SQL Frequent Errors and Pitfalls
+author: Amit Levinson
+date: '2020-05-15'
+slug: sql-frequent-errors
+categories: [SQL]
+tags: []
+subtitle: ''
+summary: "Common errors and pitfalls when working with SQL"
+authors: []
+lastmod: ''
+featured: true
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: true
+projects: []
+draft: true
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
+```
+
+```{css}
+newcaption {
+  font-size: 0.9em;
+  text-align: center
+}
+```
+
+<p align = "center">
+<img alt = 'A figure of an animated R Icon' src = '/img/year-in-r/r-img.png'>
+<newcaption> Image by [Allison Horst](https://allisonhorst.github.io/)</newcaption>
+</p>
+
+### Group By
+
+
+### Joining and selecting the wrong columns
+
+
+### Joining and getting multiple rows
+
+
+### Percentages
+
+
+### 
