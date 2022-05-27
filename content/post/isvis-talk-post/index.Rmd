@@ -1,0 +1,49 @@
+---
+title: Visualizations together — Community visualization challenges and their educational inspiration (Talk summary)
+author: Amit Levinson
+date: '2022-05-31'
+slug: isvis-talk-post
+categories: []
+tags: []
+subtitle: ''
+summary: "Summarizing the things I love about and learned from data visualization challenges as part of a talk I gave at the Israeli visualization conference, 2022"
+authors: []
+lastmod: ''
+featured: true
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: true
+projects: []
+draft: true
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
+```
+
+```{css}
+newcaption {
+  font-size: 0.9em;
+  text-align: center
+}
+```
+
+A few weeks ago (May 12, 2022) I gave a talk about my experience in several data visualization challenges I took part in. It was a great experience summarizing what I took from these challenges and while you can find a recording of it, I thought I'd summarise it for those who enjoy reading.
+
+I'll also take this opportunity to thank my wife — the night the call for talks closed I came to her and said "That's it, I'm not going to submit anything to ISVIS, I don't have anything to share". Luckily she convinced me otherwise, and this talk was born out of that process. Thank you.
+
+### Data visualization challenges and their educational inspiration
+
+I've actually come across data visualization challenges somewhat by chance. The reason I started participating in these challenges (at least the first one we'll see later) was to be able to manipulate and analyze data, so that when my thesis data will arrive I'll easily analyze it. I've document the process beforehand, [recapping my year of learning R]()
+
+
+
+
+
+
+
+<center>
+`r blogdown::shortcode('tweet','1174364639427272706')` 
+<newcaption>First visualization and participation in TidyTuesday</newcaption>
+</center>  
