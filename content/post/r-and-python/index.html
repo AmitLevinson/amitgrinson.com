@@ -1,0 +1,122 @@
+---
+title: R vs Python — Recap of a live stream
+author: Amit Levinson
+date: '2022-06-03'
+slug: r-and-python
+categories: [R]
+tags: [R, Streaming, Python]
+subtitle: 'Questions and answers from the live stream of R vs Python'
+summary: 'Answers to seven questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
+featured: yes
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+draft: true
+codefolding_show: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/font-awesome/js/script.js"></script>
+
+
+<pre class="python"><code>import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns</code></pre>
+<style type="text/css">
+newcaption {
+  font-size: 0.9em;
+  text-align: center;
+}
+</style>
+<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I live streamed an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a> cleaned it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
+<p>Besides it being a great experience collobarting with Tal, I think the questions overall touched on various aspects of our data analysis workflows. Hope you enjoy solving the questions and let us know if you liked the stream or came up with a different solution!</p>
+<div id="how-should-you-read-this-post" class="section level4">
+<h4>How should you read this post?</h4>
+<p>My recommendation would be to <strong>first try solving the questions yourself.</strong> You can find the data-files in the link below:</p>
+<a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
+<button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
+</a>
+<p>Great, now that you have the data, answer the following questions with any tool you’d like and as long as it takes you. Once you have the solutions you can check them with our sultions below.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+<p><iframe src="https://www.youtube.com/watch?v=oO8MZWk07q0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe></p>
+</div>
+<p>{{&lt; youtube id=“oO8MZWk07q0” &gt;}}</p>
+</div>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
+<p><a href="#q1">1. Load the files into memory and combined them into a single Dataframe</a></p>
+<p><a href="#q2">2. Describe the data using a summary function of sort</a></p>
+<p>asda</p>
+<p>asd</p>
+<div id="q1" class="section level6">
+<h6>1. Load the files into memory and combined them into a single Dataframe</h6>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
+<pre class="python"><code>all_files = []
+for file in os.listdir(&quot;split_data/&quot;):
+    if not file.endswith(&quot;csv&quot;):
+        continue
+    all_files.append(pd.read_csv(&quot;split_data/&quot;+file))
+
+df = pd.concat(all_files, ignore_index=True)
+
+df</code></pre>
+<pre><code>##       owner_id    age gender  ...  dog_gender    dog_color     dog_dob
+## 0       124913  41-50      w  ...           m    saufarben  1996-11-10
+## 1        84494  61-70      w  ...           w  schwarz/rot  1997-08-10
+## 2        85293  81-90      w  ...           w  beige/weiss  1997-09-10
+## 3        80204  51-60      w  ...           m   dreifarbig  1998-08-10
+## 4        80399  61-70      w  ...           m     tricolor  1998-08-10
+## ...        ...    ...    ...  ...         ...          ...         ...
+## 7150    135725  31-40      w  ...           w   gelb/weiss  2016-03-10
+## 7151    135726  11-20      w  ...           w      schwarz  2016-09-10
+## 7152    135728  31-40      w  ...           w   vierfarbig  2016-02-10
+## 7153    135731  21-30      m  ...           m      schwarz  2016-12-10
+## 7154     67272  31-40      w  ...           w     tricolor  2017-05-10
+## 
+## [7155 rows x 14 columns]</code></pre>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
+<pre class="r"><code>files &lt;- paste0(&quot;split_data/&quot;,list.files(path = &quot;split_data/&quot;))
+dogs &lt;- map_dfr(files, read_csv, col_types = cols())
+
+dogs</code></pre>
+<pre><code>## # A tibble: 7,155 × 14
+##    owner_id age   gender city_district quarter primary_breed           is_hybrid
+##       &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;    
+##  1   124913 41-50 w                 11     115 Spitz                   Mischling
+##  2    84494 61-70 w                 10     102 Dachshund               &lt;NA&gt;     
+##  3    85293 81-90 w                 11     115 Malteser                Mischling
+##  4    80204 51-60 w                 11     111 Appenzeller             &lt;NA&gt;     
+##  5    80399 61-70 w                 12     123 Appenzeller             Mischling
+##  6    82293 71-80 w                  2      24 Mischling klein         &lt;NA&gt;     
+##  7    82452 61-70 w                 10     102 Dachshund               &lt;NA&gt;     
+##  8    82452 61-70 w                 10     102 Dachshund               &lt;NA&gt;     
+##  9    83136 71-80 m                  3      31 Mischling klein         &lt;NA&gt;     
+## 10    83476 61-70 w                 11     119 West Highland White Te… &lt;NA&gt;     
+## # … with 7,145 more rows, and 7 more variables: secondary_breed &lt;chr&gt;,
+## #   is_secondary_hybrid &lt;lgl&gt;, breed_type &lt;chr&gt;, dog_yob &lt;dbl&gt;,
+## #   dog_gender &lt;chr&gt;, dog_color &lt;chr&gt;, dog_dob &lt;date&gt;</code></pre>
+<p>In order to iteratively read the files we create a vector <code>files</code> with the relevant paths to all files, and then load them using <code>map_dfr</code>. The latter runs <code>read_csv</code> on every element of <code>files</code>, our data files, and binds the rows together to one dataframe.</p>
+</div>
+<div id="q2" class="section level6">
+<h6>2. Describe the data using a summary function of sort</h6>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
+<pre class="python"><code>df.describe(percentiles=[0.2,0.8])</code></pre>
+<pre><code>##             owner_id  city_district  ...  is_secondary_hybrid      dog_yob
+## count    7155.000000    7154.000000  ...                  0.0  7155.000000
+## mean   105854.243326       7.413195  ...                  NaN  2009.803215
+## std     21260.952718       3.261187  ...                  NaN     4.115384
+## min       126.000000       1.000000  ...                  NaN  1996.000000
+## 20%     87256.000000       4.000000  ...                  NaN  2006.000000
+## 50%    105784.000000       8.000000  ...                  NaN  2010.000000
+## 80%    126879.800000      11.000000  ...                  NaN  2014.000000
+## max    135731.000000      12.000000  ...                  NaN  2017.000000
+## 
+## [8 rows x 5 columns]</code></pre>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
+</div>
+</div>

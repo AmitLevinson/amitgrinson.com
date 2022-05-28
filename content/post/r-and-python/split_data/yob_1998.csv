@@ -1,0 +1,12 @@
+owner_id,age,gender,city_district,quarter,primary_breed,is_hybrid,secondary_breed,is_secondary_hybrid,breed_type,dog_yob,dog_gender,dog_color,dog_dob
+80204,51-60,w,11,111,Appenzeller,NA,NA,NA,I,1998,m,dreifarbig,1998-08-10
+80399,61-70,w,12,123,Appenzeller,Mischling,NA,NA,I,1998,m,tricolor,1998-08-10
+82293,71-80,w,2,24,Mischling klein,NA,NA,NA,K,1998,w,schwarz,1998-06-10
+82452,61-70,w,10,102,Dachshund,NA,NA,NA,K,1998,w,schwarz/rot,1998-05-10
+82452,61-70,w,10,102,Dachshund,NA,NA,NA,K,1998,w,rot,1998-06-10
+83136,71-80,m,3,31,Mischling klein,NA,NA,NA,K,1998,m,schwarz,1998-05-10
+83476,61-70,w,11,119,West Highland White Terrier,NA,NA,NA,K,1998,w,weiss,1998-03-10
+87819,61-70,w,7,72,Jack Russel Terrier,Mischling,NA,NA,K,1998,m,rot/weiss,1998-04-10
+89399,71-80,m,12,122,American Staffordshire Terrier,NA,NA,NA,II,1998,m,braun/schwarz,1998-07-10
+90344,NA,m,NA,NA,Shih Tzu,NA,NA,NA,K,1998,w,schwarz,1998-10-10
+92357,41-50,w,3,34,Irish Terrier,NA,NA,NA,I,1998,w,braun,1998-06-10

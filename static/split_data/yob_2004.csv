@@ -1,0 +1,354 @@
+owner_id,age,gender,city_district,quarter,primary_breed,is_hybrid,secondary_breed,is_secondary_hybrid,breed_type,dog_yob,dog_gender,dog_color,dog_dob
+4215,41-50,w,8,81,Bergamasker,Mischling,NA,NA,I,2004,w,schwarz,2004-10-10
+6600,51-60,m,6,63,Mischling klein,NA,NA,NA,K,2004,m,braun,2004-08-10
+14362,61-70,m,7,72,Zwergdachshund,NA,NA,NA,K,2004,w,saufarben,2004-06-10
+40684,71-80,m,7,74,Labrador Retriever,NA,NA,NA,I,2004,m,blondfarben,2004-08-10
+60402,61-70,w,11,111,Border Terrier,NA,NA,NA,K,2004,m,rot/grau/schwarz,2004-01-10
+62621,71-80,m,11,111,Papillon,NA,NA,NA,K,2004,w,schwarz/weiss,2004-04-10
+64718,51-60,m,11,115,Mischling klein,NA,NA,NA,K,2004,w,weiss/braun,2004-09-10
+66913,51-60,m,8,83,Hovawart,NA,NA,NA,I,2004,w,blondfarben,2004-08-10
+67180,51-60,w,1,11,English Cocker Spaniel,NA,NA,NA,K,2004,w,blauschimmel,2004-01-10
+80011,41-50,w,12,123,Malteser,Mischling,NA,NA,K,2004,m,weiss,2004-04-10
+80017,61-70,m,6,61,Spanischer Wasserhund,NA,NA,NA,I,2004,w,braun/weiss,2004-08-10
+80096,51-60,w,11,111,Malteser,NA,NA,NA,K,2004,m,weiss,2004-05-10
+80330,71-80,w,12,123,Husky,NA,Appenzeller,NA,I,2004,w,braun/weiss,2004-07-10
+80552,51-60,w,10,101,Windspiel,NA,NA,NA,I,2004,w,beige/weiss,2004-10-10
+80604,71-80,m,7,72,Labrador Retriever,NA,NA,NA,I,2004,w,schwarz,2004-07-10
+80607,81-90,w,10,101,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-05-10
+80608,81-90,w,2,24,Deutscher Schäfer,NA,NA,NA,I,2004,w,schwarz/gelb,2004-06-10
+80719,61-70,w,11,111,Jack Russel Terrier,NA,NA,NA,K,2004,m,weiss/schwarz/braun,2004-07-10
+80890,61-70,m,7,73,Pinscher,Mischling,NA,NA,K,2004,w,tricolor,2004-05-10
+81054,51-60,w,1,11,Labrador Retriever,NA,Golden Retriever,NA,I,2004,m,gold/sable,2004-08-10
+81091,61-70,w,7,71,Labrador Retriever,NA,NA,NA,I,2004,m,braun,2004-02-10
+81195,61-70,w,10,102,Beagle,NA,NA,NA,K,2004,m,tricolor,2004-04-10
+81202,81-90,m,9,91,Toypudel,NA,NA,NA,K,2004,w,silber,2004-11-10
+81254,51-60,w,9,92,Tibet Terrier,NA,NA,NA,K,2004,m,weiss/schwarz,2004-01-10
+81397,51-60,w,8,83,Bobtail,NA,Bergamasker,NA,I,2004,w,grau,2004-01-10
+81441,71-80,w,8,81,Mischling klein,NA,NA,NA,K,2004,m,weiss,2004-07-10
+81468,71-80,w,5,51,Yorkshire Terrier,NA,West Highland White Terrier,NA,K,2004,m,schwarz/braun/weiss,2004-09-10
+81482,71-80,m,12,122,Katalanischer Hirtenhund,NA,NA,NA,I,2004,w,braun schwarz gestromt,2004-07-10
+81507,61-70,w,6,63,Mittelpudel,NA,NA,NA,K,2004,m,schwarz,2004-06-10
+81531,71-80,w,3,34,Mischling klein,NA,NA,NA,K,2004,w,rot/schwarz,2004-12-10
+81557,71-80,w,2,24,Labrador Retriever,Mischling,NA,NA,I,2004,w,schwarz,2004-01-10
+81674,81-90,w,10,101,Pekingese,Mischling,NA,NA,K,2004,m,schwarz/braun,2004-07-10
+81764,81-90,w,12,122,Coton de Tulear,NA,NA,NA,K,2004,m,weiss,2004-07-10
+82011,71-80,m,7,74,Bergamasker,NA,NA,NA,I,2004,w,grau meliert,2004-02-10
+82284,81-90,w,2,24,Zwergpudel,NA,NA,NA,K,2004,m,braun/weiss,2004-01-10
+82369,61-70,m,2,24,Mischling klein,NA,NA,NA,K,2004,w,schwarz/braun,2004-05-10
+82435,71-80,w,7,73,Jack Russel Terrier,NA,NA,NA,K,2004,w,weiss/beige,2004-01-10
+82439,81-90,m,7,74,Mischling gross,NA,NA,NA,I,2004,m,braun,2004-01-10
+82474,71-80,w,3,31,Kromfohrländer,NA,NA,NA,I,2004,w,weiss/braun,2004-09-10
+82538,61-70,w,7,71,Dachshund,NA,NA,NA,K,2004,m,braun,2004-07-10
+82567,61-70,w,7,71,Papillon,NA,NA,NA,K,2004,m,weiss/braun,2004-10-10
+82660,71-80,w,7,74,Schäfer,NA,Appenzeller Sennenhund,NA,I,2004,m,tricolor,2004-04-10
+82706,71-80,w,7,74,Tibet Terrier,NA,NA,NA,K,2004,m,schwarz/weiss,2004-01-10
+82720,71-80,w,7,74,Flat Coated Retriever,NA,NA,NA,I,2004,w,braun,2004-05-10
+82852,61-70,w,9,92,Chinese Crested Powderpuff,NA,NA,NA,K,2004,m,braun/weiss,2004-03-10
+82934,51-60,m,2,23,Samojede,NA,NA,NA,I,2004,w,weiss,2004-07-10
+83237,51-60,w,9,92,Riesenschnauzer,NA,NA,NA,I,2004,m,schwarz,2004-03-10
+83308,51-60,w,4,41,Yorkshire Terrier,Mischling,NA,NA,K,2004,m,grau,2004-10-10
+83313,61-70,w,9,92,Appenzeller,Mischling,NA,NA,I,2004,m,schwarz/weiss,2004-09-10
+83455,71-80,m,10,101,Mischling gross,NA,NA,NA,I,2004,m,braun,2004-10-10
+83523,51-60,w,8,83,Katalanischer Hirtenhund,NA,NA,NA,I,2004,w,sandfarbig,2004-04-10
+83547,71-80,w,11,115,West Highland White Terrier,NA,NA,NA,K,2004,m,weiss,2004-09-10
+83564,71-80,m,10,101,Zwergdackel,NA,NA,NA,K,2004,m,schwarz/rot,2004-12-10
+83645,51-60,m,9,91,Langhaardackel,NA,NA,NA,K,2004,m,rot,2004-07-10
+83651,51-60,m,3,31,Flat Coated Retriever,NA,NA,NA,I,2004,w,schwarz/grau,2004-01-10
+83946,71-80,w,9,91,Golden Retriever,Mischling,NA,NA,I,2004,w,golden,2004-05-10
+84094,81-90,m,9,91,Border Collie,NA,NA,NA,I,2004,w,schwarz/weiss,2004-04-10
+84155,71-80,m,10,101,Border Collie,NA,Appenzeller,NA,I,2004,w,schwarz/weiss,2004-02-10
+84414,51-60,w,9,92,Mittelpudel,NA,NA,NA,K,2004,m,dunkelbraun,2004-08-10
+84602,71-80,w,6,63,Dachsbracke,Mischling,NA,NA,K,2004,w,braun,2004-02-10
+84804,51-60,w,9,92,Jack Russel Terrier,NA,NA,NA,K,2004,w,tricolor,2004-06-10
+84961,71-80,w,2,21,Pudel,NA,NA,NA,K,2004,w,schwarz,2004-02-10
+85022,51-60,w,9,92,Foxterrier,NA,NA,NA,K,2004,w,tricolor,2004-09-10
+85077,81-90,m,10,101,Dachshund,NA,NA,NA,K,2004,w,schwarz,2004-08-10
+85089,61-70,m,9,92,Appenzeller,Mischling,NA,NA,I,2004,w,dunkelbraun,2004-03-10
+85152,61-70,m,6,61,Mischling klein,NA,NA,NA,K,2004,m,beige,2004-12-10
+85306,61-70,w,11,111,Prager Rattler,NA,NA,NA,K,2004,m,goldbraun,2004-12-10
+85375,81-90,m,7,74,Zwergdackel,NA,NA,NA,K,2004,m,rot/braun,2004-08-10
+85426,71-80,w,12,122,Belgischer Schäfer,NA,NA,NA,I,2004,w,gold/schwarz,2004-05-10
+85485,51-60,w,11,119,Whippet,NA,NA,NA,I,2004,w,rot/schwarz,2004-01-10
+85495,61-70,w,7,74,Labrador Retriever,NA,NA,NA,I,2004,m,braun,2004-06-10
+85505,71-80,m,7,74,Border Collie,NA,NA,NA,I,2004,m,weiss/schwarz,2004-04-10
+85539,51-60,w,7,74,Bergamasker,NA,NA,NA,I,2004,w,schwarz/grau,2004-01-10
+85589,71-80,w,11,111,Königspudel,NA,NA,NA,I,2004,w,schwarz,2004-09-10
+85645,71-80,w,11,111,Border Terrier,NA,NA,NA,K,2004,m,rot/grau/schwarz,2004-10-10
+85673,61-70,w,6,63,Münsterländer,Mischling,NA,NA,I,2004,m,weiss/braun,2004-01-10
+85723,71-80,w,8,82,Mischling klein,NA,NA,NA,K,2004,w,schwarz,2004-02-10
+85751,71-80,m,2,21,Bearded Collie,NA,NA,NA,I,2004,m,schwarz/grau/weiss,2004-06-10
+86046,71-80,w,7,72,King Charles Spaniel,NA,NA,NA,K,2004,w,dreifarbig,2004-01-10
+86328,41-50,w,11,119,Podenco,Mischling,NA,NA,I,2004,w,weiss/beige,2004-10-10
+86388,51-60,m,2,23,Golden Retriever,NA,NA,NA,I,2004,m,blondfarben,2004-05-10
+86391,41-50,w,3,33,Mischling klein,NA,NA,NA,K,2004,w,weiss,2004-06-10
+86837,51-60,w,7,72,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-11-10
+86872,71-80,m,5,51,Jack Russel Terrier,NA,NA,NA,K,2004,m,schwarz/weiss,2004-05-10
+86901,41-50,w,2,24,Border Collie,NA,Bergamasker,NA,I,2004,m,tricolor,2004-12-10
+86923,51-60,w,7,74,Entlebucher,Mischling,NA,NA,I,2004,w,schwarz/weiss/braun,2004-05-10
+86939,61-70,w,10,101,Hirtenhund,NA,Pyrenäen,NA,I,2004,w,schwarz,2004-08-10
+86998,71-80,w,7,72,Bergamasker,NA,NA,NA,I,2004,w,tricolor,2004-10-10
+87123,51-60,w,3,33,Mischling klein,NA,NA,NA,K,2004,m,schwarz,2004-12-10
+87158,31-40,w,2,23,Labrador Retriever,NA,Boxer,NA,I,2004,w,tricolor,2004-06-10
+87174,31-40,m,9,92,Mischling klein,NA,NA,NA,K,2004,w,braun/weiss,2004-09-10
+87304,41-50,m,11,119,Jack Russel Terrier,Mischling,NA,NA,K,2004,w,beige/weiss,2004-10-10
+87334,61-70,m,9,92,Labrador Retriever,NA,NA,NA,I,2004,m,schwarz,2004-07-10
+87385,81-90,w,2,23,Pudel,NA,NA,NA,K,2004,w,schwarz,2004-01-10
+87504,51-60,w,7,72,Riesenschnauzer,NA,NA,NA,I,2004,w,schwarz,2004-03-10
+87619,51-60,w,10,102,Schäfer,NA,Schnauzer,NA,I,2004,m,braun/schwarz,2004-01-10
+87626,71-80,m,12,123,Labrador Retriever,Mischling,NA,NA,I,2004,m,hellbraun,2004-06-10
+87760,51-60,m,9,91,Beagle,NA,NA,NA,K,2004,m,tricolor,2004-10-10
+87801,51-60,m,11,111,Mischling klein,NA,NA,NA,K,2004,m,hellbraun,2004-07-10
+87804,71-80,w,11,115,Border Terrier,NA,NA,NA,K,2004,w,blue/tan,2004-01-10
+87830,61-70,m,11,119,Mischling klein,NA,NA,NA,K,2004,w,braun/schwarz,2004-11-10
+87839,61-70,w,11,119,Mischling klein,NA,NA,NA,K,2004,m,beige,2004-03-10
+87860,61-70,m,7,74,Welsh Springer Spaniel,NA,NA,NA,I,2004,w,rot/weiss,2004-07-10
+87864,61-70,w,9,91,English Setter,Mischling,NA,NA,I,2004,w,beige/rot,2004-01-10
+87876,41-50,m,9,91,Terrier,NA,Toy Pudel,NA,K,2004,w,schwarz,2004-05-10
+87882,41-50,w,2,21,Mischling klein,NA,NA,NA,K,2004,m,schwarz/grau/weiss,2004-06-10
+87899,61-70,w,7,72,Cairn Terrier,NA,NA,NA,K,2004,m,brindle,2004-10-10
+87905,51-60,w,6,63,Coton de Tulear,NA,NA,NA,K,2004,m,weiss,2004-08-10
+87908,71-80,m,2,23,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-03-10
+87931,51-60,w,11,119,Labrador Retriever,NA,Golden Retriever,NA,I,2004,m,gelb,2004-10-10
+87932,51-60,m,10,102,Riesenschnauzer,NA,NA,NA,I,2004,w,schwarz,2004-11-10
+87941,71-80,w,7,74,Border Terrier,NA,NA,NA,K,2004,w,blue/tan,2004-03-10
+87947,51-60,m,10,102,Münsterländer,NA,NA,NA,I,2004,w,schwarz/weiss,2004-12-10
+87954,51-60,m,8,82,Lagotto Romagnolo,NA,NA,NA,I,2004,m,weiss/schwarz,2004-01-10
+87964,51-60,w,12,122,Mischling klein,NA,NA,NA,K,2004,w,schwarz,2004-04-10
+87966,41-50,w,11,115,Labrador Retriever,NA,Appenzeller,NA,I,2004,w,schwarz/weiss/braun,2004-10-10
+87990,51-60,w,7,72,Berger des Pyrenées,NA,NA,NA,I,2004,m,fauve,2004-07-10
+88014,31-40,m,3,31,Terrier,Mischling,NA,NA,K,2004,m,braun,2004-01-10
+88017,31-40,m,9,92,Mischling klein,NA,NA,NA,K,2004,m,schwarz/weiss,2004-05-10
+88031,51-60,w,2,23,Parson Jack Russell Terrier,NA,NA,NA,K,2004,m,tricolor,2004-04-10
+88046,51-60,w,6,63,Deutscher Schäfer,NA,NA,NA,I,2004,w,grau/braun,2004-03-10
+88061,41-50,w,9,91,Appenzeller Sennenhund,NA,NA,NA,I,2004,w,schwarz/braun/weiss,2004-12-10
+88068,61-70,m,9,91,Border Terrier,NA,NA,NA,K,2004,m,rot/braun,2004-01-10
+88071,51-60,w,5,52,Appenzeller,NA,NA,NA,I,2004,w,tricolor,2004-01-10
+88077,61-70,m,8,81,Irish Setter,Mischling,NA,NA,I,2004,w,golden,2004-05-10
+88081,71-80,w,7,74,Welsh Corgi,NA,NA,NA,K,2004,w,schwarz/weiss,2004-06-10
+88082,31-40,w,7,74,Alaskan Malamute,NA,NA,NA,I,2004,w,schwarz/grau/weiss,2004-04-10
+88084,41-50,w,10,101,Nova Scotia Duck Tolling Retriever,NA,NA,NA,I,2004,w,rot/weiss,2004-10-10
+88087,51-60,w,7,74,Kromfohrländer,NA,NA,NA,I,2004,m,weiss/braun,2004-11-10
+88095,81-90,m,10,101,Deutscher Schäfer,NA,NA,NA,I,2004,w,braun/schwarz,2004-08-10
+88108,71-80,w,11,111,Cairn Terrier,NA,NA,NA,K,2004,m,schwarz/rot,2004-02-10
+88118,31-40,w,10,101,Mops,NA,NA,NA,K,2004,w,beige,2004-01-10
+88137,61-70,m,7,73,Dachshund,NA,NA,NA,K,2004,m,schwarz/rot,2004-10-10
+88138,41-50,w,11,119,Terrier,Mischling,NA,NA,K,2004,m,schwarz/weiss,2004-11-10
+88151,71-80,w,12,122,Chow Chow,NA,NA,NA,I,2004,w,braun,2004-02-10
+88153,51-60,m,11,115,Labrador Retriever,NA,NA,NA,I,2004,m,gelb,2004-12-10
+88163,41-50,w,10,102,Mischling klein,NA,NA,NA,K,2004,w,braun,2004-01-10
+88171,41-50,w,7,74,Mischling klein,NA,NA,NA,K,2004,w,weiss/beige,2004-06-10
+88172,61-70,w,11,111,Zwergpinscher,NA,NA,NA,K,2004,m,braun,2004-04-10
+88189,71-80,w,8,83,Golden Retriever,NA,NA,NA,I,2004,w,golden,2004-08-10
+88190,61-70,w,11,115,Border Collie,Mischling,NA,NA,I,2004,w,schwarz/weiss/braun,2004-03-10
+88191,71-80,w,9,92,Appenzeller,NA,Entlebucher Sennenhund,NA,I,2004,w,tricolor,2004-02-10
+88196,71-80,w,11,111,Schäfer,NA,NA,NA,I,2004,w,schwarz/gelb,2004-12-10
+88203,61-70,w,7,73,Staffordshire Bull Terrier,NA,NA,NA,II,2004,m,schwarz,2004-01-10
+88217,41-50,m,6,63,Rhodesian Ridgeback,NA,NA,NA,I,2004,m,hellbraun,2004-04-10
+88218,51-60,w,4,42,Collie,Mischling,NA,NA,I,2004,w,weiss/schwarz/braun,2004-10-10
+88222,31-40,w,10,101,Schäfer,Mischling,NA,NA,I,2004,m,braun/weiss/schwarz,2004-11-10
+88229,31-40,w,3,33,Labrador Retriever,NA,NA,NA,I,2004,m,schwarz,2004-08-10
+88232,81-90,w,6,61,Golden Retriever,Mischling,NA,NA,I,2004,m,golden,2004-03-10
+88236,51-60,m,9,92,Labrador Retriever,Mischling,NA,NA,I,2004,m,schwarz,2004-09-10
+88242,61-70,w,8,82,Pekingese,Mischling,NA,NA,K,2004,w,hellbraun,2004-02-10
+88242,61-70,w,8,82,Mischling klein,NA,NA,NA,K,2004,m,weiss/rot,2004-12-10
+88251,41-50,w,4,44,Jack Russel Terrier,Mischling,NA,NA,K,2004,w,braun/weiss,2004-12-10
+88262,61-70,w,6,61,Shih Tzu,NA,NA,NA,K,2004,m,schwarz/weiss,2004-01-10
+88269,41-50,m,10,102,Mischling klein,NA,NA,NA,K,2004,w,schwarz,2004-05-10
+88280,61-70,m,1,13,Mischling klein,NA,NA,NA,K,2004,m,schwarz,2004-11-10
+88294,41-50,m,11,115,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-08-10
+88302,41-50,w,12,123,American Staffordshire Terrier,NA,Pit Bull Terrier,NA,II,2004,m,schwarz,2004-09-10
+88304,51-60,w,7,72,West Highland White Terrier,NA,NA,NA,K,2004,m,weiss,2004-02-10
+88305,51-60,w,2,23,Lhasa Apso,NA,NA,NA,K,2004,w,sandfarbig,2004-12-10
+88320,51-60,w,2,23,Bichon frisé,NA,NA,NA,K,2004,m,weiss,2004-01-10
+88331,41-50,w,11,115,Podenco,Mischling,NA,NA,I,2004,w,hellbraun,2004-01-10
+88337,41-50,w,3,33,Yorkshire Terrier,NA,NA,NA,K,2004,m,schwarz/braun,2004-05-10
+88345,61-70,m,12,123,Gordon Setter,NA,NA,NA,I,2004,m,schwarz/braun,2004-10-10
+88350,41-50,w,9,92,Zwergpinscher,NA,NA,NA,K,2004,m,rot/braun,2004-03-10
+88353,41-50,m,7,72,Labrador Retriever,NA,NA,NA,I,2004,w,blondfarben,2004-09-10
+88360,71-80,w,3,33,Tervueren,NA,NA,NA,I,2004,w,braun/schwarz,2004-02-10
+88364,61-70,w,11,119,Yorkshire Terrier,NA,NA,NA,K,2004,w,blue/tan,2004-12-10
+88366,41-50,w,3,34,Yorkshire Terrier,NA,NA,NA,K,2004,m,schwarz/braun,2004-07-10
+88380,61-70,m,9,91,Rehpinscher,NA,NA,NA,K,2004,m,braun,2004-01-10
+88398,61-70,w,9,92,Lhasa Apso,NA,NA,NA,K,2004,m,schwarz/weiss,2004-09-10
+88401,61-70,w,11,115,Tibet Terrier,NA,Spaniel,NA,K,2004,m,schwarz/braun,2004-02-10
+88402,61-70,w,8,83,Polski Owczarek Nizinny,NA,NA,NA,I,2004,m,schwarz/weiss,2004-07-10
+88408,61-70,m,11,111,Mischling klein,NA,NA,NA,K,2004,w,schwarz/braun,2004-05-10
+88422,51-60,m,11,115,Border Collie,NA,Appenzeller,NA,I,2004,m,schwarz/weiss,2004-11-10
+88437,61-70,m,9,92,Pekingese,NA,NA,NA,K,2004,m,braun/schwarz,2004-03-10
+88439,51-60,w,7,72,Terrier,Mischling,NA,NA,K,2004,m,hellbraun,2004-09-10
+88471,71-80,w,10,101,Yorkshire Terrier,NA,NA,NA,K,2004,w,braun/schwarz,2004-01-10
+88473,41-50,m,2,24,Jack Russel Terrier,NA,NA,NA,K,2004,w,weiss/schwarz/braun,2004-05-10
+88500,61-70,m,12,123,Labrador Retriever,NA,NA,NA,I,2004,w,schwarz,2004-12-10
+88516,61-70,w,12,123,Tibet Terrier,NA,Spaniel,NA,K,2004,m,braun/schwarz,2004-06-10
+88528,51-60,w,12,121,Volpino,NA,NA,NA,K,2004,w,beige/weiss,2004-08-10
+88567,61-70,w,6,63,Golden Retriever,Mischling,NA,NA,I,2004,m,schwarz,2004-11-10
+88579,61-70,w,2,21,Malteser,NA,NA,NA,K,2004,w,weiss,2004-02-10
+88580,51-60,w,9,92,Mischling klein,NA,NA,NA,K,2004,w,beige,2004-12-10
+88582,61-70,w,9,92,Pekingese,NA,NA,NA,K,2004,m,beige,2004-07-10
+88585,41-50,w,11,111,Jack Russel Terrier,NA,NA,NA,K,2004,m,tricolor,2004-01-10
+88590,21-30,w,12,122,Chow Chow,NA,NA,NA,I,2004,m,beige,2004-05-10
+88630,61-70,w,2,23,Golden Retriever,Mischling,NA,NA,I,2004,w,braun,2004-06-10
+88647,41-50,w,11,119,Volpino,NA,NA,NA,K,2004,m,weiss,2004-03-10
+88684,61-70,m,2,24,Appenzeller,Mischling,NA,NA,I,2004,m,schwarz/weiss,2004-01-10
+88752,51-60,w,2,23,Grosspudel,NA,NA,NA,I,2004,w,weiss,2004-04-10
+88762,51-60,w,10,101,Pinscher,Mischling,NA,NA,K,2004,w,beige,2004-11-10
+88937,41-50,w,9,91,Deutscher Schäfer,Mischling,NA,NA,I,2004,w,schwarz/grau,2004-03-10
+89000,41-50,w,1,11,Husky,Mischling,NA,NA,I,2004,m,blondfarben,2004-12-10
+89034,31-40,w,11,119,Jack Russel Terrier,NA,NA,NA,K,2004,m,tricolor,2004-02-10
+89080,41-50,w,2,21,Jack Russel Terrier,NA,NA,NA,K,2004,w,tricolor,2004-05-10
+89086,71-80,m,11,115,Chihuahua,NA,NA,NA,K,2004,m,braun,2004-10-10
+89090,61-70,w,12,122,Labrador Retriever,NA,NA,NA,I,2004,m,golden,2004-08-10
+89177,31-40,w,3,31,Chihuahua,NA,NA,NA,K,2004,m,weiss/braun,2004-12-10
+89271,41-50,w,6,63,Australian Terrier,NA,NA,NA,K,2004,m,braun/beige,2004-01-10
+89333,81-90,m,9,92,Appenzeller,Mischling,NA,NA,I,2004,m,braun/schwarz,2004-12-10
+89370,51-60,m,7,74,Malteser,NA,NA,NA,K,2004,m,weiss,2004-11-10
+89372,41-50,w,5,52,Scottish Terrier,NA,NA,NA,K,2004,m,weizen,2004-03-10
+89402,71-80,m,9,92,Collie,NA,NA,NA,I,2004,w,schwarz/weiss,2004-01-10
+89416,41-50,w,10,101,Border Terrier,NA,Jack Russel Terrier,NA,K,2004,w,beige,2004-08-10
+89496,41-50,w,11,115,Chihuahua,NA,NA,NA,K,2004,w,schwarz/weiss,2004-01-10
+89526,31-40,w,9,92,Appenzeller,NA,Jack Russel Terrier,NA,I,2004,m,tricolor,2004-07-10
+89533,61-70,w,10,101,Appenzeller,NA,Sennenhund,NA,I,2004,m,tricolor,2004-01-10
+89651,31-40,w,9,91,Chihuahua,NA,NA,NA,K,2004,w,braun,2004-02-10
+89689,31-40,w,6,63,Chihuahua,NA,NA,NA,K,2004,w,beige,2004-01-10
+89691,61-70,w,10,101,Chihuahua,NA,NA,NA,K,2004,m,beige,2004-06-10
+89704,41-50,w,10,101,Chihuahua,NA,NA,NA,K,2004,m,schwarz/weiss,2004-11-10
+89704,41-50,w,10,101,Chihuahua,NA,NA,NA,K,2004,w,schwarz/weiss,2004-08-10
+89709,51-60,w,9,92,Chihuahua,Mischling,NA,NA,K,2004,w,tricolor,2004-07-10
+89717,31-40,w,9,91,Münsterländer,Mischling,NA,NA,I,2004,w,weiss/braun,2004-05-10
+89760,71-80,w,3,33,Papillon,NA,NA,NA,K,2004,w,tricolor,2004-08-10
+89774,41-50,w,3,31,Parson Jack Russell Terrier,NA,NA,NA,K,2004,m,weiss/rot,2004-02-10
+90427,61-70,w,11,111,Labrador Retriever,NA,Appenzeller,NA,I,2004,w,braun/weiss,2004-06-10
+90441,51-60,m,8,83,Labrador Retriever,NA,NA,NA,I,2004,m,braun,2004-11-10
+90531,71-80,w,9,92,Chihuahua,NA,NA,NA,K,2004,m,braun,2004-11-10
+90683,51-60,m,4,44,Mischling klein,NA,NA,NA,K,2004,m,braun,2004-02-10
+90889,41-50,w,12,122,Mops,NA,Boston Terrier,NA,K,2004,w,beige/weiss,2004-04-10
+90990,71-80,w,7,74,Cairn Terrier,NA,NA,NA,K,2004,m,red-brindle,2004-10-10
+91084,31-40,w,7,71,Mischling klein,NA,NA,NA,K,2004,m,schwarz/braun,2004-05-10
+91256,41-50,m,9,91,Segugio,NA,Spinone,NA,I,2004,m,schwarz/braun/weiss,2004-07-10
+91280,71-80,w,11,119,Malteser,Mischling,NA,NA,K,2004,m,schwarz,2004-05-10
+91450,81-90,w,7,73,Berger des Pyrenées,NA,NA,NA,I,2004,m,creme,2004-02-10
+91952,81-90,m,6,63,Mischling klein,NA,NA,NA,K,2004,m,schwarz,2004-10-10
+92317,51-60,w,11,119,Mischling klein,NA,NA,NA,K,2004,w,tricolor,2004-01-10
+92619,51-60,m,6,63,Labrador Retriever,NA,Golden Retriever,NA,I,2004,m,blondfarben,2004-03-10
+93179,71-80,m,2,21,Labrador Retriever,Mischling,NA,NA,I,2004,m,beige,2004-07-10
+93262,71-80,w,12,122,Spitz,Mischling,NA,NA,K,2004,m,schwarz/weiss,2004-12-10
+93392,51-60,w,2,24,Riesenschnauzer,NA,NA,NA,I,2004,w,schwarz,2004-07-10
+94658,41-50,w,6,61,Mischling klein,NA,NA,NA,K,2004,w,schwarz/braun gestromt,2004-12-10
+94937,41-50,w,7,71,Malteser,NA,NA,NA,K,2004,w,weiss,2004-07-10
+95166,31-40,w,8,81,Parson Jack Russell Terrier,NA,NA,NA,K,2004,m,schwarz/braun,2004-01-10
+95646,31-40,w,10,101,Mischling klein,NA,NA,NA,K,2004,m,tricolor,2004-10-10
+95773,41-50,m,11,111,Bichon frisé,NA,NA,NA,K,2004,m,weiss,2004-10-10
+95911,51-60,m,11,111,Saluki,NA,NA,NA,I,2004,m,creme,2004-05-10
+96021,31-40,w,8,81,Pekingese,NA,Mischling klein,NA,K,2004,m,braun,2004-08-10
+96104,71-80,w,2,21,Collie,NA,NA,NA,I,2004,w,tricolor,2004-02-10
+96345,71-80,w,11,111,Coton de Tulear,Mischling,NA,NA,K,2004,m,weiss,2004-02-10
+97216,91-100,w,6,61,Mischling klein,NA,NA,NA,K,2004,w,rot,2004-01-10
+97282,41-50,m,2,21,Cairn Terrier,NA,NA,NA,K,2004,w,braun,2004-05-10
+97650,41-50,w,9,91,Labrador Retriever,NA,NA,NA,I,2004,w,blondfarben,2004-01-10
+97953,71-80,w,8,82,Tibet Terrier,NA,NA,NA,K,2004,w,schwarz/weiss,2004-01-10
+98244,61-70,w,2,21,Border Terrier,NA,NA,NA,K,2004,m,red grizzle,2004-10-10
+98380,51-60,m,8,81,Coton de Tulear,NA,NA,NA,K,2004,m,weiss,2004-07-10
+98466,41-50,w,10,101,Zwergpudel,Mischling,NA,NA,K,2004,m,schwarz,2004-03-10
+98515,51-60,m,4,41,Golden Retriever,NA,NA,NA,I,2004,w,golden,2004-09-10
+98521,81-90,w,8,83,Dackel,Mischling,NA,NA,K,2004,m,rot/braun,2004-12-10
+98534,61-70,w,11,111,Yorkshire Terrier,NA,NA,NA,K,2004,m,braun/schwarz,2004-07-10
+98612,61-70,w,11,111,Yorkshire Terrier,NA,NA,NA,K,2004,m,blue/tan,2004-07-10
+98706,51-60,w,7,74,Mischling klein,NA,NA,NA,K,2004,m,weiss/schwarz/braun,2004-12-10
+98776,31-40,w,11,119,Mischling klein,NA,NA,NA,K,2004,w,weiss/schwarz,2004-08-10
+99363,41-50,w,10,101,Irish Terrier,NA,NA,NA,I,2004,w,rot,2004-06-10
+99922,51-60,w,3,34,Dachshund,NA,NA,NA,K,2004,w,braun,2004-01-10
+100257,51-60,w,12,123,Chihuahua,NA,NA,NA,K,2004,w,schwarz/braun,2004-02-10
+100297,41-50,m,3,33,Parson Jack Russell Terrier,NA,NA,NA,K,2004,w,tricolor,2004-09-10
+100297,41-50,m,3,33,Parson Jack Russell Terrier,NA,NA,NA,K,2004,w,tricolor,2004-02-10
+100352,21-30,w,6,61,Bichon frisé,NA,NA,NA,K,2004,w,weiss,2004-10-10
+100391,41-50,w,6,63,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-08-10
+100394,41-50,m,10,101,Deutscher Schäfer,NA,NA,NA,I,2004,m,grau/braun/schwarz,2004-03-10
+101231,31-40,w,11,111,Border Collie,NA,NA,NA,I,2004,w,schwarz/weiss,2004-01-10
+103014,31-40,w,10,101,Niederlaufhund,Mischling,NA,NA,I,2004,w,dunkelbraun,2004-08-10
+103260,51-60,w,2,21,Terrier,Mischling,NA,NA,K,2004,m,braun/beige,2004-03-10
+104262,41-50,m,1,12,Mischling klein,NA,NA,NA,K,2004,w,schwarz,2004-11-10
+104405,41-50,w,5,52,Irish Terrier,NA,NA,NA,I,2004,m,rot,2004-01-10
+104406,41-50,m,9,92,Cocker Spaniel,NA,NA,NA,K,2004,w,golden,2004-01-10
+104750,61-70,w,10,102,Jack Russel Terrier,NA,NA,NA,K,2004,m,weiss/braun/schwarz,2004-12-10
+105228,31-40,m,9,92,Terrier,Mischling,NA,NA,K,2004,w,braun/beige,2004-07-10
+105273,61-70,m,10,101,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-11-10
+105384,41-50,w,7,72,Jack Russel Terrier,NA,NA,NA,K,2004,m,tricolor,2004-10-10
+105410,61-70,w,3,31,Shih Tzu,NA,NA,NA,K,2004,w,beige,2004-09-10
+106057,61-70,w,9,91,Lhasa Apso,NA,NA,NA,K,2004,m,weiss,2004-10-10
+106713,81-90,w,7,74,Katalanischer Schäferhund,NA,NA,NA,I,2004,m,wildfarbig,2004-09-10
+106839,31-40,w,9,91,Papillon,NA,NA,NA,K,2004,m,weiss/braun,2004-09-10
+107028,31-40,m,4,42,Bergamasker,Mischling,NA,NA,I,2004,m,weiss/braun,2004-02-10
+108060,21-30,w,4,42,Appenzeller,NA,Toller,NA,I,2004,m,braun/weiss,2004-01-10
+108077,41-50,w,2,23,Labrador Retriever,Mischling,NA,NA,I,2004,m,beige,2004-06-10
+108168,61-70,w,3,34,Mischling klein,NA,NA,NA,K,2004,w,braun,2004-12-10
+108233,41-50,w,7,71,Jack Russel Terrier,NA,NA,NA,K,2004,w,weiss/braun,2004-08-10
+108383,51-60,m,11,111,Pudel,Mischling,NA,NA,K,2004,m,schwarz,2004-10-10
+109007,51-60,m,8,82,Yorkshire Terrier,NA,Terrier,NA,K,2004,m,schwarz/braun,2004-12-10
+109198,51-60,w,10,101,Malteser,NA,Yorkshire Terrier,NA,K,2004,w,beige,2004-07-10
+110000,81-90,m,11,111,Foxterrier,NA,NA,NA,K,2004,m,tricolor,2004-08-10
+110085,41-50,m,11,119,Golden Retriever,NA,NA,NA,I,2004,w,golden,2004-01-10
+112003,31-40,w,11,119,Lhasa Apso,NA,NA,NA,K,2004,w,schwarz,2004-10-10
+113170,51-60,m,11,111,Jack Russel Terrier,NA,NA,NA,K,2004,m,weiss/schwarz,2004-01-10
+113999,61-70,m,9,92,Shih Tzu,NA,NA,NA,K,2004,m,weiss/schwarz,2004-01-10
+114112,51-60,w,6,63,West Highland White Terrier,NA,NA,NA,K,2004,m,weiss,2004-12-10
+114125,31-40,w,6,63,Zwergschnauzer,NA,NA,NA,K,2004,w,pfeffer/salz,2004-06-10
+115769,21-30,m,4,42,Pinscher,NA,Chihuahua,NA,K,2004,w,schwarz,2004-03-10
+116547,41-50,m,10,102,Malteser,Mischling,NA,NA,K,2004,w,weiss,2004-02-10
+116798,51-60,w,12,123,Malinois,Mischling,NA,NA,I,2004,m,hellbraun,2004-03-10
+116988,51-60,m,6,61,Grosspudel,NA,NA,NA,I,2004,w,weiss,2004-10-10
+118834,71-80,w,6,63,Golden Retriever,NA,NA,NA,I,2004,w,golden,2004-04-10
+119256,61-70,w,1,13,Havaneser,NA,NA,NA,K,2004,m,weiss,2004-02-10
+119810,61-70,w,3,33,Irish Wolfhound,NA,Setter,NA,I,2004,m,tricolor,2004-12-10
+120417,31-40,w,4,42,Französische Bulldogge,NA,NA,NA,K,2004,m,schwarz,2004-06-10
+121019,61-70,w,7,74,Collie,Mischling,NA,NA,I,2004,m,tricolor,2004-05-10
+121564,51-60,w,11,111,West Highland White Terrier,NA,NA,NA,K,2004,w,weiss,2004-06-10
+121718,31-40,m,11,119,Mischling klein,NA,NA,NA,K,2004,w,braun,2004-01-10
+122956,51-60,m,12,122,Pekingese,Mischling,NA,NA,K,2004,w,braun,2004-08-10
+124552,61-70,m,9,92,Coton de Tulear,NA,NA,NA,K,2004,m,weiss,2004-06-10
+124649,61-70,w,10,101,Dackel,NA,NA,NA,K,2004,w,braun,2004-02-10
+124910,41-50,w,8,81,Malteser,NA,NA,NA,K,2004,m,weiss,2004-04-10
+124929,51-60,w,7,74,Mischling klein,NA,NA,NA,K,2004,w,schwarz/braun,2004-03-10
+125237,31-40,w,2,23,Labrador Retriever,NA,NA,NA,I,2004,m,schwarz,2004-02-10
+125384,31-40,w,10,102,Mischling gross,NA,NA,NA,I,2004,w,braun,2004-02-10
+125633,51-60,w,7,71,Zwergdackel,NA,NA,NA,K,2004,m,saufarben,2004-11-10
+125809,71-80,w,10,101,Mischling gross,NA,NA,NA,I,2004,w,blondfarben,2004-09-10
+125852,71-80,w,12,123,Pudel,NA,NA,NA,K,2004,w,schwarz,2004-10-10
+125867,21-30,m,11,111,Shih Tzu,NA,NA,NA,K,2004,m,tricolor,2004-01-10
+125891,71-80,w,6,63,Kerry Blue Terrier,NA,NA,NA,I,2004,w,schwarz/grau,2004-03-10
+126027,41-50,w,6,61,Ratero,Mischling,NA,NA,K,2004,m,schwarz/weiss,2004-10-10
+126116,61-70,w,8,83,Rauhaar Dackel,NA,NA,NA,K,2004,m,saufarben,2004-07-10
+126271,71-80,w,10,101,Mischling klein,NA,NA,NA,K,2004,m,weiss/rot,2004-09-10
+126949,41-50,m,3,33,Kleinspitz,NA,NA,NA,K,2004,m,beige/schwarz,2004-08-10
+127095,21-30,w,11,115,Yorkshire Terrier,NA,NA,NA,K,2004,w,black/tan,2004-01-10
+127114,91-100,w,4,44,Pudel,NA,NA,NA,K,2004,m,schwarz,2004-11-10
+127215,61-70,w,11,119,Mischling klein,NA,NA,NA,K,2004,m,braun,2004-09-10
+127324,51-60,w,10,101,Labrador Retriever,NA,NA,NA,I,2004,m,schwarz,2004-07-10
+128067,51-60,w,7,72,Labrador Retriever,NA,Golden Retriever,NA,I,2004,m,gelb,2004-12-10
+128076,51-60,w,5,52,English Setter,NA,NA,NA,I,2004,m,tricolor,2004-07-10
+128114,31-40,w,7,73,Jack Russel Terrier,NA,NA,NA,K,2004,w,tricolor,2004-01-10
+128234,61-70,m,7,74,Deutscher Schäfer,NA,Border Collie,NA,I,2004,w,braun/schwarz,2004-12-10
+128404,31-40,w,10,102,Toy Pudel,NA,NA,NA,K,2004,w,weiss,2004-06-10
+128456,51-60,w,8,83,Mischling klein,NA,NA,NA,K,2004,w,beige,2004-10-10
+128615,71-80,m,6,61,Spaniel,Mischling,NA,NA,K,2004,w,braun/beige,2004-07-10
+128711,61-70,m,7,74,West Highland White Terrier,NA,NA,NA,K,2004,m,weiss,2004-01-10
+128914,41-50,w,6,63,Chihuahua,Mischling,NA,NA,K,2004,w,beige/braun,2004-04-10
+129005,61-70,m,1,13,Shih Tzu,NA,Pudel,NA,K,2004,w,schwarz/weiss,2004-07-10
+129681,21-30,w,10,102,Labrador Retriever,NA,Münsterländer,NA,I,2004,m,schwarz/weiss,2004-11-10
+130887,51-60,w,7,72,Zwergrauhaardackel,NA,NA,NA,K,2004,w,saufarben,2004-09-10
+130965,21-30,w,10,102,Cocker Spaniel,NA,NA,NA,K,2004,m,braun/weiss,2004-03-10
+131017,51-60,w,4,42,Coton de Tulear,NA,NA,NA,K,2004,m,weiss,2004-10-10
+131332,41-50,m,10,101,Spitz,NA,NA,NA,K,2004,m,weiss,2004-01-10
+131446,31-40,m,7,72,Golden Retriever,NA,NA,NA,I,2004,m,blondfarben,2004-07-10
+131666,81-90,w,11,111,Chihuahua,NA,NA,NA,K,2004,w,blau/weiss,2004-05-10
+132195,71-80,w,7,74,Mischling klein,NA,NA,NA,K,2004,m,beige,2004-02-10
+132580,51-60,w,7,72,Riesenschnauzer,NA,NA,NA,I,2004,w,schwarz,2004-01-10
+132672,71-80,w,2,24,Mischling klein,NA,NA,NA,K,2004,w,braun/weiss,2004-08-10
+132749,31-40,m,2,21,Golden Retriever,NA,NA,NA,I,2004,m,golden,2004-11-10
+133104,21-30,w,2,21,Flat Coated Retriever,NA,NA,NA,I,2004,w,schwarz,2004-02-10
+133450,41-50,w,2,24,Welsh Corgi,NA,NA,NA,K,2004,m,braun,2004-01-10
+133464,51-60,m,7,74,Welsh Terrier,NA,NA,NA,K,2004,w,black/tan,2004-04-10
+133526,61-70,m,7,72,Mischling gross,NA,NA,NA,I,2004,m,schwarz/weiss,2004-10-10
+133868,31-40,w,2,24,Golden Retriever,NA,Pudel,NA,I,2004,w,golden,2004-04-10
+133933,41-50,w,11,111,Laufhund,NA,Pointer,NA,I,2004,w,weiss/schwarz/braun,2004-01-10
+134875,51-60,m,7,71,Mischling klein,NA,NA,NA,K,2004,w,schwarz,2004-09-10
+135344,41-50,m,5,52,Labrador Retriever,NA,NA,NA,I,2004,m,schwarz,2004-05-10
