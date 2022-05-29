@@ -41,18 +41,24 @@ newcaption {
 <a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
 <button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
 </a>
-<p>Great, now that you have the data, answer the following questions with any tool you’d like and as long as it takes you. Once you have the solutions you can check them with our sultions below.</p>
+<p>Great, now that you have the data, answer the following questions with any tool you’d like and as long as it takes you. Once you have the solutions you can check them with our sultions below. If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 <p><iframe src="https://www.youtube.com/watch?v=oO8MZWk07q0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe></p>
 </div>
 <p>{{&lt; youtube id=“oO8MZWk07q0” &gt;}}</p>
 </div>
-<div id="questions" class="section level3">
-<h3>Questions</h3>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
 <p><a href="#q1">1. Load the files into memory and combined them into a single Dataframe</a></p>
 <p><a href="#q2">2. Describe the data using a summary function of sort</a></p>
-<p>asda</p>
-<p>asd</p>
+<p><a href="#q3">3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown.</a></p>
+<p><a href="#q4">4. What are the top 10 most common primary breeds by dog gender? Visualize it using a corresponding bar plot</a></p>
+<p><a href="#q6">5. Who (owner) has dogs with the largest age gap between them? What’s the gap value?</a></p>
+<p><a href="#q7">6. Save the Dataframe into an excel file where each sheet is a different age-group of owners</a></p>
+</div>
+<div id="answers" class="section level4">
+<h4>Answers</h4>
+<p>The following section has the answers to the questions in Python and R. You’ll find the questions, the code, output and a follow up explanation for the R code. The code is initially collapsed and hidden, so just click it to see it.</p>
 <div id="q1" class="section level6">
 <h6>1. Load the files into memory and combined them into a single Dataframe</h6>
 <p><strong>Python <i class="fab fa-python"></i></strong></p>
@@ -118,5 +124,438 @@ dogs</code></pre>
 ## 
 ## [8 rows x 5 columns]</code></pre>
 <p><strong>R <i class="fab fa-r-project"></i></strong></p>
+<pre class="r"><code>skimr::skim(dogs)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-8">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">dogs</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">7155</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">logical</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="21%" />
+<col width="13%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">age</td>
+<td align="right">1</td>
+<td align="right">1.00</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">gender</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">primary_breed</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">304</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">is_hybrid</td>
+<td align="right">6537</td>
+<td align="right">0.09</td>
+<td align="right">9</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">secondary_breed</td>
+<td align="right">6612</td>
+<td align="right">0.08</td>
+<td align="right">4</td>
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">118</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">breed_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">dog_gender</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">dog_color</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">169</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="12%" />
+<col width="17%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dog_dob</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">1996-11-10</td>
+<td align="left">2017-05-10</td>
+<td align="left">2010-08-10</td>
+<td align="right">226</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">is_secondary_hybrid</td>
+<td align="right">7155</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="14%" />
+<col width="10%" />
+<col width="9%" />
+<col width="5%" />
+<col width="8%" />
+<col width="7%" />
+<col width="9%" />
+<col width="7%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">owner_id</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">105854.24</td>
+<td align="right">21260.95</td>
+<td align="right">126</td>
+<td align="right">88587.5</td>
+<td align="right">105784</td>
+<td align="right">124634.5</td>
+<td align="right">135731</td>
+<td align="left">▁▁▁▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">city_district</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">7.41</td>
+<td align="right">3.26</td>
+<td align="right">1</td>
+<td align="right">5.0</td>
+<td align="right">8</td>
+<td align="right">10.0</td>
+<td align="right">12</td>
+<td align="left">▅▂▅▅▇</td>
+</tr>
+<tr class="odd">
+<td align="left">quarter</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">76.70</td>
+<td align="right">33.03</td>
+<td align="right">4</td>
+<td align="right">51.0</td>
+<td align="right">81</td>
+<td align="right">102.0</td>
+<td align="right">123</td>
+<td align="left">▂▃▆▅▇</td>
+</tr>
+<tr class="even">
+<td align="left">dog_yob</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2009.80</td>
+<td align="right">4.12</td>
+<td align="right">1996</td>
+<td align="right">2007.0</td>
+<td align="right">2010</td>
+<td align="right">2013.0</td>
+<td align="right">2017</td>
+<td align="left">▁▃▆▇▇</td>
+</tr>
+</tbody>
+</table>
+<p><code>skmir::skim</code> provides a summary of the data by column type. You can also use <code>summary</code> and <code>glimpse</code>.</p>
+</div>
+<div id="q3" class="section level5">
+<h5>3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown</h5>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
+<pre class="python"><code>melted = df[&#39;dog_color&#39;].str.split(&quot;/&quot;, expand=True).melt().copy()
+
+melted[&#39;value&#39;].value_counts()</code></pre>
+<pre><code>## schwarz                2349
+## weiss                  2207
+## braun                  1836
+## tricolor                696
+## beige                   622
+##                        ... 
+## bicolor                   1
+## schwarz melliert          1
+## hirschrot mit Maske       1
+## marronschimmel            1
+## rotblond                  1
+## Name: value, Length: 89, dtype: int64</code></pre>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
+<pre class="r"><code>dogs %&gt;% 
+  transmute(
+    new_color = strsplit(dog_color, split = &quot;/&quot;)
+    ) %&gt;% 
+  unnest() %&gt;% 
+  count(new_color, sort = T)</code></pre>
+<pre><code>## # A tibble: 89 × 2
+##    new_color     n
+##    &lt;chr&gt;     &lt;int&gt;
+##  1 schwarz    2349
+##  2 weiss      2207
+##  3 braun      1836
+##  4 tricolor    696
+##  5 beige       622
+##  6 rot         368
+##  7 grau        282
+##  8 tan         228
+##  9 hellbraun   170
+## 10 black       160
+## # … with 79 more rows</code></pre>
+<p>Our color column is comprised of several values in an observation. We need to split the string to single colors and then count them.</p>
+</div>
+<div id="q4" class="section level5">
+<h5>4. What are the top 10 most common primary breeds by dog gender? Visualize it using a corresponding bar plot</h5>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
+<pre class="python"><code>main_table = df[[&#39;dog_gender&#39;,&#39;primary_breed&#39;]].pivot_table(index=&#39;primary_breed&#39;, columns=&#39;dog_gender&#39;, aggfunc=len).copy()
+
+
+sorted_by_w = main_table.sort_values(&#39;w&#39;, ascending=False).head(10).copy()
+sorted_by_m = main_table.sort_values(&#39;m&#39;, ascending=False).head(10).copy()
+
+
+fig, axes = plt.subplots(1,2)
+
+fig.suptitle(&quot;This is a title&quot;, fontsize=18)
+
+sorted_by_w.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[0], figsize=(20,5))
+sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[1], figsize=(20,5))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="1920" /></p>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
+<pre class="r"><code>dogs %&gt;% 
+  count(dog_gender, primary_breed, sort = T) %&gt;% 
+  group_by(dog_gender) %&gt;% 
+  slice(1:10) %&gt;% 
+  ggplot(aes(y = reorder_within(primary_breed, by =  n, within = dog_gender), x = n)) +
+  geom_col() +
+  facet_wrap(vars(dog_gender), scales = &quot;free_y&quot;) +
+  scale_y_reordered() +
+  labs(y = NULL, title = &quot;This is a title&quot;)+
+  theme_minimal()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<p>We start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the <code>reorder_within</code>, a function from <code>tidytext</code> to reorder the categories within each facet, here the gender. Alternatively we can remove it and compare the primary breeds across gender.</p>
+</div>
+<div id="q6" class="section level5">
+<h5>5. Who (owner) has dogs with the largest age gap between them? What’s the gap value?</h5>
+<pre class="python"><code>df[&#39;dog_dob&#39;] = pd.to_datetime(df[&#39;dog_dob&#39;])
+gb = df[[&#39;owner_id&#39;, &#39;dog_dob&#39;]].groupby(&#39;owner_id&#39;).agg([min, max])
+
+gb.columns = [&quot;_&quot;.join(list(x)) for x in gb.columns]
+
+gb[&#39;diff&#39;] = (gb[&#39;dog_dob_max&#39;]-gb[&#39;dog_dob_min&#39;]).dt.days
+
+gb.sort_values(&#39;diff&#39;).tail(1)</code></pre>
+<pre><code>##          dog_dob_min dog_dob_max  diff
+## owner_id                              
+## 87158     2000-04-10  2015-10-10  5661</code></pre>
+<pre class="r"><code>dogs %&gt;% 
+  group_by(owner_id) %&gt;% 
+  filter(
+    n() &gt; 1,
+    dog_dob == min(dog_dob) | dog_dob == max(dog_dob)
+  ) %&gt;% 
+  select(owner_id, dog_dob) %&gt;% 
+  arrange(owner_id, dog_dob) %&gt;% 
+  summarise(
+    timediff = difftime(dog_dob, time2 = lag(dog_dob), units = &quot;days&quot;)
+  ) %&gt;% 
+  fill(timediff, .direction = &quot;up&quot;) %&gt;% 
+  arrange(-timediff)</code></pre>
+<pre><code>## # A tibble: 1,153 × 2
+## # Groups:   owner_id [576]
+##    owner_id timediff 
+##       &lt;dbl&gt; &lt;drtn&gt;   
+##  1    87158 5661 days
+##  2    87158 5661 days
+##  3    88250 5265 days
+##  4    88250 5265 days
+##  5   100112 5234 days
+##  6   100112 5234 days
+##  7   109472 4932 days
+##  8   109472 4932 days
+##  9   128461 4932 days
+## 10   128461 4932 days
+## # … with 1,143 more rows</code></pre>
+<p>I initiall start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. We arranged the dob within each owner’s group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.</p>
+<p>During the session [Adi Sarid] suggested another solution, more concise and to my liking:</p>
+<pre class="r"><code>dogs %&gt;% 
+  group_by(owner_id) %&gt;% 
+  summarise(age_gap = max(dog_dob) - min(dog_dob)) %&gt;% 
+  arrange(desc(age_gap))</code></pre>
+</div>
+<div id="q7" class="section level5">
+<h5>6. Save the Dataframe into an excel file where each sheet is a different age-group of owners</h5>
+<pre class="python"><code>writer = pd.ExcelWriter(&quot;dogs_by_owner_age_python.xlsx&quot;)
+
+for age in df[&#39;age&#39;].fillna(&quot;None&quot;).unique():
+    temp_df = df[df[&#39;age&#39;]==age].copy()
+    temp_df.to_excel(writer, sheet_name=age)
+
+writer.save()</code></pre>
+<pre class="r"><code>dogs %&gt;% 
+  split(.$age) %&gt;% 
+  writexl::write_xlsx(path = &quot;dogs_by_owners_age.xlsx&quot;)</code></pre>
+<p>I really like here the use of <code>split</code> that splits a dataframe into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to <code>write_xlsx</code> that saves each element of the list as a sheet.</p>
+<p>That’s it, hope you enjoyed solving the questions!</p>
 </div>
 </div>
