@@ -1,7 +1,7 @@
 ---
-title: R vs Python — Recap of a live stream
+title: R vs Python — Analysis Live stream
 author: Amit Levinson
-date: '2022-06-03'
+date: '2022-06-02'
 slug: r-and-python
 categories: [R]
 tags: [R, Streaming, Python]
@@ -22,30 +22,16 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/font-awesome/js/script.js"></script>
 
 
-<pre class="python"><code>import pandas as pd
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-import seaborn as sns</code></pre>
-<style type="text/css">
-newcaption {
-  font-size: 0.9em;
-  text-align: center;
-}
-</style>
-<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I live streamed an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a> cleaned it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
-<p>Besides it being a great experience collobarting with Tal, I think the questions overall touched on various aspects of our data analysis workflows. Hope you enjoy solving the questions and let us know if you liked the stream or came up with a different solution!</p>
+<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live streamed</a> an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a>, cleaned it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
+<p>Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis workflows. Initially I <a href="https://amitlevinson.github.io/streaming/r_and_python/index.html">hosted the questions and answers on some GitHub page</a> but realized it got lost in the abyss of the internet.</p>
+<p>Therefore I decided to transfer it to a blog post, for future me as I pick up Python and others who want to get some practice. If you’re a beginner-intermediate level user of either program I believe you’ll enjoy and learn from it. But I imagine all levels will enjoy it, and do reach out and let us know!</p>
 <div id="how-should-you-read-this-post" class="section level4">
 <h4>How should you read this post?</h4>
 <p>My recommendation would be to <strong>first try solving the questions yourself.</strong> You can find the data-files in the link below:</p>
 <a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
 <button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
 </a>
-<p>Great, now that you have the data, answer the following questions with any tool you’d like and as long as it takes you. Once you have the solutions you can check them with our sultions below. If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-<p><iframe src="https://www.youtube.com/watch?v=oO8MZWk07q0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe></p>
-</div>
-<p>{{&lt; youtube id=“oO8MZWk07q0” &gt;}}</p>
+<p>Great, now that you have the data, answer the following questions with any tool you’d like. Tale your time, no better answer them at your own pace then try rushing through and skipping questions. Once you have the solutions you can check them with our solutions below. If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
 </div>
 <div id="questions" class="section level4">
 <h4>Questions</h4>
@@ -62,6 +48,11 @@ newcaption {
 <div id="q1" class="section level6">
 <h6>1. Load the files into memory and combined them into a single Dataframe</h6>
 <p><strong>Python <i class="fab fa-python"></i></strong></p>
+<pre class="python"><code>import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns</code></pre>
 <pre class="python"><code>all_files = []
 for file in os.listdir(&quot;split_data/&quot;):
     if not file.endswith(&quot;csv&quot;):
@@ -86,6 +77,9 @@ df</code></pre>
 ## 
 ## [7155 rows x 14 columns]</code></pre>
 <p><strong>R <i class="fab fa-r-project"></i></strong></p>
+<pre class="r"><code>library(tidyverse)
+library(tidytext)
+library(skimr)</code></pre>
 <pre class="r"><code>files &lt;- paste0(&quot;split_data/&quot;,list.files(path = &quot;split_data/&quot;))
 dogs &lt;- map_dfr(files, read_csv, col_types = cols())
 
@@ -126,7 +120,7 @@ dogs</code></pre>
 <p><strong>R <i class="fab fa-r-project"></i></strong></p>
 <pre class="r"><code>skimr::skim(dogs)</code></pre>
 <table>
-<caption><span id="tab:unnamed-chunk-8">Table 1: </span>Data summary</caption>
+<caption><span id="tab:unnamed-chunk-7">Table 1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -478,9 +472,9 @@ fig, axes = plt.subplots(1,2)
 
 fig.suptitle(&quot;This is a title&quot;, fontsize=18)
 
-sorted_by_w.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[0], figsize=(20,5))
-sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[1], figsize=(20,5))</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="1920" /></p>
+sorted_by_w.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[0], figsize=(20,8))
+sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[1], figsize=(20,8))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="1920" /></p>
 <p><strong>R <i class="fab fa-r-project"></i></strong></p>
 <pre class="r"><code>dogs %&gt;% 
   count(dog_gender, primary_breed, sort = T) %&gt;% 
@@ -492,11 +486,12 @@ sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal
   scale_y_reordered() +
   labs(y = NULL, title = &quot;This is a title&quot;)+
   theme_minimal()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
 <p>We start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the <code>reorder_within</code>, a function from <code>tidytext</code> to reorder the categories within each facet, here the gender. Alternatively we can remove it and compare the primary breeds across gender.</p>
 </div>
 <div id="q6" class="section level5">
 <h5>5. Who (owner) has dogs with the largest age gap between them? What’s the gap value?</h5>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
 <pre class="python"><code>df[&#39;dog_dob&#39;] = pd.to_datetime(df[&#39;dog_dob&#39;])
 gb = df[[&#39;owner_id&#39;, &#39;dog_dob&#39;]].groupby(&#39;owner_id&#39;).agg([min, max])
 
@@ -508,6 +503,7 @@ gb.sort_values(&#39;diff&#39;).tail(1)</code></pre>
 <pre><code>##          dog_dob_min dog_dob_max  diff
 ## owner_id                              
 ## 87158     2000-04-10  2015-10-10  5661</code></pre>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
 <pre class="r"><code>dogs %&gt;% 
   group_by(owner_id) %&gt;% 
   filter(
@@ -545,6 +541,7 @@ gb.sort_values(&#39;diff&#39;).tail(1)</code></pre>
 </div>
 <div id="q7" class="section level5">
 <h5>6. Save the Dataframe into an excel file where each sheet is a different age-group of owners</h5>
+<p><strong>Python <i class="fab fa-python"></i></strong></p>
 <pre class="python"><code>writer = pd.ExcelWriter(&quot;dogs_by_owner_age_python.xlsx&quot;)
 
 for age in df[&#39;age&#39;].fillna(&quot;None&quot;).unique():
@@ -552,6 +549,7 @@ for age in df[&#39;age&#39;].fillna(&quot;None&quot;).unique():
     temp_df.to_excel(writer, sheet_name=age)
 
 writer.save()</code></pre>
+<p><strong>R <i class="fab fa-r-project"></i></strong></p>
 <pre class="r"><code>dogs %&gt;% 
   split(.$age) %&gt;% 
   writexl::write_xlsx(path = &quot;dogs_by_owners_age.xlsx&quot;)</code></pre>
