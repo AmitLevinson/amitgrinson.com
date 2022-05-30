@@ -3,9 +3,9 @@ title: R vs Python — Analysis Live stream
 author: Amit Levinson
 date: '2022-06-02'
 slug: r-and-python
-categories: [R]
+categories: []
 tags: [R, Streaming, Python]
-subtitle: 'Questions and answers from the live stream of R vs Python'
+subtitle: 'Questions and answers from the live stream of an R vs Python session'
 summary: 'Answers to seven questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
 featured: yes
 image:
@@ -13,7 +13,7 @@ image:
   focal_point: ''
   preview_only: yes
 projects: []
-draft: true
+draft: false
 codefolding_show: hide
 editor_options: 
   chunk_output_type: console
@@ -22,19 +22,18 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/font-awesome/js/script.js"></script>
 
 
-<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live streamed</a> an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a>, cleaned it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
+<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live streamed</a> an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a>, formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
 <p>Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis workflows. Initially I <a href="https://amitlevinson.github.io/streaming/r_and_python/index.html">hosted the questions and answers on some GitHub page</a> but realized it got lost in the abyss of the internet.</p>
 <p>Therefore I decided to transfer it to a blog post, for future me as I pick up Python and others who want to get some practice. If you’re a beginner-intermediate level user of either program I believe you’ll enjoy and learn from it. But I imagine all levels will enjoy it, and do reach out and let us know!</p>
-<div id="how-should-you-read-this-post" class="section level4">
-<h4>How should you read this post?</h4>
+<div id="how-should-you-read-this-post" class="section level3">
+<h3>How should you read this post?</h3>
 <p>My recommendation would be to <strong>first try solving the questions yourself.</strong> You can find the data-files in the link below:</p>
 <a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
 <button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
 </a>
 <p>Great, now that you have the data, answer the following questions with any tool you’d like. Tale your time, no better answer them at your own pace then try rushing through and skipping questions. Once you have the solutions you can check them with our solutions below. If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
-</div>
-<div id="questions" class="section level4">
-<h4>Questions</h4>
+<div id="the-questions" class="section level4">
+<h4>The Questions</h4>
 <p><a href="#q1">1. Load the files into memory and combined them into a single Dataframe</a></p>
 <p><a href="#q2">2. Describe the data using a summary function of sort</a></p>
 <p><a href="#q3">3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown.</a></p>
@@ -472,8 +471,8 @@ fig, axes = plt.subplots(1,2)
 
 fig.suptitle(&quot;This is a title&quot;, fontsize=18)
 
-sorted_by_w.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[0], figsize=(20,8))
-sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[1], figsize=(20,8))</code></pre>
+sorted_by_w.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[0], figsize=(20,12))
+sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal&quot;], ax=axes[1], figsize=(20,12))</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="1920" /></p>
 <p><strong>R <i class="fab fa-r-project"></i></strong></p>
 <pre class="r"><code>dogs %&gt;% 
@@ -554,6 +553,8 @@ writer.save()</code></pre>
   split(.$age) %&gt;% 
   writexl::write_xlsx(path = &quot;dogs_by_owners_age.xlsx&quot;)</code></pre>
 <p>I really like here the use of <code>split</code> that splits a dataframe into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to <code>write_xlsx</code> that saves each element of the list as a sheet.</p>
-<p>That’s it, hope you enjoyed solving the questions!</p>
+<p>=====</p>
+<p>That’s it, hope you enjoyed solving the questions. Make sure to checkout the <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live stream recording!</a></p>
+</div>
 </div>
 </div>

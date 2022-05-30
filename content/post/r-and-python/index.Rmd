@@ -24,13 +24,13 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE
 ```
 
 
-A few months ago [Tal Mizrachi](https://www.linkedin.com/in/talnmizrachi/) (The famous [Aanlysis Paralysis](https://www.facebook.com/go.analysis.paralysis)) & I [live streamed](https://www.youtube.com/watch?v=oO8MZWk07q0) an R vs/and Python data analysis session. We took the [dogs of Zurich dataset](https://www.kaggle.com/kmader/dogs-of-zurich), cleaned it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.
+A few months ago [Tal Mizrachi](https://www.linkedin.com/in/talnmizrachi/) (The famous [Aanlysis Paralysis](https://www.facebook.com/go.analysis.paralysis)) & I [live streamed](https://www.youtube.com/watch?v=oO8MZWk07q0) an R vs/and Python data analysis session. We took the [dogs of Zurich dataset](https://www.kaggle.com/kmader/dogs-of-zurich), formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.
 
 Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis workflows. Initially I [hosted the questions and answers on some GitHub page](https://amitlevinson.github.io/streaming/r_and_python/index.html) but realized it got lost in the abyss of the internet. 
 
 Therefore I decided to transfer it to a blog post, for future me as I pick up Python and others who want to get some practice. If you're a beginner-intermediate level user of either program I believe you'll enjoy and learn from it. But I imagine all levels will enjoy it, and do reach out and let us know!
 
-#### How should you read this post?
+### How should you read this post?
 
 My recommendation would be to **first try solving the questions yourself.** You can find the data-files in the link below:
 
@@ -50,7 +50,7 @@ download_link(
 Great, now that you have the data, answer the following questions with any tool you'd like. Tale your time, no better answer them at your own pace then try rushing through and skipping questions. Once you have the solutions you can check them with our solutions below. If you're struggling you can use the output from our answers as a hint before viewing the actual answer in the code.
 
 
-#### Questions
+#### The Questions
 
   [1. Load the files into memory and combined them into a single Dataframe](#q1) 
 
