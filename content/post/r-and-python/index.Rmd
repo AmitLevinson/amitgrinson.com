@@ -1,12 +1,12 @@
 ---
-title: R vs Python — Analysis Live stream
+title: R vs Python — Live stream Analysis
 author: Amit Levinson
 date: '2022-06-02'
 slug: r-and-python
 categories: []
 tags: [R, Streaming, Python]
-subtitle: 'Questions and answers from the live stream of an R vs Python session'
-summary: 'Answers to seven questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
+subtitle: 'Questions and answers from the live stream of an R vs Python data analysis session'
+summary: 'Answers to six questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
 featured: yes
 image:
   caption: ''
@@ -24,15 +24,13 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE
 ```
 
 
-A few months ago [Tal Mizrachi](https://www.linkedin.com/in/talnmizrachi/) (The famous [Aanlysis Paralysis](https://www.facebook.com/go.analysis.paralysis)) & I [live streamed](https://www.youtube.com/watch?v=oO8MZWk07q0) an R vs/and Python data analysis session. We took the [dogs of Zurich dataset](https://www.kaggle.com/kmader/dogs-of-zurich), formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.
+A few months ago [Tal Mizrachi](https://www.linkedin.com/in/talnmizrachi/) (The famous [Analysis Paralysis](https://www.facebook.com/go.analysis.paralysis)) & I [live streamed](https://www.youtube.com/watch?v=oO8MZWk07q0) an R vs Python data analysis session. We took the [dogs of Zurich dataset](https://www.kaggle.com/kmader/dogs-of-zurich), formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream, each with his own tool.
 
-Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis workflows. Initially I [hosted the questions and answers on some GitHub page](https://amitlevinson.github.io/streaming/r_and_python/index.html) but realized it got lost in the abyss of the internet. 
-
-Therefore I decided to transfer it to a blog post, for future me as I pick up Python and others who want to get some practice. If you're a beginner-intermediate level user of either program I believe you'll enjoy and learn from it. But I imagine all levels will enjoy it, and do reach out and let us know!
+Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis flow. I initially [hosted the questions and answers on some GitHub page](https://amitlevinson.github.io/streaming/r_and_python/index.html) but realized it got lost in the abyss called 'internet'. Instead I decided to share it on my website for future me as I pick up Python and others who want to get some practice. If you liked it, came up with a different solution or just want to share how much you love <s>Python</s> **R**, do reach out to either one of us and let us know. We'd love to hear more about your experience!
 
 ### How should you read this post?
 
-My recommendation would be to **first try solving the questions yourself.** You can find the data-files in the link below:
+My recommendation is to **first try solving the questions yourself.** You can find the data-files in the link below:
 
 ```{r echo = FALSE}
 library(downloadthis)
@@ -47,12 +45,12 @@ download_link(
 )
 ```
 
-Great, now that you have the data, answer the following questions with any tool you'd like. Tale your time, no better answer them at your own pace then try rushing through and skipping questions. Once you have the solutions you can check them with our solutions below. If you're struggling you can use the output from our answers as a hint before viewing the actual answer in the code.
+Great, now that you have the data, answer the following questions with any tool you'd like. Once you have the solutions you can check them with our solutions below (just click on the question). If you're struggling you can use the output from our answers as a hint before viewing the actual answer in the code.
 
 
-#### The Questions
+### The Questions
 
-  [1. Load the files into memory and combined them into a single Dataframe](#q1) 
+  [1. Load the files into memory and combine them into a single Dataframe](#q1) 
 
   [2. Describe the data using a summary function of sort](#q2)
 
@@ -66,13 +64,14 @@ Great, now that you have the data, answer the following questions with any tool 
   [6. Save the Dataframe into an excel file where each sheet is a different age-group of owners](#q7)
   
 
-#### Answers
+### The Answers
 
-The following section has the answers to the questions in Python and R. You'll find the questions, the code, output and a follow up explanation for the R code. The code is initially collapsed and hidden, so just click it to see it. 
+The following section has the answers to the questions in both Python (by Tal) and R (By me). For each question you'll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it. 
+
+<br>
 
 
-
-###### 1. Load the files into memory and combined them into a single Dataframe {#q1}
+###### 1. Load the files into memory and combine them into a single Dataframe {#q1}
 
 **Python <i class="fab fa-python"></i>**
 
@@ -115,7 +114,10 @@ dogs <- map_dfr(files, read_csv, col_types = cols())
 dogs
 ```
 
-In order to iteratively read the files we create a vector `files` with the relevant paths to all files, and then load them using `map_dfr`. The latter runs `read_csv` on every element of `files`, our data files, and binds the rows together to one dataframe.
+In order to iteratively read the files we create a vector called `files` with the relevant paths to all the relevant CSVs and load them using `purrr::map_dfr`. The latter runs `read_csv` on every element of `files`, our data file paths, and binds the rows together to one data frame.
+
+<br>
+
 
 ###### 2. Describe the data using a summary function of sort {#q2}
 
@@ -130,11 +132,13 @@ df.describe(percentiles=[0.2,0.8])
 **R <i class="fab fa-r-project"></i>**
 
 
-```{r}
+```{r, results = 'asis'}
 skimr::skim(dogs)
 ```
 
 `skmir::skim` provides a summary of the data by column type. You can also use `summary` and `glimpse`.
+
+<br>
 
 
 ##### 3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown {#q3}
@@ -160,11 +164,12 @@ dogs %>%
   count(new_color, sort = T)
 ```
 
-Our color column is comprised of several values in an observation. We need to split the string to single colors and then count them.
+Our color column is comprised of several values in an observation. We `split` the strings to single colors which results in each observation being a list of values (i.e., our colors), We then `unnest` the list and count the colors.  
+
+<br>
 
 
-
-##### 4. What are the top 10 most common primary breeds by dog gender? Visualize it using a corresponding bar plot {#q4}  
+##### 4. What are the top 10 most common primary breeds by dog gender? Visualize it using a bar plot {#q4}  
 
 **Python <i class="fab fa-python"></i>**
 
@@ -201,10 +206,9 @@ dogs %>%
   theme_minimal()
 ```
 
-We start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the `reorder_within`, a function from `tidytext` to reorder the categories within each facet, here the gender. Alternatively we can remove it and compare the primary breeds across gender.
+I start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the `reorder_within`, a function from `tidytext` to reorder the categories within each facet (gender). Alternatively we can remove the `reorder_within` and compare the primary breeds across gender instead of within.
 
-
-
+<br>
 
 ##### 5. Who (owner) has dogs with the largest age gap between them? What’s the gap value? {#q6}  
 
@@ -244,9 +248,9 @@ dogs %>%
   arrange(-timediff)
 ```
 
-I initiall start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. We arranged the dob within each owner's group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.
+I start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. I then arrange the dob within each owner's group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.
 
-During the session [Adi Sarid] suggested another solution, more concise and to my liking:
+During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking:
 
 ```{r eval = FALSE}
 dogs %>% 
@@ -254,6 +258,9 @@ dogs %>%
   summarise(age_gap = max(dog_dob) - min(dog_dob)) %>% 
   arrange(desc(age_gap))
 ```
+
+<br>
+
 
 ##### 6. Save the Dataframe into an excel file where each sheet is a different age-group of owners {#q7}
 
@@ -282,8 +289,8 @@ dogs %>%
 ```
 
 
-I really like here the use of `split` that splits a dataframe into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to `write_xlsx` that saves each element of the list as a sheet.
+I really like here the use of `split` that splits a data frame into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to `write_xlsx` that saves each element of the list as a sheet in our newly written `.xlsx` file.
 
 =====
 
-That's it, hope you enjoyed solving the questions. Make sure to checkout the [live stream recording!](https://www.youtube.com/watch?v=oO8MZWk07q0)
+That's it, hope you enjoyed solving the questions. Make sure to checkout the [recording!](https://www.youtube.com/watch?v=oO8MZWk07q0)

@@ -1,12 +1,12 @@
 ---
-title: R vs Python — Analysis Live stream
+title: R vs Python — Live stream Analysis
 author: Amit Levinson
 date: '2022-06-02'
 slug: r-and-python
 categories: []
 tags: [R, Streaming, Python]
-subtitle: 'Questions and answers from the live stream of an R vs Python session'
-summary: 'Answers to seven questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
+subtitle: 'Questions and answers from the live stream of an R vs Python data analysis session'
+summary: 'Answers to six questions we analyzed using both R and Python on the Dog of Zurich dataset from Kaggle'
 featured: yes
 image:
   caption: ''
@@ -22,30 +22,31 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/font-awesome/js/script.js"></script>
 
 
-<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Aanlysis Paralysis</a>) &amp; I <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live streamed</a> an R vs/and Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a>, formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream.</p>
-<p>Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis workflows. Initially I <a href="https://amitlevinson.github.io/streaming/r_and_python/index.html">hosted the questions and answers on some GitHub page</a> but realized it got lost in the abyss of the internet.</p>
-<p>Therefore I decided to transfer it to a blog post, for future me as I pick up Python and others who want to get some practice. If you’re a beginner-intermediate level user of either program I believe you’ll enjoy and learn from it. But I imagine all levels will enjoy it, and do reach out and let us know!</p>
+<p>A few months ago <a href="https://www.linkedin.com/in/talnmizrachi/">Tal Mizrachi</a> (The famous <a href="https://www.facebook.com/go.analysis.paralysis">Analysis Paralysis</a>) &amp; I <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live streamed</a> an R vs Python data analysis session. We took the <a href="https://www.kaggle.com/kmader/dogs-of-zurich">dogs of Zurich dataset</a>, formatted it a bit, added a random DOB column and wrote down a few questions we answered during the live stream, each with his own tool.</p>
+<p>Besides it being a great experience collaborating with Tal, I think the questions overall touched on various aspects of our day to day data analysis flow. I initially <a href="https://amitlevinson.github.io/streaming/r_and_python/index.html">hosted the questions and answers on some GitHub page</a> but realized it got lost in the abyss called ‘internet’. Instead I decided to share it on my website for future me as I pick up Python and others who want to get some practice. If you liked it, came up with a different solution or just want to share how much you love <s>Python</s> <strong>R</strong>, do reach out to either one of us and let us know. We’d love to hear more about your experience!</p>
 <div id="how-should-you-read-this-post" class="section level3">
 <h3>How should you read this post?</h3>
-<p>My recommendation would be to <strong>first try solving the questions yourself.</strong> You can find the data-files in the link below:</p>
+<p>My recommendation is to <strong>first try solving the questions yourself.</strong> You can find the data-files in the link below:</p>
 <a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
 <button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
 </a>
-<p>Great, now that you have the data, answer the following questions with any tool you’d like. Tale your time, no better answer them at your own pace then try rushing through and skipping questions. Once you have the solutions you can check them with our solutions below. If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
-<div id="the-questions" class="section level4">
-<h4>The Questions</h4>
-<p><a href="#q1">1. Load the files into memory and combined them into a single Dataframe</a></p>
+<p>Great, now that you have the data, answer the following questions with any tool you’d like. Once you have the solutions you can check them with our solutions below (just click on the question). If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
+</div>
+<div id="the-questions" class="section level3">
+<h3>The Questions</h3>
+<p><a href="#q1">1. Load the files into memory and combine them into a single Dataframe</a></p>
 <p><a href="#q2">2. Describe the data using a summary function of sort</a></p>
 <p><a href="#q3">3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown.</a></p>
 <p><a href="#q4">4. What are the top 10 most common primary breeds by dog gender? Visualize it using a corresponding bar plot</a></p>
 <p><a href="#q6">5. Who (owner) has dogs with the largest age gap between them? What’s the gap value?</a></p>
 <p><a href="#q7">6. Save the Dataframe into an excel file where each sheet is a different age-group of owners</a></p>
 </div>
-<div id="answers" class="section level4">
-<h4>Answers</h4>
-<p>The following section has the answers to the questions in Python and R. You’ll find the questions, the code, output and a follow up explanation for the R code. The code is initially collapsed and hidden, so just click it to see it.</p>
+<div id="the-answers" class="section level3">
+<h3>The Answers</h3>
+<p>The following section has the answers to the questions in both Python (by Tal) and R (By me). For each question you’ll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it.</p>
+<p><br></p>
 <div id="q1" class="section level6">
-<h6>1. Load the files into memory and combined them into a single Dataframe</h6>
+<h6>1. Load the files into memory and combine them into a single Dataframe</h6>
 <p><strong>Python <i class="fab fa-python"></i></strong></p>
 <pre class="python"><code>import pandas as pd
 import numpy as np
@@ -99,7 +100,8 @@ dogs</code></pre>
 ## # … with 7,145 more rows, and 7 more variables: secondary_breed &lt;chr&gt;,
 ## #   is_secondary_hybrid &lt;lgl&gt;, breed_type &lt;chr&gt;, dog_yob &lt;dbl&gt;,
 ## #   dog_gender &lt;chr&gt;, dog_color &lt;chr&gt;, dog_dob &lt;date&gt;</code></pre>
-<p>In order to iteratively read the files we create a vector <code>files</code> with the relevant paths to all files, and then load them using <code>map_dfr</code>. The latter runs <code>read_csv</code> on every element of <code>files</code>, our data files, and binds the rows together to one dataframe.</p>
+<p>In order to iteratively read the files we create a vector called <code>files</code> with the relevant paths to all the relevant CSVs and load them using <code>purrr::map_dfr</code>. The latter runs <code>read_csv</code> on every element of <code>files</code>, our data file paths, and binds the rows together to one data frame.</p>
+<p><br></p>
 </div>
 <div id="q2" class="section level6">
 <h6>2. Describe the data using a summary function of sort</h6>
@@ -415,6 +417,7 @@ dogs</code></pre>
 </tbody>
 </table>
 <p><code>skmir::skim</code> provides a summary of the data by column type. You can also use <code>summary</code> and <code>glimpse</code>.</p>
+<p><br></p>
 </div>
 <div id="q3" class="section level5">
 <h5>3. What are the top 10 most common colors? Each color should be counted separately, i.e. black/brown should be counted as 1 black, 1 brown</h5>
@@ -455,10 +458,11 @@ melted[&#39;value&#39;].value_counts()</code></pre>
 ##  9 hellbraun   170
 ## 10 black       160
 ## # … with 79 more rows</code></pre>
-<p>Our color column is comprised of several values in an observation. We need to split the string to single colors and then count them.</p>
+<p>Our color column is comprised of several values in an observation. We <code>split</code> the strings to single colors which results in each observation being a list of values (i.e., our colors), We then <code>unnest</code> the list and count the colors.</p>
+<p><br></p>
 </div>
 <div id="q4" class="section level5">
-<h5>4. What are the top 10 most common primary breeds by dog gender? Visualize it using a corresponding bar plot</h5>
+<h5>4. What are the top 10 most common primary breeds by dog gender? Visualize it using a bar plot</h5>
 <p><strong>Python <i class="fab fa-python"></i></strong></p>
 <pre class="python"><code>main_table = df[[&#39;dog_gender&#39;,&#39;primary_breed&#39;]].pivot_table(index=&#39;primary_breed&#39;, columns=&#39;dog_gender&#39;, aggfunc=len).copy()
 
@@ -486,7 +490,8 @@ sorted_by_m.plot(kind=&#39;bar&#39;, rot=40, color=[&quot;pink&quot;, &quot;teal
   labs(y = NULL, title = &quot;This is a title&quot;)+
   theme_minimal()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
-<p>We start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the <code>reorder_within</code>, a function from <code>tidytext</code> to reorder the categories within each facet, here the gender. Alternatively we can remove it and compare the primary breeds across gender.</p>
+<p>I start by counting the primary breed within each gender. I then visualize the data with ggplot2, leveraging the <code>reorder_within</code>, a function from <code>tidytext</code> to reorder the categories within each facet (gender). Alternatively we can remove the <code>reorder_within</code> and compare the primary breeds across gender instead of within.</p>
+<p><br></p>
 </div>
 <div id="q6" class="section level5">
 <h5>5. Who (owner) has dogs with the largest age gap between them? What’s the gap value?</h5>
@@ -531,12 +536,13 @@ gb.sort_values(&#39;diff&#39;).tail(1)</code></pre>
 ##  9   128461 4932 days
 ## 10   128461 4932 days
 ## # … with 1,143 more rows</code></pre>
-<p>I initiall start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. We arranged the dob within each owner’s group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.</p>
-<p>During the session [Adi Sarid] suggested another solution, more concise and to my liking:</p>
+<p>I start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. I then arrange the dob within each owner’s group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.</p>
+<p>During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking:</p>
 <pre class="r"><code>dogs %&gt;% 
   group_by(owner_id) %&gt;% 
   summarise(age_gap = max(dog_dob) - min(dog_dob)) %&gt;% 
   arrange(desc(age_gap))</code></pre>
+<p><br></p>
 </div>
 <div id="q7" class="section level5">
 <h5>6. Save the Dataframe into an excel file where each sheet is a different age-group of owners</h5>
@@ -552,9 +558,8 @@ writer.save()</code></pre>
 <pre class="r"><code>dogs %&gt;% 
   split(.$age) %&gt;% 
   writexl::write_xlsx(path = &quot;dogs_by_owners_age.xlsx&quot;)</code></pre>
-<p>I really like here the use of <code>split</code> that splits a dataframe into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to <code>write_xlsx</code> that saves each element of the list as a sheet.</p>
+<p>I really like here the use of <code>split</code> that splits a data frame into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to <code>write_xlsx</code> that saves each element of the list as a sheet in our newly written <code>.xlsx</code> file.</p>
 <p>=====</p>
-<p>That’s it, hope you enjoyed solving the questions. Make sure to checkout the <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">live stream recording!</a></p>
-</div>
+<p>That’s it, hope you enjoyed solving the questions. Make sure to checkout the <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">recording!</a></p>
 </div>
 </div>
