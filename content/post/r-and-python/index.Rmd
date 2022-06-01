@@ -45,7 +45,7 @@ download_link(
 )
 ```
 
-Great, now that you have the data, answer the following questions with any tool you'd like. Once you have the solutions you can check them with our solutions below (just click on the question). If you're struggling you can use the output from our answers as a hint before viewing the actual answer in the code.
+Great, now that you have the data, answer the following questions with any tool you'd like. Once you have the solutions you can check them with our solutions below (just click on the question). If you're struggling you can use the output from our answers as a hint before viewing the answer in the code chunks.
 
 
 ### The Questions
@@ -66,7 +66,7 @@ Great, now that you have the data, answer the following questions with any tool 
 
 ### The Answers
 
-The following section has the answers to the questions in both Python (by Tal) and R (By me). For each question you'll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it. 
+The following section has the answers to the questions in both Python (by Tal) and R (by me). For each question you'll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it. 
 
 <br>
 
@@ -114,7 +114,7 @@ dogs <- map_dfr(files, read_csv, col_types = cols())
 dogs
 ```
 
-In order to iteratively read the files we create a vector called `files` with the relevant paths to all the relevant CSVs and load them using `purrr::map_dfr`. The latter runs `read_csv` on every element of `files`, our data file paths, and binds the rows together to one data frame.
+In order to read the files we first create a vector called `files` with paths to all the relevant CSVs and load them using `purrr::map_dfr`. The latter runs `read_csv` on every element of `files`, our data file paths, and binds the rows together to one data frame. Basically we iterate across each file path, load it and then combine all of them together to  data frame.
 
 <br>
 
@@ -164,7 +164,7 @@ dogs %>%
   count(new_color, sort = T)
 ```
 
-Our color column is comprised of several values in an observation. We `split` the strings to single colors which results in each observation being a list of values (i.e., our colors), We then `unnest` the list and count the colors.  
+Our color column is comprised of several values in per observation. We `split` the strings to single colors which turns each observation to a list of values (our colors), and we then `unnest` the list and count the colors.  
 
 <br>
 
@@ -248,9 +248,9 @@ dogs %>%
   arrange(-timediff)
 ```
 
-I start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. I then arrange the dob within each owner's group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.
+I start off by filtering to owners having at least two dogs and  take the oldest and youngest dog for each owner. I then arrange the dob within each owner's group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.
 
-During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking:
+During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking. Instead of counting, filtering, etc., he suggests to straight up calculate the age differce between oldest and youngest dog and arrange that in a descending order:
 
 ```{r eval = FALSE}
 dogs %>% 
@@ -291,6 +291,6 @@ dogs %>%
 
 I really like here the use of `split` that splits a data frame into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to `write_xlsx` that saves each element of the list as a sheet in our newly written `.xlsx` file.
 
-=====
+------
 
 That's it, hope you enjoyed solving the questions. Make sure to checkout the [recording!](https://www.youtube.com/watch?v=oO8MZWk07q0)

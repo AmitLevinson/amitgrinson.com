@@ -5,7 +5,7 @@ date: '2022-06-02'
 slug: r-and-python
 categories: []
 tags: [R, Streaming, Python]
-subtitle: 'Questions and answers from the live stream of an R vs Python data analysis session'
+subtitle: 'Questions and answers from the live stream of an R vs Python data analysis'
 summary: 'Using both R and Python we answer various questions on the Dog of Zurich dataset. Try it yourself and get some hands-on data analysis'
 featured: yes
 image:
@@ -30,7 +30,7 @@ editor_options:
 <a href="https://github.com/AmitLevinson/streaming/raw/main/r_and_python/split_data.zip">
 <button class="btn btn-default" output_name="Files from downloadthis"><i class="fa fa-save"></i> Download files</button>
 </a>
-<p>Great, now that you have the data, answer the following questions with any tool you’d like. Once you have the solutions you can check them with our solutions below (just click on the question). If you’re struggling you can use the output from our answers as a hint before viewing the actual answer in the code.</p>
+<p>Great, now that you have the data, answer the following questions with any tool you’d like. Once you have the solutions you can check them with our solutions below (just click on the question). If you’re struggling you can use the output from our answers as a hint before viewing the answer in the code chunks.</p>
 </div>
 <div id="the-questions" class="section level3">
 <h3>The Questions</h3>
@@ -43,7 +43,7 @@ editor_options:
 </div>
 <div id="the-answers" class="section level3">
 <h3>The Answers</h3>
-<p>The following section has the answers to the questions in both Python (by Tal) and R (By me). For each question you’ll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it.</p>
+<p>The following section has the answers to the questions in both Python (by Tal) and R (by me). For each question you’ll find the answers in code, an output of the code and a follow up explanation for the R code or procedure we took. The code is collapsed and hidden, so just click to see it.</p>
 <p><br></p>
 <div id="q1" class="section level6">
 <h6>1. Load the files into memory and combine them into a single Dataframe</h6>
@@ -100,7 +100,7 @@ dogs</code></pre>
 ## # … with 7,145 more rows, and 7 more variables: secondary_breed &lt;chr&gt;,
 ## #   is_secondary_hybrid &lt;lgl&gt;, breed_type &lt;chr&gt;, dog_yob &lt;dbl&gt;,
 ## #   dog_gender &lt;chr&gt;, dog_color &lt;chr&gt;, dog_dob &lt;date&gt;</code></pre>
-<p>In order to iteratively read the files we create a vector called <code>files</code> with the relevant paths to all the relevant CSVs and load them using <code>purrr::map_dfr</code>. The latter runs <code>read_csv</code> on every element of <code>files</code>, our data file paths, and binds the rows together to one data frame.</p>
+<p>In order to read the files we first create a vector called <code>files</code> with paths to all the relevant CSVs and load them using <code>purrr::map_dfr</code>. The latter runs <code>read_csv</code> on every element of <code>files</code>, our data file paths, and binds the rows together to one data frame. Basically we iterate across each file path, load it and then combine all of them together to data frame.</p>
 <p><br></p>
 </div>
 <div id="q2" class="section level6">
@@ -458,7 +458,7 @@ melted[&#39;value&#39;].value_counts()</code></pre>
 ##  9 hellbraun   170
 ## 10 black       160
 ## # … with 79 more rows</code></pre>
-<p>Our color column is comprised of several values in an observation. We <code>split</code> the strings to single colors which results in each observation being a list of values (i.e., our colors), We then <code>unnest</code> the list and count the colors.</p>
+<p>Our color column is comprised of several values in per observation. We <code>split</code> the strings to single colors which turns each observation to a list of values (our colors), and we then <code>unnest</code> the list and count the colors.</p>
 <p><br></p>
 </div>
 <div id="q4" class="section level5">
@@ -536,8 +536,8 @@ gb.sort_values(&#39;diff&#39;).tail(1)</code></pre>
 ##  9   128461 4932 days
 ## 10   128461 4932 days
 ## # … with 1,143 more rows</code></pre>
-<p>I start off by filtering to owners having at least two dogs, and then take the oldest and youngest dog for each owner. I then arrange the dob within each owner’s group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.</p>
-<p>During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking:</p>
+<p>I start off by filtering to owners having at least two dogs and take the oldest and youngest dog for each owner. I then arrange the dob within each owner’s group, calculate the difference between the ages and arrange by the difference in a descending order, giving us the owner with the largest gap.</p>
+<p>During the session [Adi Sarid] suggested another solution, overall more concise and also to my liking. Instead of counting, filtering, etc., he suggests to straight up calculate the age differce between oldest and youngest dog and arrange that in a descending order:</p>
 <pre class="r"><code>dogs %&gt;% 
   group_by(owner_id) %&gt;% 
   summarise(age_gap = max(dog_dob) - min(dog_dob)) %&gt;% 
@@ -559,7 +559,7 @@ writer.save()</code></pre>
   split(.$age) %&gt;% 
   writexl::write_xlsx(path = &quot;dogs_by_owners_age.xlsx&quot;)</code></pre>
 <p>I really like here the use of <code>split</code> that splits a data frame into various lists by the variable passed to it. we can then use that – our object of data frames split by age – and pass it to <code>write_xlsx</code> that saves each element of the list as a sheet in our newly written <code>.xlsx</code> file.</p>
-<p>=====</p>
+<hr />
 <p>That’s it, hope you enjoyed solving the questions. Make sure to checkout the <a href="https://www.youtube.com/watch?v=oO8MZWk07q0">recording!</a></p>
 </div>
 </div>
