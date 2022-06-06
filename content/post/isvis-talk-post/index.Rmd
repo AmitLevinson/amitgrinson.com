@@ -29,12 +29,12 @@ newcaption {
 }
 
 .grayit {
-  color: #A9A9A9;
+  color: #888888;
   font-weight: normal;
 }
 ```
 
-A few weeks ago (May 12, 2022) I gave a talk about my experience in several data visualization challenges I took part in. It was a great experience summarizing what I took from these challenges and while you can find a recording of it, I thought I'd summarise it for those who enjoy reading.
+A few weeks ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I took part in. It was a great experience summarizing what I took from these challenges and while you can find a recording of it, I thought I'd summarise it for those who enjoy reading.
 
 I'll also take this opportunity to thank my wife — the night the call for talks closed I came to her and said "That's it, I'm not going to submit anything to ISVIS, I don't have anything to share". Luckily she convinced me otherwise, and this talk was born out of that process. Thank you.
 
@@ -64,18 +64,59 @@ While the two challenges differ, I found a lot in common: Anyone and everyone ar
 
 ### Engaging
 
-#### Meaningful data
+During challenges that I brought my own data (e.g. 30day*) I realized eventually that when I brought data that was engaging to me I was more committed to participate. This broke down to two kinds of engagement, meaningful and personal
 
-#### Personal Data
+#### Meaningful <span class='grayit'>Data</span>
+
+Meaningful is a subjective concept, where everyone views things as meaningful differently. As someone leaving in Israel I found data relating to Israel meaningful and relating to me. I was intruiged and challenged by it, and wanted to answer questions pertaining it as an Israeli.
+
+[Image]
+
+So I picked up various datasets relating to Israel, such as visualizing Israeli prime ministers and Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and wanted to look at for a while.
+
+#### Personal <span class='grayit'>Data</span>
+
+Meaningful also took form as data that recorded my behviour. Realizing that I collected and picked up various data ahead of time that I was eager to look at. For example as someone who uses Twitter mainly for R related things I was curious to see how much I use the #rstats hashtag, a hashtag associated with the R community. Alternatively currently living in Tel-Aviv I frequently visit the Dizengoff square, so I was curious to see how far can I walk at different time frames.
+
+Meaningful and personal here are somewhat blurry, but I hope it conveys the picture. In challenges you bring your own data (BYOD `r emo::ji('wink')`) find data that engages you, something you're passionate about or been wanting to explore for a while. Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while.
 
 ### Learning
 
-### <span class='grayit'>Learning</span> from others
+#### <span class='grayit'>Learning</span> from others
 
-### Learning 
+One of the things I love about these challenges is that many of the participants share their code, which you can then adapt for your own needs. 
+
+During the #30DayMapChallenge in 2019 Alexandra Kapp published a map of frequently traveled routes in Berlin. What she did was, to my interpertation, elegantly brilliant: She sampled two points in Berlin and calculated the fastest route between them. She did this for 500 pairs of points and plotted the routes traveled on with the line width representing the frequency of the street traveled compared to other streets.
+
+Seeing this and amazed by its simplictiy I adapted it for my own needs: The next year I ran the same analysis on Tel-Aviv, producing the plot on the right.
+
+While this was one example, adapting others' code is something prevalent in a coder's life: You find an answer on StackOverflow, copy the example in a GitHub repo documentation and more. Participating in these challenges de-facto motivated me to learn others' code, way of thinking and different approaches to the same data.
 
 
+#### <span class='grayit'>Learning</span> new tools and methods
 
+Somehow I find this idea - learning new tools and methods - in these challenges somewhat redundant. However, pointing them out really helps look at one's accomplishments.
+
+I remember sitting for days trying to configure the transition of a map to a cartogram. Even while following a blog post something went wrong: I had the data in a different format, the post referenced an older version of a package, etc. But the feeling after succedding; boi was it great!
+
+I also got to try out different ways of representing data, such as trying to plot data with an extreme outlier, leveraging the area above the plot to highlight it's starking distance from other points.
+
+At another time I wanted to try out a new tool, so after collecting and aggregating the R packages I use I visualized it using D3.js, something I definetely look forward to exploring more.
+
+What I love about these challenges is even without deliberatly attempting to challenge ourselves it occurs: The data is slightly different than what we're used to, we try out one new function and other things that expand our knowledge one step further.
+
+
+#### <span class='grayit'>Learning</span> things I implement at work
+
+By the time I started working at Payoneer I participated in various challenges and had the opportunity to participate in a few more since. 
+
+As I created charts at work I noticed I would translate a lot of practices I implemented and experimented with in challenges into my work charts. For example the whole idea of pre-attentive attention, how do I guide my reader through the chart, showing him where to focus first, second and last. The idea of using color, bold text, miniamlism and much more to guide the reader's attention. At other times it was more specific things such as annotations, and using them to guide the audience to the main takeaway at hand.
+
+Sometimes it was even more subtles things, such as having a reprtoire of graphs to choose from or choosing the right one for the data I wanted to present. Either way, I realized that **participating in these challenges made me a better communicator and analyst 
+
+### Recapping
+
+So if I
 
 
 <center>
