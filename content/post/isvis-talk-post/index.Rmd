@@ -46,6 +46,10 @@ I'll also take this opportunity to thank my wife — the night the call for talk
 I've actually come across data visualization challenges somewhat by chance. When I started thinking about MA thesis (somewhere in 2019) I realized I wanted to analyze it in something other than SPSS we learned, and was recommended to try out the R programming language. But I didn't want to wait for my thesis data to arrive, only to be incompetent to analyze it; rather, I wanted to be capable and confident in analyzing it when the time came. This is also how I thought about learning R — By manipulating and analyzing data, which eventually led me to data visualization challenges.
 
 <img src="Slide4.png" alt="image of a slide with the writing How do I learn to use R? By manipulating and visualizing data"/>
+<center>
+<newcaption>Wanting to analyze my thesis data in R, i had to first gain confidence and experience with the program</newcaption>
+</center>
+
 
 In the next couple of sections I'll share it was it I love about and learned from the challenges, and hope to motivate you to participate in an upcoming challenge.
 
@@ -69,24 +73,28 @@ As time went by I joined additional projects such as the #30DayMapChallenge and 
 
 While the two challenges differ, I found a lot in common: Anyone and everyone are invited, beginners and advanced alike. Graph it in R, Python, Tableau, Qgis and whatnot. But most importantnly despite not knowing almost anyone I felt like I was part of a community.
 
-[ gif community]
+<img src="community.gif" alt="a gif of the scene from the 'Wolf of wall street' with the caption 'one of us'"/>
 
 
 ### Engaging
 
-During challenges that I brought my own data (e.g. 30day*) I realized eventually that when I brought data that was engaging to me I was more committed to participate. This broke down to two kinds of engagement, meaningful and personal
+During challenges that I brought my own data (e.g. 30daysX) I realized that when I brought data that was engaging to me I was more committed to participate. This broke down to two kinds of engagement, meaningful and personal.
 
 #### Meaningful <span class='grayit'>Data</span>
 
-Meaningful is a subjective concept, where everyone views things as meaningful differently. As someone leaving in Israel I found data relating to Israel meaningful and relating to me. I was intruiged and challenged by it, and wanted to answer questions pertaining it as an Israeli.
+As someone leaving in Israel I found data relating to Israel meaningful and relating to me. I was intrigued and challenged by it, and wanted to answer questions pertaining to it as an Israeli.
 
-[Image]
+<img src="Slide10.png" alt="Three graphs one next to the other, from left to right: a pictogram of ISraeli prime ministers, Israel's map with elevation and lastly points in a circle representing population per km^2 across Israeli cities."/>
+
 
 So I picked up various datasets relating to Israel, such as visualizing Israeli prime ministers and Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and wanted to look at for a while.
 
 #### Personal <span class='grayit'>Data</span>
 
 Meaningful also took form as data that recorded my behviour. Realizing that I collected and picked up various data ahead of time that I was eager to look at. For example as someone who uses Twitter mainly for R related things I was curious to see how much I use the #rstats hashtag, a hashtag associated with the R community. Alternatively currently living in Tel-Aviv I frequently visit the Dizengoff square, so I was curious to see how far can I walk at different time frames.
+
+<img src="Slide11.png" alt="Two graphs one next to the other. The left one shows a pictogram of twitter icons, reprsenting how often I use the hashtag #rstats; the right one plots walking distances from dizengof square."/>
+
 
 Meaningful and personal here are somewhat blurry, but I hope it conveys the picture. In challenges you bring your own data (BYOD `r emo::ji('wink')`) find data that engages you, something you're passionate about or been wanting to explore for a while. Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while.
 
@@ -109,20 +117,31 @@ Somehow I find this idea - learning new tools and methods - in these challenges 
 
 I remember sitting for days trying to configure the transition of a map to a cartogram. Even while following a blog post something went wrong: I had the data in a different format, the post referenced an older version of a package, etc. But the feeling after succedding; boi was it great!
 
+<img src="20_map.gif" alt="" width = '250'/>
+
+
 I also got to try out different ways of representing data, such as trying to plot data with an extreme outlier, leveraging the area above the plot to highlight it's starking distance from other points.
 
 At another time I wanted to try out a new tool, so after collecting and aggregating the R packages I use I visualized it using D3.js, something I definetely look forward to exploring more.
 
+
+<img src="01.png" alt="" height = '200'/>
+
+
 What I love about these challenges is even without deliberatly attempting to challenge ourselves it occurs: The data is slightly different than what we're used to, we try out one new function and other things that expand our knowledge one step further.
 
 
-#### <span class='grayit'>Learning</span> things I implement at work
+#### <span class='grayit'>Learning</span> things I can implement at work
 
 By the time I started working at Payoneer I participated in various challenges and had the opportunity to participate in a few more since. 
 
 As I created charts at work I noticed I would translate a lot of practices I implemented and experimented with in challenges into my work charts. For example the whole idea of pre-attentive attention, how do I guide my reader through the chart, showing him where to focus first, second and last. The idea of using color, bold text, miniamlism and much more to guide the reader's attention. At other times it was more specific things such as annotations, and using them to guide the audience to the main takeaway at hand.
 
-Sometimes it was even more subtles things, such as having a reprtoire of graphs to choose from or choosing the right one for the data I wanted to present. Either way, I realized that **participating in these challenges made me a better communicator and analyst 
+
+<img src="Slide15.png" alt=""/>
+
+
+Sometimes it was even more subtle things, such as having a reprtoire of graphs to choose from or choosing the right one for the data I wanted to present. Either way, I realized that **participating in these challenges made me a better communicator and analyst 
 
 ### Recapping
 
