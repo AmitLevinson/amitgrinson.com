@@ -55,9 +55,9 @@ In the next couple of sections I'll share it was it I love about and learned fro
 
 ### Community
 
-Concurrent to wanting to learn R I also started roaming across Twitter. One day I came across the #TidyTuesday challenge, a data visualization challenge oriented to the R community. every week a new dataset is published and the R community is invited to analyze and visualize it. 
+As I was roaming across Twitter one day I came across the #TidyTuesday challenge, a data visualization challenge oriented towards the R community. every week a new dataset is published and the R community is invited to analyze and visualize it. 
 
-Observing for a few weeks I decided to participate in week 39, 2020. Doing a quick EDA I noticed a trend, somewhat intuitive, of an upward increase in the number of visitors to parks across years. Remembering a plot with added icons from the week before I adapted some of the code and produced my first plot. I posted it on Twitter and the feedback was amazing.
+Observing as a spectator for a few weeks I decided to participate in week 39, 2020. Doing a quick exploratory analysis of the data I noticed a trend, somewhat intuitive, ofan increase in the number of visitors to national parks across years. Remembering a plot with added icons from the week before by XXX, I adapted some of her code and posted my first plot.
 
 <center>
 `r blogdown::shortcode('tweet','1174364639427272706')` 
@@ -65,33 +65,35 @@ Observing for a few weeks I decided to participate in week 39, 2020. Doing a qui
 </center>  
 
 
-People were glad I joined, wanted to learn how I made the plot, added the icons and peak at my code (which took me a few hours to get onto GitHub. I was hooked on the project.[^1]
+ The feedback from the community was amazing. People were glad I joined, wanted to learn how I made the plot such as added the icons and peak at my code (which took me a few hours to get onto GitHub). I was hooked on the project.[^1]
 
-[^1]: I've documented more at length the same experience when I [reflected on a year of learning R](https://amitlevinson.com/blog/my-year-in-r/)
+[^1]: I've documented more at length the same experience when I [reflected on a year of learning R](https://amitlevinson.com/blog/my-year-in-r/) you might find interesting.
 
-As time went by I joined additional projects such as the #30DayMapChallenge and #30DayChart challenge. In different from the #TidyTuesday, here you bring your own data. Additionally, the challenges occur through a whole month, where each day has its own theme and participants are invited to share maps/charts relating to that theme.
+As time went by I joined additional community visualization challenges such as the #30DayMapChallenge and #30DayChartChallenge. In different from the #TidyTuesday, in these challenges you bring your own data. The challenges occur throughout a whole month, every day a different theme and participants are invited to share maps/charts relating to that theme.
 
-While the two challenges differ, I found a lot in common: Anyone and everyone are invited, beginners and advanced alike. Graph it in R, Python, Tableau, Qgis and whatnot. But most importantnly despite not knowing almost anyone I felt like I was part of a community.
+While the two challenges differ, I found a lot in common: Anyone and everyone are invited, beginners and advanced alike. Plot it in R, Python, Tableau, Qgis and whatnot. And most importantly despite not knowing almost anyone I felt like I was part of a community in every challenge I joined.
 
 <img src="community.gif" alt="a gif of the scene from the 'Wolf of wall street' with the caption 'one of us'"/>
 
 
 ### Engaging
 
-During challenges that I brought my own data (e.g. 30daysX) I realized that when I brought data that was engaging to me I was more committed to participate. This broke down to two kinds of engagement, meaningful and personal.
+In challenges that I brought my own data (e.g. 30days*) I realized that when I brought data that engaged me I was more committed to participate. So what's engaging? Well this broke down to two kinds of engagement, meaningful and personal.
 
 #### Meaningful <span class='grayit'>Data</span>
 
-As someone leaving in Israel I found data relating to Israel meaningful and relating to me. I was intrigued and challenged by it, and wanted to answer questions pertaining to it as an Israeli.
+As someone living in Israel I found data relating to Israel meaningful to explore. I was intrigued and challenged by it, and wanted to answer questions pertaining to it as an Israeli.
 
 <img src="Slide10.png" alt="Three graphs one next to the other, from left to right: a pictogram of ISraeli prime ministers, Israel's map with elevation and lastly points in a circle representing population per km^2 across Israeli cities."/>
 
 
-So I picked up various datasets relating to Israel, such as visualizing Israeli prime ministers and Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and wanted to look at for a while.
+So I picked up various datasets relating to Israel, for example previous Israeli prime ministers and Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and wanted to look at for a while.
 
 #### Personal <span class='grayit'>Data</span>
 
-Meaningful also took form as data that recorded my behviour. Realizing that I collected and picked up various data ahead of time that I was eager to look at. For example as someone who uses Twitter mainly for R related things I was curious to see how much I use the #rstats hashtag, a hashtag associated with the R community. Alternatively currently living in Tel-Aviv I frequently visit the Dizengoff square, so I was curious to see how far can I walk at different time frames.
+Other data that engaged me was something that related to me personally, such as my behavior. Realizing that I collected various data ahead of some of these challenges so by the time the challenge started I was eager to explroe them.  
+
+For example as someone who uses Twitter mainly for R related things I was curious to see how much I use the #rstats hashtag, a hashtag commonly associated with the R community. Alternatively, currently living in Tel-Aviv I frequently walk to Dizengoff square, so I was curious to see walking distances from the square.
 
 <img src="Slide11.png" alt="Two graphs one next to the other. The left one shows a pictogram of twitter icons, reprsenting how often I use the hashtag #rstats; the right one plots walking distances from dizengof square."/>
 
@@ -104,11 +106,11 @@ Meaningful and personal here are somewhat blurry, but I hope it conveys the pict
 
 One of the things I love about these challenges is that many of the participants share their code, which you can then adapt for your own needs. 
 
-During the #30DayMapChallenge in 2019 Alexandra Kapp published a map of frequently traveled routes in Berlin. What she did was, to my interpertation, elegantly brilliant: She sampled two points in Berlin and calculated the fastest route between them. She did this for 500 pairs of points and plotted the routes traveled on with the line width representing the frequency of the street traveled compared to other streets.
+During the #30DayMapChallenge in 2019 Alexandra Kapp published a map of frequently traveled routes in Berlin. What she did was, to my interpretation, elegantly brilliant: She sampled two points in Berlin and calculated the fastest route between them. She did this for 500 pairs of points and plotted the routes traveled on with the line width representing the frequency of the street traveled compared to all other streets.
 
-Seeing this and amazed by its simplictiy I adapted it for my own needs: The next year I ran the same analysis on Tel-Aviv, producing the plot on the right.
+Seeing this and amazed by its simplicity I adapted it for my own needs: The next year I ran the same analysis on Tel-Aviv, producing the plot on the right.
 
-While this was one example, adapting others' code is something prevalent in a coder's life: You find an answer on StackOverflow, copy the example in a GitHub repo documentation and more. Participating in these challenges de-facto motivated me to learn others' code, way of thinking and different approaches to the same data.
+While this was one example, adapting others' code is something prevalent in a coder's life: You find an answer on Stack Overflow or copy the example in a GitHub repository. Participating in these challenges de-facto motivated me to learn others' code and view different approaches to the same data.
 
 
 #### <span class='grayit'>Learning</span> new tools and methods
