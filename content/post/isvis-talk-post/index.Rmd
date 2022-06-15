@@ -15,7 +15,7 @@ image:
   focal_point: ''
   preview_only: true
 projects: []
-draft: true
+draft: false
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -74,7 +74,7 @@ Observing as a spectator for a few weeks I decided to participate in week 39, 20
 `r blogdown::shortcode('tweet','1174364639427272706')` 
 <newcaption>First visualization and participation in TidyTuesday</newcaption>
 </center>  
-<br>s
+<br>
 
 The feedback from the community was amazing. People were glad I joined, wanted to learn how I made the plot, e.g.added the icons, and peak at my code (which took me a few hours to get on GitHub); I was hooked on the project.
 
