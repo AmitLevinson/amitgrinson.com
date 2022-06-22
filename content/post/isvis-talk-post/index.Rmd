@@ -36,12 +36,12 @@ newcaption {
 
 <img src="Slide17.png" alt="One of the closing slide explaining why one should participate in these challenges. See the list at the end of the document with more detail"/>
 <center>
-<newcaption>TL;DR of why you should participate in these challenges.</newcaption>
+<newcaption>TL;DR or why you should participate in these challenges.</newcaption>
 </center>
 <br>
 
 
-A little more than a month ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I participated in over the past years at [Israeli Visualizaiton conference](https://isvis.org/). It was great to summarize what I took from these challenges and while you can find a recording of it, I thought I'd also summarise it with a little more than I could say in those 8 minutes.
+A little more than a month ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I participated in recent the past years at the [Israeli Visualizaiton conference](https://isvis.org/). It was great to summarize what I took from these challenges and while you can find a recording of it, I thought I'd also summarise it with a little more than I could say in those 8 minutes.
 
 I'll also take this opportunity to thank my wife — the night the call for talks closed I came to her and said "Never mind, I'm not going to submit anything to ISVIS, what can I possibly talk about". Luckily she convinced me otherwise, and this talk was born out of it. Thank you ❤️
 
@@ -49,20 +49,20 @@ I'll also take this opportunity to thank my wife — the night the call for talk
 ## Visualizations together: Community visualization challenges and their educational inspiration
 
 
-I actually come across data visualization challenges somewhat by chance. When I started thinking about MA thesis (somewhere in 2019) I realized I wanted to analyze it in something other than SPSS we learned, and was recommended to try out the R programming language.[^1]
+I actually discovered data visualization challenges somewhat by chance. When I started thinking about my MA thesis (somewhere in 2019) I realized I wanted to analyze it in something other than the SPSS we learned, and was recommended to try out the R programming language.[^1]
 
 [^1]: I've documented more at length the same experience when I [reflected on a year of learning R](https://amitlevinson.com/blog/my-year-in-r/) you might find interesting.
 
-I didn't want to wait for my thesis data to arrive, only to be incompetent to analyze it, and in order to be able to do it I had to know how to use R to manipulate and analyze data, which eventually led me to data visualization challenges.
+I didn't want to wait for my thesis data to arrive, only to be unable to analyze it, and in order to be able to do so I had to know how to use R to manipulate and analyze data, which eventually led me to data visualization challenges.
 
 <img src="Slide4.png" alt="image of a slide with the writing How do I learn to use R? By manipulating and visualizing data"/>
 <center>
-<newcaption>Wanting to analyze my thesis data in R, i had to first gain confidence and experience with the program</newcaption>
+<newcaption>Wanting to analyze my thesis data in R, I had to first gain confidence and experience with the program</newcaption>
 </center>
 <br>
 
 
-In what's left from this blog post I want to share with you what is it I love about and learned from these challenges, with the hope to motivate you to participate in an upcoming one.
+In the following sections I want to share with you what is it I love about and learned from these challenges, with the hope to motivate you to participate in an upcoming one if you haven't yet given it a try.
 
 ### Community
 
@@ -76,9 +76,9 @@ Observing as a spectator for a few weeks I decided to participate in week 39, 20
 </center>  
 <br>
 
-The feedback from the community was amazing. People were glad I joined, wanted to learn how I made the plot, e.g.added the icons, and peak at my code (which took me a few hours to get on GitHub). I was also amazed that so many people craete such beautiful and inspiring visuliazation I can learn from, and all this for free! I was hooked on the project.
+The feedback from the community was amazing. People were glad I joined, wanted to learn how I made the plot, e.g.added the icons, and peek at my code (which took me a few hours to get onto GitHub). I was also amazed that so many people create such beautiful and inspiring visualization I can learn from, and all this for free! I was hooked on the project.
 
-As time went by I joined additional community visualization challenges such as the [#30Day**Map**Challenge](https://30daymapchallenge.com/) and [#30Day**Chart**Challenge](https://30daychartchallenge.org/). In different from the #TidyTuesday you bring your own data to these challenges. The challenges occur throughout a whole month, where each day has a different theme and participants are invited to share maps/charts relating to that theme.
+As time went by I joined additional community visualization challenges such as the [#30Day**Map**Challenge](https://30daymapchallenge.com/) and [#30Day**Chart**Challenge](https://30daychartchallenge.org/). In contrast to the #TidyTuesday you bring your own data to these challenges. The challenges occur throughout a whole month, where each day has a different theme and participants are invited to share maps/charts relating to that theme.
 
 While the two challenges differ, I found a lot in common between them: **Anyone and everyone are invited, beginners and advanced alike. Plot it in R, Python, Tableau, Qgis and what not. Most importantly, despite never meeting anyone I constantly felt like I was part of the community participating.**
 
@@ -87,7 +87,7 @@ While the two challenges differ, I found a lot in common between them: **Anyone 
 
 ### Engaging
 
-In challenges that I brought my own data (e.g. 30daysX) I realized that when I brought data that engaged me I was more committed to participate. "But Amit, what's *engaging data*?" you might ask. Well this broke down for me to two, meaningful and personal data.
+In challenges where I brought my own data (e.g. 30daysX) I realized that when I brought data that engaged me I was more committed to participate. "But Amit, what's *engaging data*?" you might ask. Well this broke down for me into two classes: meaningful and personal data.
 
 #### Meaningful <span class='grayit'>Data</span>
 
@@ -96,7 +96,7 @@ As someone living in Israel I found data relating to Israel meaningful to explor
 <img src="Slide10.png" alt="Three graphs one next to the other, from left to right: a pictogram of ISraeli prime ministers, Israel's map with elevation and lastly points in a circle representing population per km^2 across Israeli cities."/>
 
 
-So I picked up various datasets relating to Israel and visualized them, for example previous Israeli prime ministers or visualizing Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and been meaning to explore for a while. It was great to explore Israeli data and also share it with other participants for them to learn more about Israel.
+So I accessed various datasets relating to Israel and visualized them, for example previous Israeli prime ministers or visualizing Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and been meaning to explore for a while. It was great to explore Israeli data and also share it with other participants for them to learn more about Israel.
 
 #### Personal <span class='grayit'>Data</span>
 
@@ -105,12 +105,12 @@ Other data that engaged me was something that related to me personally such as m
 <img src="02.png" alt="a pictogram of twitter icons, reprsenting how often I use the hashtag #rstats."/>
 
 
-For example as someone who uses Twitter mainly for R related things I was curious to see how much I use the #rstats hashtag, a hashtag commonly associated with the R community. Alternatively, currently living in Tel-Aviv I frequently walk to Dizengoff square so I was curious to see how long it took to walk to various locations from there.
+For example as someone who uses Twitter mainly for R–related comments and inspiration I was curious to see how much I use the #rstats hashtag, a hashtag commonly associated with the R community. Alternatively, currently living in Tel-Aviv I frequently walk to Dizengoff square so I was curious to see how long it took to walk to various locations from there.
 
 <img src="walking.png" alt="plot of time it takes to walk from dizengof square to different places."/>
 
 
-Meaningful and personal here are somewhat blurry, but I hope it conveys the picture:**In challenges you bring your own data (BYOD `r emo::ji('wink')`) try to find data that engages you, something you're passionate about or been wanting to explore for a while.** Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while. 
+Meaningful and personal here are somewhat blurry, but I hope it conveys the picture:**In challenges where you bring your own data (BYOD `r emo::ji('wink')`) try to find data that engages you, something you're passionate about or been wanting to explore for a while.** Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while. 
 
 
 ### Learning
@@ -120,13 +120,13 @@ Meaningful and personal here are somewhat blurry, but I hope it conveys the pict
 One of the things I love about these challenges is that many of the participants share their code, which you can then adapt for your own needs. 
 
 
-During the #30DayMapChallenge in 2019 [Alexandra Kapp](https://alexandrakapp.blog/) published a map of frequently traveled routes in Berlin using simulated data. What she did was, to my interpretation, elegantly brilliant: She sampled two points in Berlin and calculated the shortest route between them. She did this for 500 pairs of points and plotted the routes traveled on where the line width represents the frequency of the street traveled compared to all other streets.
+During the #30DayMapChallenge in 2019 [Alexandra Kapp](https://alexandrakapp.blog/) published a map of frequently traveled routes in Berlin using simulated data. What she did was, to my understanding, elegantly brilliant: She sampled two points in Berlin and calculated the shortest route between them. She did this for 500 pairs of points and plotted the routes traveled on where the line width represents the frequency of the street traveled compared to all other streets.
 
 Seeing this and amazed by its simplicity I adapted it for my own needs: The next year I ran the same analysis on Tel-Aviv, producing the plot on the right.
 
 <img src="Slide13.png" alt="Slides with two similar graphs on theme. On the right is a map of Berlin with routes most frequently travelled on by Alexandra. On the right is my attempt at reproducing it with data regarding Tel-Aviv."/>
 
-While this was one example, adapting others' code is something prevalent in a coder's life: You find an answer on Stack Overflow or in some GitHub repository and adapt it to your current need. **These challenges provided a great lesson in how to take someone else's code and integrate it to what it is you're trying to produce.**
+While this was one example, incorporating others' code is something prevalent in a coder's life: You find an answer on Stack Overflow or in some GitHub repository and adapt it to your current need. **These challenges provided a great lesson in how to take someone else's code and integrate it to what it is you're trying to produce.**
 
 
 
@@ -134,12 +134,16 @@ While this was one example, adapting others' code is something prevalent in a co
 
 Somehow I find this idea - learning new tools and methods - somewhat redundant. I mean, unless you're proficient in the language you're using, you're likely to encounter some challenge you will learn from. With that said, pointing them out really helps to look at at one's accomplishments.
 
-For one of the days in the first #30DayMapChallenge I participated I wanted to create a regular map transitioning to a cartogram. I remember sitting for days trying to work the code, even while following various blog posts. Something constantly went wrong: I had the data in a different format, the post referenced an older version of the package and more. And yet, the feeling after succeeding was great, realizing I gained and learned a lot from the process on using the specific functions.
+For one of the days in the first #30DayMapChallenge in which I participated I wanted to create a regular map transitioning to a cartogram. I remember sitting for days trying to work the code, even while following various blog posts. Something constantly went wrong: I had the data in a different format, the post referenced an older version of the package and more. And yet, the feeling after succeeding was great, realizing I gained and learned a lot from the process on using the specific functions.
 
 <img src="20_map.gif" alt="" width = '250'/>
 
 
-I also got to try out different ways of representing data, such as trying to plot data with an extreme outlier, leveraging the area above the plot to highlight the starking distance from other points. At another time I wanted to try out a new tool, so after collecting and aggregating data about the R packages I use I visualized it using D3.js, something I hope and look forward to exploring more in the future.
+I also got to try out different ways of representing data, such as trying to plot data with an extreme outlier, leveraging the area above the plot to highlight the extreme distance from other points.
+
+<img src="superbowl.png" alt="A plot of superbowl add spending by companies, with an outlier above the area of the plot." height = '200'/>
+
+At another time I wanted to try out a new tool, so after collecting and aggregating data about the R packages I use I visualized it using D3.js, something I hope and look forward to exploring more in the future.
 
 <img src="01.png" alt="" height = '200'/>
 
@@ -154,7 +158,7 @@ As I created charts at work I noticed I would translate a lot of practices I imp
 <img src="Slide15.png" alt=""/>
 
 
-Sometimes it was even more subtle things, such as having a reprtoire of graphs to choose from or choosing the right one for the data I wanted to present. Either way, I realized that **participating in these challenges made me a better communicator and analyst**
+Sometimes it was even more subtle things, such as having a repertoire of graphs to choose from or choosing the right one for the data I wanted to present. Either way, I realized that **participating in these challenges made me a better communicator and analyst**
 
 ### Recapping
 
@@ -163,17 +167,17 @@ Sometimes it was even more subtle things, such as having a reprtoire of graphs t
 
 So if I'll try to recap my experiences and what I took from these challenges and why I think you too should join too then it's because of the following:
 
-1. **Welcoming community** — The community in the challenges I participated in were extremely welcoming. Come with any level of experience and whatever tool you use, everyone is welcome and as much as they want.  
+1. **Welcoming community** — The communities in the challenges I participated in were extremely welcoming. Come with any level of experience and whatever tool you use. Everyone is welcome to participate as much as they want.  
 
-2. **Interacting and being inspired by amazing people** — It's amazing how many people I learned about and got to interact with from these challenges. My Twitter feed has grown drasticaly, following many of the participants' sharing and work they continue to share since  
+2. **Interacting and being inspired by amazing people** — It's amazing how many people I learned about and got to interact with from these challenges. My Twitter feed has grown drasticaly, following many of the participants' sharing and work they continue to share.  
 
 3. **Invitation to leave your comfort zone and challenge yourself** — These challenges, in effect, constantly push your limits: A new dataset, a new function or a new tool altogether; every theme comes with new and exciting challenges to overcome and learn from. Just grab them closely and embrace the opportunity to try out something new.    
 
-4. **Explore various data** — Since you bring your own data to some of these challenges it's a great opportunity to explore data you had laying around or something personal. And when the dataset is provided? you get to analyze different topics and formats of data such as text, time series, networks and much more that you (or at least I) don't usually get to explore.
+4. **Explore various data** — Since you bring your own data to some of these challenges it's a great opportunity to explore data you had laying around or something personal. And when the dataset is provided you get to analyze different topics and formats of data such as text, time series, networks and much more that you (or at least I) don't usually get to explore.
 
-5. **Gain experience and confidence** — As I coded and participated more I became better and more confident in my ability to analyze data. Something I'm grateful and see in these challenges everytime I participate in one. And as to my original purpose, when I got my thesis data I was all ready and confident to analyze it (thouh I did stilll encounter difficulties).
+5. **Gain experience and confidence** — As I coded and participated more I became better and more confident in my ability to analyze data. And as to my original purpose, when I got my thesis data I was all ready and confident to analyze it (thouh I did stilll encounter difficulties).
 
-6. **Create something to call your own** — The best part of participating in these challenges is suddenly you have this great and diverse portfolio to share with others. Just set up a simple [webpage and host all your contributions](https://amitlevinson.com/data-visualization/) to share with othes!
+6. **Create something to call your own** — The best part of participating in these challenges is suddenly you have this great and diverse portfolio to share with others. Just set up a simple [webpage and host all your contributions!](https://amitlevinson.com/data-visualization/)
 
 
 7. **It's fun!**
@@ -181,7 +185,9 @@ So if I'll try to recap my experiences and what I took from these challenges and
 
 #### How to start
 
-Well, you just start! Seriously, there's many challenges out there occurring all the time. [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) project, [#MakeOverMonday](https://www.makeovermonday.co.uk/), [#StoryTellingWithData](https://community.storytellingwithdata.com/challenges) (SWD), [vizforsocialgood](https://www.vizforsocialgood.com/), [#30DayChartChallenge](https://30daychartchallenge.org/), [#30DayMapChallenge](https://30daymapchallenge.com/) and more!
+Well, you just start! Seriously, there are many challenges out there occurring all the time. [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) project, [#MakeOverMonday](https://www.makeovermonday.co.uk/), [#StoryTellingWithData](https://community.storytellingwithdata.com/challenges) (SWD), [VizFSG(https://twitter.com/VizFSG), [#30DayChartChallenge](https://30daychartchallenge.org/), [#30DayMapChallenge](https://30daymapchallenge.com/) and more!
+
+As to myself I really hope to pick up more some #TidyTuesdays. I try to participate in the 30DayMap and Chart challenge when they arrive but having a baby at home definitely takes a lot of my free time during the week. Hopefully trying to participate with new tools - e.g. Python, d3js - will motivate me more.
 
 **So, will I see you at the next challenge 🤩?**
 
