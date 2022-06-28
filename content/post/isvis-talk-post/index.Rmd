@@ -1,5 +1,5 @@
 ---
-title: Community visualization challenges and their educational inspiration (Talk summary)
+title: Community visualization challenges and their educational inspiration (talk summary)
 author: Amit Levinson
 date: '2022-06-29'
 slug: isvis-talk-post
@@ -40,7 +40,7 @@ newcaption {
 </center>
 <br>
 
- <i class="fab fa-youtube" style='color:#FF0000'></i> [Check out the video online](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15)
+ <i class="fab fa-youtube" style='color:#FF0000'></i> [Check out the recording of the talk](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15)
 
 
 A little more than a month ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I participated in recent years at the [Israeli Visualizaiton conference](https://isvis.org/). It was great to summarize what I took from these challenges and while you can find a [recording of it online](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15), I thought I'd also summarise it with a little more than I could say in those 8 minutes.
@@ -196,7 +196,9 @@ As to myself I really hope to pick up more some #TidyTuesdays. I try to particip
 
 **So, will I see you at the next challenge 🤩?**
 
-Checkout the [recording of the talk](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15) or view the [complete slide deck](https://amitlevinson.github.io/talks/isvis/Talk.pdf). Thanks for reading!
+You might want to check out the [recording of the talk](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15) or view the [complete slide deck](https://amitlevinson.github.io/talks/isvis/Talk.pdf).  
+
+Thanks for reading!
 
 
 
