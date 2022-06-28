@@ -1,7 +1,7 @@
 ---
 title: Community visualization challenges and their educational inspiration (Talk summary at ISVIS)
 author: Amit Levinson
-date: '2022-05-31'
+date: '2022-06-28'
 slug: isvis-talk-post
 categories: []
 tags: []
@@ -40,8 +40,10 @@ newcaption {
 </center>
 <br>
 
+ <i class="fab fa-youtube" style='color:#FF0000'></i> [Check out the video online](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15)
 
-A little more than a month ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I participated in recent the past years at the [Israeli Visualizaiton conference](https://isvis.org/). It was great to summarize what I took from these challenges and while you can find a recording of it, I thought I'd also summarise it with a little more than I could say in those 8 minutes.
+
+A little more than a month ago, on May 12, 2022, I gave a talk about my experience in several data visualization challenges I participated in recent years at the [Israeli Visualizaiton conference](https://isvis.org/). It was great to summarize what I took from these challenges and while you can find a [recording of it online](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15), I thought I'd also summarise it with a little more than I could say in those 8 minutes.
 
 I'll also take this opportunity to thank my wife — the night the call for talks closed I came to her and said "Never mind, I'm not going to submit anything to ISVIS, what can I possibly talk about". Luckily she convinced me otherwise, and this talk was born out of it. Thank you ❤️
 
@@ -62,13 +64,16 @@ I didn't want to wait for my thesis data to arrive, only to be unable to analyze
 <br>
 
 
-In the following sections I want to share with you what is it I love about and learned from these challenges, with the hope to motivate you to participate in an upcoming one if you haven't yet given it a try.
+In the following sections I want to share with you what it is I love about and learned from these challenges, with the hope to motivate you (and future me) to participate in an upcoming one if you haven't yet given it a try.
 
 ### Community
 
 As I was roaming across Twitter one day I came across the [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge, a data visualization challenge oriented towards the R community. Every week a new dataset is published and the R community is invited to analyze and visualize it. 
 
-Observing as a spectator for a few weeks I decided to participate in week 39, 2019. Doing a quick exploratory analysis of the data I noticed a trend, somewhat intuitive, of an increase in the number of visitors to national parks across years. Remembering a plot with added icons from the week before by [Ariane Aumaitre](https://twitter.com/ariamsita), I adapted some of her code and posted my first plot.
+Observing as a spectator for a few weeks I decided to participate in week 39, 2019[^2]. Doing a quick exploratory analysis of the data I noticed a trend, somewhat intuitive, of an increase in the number of visitors to national parks across years. Remembering a plot with added icons from the week before by [Ariane Aumaitre](https://twitter.com/ariamsita), I adapted some of her code and posted my first plot in R.
+
+[^2]: In the recording I note it was *the* first week, I meant to say it was *my* first week.
+
 
 <center>
 `r blogdown::shortcode('tweet','1174364639427272706')` 
@@ -96,7 +101,7 @@ As someone living in Israel I found data relating to Israel meaningful to explor
 <img src="Slide10.png" alt="Three graphs one next to the other, from left to right: a pictogram of ISraeli prime ministers, Israel's map with elevation and lastly points in a circle representing population per km^2 across Israeli cities."/>
 
 
-So I accessed various datasets relating to Israel and visualized them, for example previous Israeli prime ministers or visualizing Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and been meaning to explore for a while. It was great to explore Israeli data and also share it with other participants for them to learn more about Israel.
+So I accessed various datasets relating to Israel and visualized them, for example previous Israeli prime ministers or visualizing Israel's elevation. More recently I visualized population density in Israeli cities, a dataset I had laying around and been meaning to explore for a while. **It was great to explore Israeli data and also share it with other participants for them to learn more about Israel.**
 
 #### Personal <span class='grayit'>Data</span>
 
@@ -110,17 +115,17 @@ For example as someone who uses Twitter mainly for R–related comments and insp
 <img src="walking.png" alt="plot of time it takes to walk from dizengof square to different places."/>
 
 
-Meaningful and personal here are somewhat blurry, but I hope it conveys the picture:**In challenges where you bring your own data (BYOD `r emo::ji('wink')`) try to find data that engages you, something you're passionate about or been wanting to explore for a while.** Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while. 
+Meaningful and personal here are somewhat blurry, but I hope it conveys the picture: **In challenges where you bring your own data (BYOD `r emo::ji('wink')`) try to find data that engages you, something you're passionate about or been wanting to explore for a while. Take these opportunities to explore them, build your portfolio or just answer questions you've had laying around for a while.**
 
 
 ### Learning
 
 #### <span class='grayit'>Learning</span> from others
 
-One of the things I love about these challenges is that many of the participants share their code, which you can then adapt for your own needs. 
+One of the things I love about these challenges is that many of the participants share their code, which you can then adapt for your own needs and visuals. 
 
 
-During the #30DayMapChallenge in 2019 [Alexandra Kapp](https://alexandrakapp.blog/) published a map of frequently traveled routes in Berlin using simulated data. What she did was, to my understanding, elegantly brilliant: She sampled two points in Berlin and calculated the shortest route between them. She did this for 500 pairs of points and plotted the routes traveled on where the line width represents the frequency of the street traveled compared to all other streets.
+One example of this is during the #30DayMapChallenge in 2020 [Alexandra Kapp](https://alexandrakapp.blog/) published a map of frequently traveled routes in Berlin using simulated data. What she did was, to my understanding, elegantly brilliant: She sampled two points in Berlin and calculated the shortest route between them. She did this for 500 pairs of points and plotted the routes traveled on where the line width represents the frequency of the street traveled compared to all other streets.
 
 Seeing this and amazed by its simplicity I adapted it for my own needs: The next year I ran the same analysis on Tel-Aviv, producing the plot on the right.
 
@@ -134,7 +139,7 @@ While this was one example, incorporating others' code is something prevalent in
 
 Somehow I find this idea - learning new tools and methods - somewhat redundant. I mean, unless you're proficient in the language you're using, you're likely to encounter some challenge you will learn from. With that said, pointing them out really helps to look at at one's accomplishments.
 
-For one of the days in the first #30DayMapChallenge in which I participated I wanted to create a regular map transitioning to a cartogram. I remember sitting for days trying to work the code, even while following various blog posts. Something constantly went wrong: I had the data in a different format, the post referenced an older version of the package and more. And yet, the feeling after succeeding was great, realizing I gained and learned a lot from the process on using the specific functions.
+For one of the days in the first #30DayMapChallenge in which I participated I wanted to create a regular map transitioning to a cartogram. I remember sitting for days trying to work the code, even while following various blog posts. Something constantly went wrong: I had the data in a different format, the post referenced an older version of the package and more. And yet, **the feeling after succeeding was great, realizing I gained and learned a lot from the process on using the specific functions.**
 
 <img src="20_map.gif" alt="" width = '250'/>
 
@@ -165,9 +170,9 @@ Sometimes it was even more subtle things, such as having a repertoire of graphs 
 
 #### Why Participate?
 
-So if I'll try to recap my experiences and what I took from these challenges and why I think you too should join too then it's because of the following:
+So if I'll try to recap my experiences, what I took from these challenges and why I think you too should join too then it's because of the following:
 
-1. **Welcoming community** — The communities in the challenges I participated in were extremely welcoming. Come with any level of experience and whatever tool you use. Everyone is welcome to participate as much as they want.  
+1. **Welcoming community** — The communities in the challenges I participated in were extremely welcoming. Come with any level of experience and whatever tool you use. Everyone is welcome to participate as much as they want. This is great especially if you're a beginner and need that safe place to start your journey.    
 
 2. **Interacting and being inspired by amazing people** — It's amazing how many people I learned about and got to interact with from these challenges. My Twitter feed has grown drasticaly, following many of the participants' sharing and work they continue to share.  
 
@@ -185,13 +190,13 @@ So if I'll try to recap my experiences and what I took from these challenges and
 
 #### How to start
 
-Well, you just start! Seriously, there are many challenges out there occurring all the time. [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) project, [#MakeOverMonday](https://www.makeovermonday.co.uk/), [#StoryTellingWithData](https://community.storytellingwithdata.com/challenges) (SWD), [VizFSG(https://twitter.com/VizFSG), [#30DayChartChallenge](https://30daychartchallenge.org/), [#30DayMapChallenge](https://30daymapchallenge.com/) and more!
+Well, you just start! Seriously, there are many challenges out there occurring all the time. [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) project, [#MakeOverMonday](https://www.makeovermonday.co.uk/), [#StoryTellingWithData](https://community.storytellingwithdata.com/challenges) (SWD), [VizFSG](https://twitter.com/VizFSG), [#30DayChartChallenge](https://30daychartchallenge.org/), [#30DayMapChallenge](https://30daymapchallenge.com/) and more!
 
 As to myself I really hope to pick up more some #TidyTuesdays. I try to participate in the 30DayMap and Chart challenge when they arrive but having a baby at home definitely takes a lot of my free time during the week. Hopefully trying to participate with new tools - e.g. Python, d3js - will motivate me more.
 
 **So, will I see you at the next challenge 🤩?**
 
-
+Checkout the [recording of the talk](https://www.youtube.com/watch?v=s2oQVflzgmA&list=PLvmW1VKR0LWpzh0JbH90iqRz7kSiMDyAY&index=15) or view the [complete slide deck](https://amitlevinson.github.io/talks/isvis/Talk.pdf). Thanks for reading!
 
 
 
