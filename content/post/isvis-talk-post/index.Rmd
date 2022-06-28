@@ -1,7 +1,7 @@
 ---
 title: Community visualization challenges and their educational inspiration (talk summary)
 author: Amit Levinson
-date: '2022-06-29'
+date: '2022-06-28'
 slug: isvis-talk-post
 categories: []
 tags: []
