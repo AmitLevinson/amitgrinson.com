@@ -17,7 +17,7 @@ interests:
 - Trust & privacy
 
 
-name: Amit Levinson
+name: Amit Grinson
 organizations:
 - name: Payoneer
   url: https://www.payoneer.com/
