@@ -1,0 +1,48 @@
+---
+title: Translating Regex to SQL String Operations
+author: Amit Levinson
+date: '2022-06-02'
+slug: regex-in-sql
+categories: [R]
+tags: [R, Python, SQL]
+subtitle: 'Learning how to do several string operations with SQL'
+summary: 'Unfortunately, a lot of Regex operations are not available in (MS)SQL. In this post I show how I take several regex operations I like and convert thme to string manipulations with SQL syntax'
+featured: yes
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+draft: true
+codefolding_show: show
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+### lookaround
+
+[lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite regex operations. As the name suggests, a lookaround searches for a pattern and string, while a lookahead searches for the pattern and takes what before it, the lookbehind searches for the pattern and what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the symbol referenced.
+
+Let's try this with a set of emails. For example you might want to extract the email domains, which is everything that's after the @ symbol.
+
+Returning to our table, we can do this using the following operation:
+
+<<<Example of extracting email domains with positive lookbehind in regex using py/R>>>
+
+the pattern `(?<=@).+` essentially extracts any symbol(s) that follow the @ symbol, in this case our domain. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it. 
+
+```{python}
+import pyodbc
+```
+
+#### SQL
+
+So how can we do it in SQL? Well, I mainl have it for the positive lookahead/behind, where we can identify the character's location and extract anything after it:
+
+<<<SQL Code>>>
+
+We're leveraging the function `CHARINDEX` in order to identifying the location of the '@' symbol, and then extract all text from that location forward.
