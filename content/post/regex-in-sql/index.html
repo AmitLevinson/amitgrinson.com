@@ -1,0 +1,219 @@
+---
+title: Translating Regex to SQL String Operations
+author: Amit Levinson
+date: '2022-06-02'
+slug: regex-in-sql
+categories: [R]
+tags: [R, Python, SQL]
+subtitle: 'Learning how to do several string operations with SQL'
+summary: 'Unfortunately, a lot of Regex operations are not available in (MS)SQL. In this post I show how I take several regex operations I like and convert thme to string manipulations with SQL syntax'
+featured: yes
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+draft: true
+codefolding_show: show
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Let’s start by setting up a local connection both for Python (call it <code>pyconn</code>) and R (<code>rconn</code>) we’ll be using. I’m connecting to a local MSSQL server we’ll query moving forward.</p>
+<div id="python" class="section level5">
+<h5>Python</h5>
+<pre class="python"><code>import pandas as pd
+
+payments = pd.read_csv(&#39;data.csv&#39;)
+payments</code></pre>
+<pre><code>##     userId  ...   payment_description
+## 0        1  ...    John Dalle 1238127
+## 1        1  ...    John Dalle 1827398
+## 2        1  ...       John Dalle 2142
+## 3        2  ...        Jarry Cohen 23
+## 4        2  ...      Jarry Cohen 6548
+## 5        3  ...      Barbra Smith 322
+## 6        4  ...     Shawn Brown 92794
+## 7        5  ...  Dan S. Wilson 283749
+## 8        5  ...   Dan S. Wilson 90793
+## 9        6  ...    Lilly Taylor 53435
+## 10       6  ...      Lilly Taylor 894
+## 11       6  ...     Lilly Taylor 3698
+## 
+## [12 rows x 4 columns]</code></pre>
+</div>
+<div id="r" class="section level5">
+<h5>R</h5>
+<pre class="r"><code>library(tidyverse)
+
+payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
+</div>
+</div>
+<div id="lookarounds-extracting-the-domain-from-an-email-address" class="section level3">
+<h3>Lookarounds 👀 — Extracting the domain from an email address</h3>
+<p><a href="https://www.regular-expressions.info/lookaround.html">lookarounds</a> are definitely one of my favorite and commonly go-to regex operations. As the name implies, a lookaround searches for a pattern and string, while a lookahead searches for the pattern and takes what before it, the lookbehind searches for the pattern and what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the symbol referenced.</p>
+<p>Let’s try this with a set of emails. <strong>For example you might want to extract the email domains, which is everything that’s after the @ symbol.</strong></p>
+<div id="python-1" class="section level5">
+<h5>Python</h5>
+<p>Returning to our table, we can do this using the following regex operation:</p>
+<pre class="python"><code>(
+  payments
+  .drop_duplicates(&#39;userId&#39;)
+  .loc[:, [&#39;userId&#39;, &#39;email&#39;]]
+  .assign(
+    emaildomain = lambda df: df.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
+    )
+  )</code></pre>
+<pre><code>##    userId                     email        emaildomain
+## 0       1    johnTheKing2@yahoo.com          yahoo.com
+## 3       2  D234AbJarry@rockingit.it       rockingit.it
+## 5       3     BarbraSA@rockingit.it       rockingit.it
+## 6       4           Shawn@gmail.com          gmail.com
+## 7       5      me@photoshooting.com  photoshooting.com
+## 9       6          Lilly3@gmail.com          gmail.com</code></pre>
+<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any symbol(s) that follow the @ symbol, in this case our domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it.</p>
+</div>
+<div id="sql" class="section level5">
+<h5>SQL</h5>
+<p>So how can we do it in SQL? Well, I mainly use it for the positive lookahead/behind, where we can identify the character’s location and extract anything after it:</p>
+<pre class="sql"><code>SELECT DISTINCT p.userId,
+  email,
+  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX(&#39;@&#39;,EMAIL)) AS emaildomain
+FROM PAYMENTS p</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 1: </span>6 records</caption>
+<thead>
+<tr class="header">
+<th align="left">userId</th>
+<th align="left">email</th>
+<th align="left">emaildomain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
+<td align="left">yahoo.com</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
+<td align="left">rockingit.it</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left"><a href="mailto:BarbraSA@rockingit.it" class="email">BarbraSA@rockingit.it</a></td>
+<td align="left">rockingit.it</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left"><a href="mailto:Shawn@gmail.com" class="email">Shawn@gmail.com</a></td>
+<td align="left">gmail.com</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
+<td align="left">photoshooting.com</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
+<td align="left">gmail.com</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We’re leveraging the function <code>CHARINDEX</code> in order to identifying the location of the ‘@’ symbol, and then extract all text from that location forward.</p>
+</div>
+</div>
+<div id="partial-string-join-identifying-a-string-from-a-partial-match" class="section level3">
+<h3>Partial string join — identifying a string from a partial match</h3>
+<p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you get a list of only partial unique identifiers, how can we identify the correct observation?</p>
+<p>For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:</p>
+<pre class="r"><code>knitr::kable(partial_identifiers)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">a2209370-bdb0-44c5-b4c5</td>
+</tr>
+<tr class="even">
+<td align="left">1746-4ea9-9a33-f8cc3dd07b8e</td>
+</tr>
+<tr class="odd">
+<td align="left">b510-442c-b0d1</td>
+</tr>
+<tr class="even">
+<td align="left">8742-4396-83ca</td>
+</tr>
+<tr class="odd">
+<td align="left">6856-4df8-ac69</td>
+</tr>
+</tbody>
+</table>
+<p>How can we select the relevant payments?</p>
+<div id="r-1" class="section level5">
+<h5>R</h5>
+<p>At the time I encountered this I was using mainly R and solved it with that. Let’s solve it first and then go over the solution:</p>
+<pre class="r"><code>library(purrr)
+library(stringr)
+
+check_payment_id_exists &lt;- function (payment_id) {
+  result = partial_identifiers$id[map_lgl(partial_identifiers$id, ~ str_detect(payment_id, .))]
+  result = ifelse(is_empty(result), NA, result)
+  return(result)
+}
+
+payments %&gt;% 
+  mutate(
+    identifier = map_chr(payment_identifier, check_payment_id_exists),
+    .before = &#39;payment_identifier&#39;, .keep=&#39;used&#39;
+  )</code></pre>
+<pre><code>## # A tibble: 12 × 2
+##    identifier                  payment_identifier                  
+##    &lt;chr&gt;                       &lt;chr&gt;                               
+##  1 &lt;NA&gt;                        4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b
+##  2 a2209370-bdb0-44c5-b4c5     a2209370-bdb0-44c5-b4c5-27532022bef3
+##  3 &lt;NA&gt;                        82c06af0-08e6-4304-bf9e-b79600814439
+##  4 b510-442c-b0d1              b7a0879f-b510-442c-b0d1-595e3c7ca4ef
+##  5 1746-4ea9-9a33-f8cc3dd07b8e 32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e
+##  6 &lt;NA&gt;                        2459190c-ff94-4d8c-baf8-2fdf15dd2007
+##  7 &lt;NA&gt;                        9954c0d3-fc8f-4234-b77f-20eaaf674841
+##  8 &lt;NA&gt;                        405a073d-44e5-475c-a53f-9541aa578e9d
+##  9 8742-4396-83ca              4b285281-8742-4396-83ca-b43f1a238b6d
+## 10 6856-4df8-ac69              38afb3e3-6856-4df8-ac69-873926c17606
+## 11 &lt;NA&gt;                        0411ea12-cf57-4b43-ae17-e1677feec19f
+## 12 &lt;NA&gt;                        6df08994-0335-4463-a921-970f2349413f</code></pre>
+<p>&lt;&lt; Explanation &gt;&gt;</p>
+</div>
+<div id="sql-1" class="section level5">
+<h5>SQL</h5>
+<p>&lt;<code>&gt;</p>
+<p>&lt;<explanation>&gt;</p>
+</div>
+</div>
+<div id="extracting-digits." class="section level3">
+<h3>Extracting digits.</h3>
+<pre class="r"><code># library(readr)
+# dat &lt;- read_csv(&#39;content/post/regex-in-sql/data.csv&#39;)
+
+# dbWriteTable(conn = rconn,
+#             &#39;Payments&#39;,
+#             dat,
+#             overwrite = TRUE)</code></pre>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>The extra parentheses is to solve the ‘ValueError: pattern contains no capture groups’ error, basically including what is it we want to be captured in our regex.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

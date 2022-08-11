@@ -16,33 +16,150 @@ projects: []
 draft: true
 codefolding_show: show
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
 ```
+### Setup
 
-### lookaround
+Let's start by setting up a local connection both for Python (call it `pyconn`) and R (`rconn`) we'll be using. I'm connecting to a local MSSQL server we'll query moving forward.
 
-[lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite regex operations. As the name suggests, a lookaround searches for a pattern and string, while a lookahead searches for the pattern and takes what before it, the lookbehind searches for the pattern and what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the symbol referenced.
-
-Let's try this with a set of emails. For example you might want to extract the email domains, which is everything that's after the @ symbol.
-
-Returning to our table, we can do this using the following operation:
-
-<<<Example of extracting email domains with positive lookbehind in regex using py/R>>>
-
-the pattern `(?<=@).+` essentially extracts any symbol(s) that follow the @ symbol, in this case our domain. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it. 
+##### Python
 
 ```{python}
-import pyodbc
+import pandas as pd
+
+payments = pd.read_csv('data.csv')
+payments
 ```
 
-#### SQL
+##### R
+```{r}
+library(tidyverse)
 
-So how can we do it in SQL? Well, I mainl have it for the positive lookahead/behind, where we can identify the character's location and extract anything after it:
+payments <- read_csv('data.csv')
+```
 
-<<<SQL Code>>>
+
+```{r echo = FALSE}
+library(odbc)
+library(DBI)
+rconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "regex")
+
+# Partial strings
+partial_identifiers <- data.frame(
+  id = c("a2209370-bdb0-44c5-b4c5", "1746-4ea9-9a33-f8cc3dd07b8e", "b510-442c-b0d1", "8742-4396-83ca", "6856-4df8-ac69")
+)
+
+
+# content/post/regex-in-sql/
+payments <- read_csv('data.csv')
+```
+
+
+
+### Lookarounds 👀 — Extracting the domain from an email address
+
+[lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite and commonly go-to regex operations. As the name implies, a lookaround searches for a pattern and string, while a lookahead searches for the pattern and takes what before it, the lookbehind searches for the pattern and what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the symbol referenced.
+
+Let's try this with a set of emails. **For example you might want to extract the email domains, which is everything that's after the @ symbol.**
+
+##### Python
+
+Returning to our table, we can do this using the following regex operation:
+
+```{python}
+(
+  payments
+  .drop_duplicates('userId')
+  .loc[:, ['userId', 'email']]
+  .assign(
+    emaildomain = lambda df: df.email.str.extract(r'((?<=@).+)') # <- relevant part
+    )
+  )
+```
+
+
+the pattern `(?<=@).+` essentially extracts any symbol(s) that follow the @ symbol, in this case our domain[^1]. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it. 
+
+[^1]: The extra parentheses is to solve the 'ValueError: pattern contains no capture groups' error, basically including what is it we want to be captured in our regex.
+
+##### SQL
+
+So how can we do it in SQL? Well, I mainly use it for the positive lookahead/behind, where we can identify the character's location and extract anything after it:
+
+```{sql connection=rconn, echo = TRUE}
+SELECT DISTINCT p.userId,
+  email,
+  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX('@',EMAIL)) AS emaildomain
+FROM PAYMENTS p
+```
+
 
 We're leveraging the function `CHARINDEX` in order to identifying the location of the '@' symbol, and then extract all text from that location forward.
+
+### Partial string join — identifying a string from a partial match
+
+I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you get a list of only partial unique identifiers, how can we identify the correct observation? 
+
+For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:
+
+```{r}
+knitr::kable(partial_identifiers)
+```
+How can we select the relevant payments?
+
+##### R
+
+At the time I encountered this I was using mainly R and solved it with that. Let's solve it first and then go over the solution:
+
+```{r}
+library(purrr)
+library(stringr)
+
+check_payment_id_exists <- function (payment_id) {
+  result = partial_identifiers$id[map_lgl(partial_identifiers$id, ~ str_detect(payment_id, .))]
+  result = ifelse(is_empty(result), NA, result)
+  return(result)
+}
+
+payments %>% 
+  mutate(
+    identifier = map_chr(payment_identifier, check_payment_id_exists),
+    .before = 'payment_identifier', .keep='used'
+  )
+```
+
+<< Explanation >>
+
+##### SQL
+
+<<code>>
+
+<<explanation>>
+
+### Extracting digits.
+
+
+
+
+```{r}
+# library(readr)
+# dat <- read_csv('content/post/regex-in-sql/data.csv')
+
+# dbWriteTable(conn = rconn,
+#             'Payments',
+#             dat,
+#             overwrite = TRUE)
+```
+
+
+```{r echo = FALSE}
+dbDisconnect(rconn)
+```
+
