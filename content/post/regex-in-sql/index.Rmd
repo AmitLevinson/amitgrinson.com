@@ -16,7 +16,7 @@ projects: []
 draft: true
 codefolding_show: show
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -30,6 +30,7 @@ Let's start by setting up a local connection both for Python (call it `pyconn`) 
 
 ```{python}
 import pandas as pd
+import re
 
 payments = pd.read_csv('data.csv')
 payments
@@ -41,7 +42,6 @@ library(tidyverse)
 
 payments <- read_csv('data.csv')
 ```
-
 
 ```{r echo = FALSE}
 library(odbc)
@@ -55,6 +55,7 @@ rconn <- dbConnect(odbc(),
 partial_identifiers <- data.frame(
   id = c("a2209370-bdb0-44c5-b4c5", "1746-4ea9-9a33-f8cc3dd07b8e", "b510-442c-b0d1", "8742-4396-83ca", "6856-4df8-ac69")
 )
+# dbWriteTable(rconn, 'Partial_Identifiers', partial_identifiers)
 
 
 # content/post/regex-in-sql/
@@ -76,7 +77,7 @@ Returning to our table, we can do this using the following regex operation:
 ```{python}
 (
   payments
-  .drop_duplicates('userId')
+  .drop_duplicates()
   .loc[:, ['userId', 'email']]
   .assign(
     emaildomain = lambda df: df.email.str.extract(r'((?<=@).+)') # <- relevant part
@@ -96,7 +97,7 @@ So how can we do it in SQL? Well, I mainly use it for the positive lookahead/beh
 ```{sql connection=rconn, echo = TRUE}
 SELECT DISTINCT p.userId,
   email,
-  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX('@',EMAIL)) AS emaildomain
+  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX('@',EMAIL)) AS email_domain
 FROM PAYMENTS p
 ```
 
@@ -133,17 +134,40 @@ payments %>%
     identifier = map_chr(payment_identifier, check_payment_id_exists),
     .before = 'payment_identifier', .keep='used'
   )
+
 ```
 
+So what do we have here? Well the idea is to iterate across all payment identifiers we have and see which of the partial identifiers matches it. To do this we break the process up, the first section is a function to do exactly that, identify if a payment matches any of the partial identifiers, and the second section is the analysis in which I iterate across all payment identifiers and check if they match. 
 << Explanation >>
 
 ##### SQL
 
-<<code>>
+```{sql connection=rconn, echo = TRUE}
+SELECT payment_identifier,
+  pi.id
+FROM PAYMENTS p
+LEFT JOIN partial_identifiers pi on p.payment_identifier like concat('%', pi.id, '%')
+```
 
-<<explanation>>
 
-### Extracting digits.
+
+The idea is pretty straight forward. We can leverage the `LIKE` operator in a join to do the partial matching for us, matching any payment identifiers to the partial identifiers id.
+
+### Extracting / Separating text & digits.
+
+Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let's see how can we do this on the column payment_description.
+
+```{python echo=TRUE}
+(
+  payments[['payment_description']]
+  .assign(
+    name = payments.payment_description.str.extract(r'([^0-9]+)'),
+    number = payments.payment_description.str.extract(r'(\d+)'),
+)
+)
+payments[['payment_description']].apply(lambda val: re.split(r'(\d+)',val.payment_description), result_type = 'expand')
+```
+
 
 
 

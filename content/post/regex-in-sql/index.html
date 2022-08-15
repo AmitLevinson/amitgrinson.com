@@ -16,7 +16,7 @@ projects: []
 draft: true
 codefolding_show: show
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 
@@ -27,6 +27,7 @@ editor_options:
 <div id="python" class="section level5">
 <h5>Python</h5>
 <pre class="python"><code>import pandas as pd
+import re
 
 payments = pd.read_csv(&#39;data.csv&#39;)
 payments</code></pre>
@@ -62,19 +63,25 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <p>Returning to our table, we can do this using the following regex operation:</p>
 <pre class="python"><code>(
   payments
-  .drop_duplicates(&#39;userId&#39;)
+  .drop_duplicates()
   .loc[:, [&#39;userId&#39;, &#39;email&#39;]]
   .assign(
     emaildomain = lambda df: df.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
     )
   )</code></pre>
-<pre><code>##    userId                     email        emaildomain
-## 0       1    johnTheKing2@yahoo.com          yahoo.com
-## 3       2  D234AbJarry@rockingit.it       rockingit.it
-## 5       3     BarbraSA@rockingit.it       rockingit.it
-## 6       4           Shawn@gmail.com          gmail.com
-## 7       5      me@photoshooting.com  photoshooting.com
-## 9       6          Lilly3@gmail.com          gmail.com</code></pre>
+<pre><code>##     userId                     email        emaildomain
+## 0        1    johnTheKing2@yahoo.com          yahoo.com
+## 1        1    johnTheKing2@yahoo.com          yahoo.com
+## 2        1    johnTheKing2@yahoo.com          yahoo.com
+## 3        2  D234AbJarry@rockingit.it       rockingit.it
+## 4        2  D234AbJarry@rockingit.it       rockingit.it
+## 5        3     BarbraSA@rockingit.it       rockingit.it
+## 6        4           Shawn@gmail.com          gmail.com
+## 7        5      me@photoshooting.com  photoshooting.com
+## 8        5      me@photoshooting.com  photoshooting.com
+## 9        6          Lilly3@gmail.com          gmail.com
+## 10       6          Lilly3@gmail.com          gmail.com
+## 11       6          Lilly3@gmail.com          gmail.com</code></pre>
 <p>the pattern <code>(?&lt;=@).+</code> essentially extracts any symbol(s) that follow the @ symbol, in this case our domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it.</p>
 </div>
 <div id="sql" class="section level5">
@@ -82,7 +89,7 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <p>So how can we do it in SQL? Well, I mainly use it for the positive lookahead/behind, where we can identify the character’s location and extract anything after it:</p>
 <pre class="sql"><code>SELECT DISTINCT p.userId,
   email,
-  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX(&#39;@&#39;,EMAIL)) AS emaildomain
+  RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX(&#39;@&#39;,EMAIL)) AS email_domain
 FROM PAYMENTS p</code></pre>
 <div class="knitsql-table">
 <table>
@@ -91,7 +98,7 @@ FROM PAYMENTS p</code></pre>
 <tr class="header">
 <th align="left">userId</th>
 <th align="left">email</th>
-<th align="left">emaildomain</th>
+<th align="left">email_domain</th>
 </tr>
 </thead>
 <tbody>
@@ -193,16 +200,81 @@ payments %&gt;%
 ## 10 6856-4df8-ac69              38afb3e3-6856-4df8-ac69-873926c17606
 ## 11 &lt;NA&gt;                        0411ea12-cf57-4b43-ae17-e1677feec19f
 ## 12 &lt;NA&gt;                        6df08994-0335-4463-a921-970f2349413f</code></pre>
-<p>&lt;&lt; Explanation &gt;&gt;</p>
+<p>So what do we have here? Well the idea is to iterate across all payment identifiers we have and see which of the partial identifiers matches it. To do this we break the process up, the first section is a function to do exactly that, identify if a payment matches any of the partial identifiers, and the second section is the analysis in which I iterate across all payment identifiers and check if they match.
+&lt;&lt; Explanation &gt;&gt;</p>
 </div>
 <div id="sql-1" class="section level5">
 <h5>SQL</h5>
-<p>&lt;<code>&gt;</p>
-<p>&lt;<explanation>&gt;</p>
+<pre class="sql"><code>SELECT payment_identifier,
+  pi.id
+FROM PAYMENTS p
+LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-8">Table 2: </span>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th align="left">payment_identifier</th>
+<th align="left">id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">a2209370-bdb0-44c5-b4c5-27532022bef3</td>
+<td align="left">a2209370-bdb0-44c5-b4c5</td>
+</tr>
+<tr class="odd">
+<td align="left">82c06af0-08e6-4304-bf9e-b79600814439</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
+<td align="left">b510-442c-b0d1</td>
+</tr>
+<tr class="odd">
+<td align="left">32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e</td>
+<td align="left">1746-4ea9-9a33-f8cc3dd07b8e</td>
+</tr>
+<tr class="even">
+<td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
+<td align="left">8742-4396-83ca</td>
+</tr>
+<tr class="even">
+<td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
+<td align="left">6856-4df8-ac69</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The idea is pretty straight forward. We can leverage the <code>LIKE</code> operator in a join to do the partial matching for us, matching any payment identifiers to the partial identifiers id.</p>
 </div>
 </div>
-<div id="extracting-digits." class="section level3">
-<h3>Extracting digits.</h3>
+<div id="extracting-separating-text-digits." class="section level3">
+<h3>Extracting / Separating text &amp; digits.</h3>
+<p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let’s see how can we do this on the column payment_description.</p>
+<pre class="python"><code># (
+#   payments[[&#39;payment_description&#39;]]
+#   .assign(
+#     split_string = 
+# )
+# )
+# payments[&#39;payment_description&#39;].apply(lambda val: re.split(r&#39;(\d+)&#39;,val)).explode()</code></pre>
 <pre class="r"><code># library(readr)
 # dat &lt;- read_csv(&#39;content/post/regex-in-sql/data.csv&#39;)
 
