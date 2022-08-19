@@ -23,6 +23,19 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
 ```
 
+```{r, echo = FALSE}
+knit_print.data.frame = function(x, ...) {
+  res = paste(c("", "", knitr::kable(x)), collapse = "\n")
+  knitr::asis_output(res)
+}
+
+registerS3method(
+  "knit_print", "data.frame", knit_print.data.frame,
+  envir = asNamespace("knitr")
+)
+```
+
+
 Working as a Data Analyst in the fraud domain I constantly find myself manipulating text to mitigate and identify fraudulent actors. Occassionally it's on the server side using SQL and at other times locally with R (or more recently Python) using Regular expression (Regex).
 
 Regex is 'a sequence of characters that specificies a serach pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically,  we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a patter in the text.
@@ -52,7 +65,9 @@ rconn <- dbConnect(odbc(),
 partial_identifiers <- data.frame(
   id = c("a2209370-bdb0-44c5-b4c5", "1746-4ea9-9a33-f8cc3dd07b8e", "b510-442c-b0d1", "8742-4396-83ca", "6856-4df8-ac69")
 )
+# payments <- read.csv('content/post/regex-in-sql/data.csv')
 # dbWriteTable(rconn, 'Partial_Identifiers', partial_identifiers)
+# dbWriteTable(rconn, 'Payments', payments, overwrite = TRUE)
 ```
 
 Awesome. As we move forward we'll be working with both Python (mainly) a little R too. So let's load the relevant libraries and data so we have them for future manipulations.
@@ -80,7 +95,14 @@ payments <- read_csv('data.csv')
 Our main dataset is a payments table. It's not normalized so that we can avoid joins and focus on what's relevant for the post. Specifically, it looks as follows:
 
 ```{r}
-knitr::kable(payments)
+payments
+```
+
+
+```{r}
+payments %>% 
+  head() %>% 
+  knitr::kable()
 ```
 We'll look at manipulations across each colum for a specific use case. Feel free to follow along; you can find the relevant dataset in the [website's GitHub repository]().
 
@@ -98,13 +120,14 @@ Returning to our table, we can do this using the following regex operation:
 
 ```{python}
 (
-  payments
+payments
   .drop_duplicates()
-  .loc[:, ['userId', 'email']]
-  .assign(
-    emaildomain = lambda df: df.email.str.extract(r'((?<=@).+)') # <- relevant part
-    )
+  .loc[:, ['email']]
+  .assign (
+    email_domain = lambda df: 
+      df.email.str.extract(r'((?<=@).+)') # <- relevant part
   )
+)
 ```
 
 
@@ -117,8 +140,7 @@ the pattern `(?<=@).+` essentially extracts any character(s) that follow the @ s
 So how can we do it in SQL? Well, I mainly use it for the positive lookahead/behind, where we can identify the character's location and extract anything after it:
 
 ```{sql connection=rconn, echo = TRUE}
-SELECT DISTINCT p.userId,
-  email,
+SELECT DISTINCT email,
   RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX('@',EMAIL)) AS email_domain
 FROM PAYMENTS p
 ```
@@ -128,32 +150,32 @@ We're leveraging the function `CHARINDEX` in order to identifying the location o
 
 ### Partial string join — identifying a string from a partial match
 
-I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join and identify which observartions intersect? 
+I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the payment identifiers with the partial strings? 
 
 For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:
 
 ```{r}
 knitr::kable(partial_identifiers)
 ```
-These strings are containted in our payments table in the column 'payment_identifier', but how can we easily join the relevant payments?
+These strings are contained in our payments table in the column 'payment_identifier', but how can we easily join the relevant payments?
 
 ##### R
 
 At the time I encountered this I was using mainly R and solved it with that. Let's solve it first and then go over the solution:
 
 ```{r echo = FALSE}
-
-check_payment_id_exists <- function (payment_id) {
-  result = partial_identifiers$id[map_lgl(partial_identifiers$id, ~ str_detect(payment_id, .))]
-  result = ifelse(is_empty(result), NA, result)
-  return(result)
-}
-
-payments %>% 
-  mutate(
-    identifier = map_chr(payment_identifier, check_payment_id_exists),
-    .before = 'payment_identifier', .keep='used'
-  )
+# 
+# check_payment_id_exists <- function (payment_id) {
+#   result = partial_identifiers$id[map_lgl(partial_identifiers$id, ~ str_detect(payment_id, .))]
+#   result = ifelse(is_empty(result), NA, result)
+#   return(result)
+# }
+# 
+# payments %>% 
+#   mutate(
+#     identifier = map_chr(payment_identifier, check_payment_id_exists),
+#     .before = 'payment_identifier', .keep='used'
+#   )
 
 
 ```
@@ -201,8 +223,7 @@ The idea is pretty straight forward. We can leverage the `LIKE` operator in a jo
 Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let's see how can we do this on the column payment_description that contains both what seems as a name and digits.
 
 ```{python echo=TRUE}
-payments[['name', 'number']] = payments.payment_description.str.split(r'(\d+)', expand = True).iloc[:, 0:2]
-payments
+payments.payment_description.str.split(r'(\d+)', expand = True).iloc[:, 0:2]
 ```
 
 

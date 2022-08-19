@@ -41,17 +41,15 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <div id="the-data" class="section level5">
 <h5>The Data</h5>
 <p>Our main dataset is a payments table. It’s not normalized so that we can avoid joins and focus on what’s relevant for the post. Specifically, it looks as follows:</p>
-<pre class="r"><code>knitr::kable(payments)</code></pre>
+<pre class="r"><code>payments</code></pre>
 <table>
 <colgroup>
-<col width="7%" />
-<col width="27%" />
-<col width="41%" />
-<col width="23%" />
+<col width="30%" />
+<col width="44%" />
+<col width="25%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="right">userId</th>
 <th align="left">email</th>
 <th align="left">payment_identifier</th>
 <th align="left">payment_description</th>
@@ -59,76 +57,113 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">1</td>
 <td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
 <td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
 <td align="left">John Dalle 1238127</td>
 </tr>
 <tr class="even">
-<td align="right">1</td>
 <td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
 <td align="left">a2209370-bdb0-44c5-b4c5-27532022bef3</td>
 <td align="left">John Dalle 1827398</td>
 </tr>
 <tr class="odd">
-<td align="right">1</td>
 <td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
 <td align="left">82c06af0-08e6-4304-bf9e-b79600814439</td>
 <td align="left">John Dalle 2142</td>
 </tr>
 <tr class="even">
-<td align="right">2</td>
 <td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
 <td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
 <td align="left">Jarry Cohen 23</td>
 </tr>
 <tr class="odd">
-<td align="right">2</td>
 <td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
 <td align="left">32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e</td>
 <td align="left">Jarry Cohen 6548</td>
 </tr>
 <tr class="even">
-<td align="right">3</td>
 <td align="left"><a href="mailto:BarbraSA@rockingit.it" class="email">BarbraSA@rockingit.it</a></td>
 <td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
 <td align="left">Barbra Smith 322</td>
 </tr>
 <tr class="odd">
-<td align="right">4</td>
 <td align="left"><a href="mailto:Shawn@gmail.com" class="email">Shawn@gmail.com</a></td>
 <td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
 <td align="left">Shawn Brown 92794</td>
 </tr>
 <tr class="even">
-<td align="right">5</td>
 <td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
 <td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
 <td align="left">Dan S. Wilson 283749</td>
 </tr>
 <tr class="odd">
-<td align="right">5</td>
 <td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
 <td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
 <td align="left">Dan S. Wilson 90793</td>
 </tr>
 <tr class="even">
-<td align="right">6</td>
 <td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
 <td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
 <td align="left">Lilly Taylor 53435</td>
 </tr>
 <tr class="odd">
-<td align="right">6</td>
 <td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
 <td align="left">0411ea12-cf57-4b43-ae17-e1677feec19f</td>
 <td align="left">Lilly Taylor 894</td>
 </tr>
 <tr class="even">
-<td align="right">6</td>
 <td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
 <td align="left">6df08994-0335-4463-a921-970f2349413f</td>
 <td align="left">Lilly Taylor 3698</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>payments %&gt;% 
+  head() %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="45%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">email</th>
+<th align="left">payment_identifier</th>
+<th align="left">payment_description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
+<td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
+<td align="left">John Dalle 1238127</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
+<td align="left">a2209370-bdb0-44c5-b4c5-27532022bef3</td>
+<td align="left">John Dalle 1827398</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
+<td align="left">82c06af0-08e6-4304-bf9e-b79600814439</td>
+<td align="left">John Dalle 2142</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
+<td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
+<td align="left">Jarry Cohen 23</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
+<td align="left">32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e</td>
+<td align="left">Jarry Cohen 6548</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="mailto:BarbraSA@rockingit.it" class="email">BarbraSA@rockingit.it</a></td>
+<td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
+<td align="left">Barbra Smith 322</td>
 </tr>
 </tbody>
 </table>
@@ -144,74 +179,67 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <h5>Python</h5>
 <p>Returning to our table, we can do this using the following regex operation:</p>
 <pre class="python"><code>(
-  payments
+payments
   .drop_duplicates()
-  .loc[:, [&#39;userId&#39;, &#39;email&#39;]]
-  .assign(
-    emaildomain = lambda df: df.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
-    )
-  )</code></pre>
-<pre><code>##     userId                     email        emaildomain
-## 0        1    johnTheKing2@yahoo.com          yahoo.com
-## 1        1    johnTheKing2@yahoo.com          yahoo.com
-## 2        1    johnTheKing2@yahoo.com          yahoo.com
-## 3        2  D234AbJarry@rockingit.it       rockingit.it
-## 4        2  D234AbJarry@rockingit.it       rockingit.it
-## 5        3     BarbraSA@rockingit.it       rockingit.it
-## 6        4           Shawn@gmail.com          gmail.com
-## 7        5      me@photoshooting.com  photoshooting.com
-## 8        5      me@photoshooting.com  photoshooting.com
-## 9        6          Lilly3@gmail.com          gmail.com
-## 10       6          Lilly3@gmail.com          gmail.com
-## 11       6          Lilly3@gmail.com          gmail.com</code></pre>
+  .loc[:, [&#39;email&#39;]]
+  .assign (
+    email_domain = lambda df: 
+      df.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
+  )
+)</code></pre>
+<pre><code>##                        email       email_domain
+## 0     johnTheKing2@yahoo.com          yahoo.com
+## 1     johnTheKing2@yahoo.com          yahoo.com
+## 2     johnTheKing2@yahoo.com          yahoo.com
+## 3   D234AbJarry@rockingit.it       rockingit.it
+## 4   D234AbJarry@rockingit.it       rockingit.it
+## 5      BarbraSA@rockingit.it       rockingit.it
+## 6            Shawn@gmail.com          gmail.com
+## 7       me@photoshooting.com  photoshooting.com
+## 8       me@photoshooting.com  photoshooting.com
+## 9           Lilly3@gmail.com          gmail.com
+## 10          Lilly3@gmail.com          gmail.com
+## 11          Lilly3@gmail.com          gmail.com</code></pre>
 <p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (here it would be r’.+(?=@)’).</p>
 </div>
 <div id="sql" class="section level5">
 <h5>SQL</h5>
 <p>So how can we do it in SQL? Well, I mainly use it for the positive lookahead/behind, where we can identify the character’s location and extract anything after it:</p>
-<pre class="sql"><code>SELECT DISTINCT p.userId,
-  email,
+<pre class="sql"><code>SELECT DISTINCT email,
   RIGHT(EMAIL, LEN(EMAIL) - CHARINDEX(&#39;@&#39;,EMAIL)) AS email_domain
 FROM PAYMENTS p</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-7">Table 1: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-9">Table 1: </span>6 records</caption>
 <thead>
 <tr class="header">
-<th align="left">userId</th>
 <th align="left">email</th>
 <th align="left">email_domain</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
-<td align="left">yahoo.com</td>
-</tr>
-<tr class="even">
-<td align="left">2</td>
-<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
-<td align="left">rockingit.it</td>
-</tr>
-<tr class="odd">
-<td align="left">3</td>
 <td align="left"><a href="mailto:BarbraSA@rockingit.it" class="email">BarbraSA@rockingit.it</a></td>
 <td align="left">rockingit.it</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left"><a href="mailto:Shawn@gmail.com" class="email">Shawn@gmail.com</a></td>
+<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
+<td align="left">rockingit.it</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
+<td align="left">yahoo.com</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
 <td align="left">gmail.com</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
 <td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
 <td align="left">photoshooting.com</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
+<td align="left"><a href="mailto:Shawn@gmail.com" class="email">Shawn@gmail.com</a></td>
 <td align="left">gmail.com</td>
 </tr>
 </tbody>
@@ -222,7 +250,7 @@ FROM PAYMENTS p</code></pre>
 </div>
 <div id="partial-string-join-identifying-a-string-from-a-partial-match" class="section level3">
 <h3>Partial string join — identifying a string from a partial match</h3>
-<p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join and identify which observartions intersect?</p>
+<p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the payment identifiers with the partial strings?</p>
 <p>For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:</p>
 <pre class="r"><code>knitr::kable(partial_identifiers)</code></pre>
 <table>
@@ -249,44 +277,72 @@ FROM PAYMENTS p</code></pre>
 </tr>
 </tbody>
 </table>
-<p>These strings are containted in our payments table in the column ‘payment_identifier’, but how can we easily join the relevant payments?</p>
+<p>These strings are contained in our payments table in the column ‘payment_identifier’, but how can we easily join the relevant payments?</p>
 <div id="r" class="section level5">
 <h5>R</h5>
 <p>At the time I encountered this I was using mainly R and solved it with that. Let’s solve it first and then go over the solution:</p>
-<pre><code>## # A tibble: 12 × 2
-##    identifier                  payment_identifier                  
-##    &lt;chr&gt;                       &lt;chr&gt;                               
-##  1 &lt;NA&gt;                        4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b
-##  2 a2209370-bdb0-44c5-b4c5     a2209370-bdb0-44c5-b4c5-27532022bef3
-##  3 &lt;NA&gt;                        82c06af0-08e6-4304-bf9e-b79600814439
-##  4 b510-442c-b0d1              b7a0879f-b510-442c-b0d1-595e3c7ca4ef
-##  5 1746-4ea9-9a33-f8cc3dd07b8e 32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e
-##  6 &lt;NA&gt;                        2459190c-ff94-4d8c-baf8-2fdf15dd2007
-##  7 &lt;NA&gt;                        9954c0d3-fc8f-4234-b77f-20eaaf674841
-##  8 &lt;NA&gt;                        405a073d-44e5-475c-a53f-9541aa578e9d
-##  9 8742-4396-83ca              4b285281-8742-4396-83ca-b43f1a238b6d
-## 10 6856-4df8-ac69              38afb3e3-6856-4df8-ac69-873926c17606
-## 11 &lt;NA&gt;                        0411ea12-cf57-4b43-ae17-e1677feec19f
-## 12 &lt;NA&gt;                        6df08994-0335-4463-a921-970f2349413f</code></pre>
 <pre class="r"><code>library(fuzzyjoin)
 
 regex_left_join(x = payments, y = partial_identifiers, by = c(&#39;payment_identifier&#39; = &#39;id&#39;)) %&gt;% 
   select(payment_identifier, id)</code></pre>
-<pre><code>## # A tibble: 12 × 2
-##    payment_identifier                   id                         
-##    &lt;chr&gt;                                &lt;chr&gt;                      
-##  1 4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b &lt;NA&gt;                       
-##  2 a2209370-bdb0-44c5-b4c5-27532022bef3 a2209370-bdb0-44c5-b4c5    
-##  3 82c06af0-08e6-4304-bf9e-b79600814439 &lt;NA&gt;                       
-##  4 b7a0879f-b510-442c-b0d1-595e3c7ca4ef b510-442c-b0d1             
-##  5 32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e 1746-4ea9-9a33-f8cc3dd07b8e
-##  6 2459190c-ff94-4d8c-baf8-2fdf15dd2007 &lt;NA&gt;                       
-##  7 9954c0d3-fc8f-4234-b77f-20eaaf674841 &lt;NA&gt;                       
-##  8 405a073d-44e5-475c-a53f-9541aa578e9d &lt;NA&gt;                       
-##  9 4b285281-8742-4396-83ca-b43f1a238b6d 8742-4396-83ca             
-## 10 38afb3e3-6856-4df8-ac69-873926c17606 6856-4df8-ac69             
-## 11 0411ea12-cf57-4b43-ae17-e1677feec19f &lt;NA&gt;                       
-## 12 6df08994-0335-4463-a921-970f2349413f &lt;NA&gt;</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">payment_identifier</th>
+<th align="left">id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">a2209370-bdb0-44c5-b4c5-27532022bef3</td>
+<td align="left">a2209370-bdb0-44c5-b4c5</td>
+</tr>
+<tr class="odd">
+<td align="left">82c06af0-08e6-4304-bf9e-b79600814439</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
+<td align="left">b510-442c-b0d1</td>
+</tr>
+<tr class="odd">
+<td align="left">32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e</td>
+<td align="left">1746-4ea9-9a33-f8cc3dd07b8e</td>
+</tr>
+<tr class="even">
+<td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
+<td align="left">8742-4396-83ca</td>
+</tr>
+<tr class="even">
+<td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
+<td align="left">6856-4df8-ac69</td>
+</tr>
+<tr class="odd">
+<td align="left">0411ea12-cf57-4b43-ae17-e1677feec19f</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">6df08994-0335-4463-a921-970f2349413f</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
 <p>So what do we have here? Well the idea is to iterate across all payment identifiers we have and see which of the partial identifiers matches it. To do this we break the process up, the first section is a function to do exactly that, identify if a payment matches any of the partial identifiers, and the second section is the analysis in which I iterate across all payment identifiers and check if they match.</p>
 <p>At the time I faced this challenge I was mainly using R so I used that. I actually had a different answer that basically extracted which values matched as new column, and then joined on that. I really like this solution though, and shows the awesoem power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
 <p>I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:</p>
@@ -305,7 +361,7 @@ FROM PAYMENTS p
 LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-12">Table 2: </span>Displaying records 1 - 10</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 2: </span>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
 <th align="left">payment_identifier</th>
@@ -362,23 +418,20 @@ LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;
 <div id="extracting-separating-text-digits." class="section level3">
 <h3>Extracting / Separating text &amp; digits.</h3>
 <p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let’s see how can we do this on the column payment_description that contains both what seems as a name and digits.</p>
-<pre class="python"><code>payments[[&#39;name&#39;, &#39;number&#39;]] = payments.payment_description.str.split(r&#39;(\d+)&#39;, expand = True).iloc[:, 0:2]
-payments</code></pre>
-<pre><code>##     userId                     email  ...            name   number
-## 0        1    johnTheKing2@yahoo.com  ...     John Dalle   1238127
-## 1        1    johnTheKing2@yahoo.com  ...     John Dalle   1827398
-## 2        1    johnTheKing2@yahoo.com  ...     John Dalle      2142
-## 3        2  D234AbJarry@rockingit.it  ...    Jarry Cohen        23
-## 4        2  D234AbJarry@rockingit.it  ...    Jarry Cohen      6548
-## 5        3     BarbraSA@rockingit.it  ...   Barbra Smith       322
-## 6        4           Shawn@gmail.com  ...    Shawn Brown     92794
-## 7        5      me@photoshooting.com  ...  Dan S. Wilson    283749
-## 8        5      me@photoshooting.com  ...  Dan S. Wilson     90793
-## 9        6          Lilly3@gmail.com  ...   Lilly Taylor     53435
-## 10       6          Lilly3@gmail.com  ...   Lilly Taylor       894
-## 11       6          Lilly3@gmail.com  ...   Lilly Taylor      3698
-## 
-## [12 rows x 6 columns]</code></pre>
+<pre class="python"><code>payments.payment_description.str.split(r&#39;(\d+)&#39;, expand = True).iloc[:, 0:2]</code></pre>
+<pre><code>##                  0        1
+## 0      John Dalle   1238127
+## 1      John Dalle   1827398
+## 2      John Dalle      2142
+## 3     Jarry Cohen        23
+## 4     Jarry Cohen      6548
+## 5    Barbra Smith       322
+## 6     Shawn Brown     92794
+## 7   Dan S. Wilson    283749
+## 8   Dan S. Wilson     90793
+## 9    Lilly Taylor     53435
+## 10   Lilly Taylor       894
+## 11   Lilly Taylor      3698</code></pre>
 <p>it’s pretty straightforward using the python <code>split</code> argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won’t drop). From there we just remove an empty column and assign it as new columns in our dataframe.</p>
 <div id="sql-2" class="section level4">
 <h4>SQL</h4>
@@ -394,7 +447,7 @@ payments</code></pre>
 FROM PAYMENTS</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-14">Table 3: </span>Displaying records 1 - 10</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 3: </span>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
 <th align="left">Payment_Description</th>
