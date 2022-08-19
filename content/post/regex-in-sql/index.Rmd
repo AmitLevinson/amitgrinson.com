@@ -3,7 +3,7 @@ title: Translating Regex to SQL String Operations
 author: Amit Levinson
 date: '2022-06-02'
 slug: regex-in-sql
-categories: [R]
+categories: []
 tags: [R, Python, SQL]
 subtitle: 'Learning how to do several string operations with SQL'
 summary: 'Unfortunately, a lot of Regex operations are not available in (MS)SQL. In this post I show how I take several regex operations I like and convert thme to string manipulations with SQL syntax'
@@ -13,7 +13,7 @@ image:
   focal_point: ''
   preview_only: yes
 projects: []
-draft: true
+draft: false
 codefolding_show: show
 editor_options: 
   chunk_output_type: inline
@@ -23,9 +23,13 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
 ```
 
-Work as a Data Analyst in the fraud domain I constantly find myself manipulating text. Coming from an R background I got to play around with various regex and text manipulation projects, e.g. exploring TF-IDF, GitHub automations and more. 
+Working as a Data Analyst in the fraud domain I constantly find myself manipulating text to mitigate and identify fraudulent actors. Occassionally it's on the server side using SQL and at other times locally with R (or more recently Python) using Regular expression (Regex).
 
-As I've been using a lot of SQL at work I wanted to transfer common regex/text manipulation procedures but quickly realized that it's not so straightforward in MSSQL we're using. This post goes over three scenarios I've solved in both some coding language and SQL. As I've recently picked up Python more I'll also solved some of them using Python.
+Regex is 'a sequence of characters that specificies a serach pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically,  we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a patter in the text.
+
+Coming from an R background I played around with various regex and text manipulation projects, e.g. exploring TF-IDF, GitHub automations and more. Knowing the power of Regex I wanted to use it in SQL but, unfortunately, MSSQL (and other RDBMS) doesn't support many regex expressions and has specific text manipulation operations.
+
+This required adaptation. Thinking in regex and translating it to SQL operations. This post outlines that process. We'll go over three scenarios I faced in the past both in some coding language and on the server sides using SQL. As I've recently picked up Python more I'll also solve some of them using it, **but the key takeaway from this post is the regex and the general idea of the functions used** (that can be implemented in something like R).
 
 
 ### Setup
@@ -40,7 +44,10 @@ rconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
                       Database = "regex")
+```
 
+
+```{r echo = FALSE}
 # Partial strings
 partial_identifiers <- data.frame(
   id = c("a2209370-bdb0-44c5-b4c5", "1746-4ea9-9a33-f8cc3dd07b8e", "b510-442c-b0d1", "8742-4396-83ca", "6856-4df8-ac69")
@@ -48,7 +55,7 @@ partial_identifiers <- data.frame(
 # dbWriteTable(rconn, 'Partial_Identifiers', partial_identifiers)
 ```
 
-Awesome. As we move forward we'll be working with both Python (mainly) and one time answer it in R too. So let's load the relevant libraries and data so we have them for future manipulations.
+Awesome. As we move forward we'll be working with both Python (mainly) a little R too. So let's load the relevant libraries and data so we have them for future manipulations.
 
 
 ```{python}
@@ -56,7 +63,7 @@ Awesome. As we move forward we'll be working with both Python (mainly) and one t
 import pandas as pd
 
 # content/post/regex-in-sql/
-payments = pd.read_csv('content/post/regex-in-sql/data.csv')
+payments = pd.read_csv('data.csv')
 ```
 
 
@@ -64,8 +71,8 @@ payments = pd.read_csv('content/post/regex-in-sql/data.csv')
 ```{r}
 #R code
 library(tidyverse)
-
-payments <- read_csv('content/post/regex-in-sql/data.csv')
+# content/post/regex-in-sql/
+payments <- read_csv('data.csv')
 ```
 
 ##### The Data
@@ -166,12 +173,12 @@ At the time I faced this challenge I was mainly using R so I used that. I actual
 I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:
 
 ```{python}
-payments
-r.partial_identifiers
-
-payments.apply(lambda x: x.payment_identifier.find())
-dataFrameFull.apply(
-    lambda x: x.work_name.find(x.sub_work_name), axis=1).ge(0)
+# payments
+# r.partial_identifiers
+# 
+# payments.apply(lambda x: x.payment_identifier.find())
+# dataFrameFull.apply(
+#     lambda x: x.work_name.find(x.sub_work_name), axis=1).ge(0)
 
 ```
 
