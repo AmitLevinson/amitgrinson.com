@@ -21,10 +21,10 @@ editor_options:
 
 
 
-<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text to mitigate and identify fraudulent actors. Occassionally it’s on the server side using SQL and at other times locally with R (or more recently Python) using Regular expression (Regex).</p>
-<p>Regex is ‘a sequence of characters that specificies a serach pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a patter in the text.</p>
-<p>Coming from an R background I played around with various regex and text manipulation projects, e.g. exploring TF-IDF, GitHub automations and more. Knowing the power of Regex I wanted to use it in SQL but, unfortunately, MSSQL (and other RDBMS) doesn’t support many regex expressions and has specific text manipulation operations.</p>
-<p>This required adaptation. Thinking in regex and translating it to SQL operations. This post outlines that process. We’ll go over three scenarios I faced in the past both in some coding language and on the server sides using SQL. As I’ve recently picked up Python more I’ll also solve some of them using it, <strong>but the key takeaway from this post is the regex and the general idea of the functions used</strong> (that can be implemented in something like R).</p>
+<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text to mitigate and identify fraudulent actors. Occasionally it’s on the server side using SQL, at other times it’s locally with R, or more recently Python, both using Regular expressions (Regex) and other text manipulations.</p>
+<p>Regex is ‘a sequence of characters that specifies a search pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a pattern in the text.</p>
+<p>Coming from an R background I got to play around with various regex and text manipulation projects, e.g. exploring TF-IDF in Political theriosts classics, GitHub automation where I extracted frequently used R libraries and more. Knowing the power of Regex I wanted to use it in other tools I was using such as SQL but, unfortunately, MSSQL (and other RDBMS) doesn’t support many common regex expressions and have specific operations. This required adaptation, thinking in regex and translating it to SQL operations or vice versa, working heavily in SQL and then doing some regex locally.</p>
+<p>In this post We’ll go over three scenarios I faced in the past both in some coding language and while using SQL. As I’ve recently picked up Python more I’ll also solve some of them using it, <strong>but the key takeaway from this post is the regex and the general idea of the functions used</strong> (that can be implemented in something like R or other language used for data analsis).</p>
 <div id="setup" class="section level3">
 <h3>Setup</h3>
 <p>Let’s start by setting up a local connection so we can easily write SQL queries as we move forward:</p>
@@ -41,86 +41,8 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <div id="the-data" class="section level5">
 <h5>The Data</h5>
 <p>Our main dataset is a payments table. It’s not normalized so that we can avoid joins and focus on what’s relevant for the post. Specifically, it looks as follows:</p>
-<pre class="r"><code>payments</code></pre>
-<table>
-<colgroup>
-<col width="30%" />
-<col width="44%" />
-<col width="25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">email</th>
-<th align="left">payment_identifier</th>
-<th align="left">payment_description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
-<td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
-<td align="left">John Dalle 1238127</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
-<td align="left">a2209370-bdb0-44c5-b4c5-27532022bef3</td>
-<td align="left">John Dalle 1827398</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="mailto:johnTheKing2@yahoo.com" class="email">johnTheKing2@yahoo.com</a></td>
-<td align="left">82c06af0-08e6-4304-bf9e-b79600814439</td>
-<td align="left">John Dalle 2142</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
-<td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
-<td align="left">Jarry Cohen 23</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="mailto:D234AbJarry@rockingit.it" class="email">D234AbJarry@rockingit.it</a></td>
-<td align="left">32afe1dc-1746-4ea9-9a33-f8cc3dd07b8e</td>
-<td align="left">Jarry Cohen 6548</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:BarbraSA@rockingit.it" class="email">BarbraSA@rockingit.it</a></td>
-<td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
-<td align="left">Barbra Smith 322</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="mailto:Shawn@gmail.com" class="email">Shawn@gmail.com</a></td>
-<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
-<td align="left">Shawn Brown 92794</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
-<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
-<td align="left">Dan S. Wilson 283749</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="mailto:me@photoshooting.com" class="email">me@photoshooting.com</a></td>
-<td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
-<td align="left">Dan S. Wilson 90793</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
-<td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
-<td align="left">Lilly Taylor 53435</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
-<td align="left">0411ea12-cf57-4b43-ae17-e1677feec19f</td>
-<td align="left">Lilly Taylor 894</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="mailto:Lilly3@gmail.com" class="email">Lilly3@gmail.com</a></td>
-<td align="left">6df08994-0335-4463-a921-970f2349413f</td>
-<td align="left">Lilly Taylor 3698</td>
-</tr>
-</tbody>
-</table>
 <pre class="r"><code>payments %&gt;% 
-  head() %&gt;% 
-  knitr::kable()</code></pre>
+  head()</code></pre>
 <table>
 <colgroup>
 <col width="30%" />
@@ -180,11 +102,9 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <p>Returning to our table, we can do this using the following regex operation:</p>
 <pre class="python"><code>(
 payments
-  .drop_duplicates()
   .loc[:, [&#39;email&#39;]]
   .assign (
-    email_domain = lambda df: 
-      df.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
+    email_domain = payments.email.str.extract(r&#39;((?&lt;=@).+)&#39;) # &lt;- relevant part
   )
 )</code></pre>
 <pre><code>##                        email       email_domain
@@ -200,7 +120,7 @@ payments
 ## 9           Lilly3@gmail.com          gmail.com
 ## 10          Lilly3@gmail.com          gmail.com
 ## 11          Lilly3@gmail.com          gmail.com</code></pre>
-<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email names instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (here it would be r’.+(?=@)’).</p>
+<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our email domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (e.g. r’(.+(?=@))’).</p>
 </div>
 <div id="sql" class="section level5">
 <h5>SQL</h5>
@@ -210,7 +130,7 @@ payments
 FROM PAYMENTS p</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-9">Table 1: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-8">Table 1: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">email</th>
@@ -245,12 +165,12 @@ FROM PAYMENTS p</code></pre>
 </tbody>
 </table>
 </div>
-<p>We’re leveraging the function <code>CHARINDEX</code> in order to identifying the location of the ‘@’ symbol, and then extract all text from that location forward.</p>
+<p>We’re leveraging the function <code>CHARINDEX</code> in order to identify the location of the ‘@’ symbol, and then extract all text from that location forward.</p>
 </div>
 </div>
 <div id="partial-string-join-identifying-a-string-from-a-partial-match" class="section level3">
 <h3>Partial string join — identifying a string from a partial match</h3>
-<p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the payment identifiers with the partial strings?</p>
+<p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the two tables?</p>
 <p>For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:</p>
 <pre class="r"><code>knitr::kable(partial_identifiers)</code></pre>
 <table>
@@ -277,14 +197,16 @@ FROM PAYMENTS p</code></pre>
 </tr>
 </tbody>
 </table>
-<p>These strings are contained in our payments table in the column ‘payment_identifier’, but how can we easily join the relevant payments?</p>
+<p>these strings are contained in our payments table column ‘payment_identifier’, but how can we easily join them considering it’s not an exact match?</p>
 <div id="r" class="section level5">
 <h5>R</h5>
-<p>At the time I encountered this I was using mainly R and solved it with that. Let’s solve it first and then go over the solution:</p>
+<p>At the time I encountered this I was using mainly R and solved it with that, so let’s go ahead and use that first:</p>
 <pre class="r"><code>library(fuzzyjoin)
 
-regex_left_join(x = payments, y = partial_identifiers, by = c(&#39;payment_identifier&#39; = &#39;id&#39;)) %&gt;% 
-  select(payment_identifier, id)</code></pre>
+regex_left_join(x = payments, y = partial_identifiers,
+                by = c(&#39;payment_identifier&#39; = &#39;id&#39;)) %&gt;% 
+  select(payment_identifier, id) %&gt;% 
+  head()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -315,30 +237,6 @@ regex_left_join(x = payments, y = partial_identifiers, by = c(&#39;payment_ident
 </tr>
 <tr class="even">
 <td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
-<td align="left">8742-4396-83ca</td>
-</tr>
-<tr class="even">
-<td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
-<td align="left">6856-4df8-ac69</td>
-</tr>
-<tr class="odd">
-<td align="left">0411ea12-cf57-4b43-ae17-e1677feec19f</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">6df08994-0335-4463-a921-970f2349413f</td>
 <td align="left">NA</td>
 </tr>
 </tbody>
@@ -346,22 +244,24 @@ regex_left_join(x = payments, y = partial_identifiers, by = c(&#39;payment_ident
 <p>So what do we have here? Well the idea is to iterate across all payment identifiers we have and see which of the partial identifiers matches it. To do this we break the process up, the first section is a function to do exactly that, identify if a payment matches any of the partial identifiers, and the second section is the analysis in which I iterate across all payment identifiers and check if they match.</p>
 <p>At the time I faced this challenge I was mainly using R so I used that. I actually had a different answer that basically extracted which values matched as new column, and then joined on that. I really like this solution though, and shows the awesoem power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
 <p>I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:</p>
-<pre class="python"><code># payments
-# r.partial_identifiers
+<pre class="python"><code>partial_identifiers = r.partial_identifiers</code></pre>
+<pre class="python"><code># payments[&#39;join&#39;] = 1
+# partial_identifiers[&#39;join&#39;] = 1
 # 
-# payments.apply(lambda x: x.payment_identifier.find())
-# dataFrameFull.apply(
-#     lambda x: x.work_name.find(x.sub_work_name), axis=1).ge(0)</code></pre>
+# payments_joined = payments.merge(partial_identifiers, on = &#39;join&#39;).drop(&#39;join&#39;, axis = 1)
+# payments_joined[&#39;match&#39;] payments_joined.apply(lambda x: x.payment_identifier.find(x.id), axis = 1).ge(0)
+# payments_joined.head()</code></pre>
 </div>
 <div id="sql-1" class="section level5">
 <h5>SQL</h5>
-<pre class="sql"><code>SELECT payment_identifier,
+<pre class="sql"><code>SELECT TOP 6 payment_identifier,
   pi.id
 FROM PAYMENTS p
-LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
+LEFT JOIN partial_identifiers pi
+  on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-14">Table 2: </span>Displaying records 1 - 10</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 2: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">payment_identifier</th>
@@ -393,50 +293,32 @@ LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;
 <td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
-<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">4b285281-8742-4396-83ca-b43f1a238b6d</td>
-<td align="left">8742-4396-83ca</td>
-</tr>
-<tr class="even">
-<td align="left">38afb3e3-6856-4df8-ac69-873926c17606</td>
-<td align="left">6856-4df8-ac69</td>
-</tr>
 </tbody>
 </table>
 </div>
 <p>The idea is pretty straight forward. We can leverage the <code>LIKE</code> operator in a join to do the partial matching for us, matching any payment identifiers to the partial identifiers id.</p>
+<p>Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn’t easily scalable. Eventually I realized this and just implemented it using SQL as shown above.</p>
 </div>
 </div>
 <div id="extracting-separating-text-digits." class="section level3">
 <h3>Extracting / Separating text &amp; digits.</h3>
 <p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let’s see how can we do this on the column payment_description that contains both what seems as a name and digits.</p>
-<pre class="python"><code>payments.payment_description.str.split(r&#39;(\d+)&#39;, expand = True).iloc[:, 0:2]</code></pre>
-<pre><code>##                  0        1
-## 0      John Dalle   1238127
-## 1      John Dalle   1827398
-## 2      John Dalle      2142
-## 3     Jarry Cohen        23
-## 4     Jarry Cohen      6548
-## 5    Barbra Smith       322
-## 6     Shawn Brown     92794
-## 7   Dan S. Wilson    283749
-## 8   Dan S. Wilson     90793
-## 9    Lilly Taylor     53435
-## 10   Lilly Taylor       894
-## 11   Lilly Taylor      3698</code></pre>
+<pre class="python"><code>(
+payments.payment_description.str.split(r&#39;(\d+)&#39;, expand = True)
+  .iloc[:, 0:2]
+  .head()
+)</code></pre>
+<pre><code>##               0        1
+## 0   John Dalle   1238127
+## 1   John Dalle   1827398
+## 2   John Dalle      2142
+## 3  Jarry Cohen        23
+## 4  Jarry Cohen      6548</code></pre>
 <p>it’s pretty straightforward using the python <code>split</code> argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won’t drop). From there we just remove an empty column and assign it as new columns in our dataframe.</p>
 <div id="sql-2" class="section level4">
 <h4>SQL</h4>
 <p>This requires a little more work, as we want to split it while we have varying lengths of numbers across strings. For this we can use Translate and convert any characters or digits - according to what we’re extracting - to a blank value.</p>
-<pre class="sql"><code>SELECT 
+<pre class="sql"><code>SELECT TOP 6
   Payment_Description,
   REPLACE(TRANSLATE(PAYMENT_DESCRIPTION, &#39;0123456789&#39;,
                                          &#39;##########&#39;),
@@ -447,7 +329,7 @@ LEFT JOIN partial_identifiers pi on p.payment_identifier like concat(&#39;%&#39;
 FROM PAYMENTS</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-16">Table 3: </span>Displaying records 1 - 10</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 3: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">Payment_Description</th>
@@ -486,26 +368,6 @@ FROM PAYMENTS</code></pre>
 <td align="left">Barbra Smith</td>
 <td align="left">322</td>
 </tr>
-<tr class="odd">
-<td align="left">Shawn Brown 92794</td>
-<td align="left">Shawn Brown</td>
-<td align="left">92794</td>
-</tr>
-<tr class="even">
-<td align="left">Dan S. Wilson 283749</td>
-<td align="left">Dan S. Wilson</td>
-<td align="left">283749</td>
-</tr>
-<tr class="odd">
-<td align="left">Dan S. Wilson 90793</td>
-<td align="left">Dan S. Wilson</td>
-<td align="left">90793</td>
-</tr>
-<tr class="even">
-<td align="left">Lilly Taylor 53435</td>
-<td align="left">Lilly Taylor</td>
-<td align="left">53435</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -516,14 +378,7 @@ FROM PAYMENTS</code></pre>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
-<ul>
-<li><p>three examples</p></li>
-<li><p>translating regex to sql</p></li>
-<li><p>Usually it can be done, it’s a matter of finding the right flow of operation.</p></li>
-</ul>
-</div>
-<div id="appendix" class="section level3">
-<h3>Appendix</h3>
+<p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself doing it on ther server’s side with SQL, others locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.</strong></p>
 <pre class="r"><code># library(readr)
 # dat &lt;- read_csv(&#39;content/post/regex-in-sql/data.csv&#39;)
 
