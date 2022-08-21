@@ -44,6 +44,15 @@ Appreciating the power of Regex and simple text operations in R & Python I use, 
 
 In this post We'll go over three scenarios I faced in the past both in some coding language and while using SQL. As I've recently picked up Python more I'll also solve some of them using that, **but the general idea is pretty language agnostic, using regex and working with text.**
 
+What will we be be looking at?
+
+1. [Using looksarounds to extract the email domain](#lookarounds)  
+
+1. [Joining tables on a partial string match](#partial-strings)  
+
+1. [Separating text & digits to different columns](#separate)
+
+
 ### Setup
 
 Let's start by setting up a local connection so we can easily write SQL queries as we move forward:
@@ -94,14 +103,13 @@ payments <- read_csv('data.csv')
 Our main dataset is a very simple payments table:
 
 ```{r}
-payments %>% 
-  head()
+payments
 ```
 The data has 6 rows in total detailing payments: The receiver's email, the payment identifier (e.g. id) and the payment description. Feel free to follow along; you can find the relevant dataset in the [website's GitHub repository]().
 
 All right then, let's (^begin|start$)
 
-### Lookarounds 👀 — Extracting the domain from an email address
+### Lookarounds 👀 — Extracting the domain from an email address {#lookarounds}
 
 [lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite and commonly go-to regex operations. As the name implies, **a lookaround searches for a pattern and specified string in a specific piece of text.** A *lookahead* searches for the pattern and takes what's before it, while a *lookbehind* searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced.
 
@@ -141,14 +149,14 @@ FROM PAYMENTS p
 
 We're leveraging the function `CHARINDEX` in order to identify the location of the '@' symbol, and then extract all text from that location forward.
 
-### Partial string join — identifying a string from a partial match
+### Partial string join — identifying a string from a partial match {#partial-strings}
 
 I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the two tables?
 
 For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:
 
 ```{r}
-knitr::kable(partial_identifiers)
+partial_identifiers
 ```
 these strings are contained in our payments table column 'payment_identifier', but how can we easily join them considering it's not an exact match?
 
@@ -182,8 +190,7 @@ library(fuzzyjoin)
 
 regex_left_join(x = payments, y = partial_identifiers,
                 by = c('payment_identifier' = 'id')) %>% 
-  select(payment_identifier, id) %>% 
-  head()
+  select(payment_identifier, id)
 ```
 
 
@@ -204,7 +211,7 @@ partial_identifiers = r.partial_identifiers
 # payments_joined['match'] payments_joined.apply(lambda x: x.payment_identifier.find(x.id), axis = 1).ge(0)
 # payments_joined.head()
 ```
-
+Now let's turn to SQL and solve it there.
 
 ##### SQL
 
@@ -222,20 +229,25 @@ The idea is pretty straight forward. We can leverage the `LIKE` operator in a jo
 
 Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn't easily scalable. Eventually I realized this and just implemented it using SQL as shown above.
 
-### Extracting / Separating text & digits.
+### Extracting / Separating text & digits. {#separate}
 
 Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let's see how can we do this on the column payment_description that contains both what seems as a name and digits.
 
+#### Python
+
 ```{python echo=TRUE}
-(
-payments.payment_description.str.split(r'(\d+)', expand = True)
+payments[['name', 'number']] = (
+  payments.payment_description.str.split(r'(\d+)', expand = True)
   .iloc[:, 0:2]
-  .head()
 )
+
+payments[['payment_description', 'name', 'number']]
 ```
 
 
 it's pretty straightforward using the python `split` argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won't drop). From there we just remove an empty column and assign it as new columns in our dataframe.
+
+I don't show it here but in R we could easily use the `tidyr::separate` that does exactly that -- Separates a string into new columns.
 
 #### SQL
 
@@ -254,7 +266,7 @@ FROM PAYMENTS
 ```
 We combine the `TRANSLATE` and `REPALCE` functions to do a string-extract kind of operation. The Translate basically converts any of the characters noted in the second argument to a character in the third argument. We then replace all hashtags to empty values.
 
-This is done both for the name and numbers, converting all letters and a period to empty values, and all numbers to empty values correspondently.
+This is done both for the name and numbers, converting all letters and a period to empty values, and all numbers to empty values correspondingly.
 
 You usually would have data that's a little messier, e.g. numbers appearing in between letters, but it should give the main idea and help you start from there (or at least did so for me).
 
@@ -264,7 +276,7 @@ In this blog post we solved three cases using some regex and text manipulations.
 
 
 
-```{r}
+```{r, echo = FALSE}
 # library(readr)
 # dat <- read_csv('content/post/regex-in-sql/data.csv')
 
