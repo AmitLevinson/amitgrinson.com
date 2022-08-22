@@ -21,32 +21,39 @@ editor_options:
 
 
 
-<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text using regex and simple text operations.</p>
-<p>Regex is ‘a sequence of characters that specifies a search pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a pattern in the text.</p>
-<p>Appreciating the power of Regex and simple text operations in R &amp; Python I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations.</p>
-<p>In this post We’ll go over three scenarios I faced in the past both in some coding language and while using SQL. As I’ve recently picked up Python more I’ll also solve some of them using that, <strong>but the general idea is pretty language agnostic, using regex and working with text.</strong></p>
+<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex.</p>
+<p>Regex is ‘a sequence of characters that specifies a search pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify a pattern in the text.</p>
+<p>Appreciating the power of Regex and simple text operations in the programs R &amp; Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations.</p>
+<p>In this post We’ll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I’ve recently picked up Python I’ll also solve some of them using that, <strong>but the general idea should be language agnostic, that is using regex and working with text.</strong> Hopefully you’ll learn more about regex and working with text as analysts.</p>
 <p>What will we be be looking at?</p>
 <ol style="list-style-type: decimal">
-<li><p><a href="#lookarounds">Using looksarounds to extract the email domain</a></p></li>
-<li><p><a href="#partial-strings">Joining tables on a partial string match</a></p></li>
-<li><p><a href="#separate">Separating text &amp; digits to different columns</a></p></li>
+<li><p><a href="#lookarounds">Using lookarounds to extract an email domain</a></p></li>
+<li><p><a href="#partial-strings">Joining tables with partial matching of values</a></p></li>
+<li><p><a href="#separate">Separating text &amp; digits from a string</a></p></li>
 </ol>
 <div id="setup" class="section level3">
 <h3>Setup</h3>
 <p>Let’s start by setting up a local connection so we can easily write SQL queries as we move forward:</p>
-<p>Awesome. As we move forward we’ll be working with both Python (mainly) a little R too. So let’s load the relevant libraries and data so we have them for future manipulations.</p>
-<pre class="python"><code># Python code
+<pre class="r"><code>library(odbc)
+library(DBI)
+
+rconn &lt;- dbConnect(odbc(),
+                      Driver = &quot;SQL Server&quot;,
+                      Server = &quot;localhost\\SQLEXPRESS&quot;,
+                      Database = &quot;regex&quot;)</code></pre>
+<p>Awesome, we setup a connection to our local server on the computer. As we move forward we’ll be working with both Python (mainly) and a little with R. For that let’s load the relevant libraries and data:</p>
+<pre class="python"><code># Python
 import pandas as pd
 
 # content/post/regex-in-sql/
 payments = pd.read_csv(&#39;data.csv&#39;)</code></pre>
-<pre class="r"><code>#R code
+<pre class="r"><code>#R
 library(tidyverse)
 # content/post/regex-in-sql/
 payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 <div id="the-data" class="section level5">
 <h5>The Data</h5>
-<p>Our main dataset is a very simple payments table:</p>
+<p>Our main dataset is a simple payments table:</p>
 <pre class="r"><code>payments</code></pre>
 <table>
 <colgroup>
@@ -94,14 +101,14 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The data has 6 rows in total detailing payments: The receiver’s email, the payment identifier (e.g. id) and the payment description. Feel free to follow along; you can find the relevant dataset in the <a href="">website’s GitHub repository</a>.</p>
+<p>The data has 6 rows in total detailing payment transactions: The receiver’s email, the payment identifier (e.g. id) and the payment description containing the receiver’s name and some numbers. If you’re interested in following along or trying yourself see the relevant dataset in the <a href="">website’s GitHub repository</a>.</p>
 <p>All right then, let’s (^begin|start$)</p>
 </div>
 </div>
 <div id="lookarounds" class="section level3">
 <h3>Lookarounds 👀 — Extracting the domain from an email address</h3>
-<p><a href="https://www.regular-expressions.info/lookaround.html">lookarounds</a> are definitely one of my favorite and commonly go-to regex operations. As the name implies, <strong>a lookaround searches for a pattern and specified string in a specific piece of text.</strong> A <em>lookahead</em> searches for the pattern and takes what’s before it, while a <em>lookbehind</em> searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced.</p>
-<p>Let’s try this with a set of emails. <strong>For example you might want to extract the email domains, which is everything that’s after the @ symbol.</strong></p>
+<p><a href="https://www.regular-expressions.info/lookaround.html">lookarounds</a> are definitely one of my favorite and commonly go-to regex operations. As the name implies, <strong>a lookaround searches for a pattern and specified string in a specific piece of text.</strong> A <em>lookahead</em> searches for the pattern and takes what’s before it, while a <em>lookbehind</em> searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced (negative match).</p>
+<p>Let’s explore it with a set of emails. <strong>Say for example you want to extract the email domains, which is everything that’s after the @ symbol.</strong></p>
 <div id="python" class="section level5">
 <h5>Python</h5>
 <p>Returning to our table, we can do this using the following regex operation:</p>
@@ -119,7 +126,7 @@ payments
 ## 3           Shawn@gmail.com          gmail.com
 ## 4      me@photoshooting.com  photoshooting.com
 ## 5          Lilly3@gmail.com          gmail.com</code></pre>
-<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our email domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (e.g. r’(.+(?=@))’). If you’re interested learning more about lookarounds, check out another post of mine where I extracted <a href="https://amitlevinson.com/blog/automated-plot-with-github-actions/">libraries I used in #TidyTuesday</a></p>
+<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our email domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (<code>r'(.+(?=@))'</code>). If you’re interested in learning more about lookarounds, check out another post of mine where I extracted <a href="https://amitlevinson.com/blog/automated-plot-with-github-actions/">libraries I used in #TidyTuesday R scripts</a></p>
 </div>
 <div id="sql" class="section level5">
 <h5>SQL</h5>
@@ -171,7 +178,7 @@ FROM PAYMENTS p</code></pre>
 <div id="partial-strings" class="section level3">
 <h3>Partial string join — identifying a string from a partial match</h3>
 <p>I wouldn’t say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the two tables?</p>
-<p>For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:</p>
+<p>For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full strings recorded in your system, as we can see below:</p>
 <pre class="r"><code>partial_identifiers</code></pre>
 <table>
 <thead>
@@ -191,7 +198,7 @@ FROM PAYMENTS p</code></pre>
 </tr>
 </tbody>
 </table>
-<p>these strings are contained in our payments table column ‘payment_identifier’, but how can we easily join them considering it’s not an exact match?</p>
+<p>these strings are contained in some of our payment_identifiers, but how can we easily join them considering it’s not an exact match?</p>
 <div id="r" class="section level5">
 <h5>R</h5>
 <p>At the time I encountered this I was using mainly R and solved it with that, so let’s go ahead and use that first:</p>
@@ -234,15 +241,26 @@ regex_left_join(x = payments, y = partial_identifiers,
 </tr>
 </tbody>
 </table>
-<p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution above instead as it shows the awesome power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
+<p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
 <p>I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:</p>
 <pre class="python"><code>partial_identifiers = r.partial_identifiers</code></pre>
-<pre class="python"><code># payments[&#39;join&#39;] = 1
-# partial_identifiers[&#39;join&#39;] = 1
-# 
-# payments_joined = payments.merge(partial_identifiers, on = &#39;join&#39;).drop(&#39;join&#39;, axis = 1)
-# payments_joined[&#39;match&#39;] payments_joined.apply(lambda x: x.payment_identifier.find(x.id), axis = 1).ge(0)
-# payments_joined.head()</code></pre>
+<pre class="python"><code>payments[&#39;join&#39;] = 1
+partial_identifiers[&#39;join&#39;] = 1
+
+payments_joined = payments.merge(partial_identifiers, on = &#39;join&#39;).drop(&#39;join&#39;, axis = 1)</code></pre>
+<pre class="python"><code>def id_isin_identifier(payment_identifier, id):
+  if id in payment_identifier:
+    return True
+  else:
+    return False</code></pre>
+<pre class="python"><code>(payments_joined.loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
+ .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x[&#39;payment_identifier&#39;], x[&#39;id&#39;]), axis = 1)])
+)</code></pre>
+<pre><code>##                       payment_identifier                       id
+## 3   b7a0879f-b510-442c-b0d1-595e3c7ca4ef           b510-442c-b0d1
+## 10  9954c0d3-fc8f-4234-b77f-20eaaf674841           fc8f-4234-b77f
+## 17  6df08994-0335-4463-a921-970f2349413f  6df08994-0335-4463-a921</code></pre>
+<p>Now let’s turn to SQL and solve it there.</p>
 </div>
 <div id="sql-1" class="section level5">
 <h5>SQL</h5>
@@ -253,7 +271,7 @@ LEFT JOIN partial_identifiers pi
   on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-14">Table 2: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 2: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">payment_identifier</th>
@@ -289,12 +307,13 @@ LEFT JOIN partial_identifiers pi
 </table>
 </div>
 <p>The idea is pretty straight forward. We can leverage the <code>LIKE</code> operator in a join to do the partial matching for us, matching any payment identifiers to the partial identifiers id.</p>
-<p>Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn’t easily scalable. Eventually I realized this and just implemented it using SQL as shown above.</p>
+<p>Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn’t easily scalable so eventually I just implemented it using SQL as shown above.</p>
 </div>
 </div>
 <div id="separate" class="section level3">
 <h3>Extracting / Separating text &amp; digits.</h3>
-<p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let’s see how can we do this on the column payment_description that contains both what seems as a name and digits.</p>
+<p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis.</p>
+<p>Let’s see how can we do this on the column payment_description that contains both what seems as a name and a set of numbers.</p>
 <div id="python-1" class="section level4">
 <h4>Python</h4>
 <pre class="python"><code>payments[[&#39;name&#39;, &#39;number&#39;]] = (
@@ -310,11 +329,12 @@ payments[[&#39;payment_description&#39;, &#39;name&#39;, &#39;number&#39;]]</cod
 ## 3     Shawn Brown 92794    Shawn Brown     92794
 ## 4  Dan S. Wilson 283749  Dan S. Wilson    283749
 ## 5     Lilly Taylor 3698   Lilly Taylor      3698</code></pre>
-<p>it’s pretty straightforward using the python <code>split</code> argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won’t drop). From there we just remove an empty column and assign it as new columns in our dataframe.</p>
+<p>it’s pretty straightforward using the python <code>split</code> argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won’t drop). From there we just remove an empty column and assign it as new columns into our dataframe.</p>
+<p>I don’t show it here but in R we could easily use the <code>tidyr::separate</code> that does exactly that – Separates a string into new columns.</p>
 </div>
 <div id="sql-2" class="section level4">
 <h4>SQL</h4>
-<p>This requires a little more work, as we want to split it while we have varying lengths of numbers across strings. For this we can use Translate and convert any characters or digits - according to what we’re extracting - to a blank value.</p>
+<p>This requires a little more work than what we saw, as we want to split it while we varying lengths of numbers across strings:</p>
 <pre class="sql"><code>SELECT TOP 6
   Payment_Description,
   REPLACE(TRANSLATE(PAYMENT_DESCRIPTION, &#39;0123456789&#39;,
@@ -326,7 +346,7 @@ payments[[&#39;payment_description&#39;, &#39;name&#39;, &#39;number&#39;]]</cod
 FROM PAYMENTS</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-16">Table 3: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-18">Table 3: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">Payment_Description</th>
@@ -375,7 +395,8 @@ FROM PAYMENTS</code></pre>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
-<p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself doing it on ther server’s side with SQL, others locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.</strong></p>
+<p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server’s side, other times working locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.</strong></p>
+<p>Good luck on your text manipulation endeavours!</p>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />

@@ -36,28 +36,28 @@ registerS3method(
 ```
 
 
-Working as a Data Analyst in the fraud domain I constantly find myself manipulating text using regex and simple text operations.
+Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex. 
 
-Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically,  we provide a set of rules and guidelines to identify - and accordingly extract, remove, replace, etc - a pattern in the text.
+Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically, we provide a set of rules and guidelines to identify a pattern in the text.
 
-Appreciating the power of Regex and simple text operations in R & Python I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations. 
+Appreciating the power of Regex and simple text operations in the programs R & Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations. 
 
-In this post We'll go over three scenarios I faced in the past both in some coding language and while using SQL. As I've recently picked up Python more I'll also solve some of them using that, **but the general idea is pretty language agnostic, using regex and working with text.**
+In this post We'll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I've recently picked up Python I'll also solve some of them using that, **but the general idea should be language agnostic, that is using regex and working with text.** Hopefully you'll learn more about regex and working with text as analysts.
 
 What will we be be looking at?
 
-1. [Using looksarounds to extract the email domain](#lookarounds)  
+1. [Using lookarounds to extract an email domain](#lookarounds)  
 
-1. [Joining tables on a partial string match](#partial-strings)  
+1. [Joining tables with partial matching of values](#partial-strings)  
 
-1. [Separating text & digits to different columns](#separate)
+1. [Separating text & digits from a string](#separate)
 
 
 ### Setup
 
 Let's start by setting up a local connection so we can easily write SQL queries as we move forward:
 
-```{r echo = FALSE}
+```{r}
 library(odbc)
 library(DBI)
 
@@ -78,11 +78,11 @@ partial_identifiers <- data.frame(
 # dbWriteTable(rconn, 'Payments', payments, overwrite = TRUE)
 ```
 
-Awesome. As we move forward we'll be working with both Python (mainly) a little R too. So let's load the relevant libraries and data so we have them for future manipulations.
+Awesome, we setup a connection to our local server on the computer. As we move forward we'll be working with both Python (mainly) and a little with R. For that let's load the relevant libraries and data:
 
 
 ```{python}
-# Python code
+# Python
 import pandas as pd
 
 # content/post/regex-in-sql/
@@ -92,7 +92,7 @@ payments = pd.read_csv('data.csv')
 
 
 ```{r}
-#R code
+#R
 library(tidyverse)
 # content/post/regex-in-sql/
 payments <- read_csv('data.csv')
@@ -100,20 +100,20 @@ payments <- read_csv('data.csv')
 
 ##### The Data
 
-Our main dataset is a very simple payments table:
+Our main dataset is a simple payments table:
 
 ```{r}
 payments
 ```
-The data has 6 rows in total detailing payments: The receiver's email, the payment identifier (e.g. id) and the payment description. Feel free to follow along; you can find the relevant dataset in the [website's GitHub repository]().
+The data has 6 rows in total detailing payment transactions: The receiver's email, the payment identifier (e.g. id) and the payment description containing the receiver's name and some numbers. If you're interested in following along or trying yourself see the relevant dataset in the [website's GitHub repository]().
 
 All right then, let's (^begin|start$)
 
 ### Lookarounds 👀 — Extracting the domain from an email address {#lookarounds}
 
-[lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite and commonly go-to regex operations. As the name implies, **a lookaround searches for a pattern and specified string in a specific piece of text.** A *lookahead* searches for the pattern and takes what's before it, while a *lookbehind* searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced.
+[lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite and commonly go-to regex operations. As the name implies, **a lookaround searches for a pattern and specified string in a specific piece of text.** A *lookahead* searches for the pattern and takes what's before it, while a *lookbehind* searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced (negative match).
 
-Let's try this with a set of emails. **For example you might want to extract the email domains, which is everything that's after the @ symbol.**
+Let's explore it with a set of emails. **Say for example you want to extract the email domains, which is everything that's after the @ symbol.**
 
 ##### Python
 
@@ -130,7 +130,7 @@ payments
 ```
 
 
-the pattern `(?<=@).+` essentially extracts any character(s) that follow the @ symbol, in this case our email domain[^1]. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it (e.g. r'(.+(?=@))'). If you're interested learning more about lookarounds, check out another post of mine where I extracted [libraries I used in #TidyTuesday](https://amitlevinson.com/blog/automated-plot-with-github-actions/)
+the pattern `(?<=@).+` essentially extracts any character(s) that follow the @ symbol, in this case our email domain[^1]. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it (`r'(.+(?=@))'`). If you're interested in learning more about lookarounds, check out another post of mine where I extracted [libraries I used in #TidyTuesday R scripts](https://amitlevinson.com/blog/automated-plot-with-github-actions/)
 
 [^1]: The extra parentheses is to solve the 'ValueError: pattern contains no capture groups' error, basically including what is it we want to be captured in our regex.
 
@@ -153,12 +153,12 @@ We're leveraging the function `CHARINDEX` in order to identify the location of t
 
 I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the two tables?
 
-For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full string, as we can see below:
+For example, you received from some partner a list of ids he has for each payment. However, what he has is only a part of the full strings recorded in your system, as we can see below:
 
 ```{r}
 partial_identifiers
 ```
-these strings are contained in our payments table column 'payment_identifier', but how can we easily join them considering it's not an exact match?
+these strings are contained in some of our payment_identifiers, but how can we easily join them considering it's not an exact match?
 
 ##### R
 
@@ -194,7 +194,7 @@ regex_left_join(x = payments, y = partial_identifiers,
 ```
 
 
-I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution above instead as it shows the awesome power of the [{fuzzyjoin}](https://cran.r-project.org/web/packages/fuzzyjoin/index.html) R package. 
+I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the [{fuzzyjoin}](https://cran.r-project.org/web/packages/fuzzyjoin/index.html) R package. 
 
 I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:
 
@@ -204,13 +204,28 @@ partial_identifiers = r.partial_identifiers
 
 
 ```{python}
-# payments['join'] = 1
-# partial_identifiers['join'] = 1
-# 
-# payments_joined = payments.merge(partial_identifiers, on = 'join').drop('join', axis = 1)
-# payments_joined['match'] payments_joined.apply(lambda x: x.payment_identifier.find(x.id), axis = 1).ge(0)
-# payments_joined.head()
+payments['join'] = 1
+partial_identifiers['join'] = 1
+
+payments_joined = payments.merge(partial_identifiers, on = 'join').drop('join', axis = 1)
 ```
+```{python}
+def id_isin_identifier(payment_identifier, id):
+  if id in payment_identifier:
+    return True
+  else:
+    return False
+```
+
+```{python}
+(payments_joined.loc[:, ['payment_identifier', 'id']]
+ .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x['payment_identifier'], x['id']), axis = 1)])
+)
+```
+
+
+
+
 Now let's turn to SQL and solve it there.
 
 ##### SQL
@@ -227,11 +242,13 @@ LEFT JOIN partial_identifiers pi
 
 The idea is pretty straight forward. We can leverage the `LIKE` operator in a join to do the partial matching for us, matching any payment identifiers to the partial identifiers id.
 
-Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn't easily scalable. Eventually I realized this and just implemented it using SQL as shown above.
+Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn't easily scalable so eventually I just implemented it using SQL as shown above.
 
 ### Extracting / Separating text & digits. {#separate}
 
-Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis. Let's see how can we do this on the column payment_description that contains both what seems as a name and digits.
+Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis.  
+
+Let's see how can we do this on the column payment_description that contains both what seems as a name and a set of numbers.
 
 #### Python
 
@@ -245,13 +262,13 @@ payments[['payment_description', 'name', 'number']]
 ```
 
 
-it's pretty straightforward using the python `split` argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won't drop). From there we just remove an empty column and assign it as new columns in our dataframe.
+it's pretty straightforward using the python `split` argument. We pass it a pattern to separate by and wrap it in a parenetheses (so it won't drop). From there we just remove an empty column and assign it as new columns into our dataframe.
 
 I don't show it here but in R we could easily use the `tidyr::separate` that does exactly that -- Separates a string into new columns.
 
 #### SQL
 
-This requires a little more work, as we want to split it while we have varying lengths of numbers across strings. For this we can use Translate and convert any characters or digits - according to what we're extracting - to a blank value.
+This requires a little more work than what we saw, as we want to split it while we varying lengths of numbers across strings:
 
 ```{sql connection=rconn}
 SELECT TOP 6
@@ -264,6 +281,7 @@ SELECT TOP 6
           '#','') AS Numbers
 FROM PAYMENTS
 ```
+
 We combine the `TRANSLATE` and `REPALCE` functions to do a string-extract kind of operation. The Translate basically converts any of the characters noted in the second argument to a character in the third argument. We then replace all hashtags to empty values.
 
 This is done both for the name and numbers, converting all letters and a period to empty values, and all numbers to empty values correspondingly.
@@ -272,7 +290,10 @@ You usually would have data that's a little messier, e.g. numbers appearing in b
 
 ### Conclusion
 
-In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself doing it on ther server's side with SQL, others locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.**
+In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server's side, other times working locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.**
+
+Good luck on your text manipulation endeavours!
+
 
 
 
