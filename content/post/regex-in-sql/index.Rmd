@@ -203,13 +203,16 @@ partial_identifiers = r.partial_identifiers
 ```
 
 
-```{python}
-payments['join'] = 1
-partial_identifiers['join'] = 1
 
-payments_joined = payments.merge(partial_identifiers, on = 'join').drop('join', axis = 1)
-```
+
 ```{python}
+(payments.merge(partial_identifiers, how = 'cross')
+  .loc[:, ['payment_identifier', 'id']]
+  .loc[lambda df: df.apply(lambda row: row['id'] in row['payment_identifier'], axis = 1), :]
+)
+```
+
+```{python, echo = FALSE}
 def id_isin_identifier(payment_identifier, id):
   if id in payment_identifier:
     return True
@@ -217,7 +220,7 @@ def id_isin_identifier(payment_identifier, id):
     return False
 ```
 
-```{python}
+```{python, eval = FALSE}
 (payments_joined.loc[:, ['payment_identifier', 'id']]
  .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x['payment_identifier'], x['id']), axis = 1)])
 )

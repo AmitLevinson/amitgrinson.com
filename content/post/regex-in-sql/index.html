@@ -244,22 +244,17 @@ regex_left_join(x = payments, y = partial_identifiers,
 <p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
 <p>I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:</p>
 <pre class="python"><code>partial_identifiers = r.partial_identifiers</code></pre>
-<pre class="python"><code>payments[&#39;join&#39;] = 1
-partial_identifiers[&#39;join&#39;] = 1
-
-payments_joined = payments.merge(partial_identifiers, on = &#39;join&#39;).drop(&#39;join&#39;, axis = 1)</code></pre>
-<pre class="python"><code>def id_isin_identifier(payment_identifier, id):
-  if id in payment_identifier:
-    return True
-  else:
-    return False</code></pre>
-<pre class="python"><code>(payments_joined.loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
- .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x[&#39;payment_identifier&#39;], x[&#39;id&#39;]), axis = 1)])
+<pre class="python"><code>(payments.merge(partial_identifiers, how = &#39;cross&#39;)
+  .loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
+  .loc[lambda df: df.apply(lambda row: row[&#39;id&#39;] in row[&#39;payment_identifier&#39;], axis = 1), :]
 )</code></pre>
 <pre><code>##                       payment_identifier                       id
 ## 3   b7a0879f-b510-442c-b0d1-595e3c7ca4ef           b510-442c-b0d1
 ## 10  9954c0d3-fc8f-4234-b77f-20eaaf674841           fc8f-4234-b77f
 ## 17  6df08994-0335-4463-a921-970f2349413f  6df08994-0335-4463-a921</code></pre>
+<pre class="python"><code>(payments_joined.loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
+ .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x[&#39;payment_identifier&#39;], x[&#39;id&#39;]), axis = 1)])
+)</code></pre>
 <p>Now let’s turn to SQL and solve it there.</p>
 </div>
 <div id="sql-1" class="section level5">
