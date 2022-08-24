@@ -196,9 +196,13 @@ regex_left_join(x = payments, y = partial_identifiers,
 
 I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the [{fuzzyjoin}](https://cran.r-project.org/web/packages/fuzzyjoin/index.html) R package. 
 
+We also do above a left join but moving forward we'll stay with an inner join, as payments found unmatched won't be necessary.
+
+##### Python
+
 I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:
 
-```{python}
+```{python, echo = FALSE}
 partial_identifiers = r.partial_identifiers
 ```
 
@@ -207,25 +211,13 @@ partial_identifiers = r.partial_identifiers
 
 ```{python}
 (payments.merge(partial_identifiers, how = 'cross')
-  .loc[:, ['payment_identifier', 'id']]
-  .loc[lambda df: df.apply(lambda row: row['id'] in row['payment_identifier'], axis = 1), :]
+  # .loc[:, ['payment_identifier', 'id']]
+.loc[lambda df: df.apply(lambda row: row['id'] in row['payment_identifier'], axis = 1),
+    ['payment_identifier', 'id']]
 )
 ```
 
-```{python, echo = FALSE}
-def id_isin_identifier(payment_identifier, id):
-  if id in payment_identifier:
-    return True
-  else:
-    return False
-```
-
-```{python, eval = FALSE}
-(payments_joined.loc[:, ['payment_identifier', 'id']]
- .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x['payment_identifier'], x['id']), axis = 1)])
-)
-```
-
+It's a little packed, so let's break it apart: We first join the two tables using a cartesian product, creating all combinations of payment identifiers and partial strings. The following line goes row by row and checks if the partial string is `in` the payment identifier. If so, it returns `True` which we evaluate in the `.loc[]` argument. I'm not sure regarding its efficiency if scaling to larger data, but it conveys the general idea.
 
 
 
@@ -237,7 +229,7 @@ Now let's turn to SQL and solve it there.
 SELECT TOP 6 payment_identifier,
   pi.id
 FROM PAYMENTS p
-LEFT JOIN partial_identifiers pi
+INNER JOIN partial_identifiers pi
   on p.payment_identifier like concat('%', pi.id, '%')
 ```
 
