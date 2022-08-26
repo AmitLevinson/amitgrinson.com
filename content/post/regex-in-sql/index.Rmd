@@ -1,7 +1,7 @@
 ---
-title: Translating Regex to SQL String Operations
-author: Amit Levinson
-date: '2022-06-02'
+title: Regex and Text operations in Python & R Vs. SQL
+aut7hor: Amit Levinson
+date: '2022-08-29'
 slug: regex-in-sql
 categories: []
 tags: [R, Python, SQL]
@@ -211,7 +211,6 @@ partial_identifiers = r.partial_identifiers
 
 ```{python}
 (payments.merge(partial_identifiers, how = 'cross')
-  # .loc[:, ['payment_identifier', 'id']]
 .loc[lambda df: df.apply(lambda row: row['id'] in row['payment_identifier'], axis = 1),
     ['payment_identifier', 'id']]
 )
@@ -219,6 +218,9 @@ partial_identifiers = r.partial_identifiers
 
 It's a little packed, so let's break it apart: We first join the two tables using a cartesian product, creating all combinations of payment identifiers and partial strings. The following line goes row by row and checks if the partial string is `in` the payment identifier. If so, it returns `True` which we evaluate in the `.loc[]` argument. I'm not sure regarding its efficiency if scaling to larger data, but it conveys the general idea.
 
+A faster approach instead of the `apply` would be to filter using list comprehension but I find it much less readable, as well as making sure no `NaN` are in place (which makes sense given were cross joining). [^2]
+
+[^2]: It's actuallly XX times faster (timed on YY rows). We could achieve it using: `.loc[lambda df: [x[0] in x[1] if x[0] is not None else False for x in zip(df['id'], df['payment_identifier'])]`
 
 
 Now let's turn to SQL and solve it there.
@@ -283,7 +285,19 @@ This is done both for the name and numbers, converting all letters and a period 
 
 You usually would have data that's a little messier, e.g. numbers appearing in between letters, but it should give the main idea and help you start from there (or at least did so for me).
 
-### Conclusion
+### Additional text operation tips in SQL
+
+Besides the basics you probably know of if you've work with SQL, there were a few other cases I was glad to learn something new when working with text in SQL. Here are a few last tips I have for you before you go:
+
+1. Though not shown above, you can use regex-like operations, for example you can use in the where clause a filtering to identify a string that is a letter, number, then letter without needing to replace using the following `...Like [a-z][0-9][a-z]. 
+
+2. Morever you can also use case sensitive operations to match lower and uppercase when needed, just add `WHERE column COLLATE Latin1_General_BIN LIKE [A-Z]...` to have it case sensitive.
+
+3. Some symbols have a designated meaning in SQL, e,g, the `%` and `_` operators. But what happens when you want to try and match them? Well, you can use the `ESCAPE` operator. For example to match sentences that use a '%' symbol you can add any symbol before and escape it: `LIKE '%!%% ESCAPE '!'`, matching a text with something before and after a '%' sign.
+
+You can find more more specific tips for text manipulations in MSSQL [here](https://www.sqlshack.com/t-sql-regex-commands-in-sql-server/). Have specific ones in mind that you use daily? I'd love to hear about them!
+
+### Closing remarks
 
 In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server's side, other times working locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.**
 

@@ -1,7 +1,7 @@
 ---
-title: Translating Regex to SQL String Operations
-author: Amit Levinson
-date: '2022-06-02'
+title: Regex and Text operations in Python & R Vs. SQL
+aut7hor: Amit Levinson
+date: '2022-08-29'
 slug: regex-in-sql
 categories: []
 tags: [R, Python, SQL]
@@ -242,19 +242,21 @@ regex_left_join(x = payments, y = partial_identifiers,
 </tbody>
 </table>
 <p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
+<p>We also do above a left join but moving forward we’ll stay with an inner join, as payments found unmatched won’t be necessary.</p>
+</div>
+<div id="python-1" class="section level5">
+<h5>Python</h5>
 <p>I realized this post solves the other two challenges with Python, so I might as well try it with that too. You know, just for the kicks:</p>
-<pre class="python"><code>partial_identifiers = r.partial_identifiers</code></pre>
 <pre class="python"><code>(payments.merge(partial_identifiers, how = &#39;cross&#39;)
-  .loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
-  .loc[lambda df: df.apply(lambda row: row[&#39;id&#39;] in row[&#39;payment_identifier&#39;], axis = 1), :]
+.loc[lambda df: df.apply(lambda row: row[&#39;id&#39;] in row[&#39;payment_identifier&#39;], axis = 1),
+    [&#39;payment_identifier&#39;, &#39;id&#39;]]
 )</code></pre>
 <pre><code>##                       payment_identifier                       id
 ## 3   b7a0879f-b510-442c-b0d1-595e3c7ca4ef           b510-442c-b0d1
 ## 10  9954c0d3-fc8f-4234-b77f-20eaaf674841           fc8f-4234-b77f
 ## 17  6df08994-0335-4463-a921-970f2349413f  6df08994-0335-4463-a921</code></pre>
-<pre class="python"><code>(payments_joined.loc[:, [&#39;payment_identifier&#39;, &#39;id&#39;]]
- .pipe(lambda df: df[df.apply(lambda x: id_isin_identifier(x[&#39;payment_identifier&#39;], x[&#39;id&#39;]), axis = 1)])
-)</code></pre>
+<p>It’s a little packed, so let’s break it apart: We first join the two tables using a cartesian product, creating all combinations of payment identifiers and partial strings. The following line goes row by row and checks if the partial string is <code>in</code> the payment identifier. If so, it returns <code>True</code> which we evaluate in the <code>.loc[]</code> argument. I’m not sure regarding its efficiency if scaling to larger data, but it conveys the general idea.</p>
+<p>A faster approach instead of the <code>apply</code> would be to filter using list comprehension but I find it much less readable, as well as making sure no <code>NaN</code> are in place (which makes sense given were cross joining). <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Now let’s turn to SQL and solve it there.</p>
 </div>
 <div id="sql-1" class="section level5">
@@ -262,11 +264,11 @@ regex_left_join(x = payments, y = partial_identifiers,
 <pre class="sql"><code>SELECT TOP 6 payment_identifier,
   pi.id
 FROM PAYMENTS p
-LEFT JOIN partial_identifiers pi
+INNER JOIN partial_identifiers pi
   on p.payment_identifier like concat(&#39;%&#39;, pi.id, &#39;%&#39;)</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-16">Table 2: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 2: </span>1 records</caption>
 <thead>
 <tr class="header">
 <th align="left">payment_identifier</th>
@@ -275,28 +277,8 @@ LEFT JOIN partial_identifiers pi
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4e0fc35a-703f-4ca2-ab4c-57e9824c2e0b</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
 <td align="left">b7a0879f-b510-442c-b0d1-595e3c7ca4ef</td>
 <td align="left">b510-442c-b0d1</td>
-</tr>
-<tr class="odd">
-<td align="left">2459190c-ff94-4d8c-baf8-2fdf15dd2007</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">9954c0d3-fc8f-4234-b77f-20eaaf674841</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">405a073d-44e5-475c-a53f-9541aa578e9d</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">6df08994-0335-4463-a921-970f2349413f</td>
-<td align="left">NA</td>
 </tr>
 </tbody>
 </table>
@@ -309,7 +291,7 @@ LEFT JOIN partial_identifiers pi
 <h3>Extracting / Separating text &amp; digits.</h3>
 <p>Occasionally you might encounter values that contain both a string and digits combined, for example payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis.</p>
 <p>Let’s see how can we do this on the column payment_description that contains both what seems as a name and a set of numbers.</p>
-<div id="python-1" class="section level4">
+<div id="python-2" class="section level4">
 <h4>Python</h4>
 <pre class="python"><code>payments[[&#39;name&#39;, &#39;number&#39;]] = (
   payments.payment_description.str.split(r&#39;(\d+)&#39;, expand = True)
@@ -341,7 +323,7 @@ payments[[&#39;payment_description&#39;, &#39;name&#39;, &#39;number&#39;]]</cod
 FROM PAYMENTS</code></pre>
 <div class="knitsql-table">
 <table>
-<caption><span id="tab:unnamed-chunk-18">Table 3: </span>6 records</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 3: </span>6 records</caption>
 <thead>
 <tr class="header">
 <th align="left">Payment_Description</th>
@@ -388,8 +370,18 @@ FROM PAYMENTS</code></pre>
 <p>You usually would have data that’s a little messier, e.g. numbers appearing in between letters, but it should give the main idea and help you start from there (or at least did so for me).</p>
 </div>
 </div>
-<div id="conclusion" class="section level3">
-<h3>Conclusion</h3>
+<div id="additional-text-operation-tips-in-sql" class="section level3">
+<h3>Additional text operation tips in SQL</h3>
+<p>Besides the basics you probably know of if you’ve work with SQL, there were a few other cases I was glad to learn something new when working with text in SQL. Here are a few last tips I have for you before you go:</p>
+<ol style="list-style-type: decimal">
+<li><p>Though not shown above, you can use regex-like operations, for example you can use in the where clause a filtering to identify a string that is a letter, number, then letter without needing to replace using the following `…Like [a-z][0-9][a-z].</p></li>
+<li><p>Morever you can also use case sensitive operations to match lower and uppercase when needed, just add <code>WHERE column COLLATE Latin1_General_BIN LIKE [A-Z]...</code> to have it case sensitive.</p></li>
+<li><p>Some symbols have a designated meaning in SQL, e,g, the <code>%</code> and <code>_</code> operators. But what happens when you want to try and match them? Well, you can use the <code>ESCAPE</code> operator. For example to match sentences that use a ‘%’ symbol you can add any symbol before and escape it: <code>LIKE '%!%% ESCAPE '!'</code>, matching a text with something before and after a ‘%’ sign.</p></li>
+</ol>
+<p>You can find more more specific tips for text manipulations in MSSQL <a href="https://www.sqlshack.com/t-sql-regex-commands-in-sql-server/">here</a>. Have specific ones in mind that you use daily? I’d love to hear about them!</p>
+</div>
+<div id="closing-remarks" class="section level3">
+<h3>Closing remarks</h3>
 <p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server’s side, other times working locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.</strong></p>
 <p>Good luck on your text manipulation endeavours!</p>
 </div>
@@ -397,5 +389,6 @@ FROM PAYMENTS</code></pre>
 <hr />
 <ol>
 <li id="fn1"><p>The extra parentheses is to solve the ‘ValueError: pattern contains no capture groups’ error, basically including what is it we want to be captured in our regex.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>It’s actuallly XX times faster (timed on YY rows). We could achieve it using: <code>.loc[lambda df: [x[0] in x[1] if x[0] is not None else False for x in zip(df['id'], df['payment_identifier'])]</code><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
