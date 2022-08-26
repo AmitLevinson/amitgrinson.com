@@ -1,12 +1,12 @@
 ---
-title: Regex and Text operations in Python & R Vs. SQL
+title: Regex and Text Operations in Data Analysis Using Various tools (SQL, R/Python)
 aut7hor: Amit Levinson
 date: '2022-08-29'
 slug: regex-in-sql
 categories: []
 tags: [R, Python, SQL]
-subtitle: 'Learning how to do several string operations with SQL'
-summary: 'Unfortunately, a lot of Regex operations are not available in (MS)SQL. In this post I show how I take several regex operations I like and convert thme to string manipulations with SQL syntax'
+subtitle: 'Learning how to do several string operations with the common data analyst toolbox'
+summary: 'Going over various cases of text operations in a data analysis flow, showing how to solve it with SQL compared to R/Python.'
 featured: yes
 image:
   caption: ''
@@ -36,7 +36,7 @@ registerS3method(
 ```
 
 
-Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex. 
+Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, mainly for things such as abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex. 
 
 Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically, we provide a set of rules and guidelines to identify a pattern in the text.
 
@@ -78,11 +78,10 @@ partial_identifiers <- data.frame(
 # dbWriteTable(rconn, 'Payments', payments, overwrite = TRUE)
 ```
 
-Awesome, we setup a connection to our local server on the computer. As we move forward we'll be working with both Python (mainly) and a little with R. For that let's load the relevant libraries and data:
+Awesome, we setup a connection to our local server on the computer and can write explicit SQL queries. As we move forward we'll be working with both Python (mainly) and a little with R. For that let's load the relevant libraries and data:
 
 
 ```{python}
-# Python
 import pandas as pd
 
 # content/post/regex-in-sql/
@@ -92,7 +91,6 @@ payments = pd.read_csv('data.csv')
 
 
 ```{r}
-#R
 library(tidyverse)
 # content/post/regex-in-sql/
 payments <- read_csv('data.csv')
@@ -105,7 +103,7 @@ Our main dataset is a simple payments table:
 ```{r}
 payments
 ```
-The data has 6 rows in total detailing payment transactions: The receiver's email, the payment identifier (e.g. id) and the payment description containing the receiver's name and some numbers. If you're interested in following along or trying yourself see the relevant dataset in the [website's GitHub repository]().
+The data has 6 rows in total detailing payment transactions: The receiver's email, the payment identifier (a paymen id) and the payment description containing the receiver's name and some numbers. If you're interested in following along or trying yourself see the relevant dataset in the [website's GitHub repository]().
 
 All right then, let's (^begin|start$)
 
@@ -120,12 +118,11 @@ Let's explore it with a set of emails. **Say for example you want to extract the
 Returning to our table, we can do this using the following regex operation:
 
 ```{python}
-(
-payments
-  .loc[:, ['email']]
-  .assign (
-    email_domain = payments.email.str.extract(r'((?<=@).+)') # <- relevant part
-  )
+(payments
+ .loc[:, ['email']]
+ .assign (
+   email_domain = payments.email.str.extract(r'((?<=@).+)') # <- relevant part
+ )
 )
 ```
 
@@ -158,7 +155,8 @@ For example, you received from some partner a list of ids he has for each paymen
 ```{r}
 partial_identifiers
 ```
-these strings are contained in some of our payment_identifiers, but how can we easily join them considering it's not an exact match?
+
+these strings are contained in some of our payment_identifiers, but how can we easily join them considering it's not an exact match? We'll solve it using a join - and not filtering by the pattern - so we can match each identifier to the payment returned.
 
 ##### R
 
@@ -216,12 +214,11 @@ partial_identifiers = r.partial_identifiers
 )
 ```
 
-It's a little packed, so let's break it apart: We first join the two tables using a cartesian product, creating all combinations of payment identifiers and partial strings. The following line goes row by row and checks if the partial string is `in` the payment identifier. If so, it returns `True` which we evaluate in the `.loc[]` argument. I'm not sure regarding its efficiency if scaling to larger data, but it conveys the general idea.
+It's a little packed, so let's break it apart: We first join the two tables using Cartesian product, creating all combinations of payment identifiers and partial strings. The following line goes row by row and checks if the partial string is `in` the payment identifier. If so, it returns `True` which is evaluated in the `.loc[]` argument.
 
-A faster approach instead of the `apply` would be to filter using list comprehension but I find it much less readable, as well as making sure no `NaN` are in place (which makes sense given were cross joining). [^2]
+A faster approach (nearly X25 times) instead of the `apply` would be to filter using list comprehension, but I find it much less readable[^2].
 
-[^2]: It's actuallly XX times faster (timed on YY rows). We could achieve it using: `.loc[lambda df: [x[0] in x[1] if x[0] is not None else False for x in zip(df['id'], df['payment_identifier'])]`
-
+[^2]: It's acually almost 25 times faster to use list comprehension for filtering (3.28ms vs 79ms, tested on 1,000 rows): `.loc[lambda df: [x[0] in x[1] if x[0] is not None else False for x in zip(df['id'], df['payment_identifier'])]`
 
 Now let's turn to SQL and solve it there.
 
@@ -287,11 +284,11 @@ You usually would have data that's a little messier, e.g. numbers appearing in b
 
 ### Additional text operation tips in SQL
 
-Besides the basics you probably know of if you've work with SQL, there were a few other cases I was glad to learn something new when working with text in SQL. Here are a few last tips I have for you before you go:
+Besides the basics you probably know of if you've worked in the past with SQL, there were a few other cases where I learned something new. Here are a few last tips before you go:
 
-1. Though not shown above, you can use regex-like operations, for example you can use in the where clause a filtering to identify a string that is a letter, number, then letter without needing to replace using the following `...Like [a-z][0-9][a-z]. 
+1. Though not shown above, you can use regex-like operations and symbols, for example filtering with the `WHERE` clause a string that is a letter, number, then letter using `...Like [a-z][0-9][a-z]`. 
 
-2. Morever you can also use case sensitive operations to match lower and uppercase when needed, just add `WHERE column COLLATE Latin1_General_BIN LIKE [A-Z]...` to have it case sensitive.
+2. In addition, you can use case sensitive operations to match lower and uppercase when needed, just add `WHERE column COLLATE Latin1_General_BIN LIKE [A-Z]...` to have it case sensitive.
 
 3. Some symbols have a designated meaning in SQL, e,g, the `%` and `_` operators. But what happens when you want to try and match them? Well, you can use the `ESCAPE` operator. For example to match sentences that use a '%' symbol you can add any symbol before and escape it: `LIKE '%!%% ESCAPE '!'`, matching a text with something before and after a '%' sign.
 
