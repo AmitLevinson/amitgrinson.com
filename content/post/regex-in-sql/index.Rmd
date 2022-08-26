@@ -74,7 +74,7 @@ partial_identifiers <- data.frame(
     id = c("b510-442c-b0d1", "fc8f-4234-b77f", "6df08994-0335-4463-a921")
 )
 # payments <- read.csv('content/post/regex-in-sql/data.csv')
-# dbWriteTable(rconn, 'Partial_identifiers', partial_identifiers)
+# dbWriteTable(rconn, 'Partial_identifiers', partial_identifiers, overwrite = TRUE)
 # dbWriteTable(rconn, 'Payments', payments, overwrite = TRUE)
 ```
 
