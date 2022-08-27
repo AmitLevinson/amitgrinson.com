@@ -1,5 +1,5 @@
 ---
-title: Text Manipulation & RegEx in a Data Analysis flow (with examples in SQL and  R/Python)
+title: Text Manipulation & RegEx in a Data Analysis flow (with examples in SQL vs  R/Python)
 aut7hor: Amit Levinson
 date: '2022-08-29'
 slug: regex-in-sql
@@ -36,7 +36,7 @@ registerS3method(
 ```
 
 
-Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example to abstract a pattern we identified. At other times in personal projects a lot of cleaning is needed before being able to implement various algorithms such as [TF-IDF]. This is done with various text manipulations in SQL or locally in Python or R using regex and text manipulation functions. 
+Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example to abstract a pattern we identified. This is done with various text manipulation functions in SQL or locally in Python or R using regex and other functions. 
 
 Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically, we provide a set of rules and guidelines to identify a pattern in the text. Appreciating the power of Regex and simple text operations in the programs R & Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations. 
 
