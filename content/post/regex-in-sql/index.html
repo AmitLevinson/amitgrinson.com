@@ -1,5 +1,5 @@
 ---
-title: Regex and Text Operations in Data Analysis Using Various tools (SQL, R/Python)
+title: Text Manipulation & RegEx in a Data Analysis flow (with examples in SQL and  R/Python)
 aut7hor: Amit Levinson
 date: '2022-08-29'
 slug: regex-in-sql
@@ -21,14 +21,13 @@ editor_options:
 
 
 
-<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, mainly for things such as abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex.</p>
-<p>Regex is ‘a sequence of characters that specifies a search pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify a pattern in the text.</p>
-<p>Appreciating the power of Regex and simple text operations in the programs R &amp; Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations.</p>
-<p>In this post We’ll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I’ve recently picked up Python I’ll also solve some of them using that, <strong>but the general idea should be language agnostic, that is using regex and working with text.</strong> Hopefully you’ll learn more about regex and working with text as analysts.</p>
+<p>Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example to abstract a pattern we identified. At other times in personal projects a lot of cleaning is needed before being able to implement various algorithms such as [TF-IDF]. This is done with various text manipulations in SQL or locally in Python or R using regex and text manipulation functions.</p>
+<p>Regex is ‘a sequence of characters that specifies a search pattern in text’ (~<a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a>). Basically, we provide a set of rules and guidelines to identify a pattern in the text. Appreciating the power of Regex and simple text operations in the programs R &amp; Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations.</p>
+<p>In this post We’ll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I’ve recently picked up Python I’ll solve them using that (and some R), <strong>but the general idea should be language agnostic, and that is using regex and working with text as data analysts.</strong></p>
 <p>What will we be be looking at?</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="#lookarounds">Using lookarounds to extract an email domain</a></p></li>
-<li><p><a href="#partial-strings">Joining tables with partial matching of values</a></p></li>
+<li><p><a href="#partial-strings">Joining tables with partial matching of keys</a></p></li>
 <li><p><a href="#separate">Separating text &amp; digits from a string</a></p></li>
 </ol>
 <div id="setup" class="section level3">
@@ -123,7 +122,7 @@ payments &lt;- read_csv(&#39;data.csv&#39;)</code></pre>
 ## 3           Shawn@gmail.com          gmail.com
 ## 4      me@photoshooting.com  photoshooting.com
 ## 5          Lilly3@gmail.com          gmail.com</code></pre>
-<p>the pattern <code>(?&lt;=@).+</code> essentially extracts any character(s) that follow the @ symbol, in this case our email domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (<code>r'(.+(?=@))'</code>). If you’re interested in learning more about lookarounds, check out another post of mine where I extracted <a href="https://amitlevinson.com/blog/automated-plot-with-github-actions/">libraries I used in #TidyTuesday R scripts</a></p>
+<p>The pattern <code>(?&lt;=@).+</code> essentially <strong>extracts any character(s) that follow the @ symbol,</strong> in this case our email domain<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the ‘@’ symbol only this time taking what’s before it (<code>r'(.+(?=@))'</code>). If you’re interested in learning more about lookarounds, check out another post of mine where I extracted <a href="https://amitlevinson.com/blog/automated-plot-with-github-actions/">libraries I used in #TidyTuesday R scripts</a></p>
 </div>
 <div id="sql" class="section level5">
 <h5>SQL</h5>
@@ -238,7 +237,7 @@ regex_left_join(x = payments, y = partial_identifiers,
 </tr>
 </tbody>
 </table>
-<p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package.</p>
+<p>I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the <a href="https://cran.r-project.org/web/packages/fuzzyjoin/index.html">{fuzzyjoin}</a> R package. <strong>Rows are joined based on partial match of one column in the other column.</strong></p>
 <p>We also do above a left join but moving forward we’ll stay with an inner join, as payments found unmatched won’t be necessary.</p>
 </div>
 <div id="python-1" class="section level5">
@@ -387,8 +386,9 @@ FROM PAYMENTS</code></pre>
 </div>
 <div id="closing-remarks" class="section level3">
 <h3>Closing remarks</h3>
-<p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server’s side, other times working locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.</strong></p>
-<p>Good luck on your text manipulation endeavours!</p>
+<p>In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server’s side, other times working locally with R or Python. <strong>I think it’s mainly knowing that it can be done that gets you most of the way there. The how is just a matter of powering through and past experience 💪</strong></p>
+<p>Now that your data is clean you can run more complex manipulations. See a previous post of mine <a href="https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/">explaining about TF-IDF using texts from political theorists</a> to see examples of what you can do with text.</p>
+<p><strong>Good luck on your text manipulation endeavors!</strong></p>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />

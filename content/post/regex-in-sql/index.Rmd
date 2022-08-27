@@ -1,5 +1,5 @@
 ---
-title: Regex and Text Operations in Data Analysis Using Various tools (SQL, R/Python)
+title: Text Manipulation & RegEx in a Data Analysis flow (with examples in SQL and  R/Python)
 aut7hor: Amit Levinson
 date: '2022-08-29'
 slug: regex-in-sql
@@ -36,19 +36,17 @@ registerS3method(
 ```
 
 
-Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, mainly for things such as abstracting a pattern we identified. This is done with various text manipulations in SQL or locally in Python or R using regex. 
+Working as a Data Analyst in the fraud domain I constantly find myself manipulating text, for example to abstract a pattern we identified. At other times in personal projects a lot of cleaning is needed before being able to implement various algorithms such as [TF-IDF]. This is done with various text manipulations in SQL or locally in Python or R using regex and text manipulation functions. 
 
-Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically, we provide a set of rules and guidelines to identify a pattern in the text.
+Regex is 'a sequence of characters that specifies a search pattern in text' (~[Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)). Basically, we provide a set of rules and guidelines to identify a pattern in the text. Appreciating the power of Regex and simple text operations in the programs R & Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations. 
 
-Appreciating the power of Regex and simple text operations in the programs R & Python that I use, doing them in SQL - at lease in MSSQL we currently use - requires adaptations. 
-
-In this post We'll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I've recently picked up Python I'll also solve some of them using that, **but the general idea should be language agnostic, that is using regex and working with text.** Hopefully you'll learn more about regex and working with text as analysts.
+In this post We'll go over three scenarios I faced in the past, both in some coding language or while using SQL. As I've recently picked up Python I'll solve them using that (and some R), **but the general idea should be language agnostic, and that is using regex and working with text as data analysts.** 
 
 What will we be be looking at?
 
 1. [Using lookarounds to extract an email domain](#lookarounds)  
 
-1. [Joining tables with partial matching of values](#partial-strings)  
+1. [Joining tables with partial matching of keys](#partial-strings)  
 
 1. [Separating text & digits from a string](#separate)
 
@@ -127,7 +125,7 @@ Returning to our table, we can do this using the following regex operation:
 ```
 
 
-the pattern `(?<=@).+` essentially extracts any character(s) that follow the @ symbol, in this case our email domain[^1]. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it (`r'(.+(?=@))'`). If you're interested in learning more about lookarounds, check out another post of mine where I extracted [libraries I used in #TidyTuesday R scripts](https://amitlevinson.com/blog/automated-plot-with-github-actions/)
+The pattern `(?<=@).+` essentially **extracts any character(s) that follow the @ symbol,** in this case our email domain[^1]. Alternatively if we were interested in extracting email users instead we could use a positive lookahead, looking for the '@' symbol only this time taking what's before it (`r'(.+(?=@))'`). If you're interested in learning more about lookarounds, check out another post of mine where I extracted [libraries I used in #TidyTuesday R scripts](https://amitlevinson.com/blog/automated-plot-with-github-actions/)
 
 [^1]: The extra parentheses is to solve the 'ValueError: pattern contains no capture groups' error, basically including what is it we want to be captured in our regex.
 
@@ -192,7 +190,7 @@ regex_left_join(x = payments, y = partial_identifiers,
 ```
 
 
-I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the [{fuzzyjoin}](https://cran.r-project.org/web/packages/fuzzyjoin/index.html) R package. 
+I initially had a different answer that basically extracted which values matched as a new column, and then joined on that; But I really like this solution instead as it shows the power of the [{fuzzyjoin}](https://cran.r-project.org/web/packages/fuzzyjoin/index.html) R package. **Rows are joined based on partial match of one column in the other column.**
 
 We also do above a left join but moving forward we'll stay with an inner join, as payments found unmatched won't be necessary.
 
@@ -296,9 +294,11 @@ You can find more more specific tips for text manipulations in MSSQL [here](http
 
 ### Closing remarks
 
-In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server's side, other times working locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of Googling.**
+In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server's side, other times working locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of powering through and past experience 💪**
 
-Good luck on your text manipulation endeavours!
+Now that your data is clean you can run more complex manipulations. See a previous post of mine [explaining about TF-IDF using texts from political theorists](https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/) to see examples of what you can do with text.
+
+**Good luck on your text manipulation endeavors!**
 
 
 
