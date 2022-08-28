@@ -44,11 +44,11 @@ In this post I'll go over three scenarios I faced in the past, both in some codi
 
 What will we be looking at?
 
-1. [Using lookarounds to extract an email domain](#lookarounds)  
+[1. Using lookarounds to extract an email domain](#lookarounds)  
 
-1. [Joining tables with partial matching of keys](#partial-strings)  
+[2. Joining tables with partial matching of keys](#partial-strings)  
 
-1. [Separating text & digits from a string](#separate)
+[3. Separating text & digits from a string](#separate)
 
 
 ### Setup
@@ -104,7 +104,7 @@ The data has 6 rows in total detailing payment transactions: The receiver's emai
 
 All right then, let's (^begin|start$)
 
-## Lookarounds 👀 — Extracting the domain from an email address {#lookarounds}
+## 1. Lookarounds 👀 — Extracting the domain from an email address {#lookarounds}
 
 [lookarounds](https://www.regular-expressions.info/lookaround.html) are definitely one of my favorite and commonly go-to regex operations. As the name implies, **a lookaround searches for a pattern and specified string in a specific piece of text.** A *lookahead* searches for the pattern and takes what's before it, while a *lookbehind* searches for the pattern and takes what follows it. They both can be positive or negative, while the former searches for a match (positive match) and the latter searches for the string without a match to the pattern/symbol referenced (negative match).
 
@@ -144,7 +144,7 @@ FROM PAYMENTS p
 We're leveraging the function `CHARINDEX` in order to identify the location of the '@' symbol, and then extract all text from that location forward using the `RIGHT` operator.
 
 
-## Partial string join — identifying a string from a partial match {#partial-strings}
+## 2. Partial string join — identifying a string from a partial match {#partial-strings}
 
 I wouldn't say this is a common thing I do, but I had to do it once and was pretty pleased with the solution. Assuming you have another column/dataset with partial matching strings to your primary key, how can you join the two tables?
 
@@ -233,7 +233,7 @@ The idea is pretty straight-forward. We can leverage the `LIKE` operator in a jo
 
 Interestingly, at the time of facing this challenge at work I started it with R. However, this requried downloading many of the payments and wasn't easily scalable so eventually I just implemented it using SQL as shown above.
 
-## Extracting / Separating text & digits. {#separate}
+## 3. Extracting / Separating text & digits. {#separate}
 
 Occasionally you might encounter values that contain both a string and digits combined; For example: payment descriptions, email users, security answers and more. Being able to separate the text from numbers might be a necessary step for cleaning our data and further analysis.  
 
