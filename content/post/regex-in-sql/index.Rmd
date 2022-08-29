@@ -1,5 +1,5 @@
 ---
-title: Text Manipulation & RegEx in a Data Analysis flow (with examples in SQL vs  R/Python)
+title: Text Manipulation & RegEx in a Data Analysis Flow (with examples in SQL vs  Python/R)
 aut7hor: Amit Levinson
 date: '2022-08-29'
 slug: regex-in-sql
@@ -275,7 +275,7 @@ We combine the `TRANSLATE` and `REPALCE` functions to do a string-extract kind o
 
 This is done both for the name and numbers, creating new columns for each with the clean values.
 
-You might have data that's a little messier, e.g. numbers appearing in between letters, but it should give the main idea and help you start from there (or at least did so for me).
+You might have data that's a little messier, e.g. numbers appearing in between letters, but it should give the main idea and help you start from there (or at least did so for me). 
 
 ### Additional text operation tips in SQL
 
@@ -293,7 +293,7 @@ You can find more more specific tips for text manipulations in MSSQL [here](http
 
 In this blog post we solved three cases using some regex and text manipulations. Sometimes I found myself working with text on the server's side, other times working locally with R or Python. **I think it's mainly knowing that it can be done that gets you most of the way there. The how is just a matter of powering through and past experience 💪**
 
-Now that your data is clean you can run more complex manipulations. See a previous post of mine [explaining about TF-IDF using texts from political theorists](https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/) to see examples of what you can do with text.
+Now that your data is clean you can run more complex manipulations. See a previous post of mine [explaining about TF-IDF using texts from political theorists](https://amitlevinson.com/blog/learning-tfidf-with-political-theorists/) to see examples of what you can do with text. For more tricks for working with text in SQL, checkout [SQL Cookbook](https://www.amazon.com/SQL-Cookbook-Query-Solutions-Techniques/dp/1492077445).
 
 **Good luck on your text manipulation endeavors!**
 
