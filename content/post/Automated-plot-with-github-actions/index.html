@@ -4,7 +4,7 @@ author: Amit Levinson
 date: '2021-01-03'
 slug: Automated-plot-with-github-actions
 categories: [R, GitHub]
-tags: [TidyTuesday, GitHub]
+tags: [TidyTuesday, GitHub, regex, text]
 subtitle: ''
 summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
 featured: yes
@@ -14,6 +14,7 @@ image:
   preview_only: yes
 projects: []
 draft: false
+codefolding_show: show
 editor_options: 
   chunk_output_type: console
 ---
@@ -116,7 +117,7 @@ file_packages &lt;- map_dfr(file_lines, ~ tibble(package = str_extract(.x, &quot
   distinct(tidytuesday, package)
 
 head(file_packages)</code></pre>
-<pre><code>## # A tibble: 6 x 2
+<pre><code>## # A tibble: 6 × 2
 ##   tidytuesday      package     
 ##   &lt;chr&gt;            &lt;chr&gt;       
 ## 1 National Parks   tidyverse   
@@ -243,7 +244,7 @@ We use a conditional statement to tell GitHub when to run our Action. If the con
 <li><p>In the following steps we provide a name for the step and the actual code. In the first step we install the packages we’ll be using and in the next one we <code>source</code> the R code that produces our plot<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, located in my ‘extra’ folder in the repository. Lastly we provide Git commands in which we config the built-in token (to run the git commands), add our rendered plot, commit and push the results.</p></li>
 </ul>
 <p>That’s it! Just upload the newly edited files, and activate the Action with the specific commit. <strong>Don’t forget to reference the plot from your repository’s README so it shows up.</strong> If you’re not sure how you can see how I did it <a href="https://raw.githubusercontent.com/AmitLevinson/TidyTuesday/master/README.md">here</a>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
 <img src="success.png" alt="The different steps the Action does when activated" width="960" />
 <p class="caption">
 Figure 1: The different steps the Action does when activated
@@ -255,7 +256,7 @@ If the above GitHub Action follows through with the workflow and produces a new 
 {{% /alert %}}</p>
 <p>In order to debug, i.e. if the orange dot turned to a red x, go into the ‘Actions’ tab in your repository, click on ‘Render library update’ or however you called the action <i class="fas fa-arrow-right"></i> click on the last commit message <i class="fas fa-arrow-right"></i> ‘build’ and then you should see a list of actions GitHub took. Try to identify where it stopped by locating the red x it marked the break with. Unfortunately debugging is a post in and of itself, and I’m currently not the one to write it.</p>
 <p><strong>Disabling:</strong> If you wish to disable the GitHub Action, you can either remove the <code>.yaml</code> file or disable the action from the repository’s settings.</p>
-<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
 <img src="outcome.png" alt="Final outcome of a plot automatically updating in our README file." width="509" />
 <p class="caption">
 Figure 2: Final outcome of a plot automatically updating in our README file.
@@ -275,7 +276,7 @@ Figure 2: Final outcome of a plot automatically updating in our README file.
 <p>That’s it for now. Hope you enjoyed this blog post and found it useful!</p>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
 <li id="fn1"><p>If you decide to automate this with GitHub Actions, be alert if file paths throw an error.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>

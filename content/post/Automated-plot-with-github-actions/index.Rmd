@@ -4,7 +4,7 @@ author: Amit Levinson
 date: '2021-01-03'
 slug: Automated-plot-with-github-actions
 categories: [R, GitHub]
-tags: [TidyTuesday, GitHub]
+tags: [TidyTuesday, GitHub, regex, text]
 subtitle: ''
 summary: 'a light introduction to GitHub Actions for automating a plot of frequently used R packages.'
 featured: yes
@@ -14,6 +14,7 @@ image:
   preview_only: yes
 projects: []
 draft: false
+codefolding_show: show
 editor_options: 
   chunk_output_type: console
 ---
