@@ -44,7 +44,7 @@ user_groups:
 - Visitors
 ---
 
-**Hi!** I'm Amit Levinson; I love to explore, analyze and visualize data. I currently live with my wife, our baby boy and our dog [Milo](https://milo-the-dog.amitlevinson.com/) in Tel-Aviv, Israel. My interests include Privacy & Trust, Data analytics, Visualizations, Statistics and `R`. That's also what you'll probably find me writing about on this website :smile:
+**Hi!** I'm Amit Levinson; I love to explore, analyze and visualize data. I currently live with my wife, our baby boy and our dog [Milo](https://milo-the-dog.amitlevinson.com/) in Rehovot, Israel. My interests include Data analytics, Visualizations, Statistics and various langauges such as `R`, SQL & Python. That's also what you'll probably find me writing about on this website :smile:
 
 Make sure to visit [R-bloggers](https://www.r-bloggers.com/) & [R-weely](https://rweekly.org/) to explore many more tutorials and resources. Enjoy!
 
