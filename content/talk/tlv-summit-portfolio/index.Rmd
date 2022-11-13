@@ -23,6 +23,10 @@ links:
   icon_pack: fas
   name: slides
   url: https://amitlevinson.github.io/talks/tlv-summit/TLV_Summit.pdf
+- icon: camera
+  icon_pack: fas
+  name: recording
+  url: https://www.youtube.com/watch?v=s4fISQwynPg
 ---
 
 
