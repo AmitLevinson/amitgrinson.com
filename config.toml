@@ -35,7 +35,7 @@ enableEmoji = true
   description = "Personal website of Amit Grinson"
   favicon = "/img/favicon.ico"
   logo = "/img/blogophonic-mark-dark.png"
-  mainSections = ["blog", "project", "talk"]
+  mainSections = ["blog", "projects", "talk"]
   navallcaps = true
   # show/hide social icons in site header & footer
   # configure social icons and links below in [[params.social]]
@@ -129,7 +129,7 @@ enableEmoji = true
   [[menu.header]]
     name = "Projects"
     title = "Project Portfolio"
-    url = "/project/"
+    url = "/projects/"
     weight = 4
   [[menu.header]]
     name = "About"
