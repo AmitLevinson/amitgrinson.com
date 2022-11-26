@@ -1,0 +1,261 @@
+/*
+A few adaptations from
+Silvia Canelón https://silviacanelon.com/
+Garrick Aden-Buie https://www.garrickadenbuie.com/
+*/ 
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,300;1,500');
+
+
+@font-face {
+  font-family: 'Playfair';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/Playfair/PlayfairDisplay-Medium.ttf') format('truetype');
+  
+}
+
+
+
+
+p, summary {
+  font-size: 1.150em;
+  line-height: 1.25;
+}
+
+.post-body h2 {
+  font-size: 1.75em;
+}
+
+.post-body h3 {
+  font-size: 1.75em;
+}
+
+ul, ol {
+  font-size: 1.130em;
+  > li > p {
+    font-size: 1em;
+  }
+  ul, ol {
+    li {
+      font-size: 0.9em;
+    }
+  }
+  p, summary {
+    font-size: 1em;
+  }
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+
+p a:focus, 
+p a:hover {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+
+// ToC ------------------------------------------------------------------------
+// modified from: scaffold.scss, series + collections table of contents
+
+// styles h1 and h2
+nav#TableOfContents ul li {
+  @extend .f5, .lh-title-ns;
+  // all links
+/*  a {
+    @extend .no-underline;
+    // transition: all 50mx ease-in-out;
+  }*/
+  // active list items
+  &.active {
+    @extend .pl3, .bg-#{$siteBgColor}, .bl, .b--#{$borderColor}, .bw1;
+  }
+  // non-active list items
+  &:not(.active) {
+    @extend .pl3, .bl, .bw1, .b--transparent;
+  }
+  // hovering over active links
+  &:hover.active a {
+    @extend .underline;
+  }
+  // hovering over non-active links
+  &:hover:not(.active) a {
+   //@extend .underline;
+  }
+  &a:hover {
+    @extend .br;
+  }
+    li {
+    // hovering over active links
+    // hovering over non-active links
+    &:hover:not(.active) a {
+      @extend .underline; //.dim;
+    }
+  }
+}
+
+
+/* 
+Formatting code based on 
+*/
+code,
+.code {
+  font-family: var(--font-monospace);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+p code:not(.sourceCode) {
+  white-space: pre-wrap;
+  word-break: break-word;
+
+}
+
+.post-body > p > code {
+  background-color: #f0f0f0;
+  padding: 0.15em;
+  border-radius: 5px;
+  color: $headingColorCustom;
+}
+
+
+p > a  {
+  color: $headingColorCustom;
+}
+
+
+/* Setting up alerts */
+
+.article-style aside p,
+div.alert > div {
+  position: relative;
+  display: block;
+  margin-left: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0.25rem;
+}
+
+/* I also changed the color of the icon & its top & left positions */ 
+.article-style aside p::before,
+div.alert > div:first-child::before {
+  position: absolute;
+  /*top: 0rem;*/
+  left: -1.5rem;
+ }
+
+
+div.alert-note > div:first-child::before {
+  font-family: 'Font Awesome 5 Free';
+  color: #5a66a5;
+  font-size: 1.2rem;
+  content: '\f0a4';
+}
+
+/* You can edit the borders and backgrounds here */
+.article-style aside,
+.alert-note {
+  color: #32408f;
+  background-color: #fff;
+  border-color: #5a66a5;
+  box-shadow: 2px 2px 2px 2px #5a66a5;
+  font-weight: 500;
+  text-align: left;
+  /*padding: 5px;*/
+}
+
+div.alert-warning > div:first-child::before {
+  font-family: 'Font Awesome 5 Free';
+  color: #ff3860;
+  font-size: 1.2rem;
+  content: "";
+}
+
+.alert-warning {
+  color: #ff3860;
+  background-color: #fff;
+  border-color: #ff3860;
+  box-shadow: 2px 2px 2px 2px #ff3860;
+  content: "\f12a";
+  font-weight: 500;
+  text-align: left;
+}
+
+
+
+/* tables, mainly for SQL tables */
+
+div.knitsql-table caption {
+  display: none;
+}
+/* Based on Bootstrap's `table-responsive` style. */
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.2;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+
+table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+
+table > tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+
+table table {
+  background-color: #fff;
+}
+
+/* Table Striped */
+table > tbody > tr:nth-child(odd) > td,
+table > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9;
+}
+
+/* Table Hover */
+table > tbody > tr:hover > td,
+table > tbody > tr:hover > th {
+  background-color: #e5e5e5;
+}
+
+// Center image when moving to narrow view
+@media screen and (max-width: 1000px) {
+body > div > main > section > div > div.tr.w-50-l.mr4 {
+  text-align: center;
+}
+}
+
+/* remove home icon in home page */
+.home nav .site-brand {
+  display: none;
+}

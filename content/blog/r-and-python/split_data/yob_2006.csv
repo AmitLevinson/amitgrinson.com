@@ -1,0 +1,415 @@
+owner_id,age,gender,city_district,quarter,primary_breed,is_hybrid,secondary_breed,is_secondary_hybrid,breed_type,dog_yob,dog_gender,dog_color,dog_dob
+20510,41-50,m,9,91,Berger blanc Suisse,NA,NA,NA,I,2006,m,weiss,2006-07-10
+65975,61-70,w,7,74,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-08-10
+66144,51-60,m,5,51,Labrador Retriever,NA,NA,NA,I,2006,m,braun,2006-02-10
+66266,61-70,m,9,91,Mischling klein,NA,NA,NA,K,2006,w,tricolor,2006-07-10
+70287,51-60,m,2,24,Hirtenhund,NA,NA,NA,I,2006,m,weiss/grau,2006-08-10
+80007,71-80,m,11,111,Labrador Retriever,NA,NA,NA,I,2006,m,blondfarben,2006-05-10
+80017,61-70,m,6,61,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-03-10
+80056,81-90,m,7,74,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-07-10
+80097,61-70,m,6,61,Jack Russel Terrier,NA,NA,NA,K,2006,m,schwarz/weiss,2006-06-10
+80230,61-70,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,m,braun/weiss,2006-01-10
+80230,61-70,w,9,92,Yorkshire Terrier,Mischling,NA,NA,K,2006,w,schwarz/braun,2006-05-10
+80267,41-50,m,12,122,Mischling klein,NA,NA,NA,K,2006,m,braun,2006-11-10
+80319,41-50,w,10,102,Mischling klein,NA,NA,NA,K,2006,m,braun/schwarz,2006-12-10
+80418,41-50,w,8,81,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-05-10
+80434,61-70,w,7,71,Pudel,Mischling,NA,NA,K,2006,m,schwarz,2006-06-10
+80438,71-80,m,7,71,Deutscher Wachtel,NA,NA,NA,I,2006,w,rotbraun schimmel,2006-04-10
+80491,71-80,w,6,63,Chihuahua,NA,NA,NA,K,2006,w,braun,2006-10-10
+80493,81-90,w,11,119,Shih Tzu,NA,NA,NA,K,2006,m,weiss/schwarz,2006-11-10
+80545,51-60,m,9,91,Border Terrier,NA,NA,NA,K,2006,w,schwarz/braun,2006-04-10
+80847,71-80,m,9,91,Beagle,NA,NA,NA,K,2006,w,tricolor,2006-04-10
+80881,71-80,w,7,72,Mops,NA,NA,NA,K,2006,m,beige,2006-09-10
+80915,71-80,w,3,34,Golden Retriever,NA,NA,NA,I,2006,w,blondfarben,2006-08-10
+81004,61-70,w,9,92,Scottish Terrier,NA,NA,NA,K,2006,m,brindle,2006-09-10
+81184,61-70,w,9,92,Italienisches Windspiel,NA,NA,NA,K,2006,w,schwarz,2006-05-10
+81309,71-80,w,10,102,Yorkshire Terrier,Mischling,NA,NA,K,2006,w,schwarz/braun,2006-10-10
+81348,71-80,w,7,71,Golden Retriever,NA,NA,NA,I,2006,w,golden,2006-01-10
+81377,41-50,m,6,63,Bearded Collie,NA,NA,NA,I,2006,m,grau/weiss,2006-03-10
+81407,71-80,m,6,63,Border Collie,NA,NA,NA,I,2006,w,schwarz,2006-10-10
+81466,71-80,w,3,34,Yorkshire Terrier,NA,NA,NA,K,2006,w,blue/tan,2006-03-10
+81590,81-90,w,2,21,Cocker Spaniel,NA,NA,NA,K,2006,w,blauschimmel,2006-10-10
+81722,61-70,w,6,61,Beagle,NA,NA,NA,K,2006,m,tricolor,2006-01-10
+81782,51-60,w,11,115,Mittelpudel,NA,NA,NA,K,2006,w,schwarz/weiss,2006-10-10
+82010,71-80,w,7,73,English Springer Spaniel,NA,NA,NA,I,2006,m,weiss/braun,2006-09-10
+82099,71-80,w,3,31,Tervueren,NA,NA,NA,I,2006,w,grau/schwarz,2006-07-10
+82136,61-70,m,8,81,Collie,NA,NA,NA,I,2006,w,sable,2006-11-10
+82180,61-70,w,7,73,Rauhaar Dackel,NA,NA,NA,K,2006,w,rot/braun,2006-07-10
+82312,51-60,w,10,101,Labrador Retriever,NA,NA,NA,I,2006,w,gelb,2006-08-10
+82414,51-60,w,11,119,Border Collie,NA,Schäfer,NA,I,2006,w,schwarz/weiss,2006-12-10
+82419,51-60,w,7,72,Cairn Terrier,NA,NA,NA,K,2006,w,braun/schwarz,2006-07-10
+82452,61-70,w,10,102,Dachshund,NA,NA,NA,K,2006,w,schwarz/rot,2006-03-10
+82452,61-70,w,10,102,Dachshund,NA,NA,NA,K,2006,w,rot/braun,2006-09-10
+82498,61-70,w,7,74,Border Collie,NA,NA,NA,I,2006,w,grau/weiss/schwarz,2006-07-10
+82623,81-90,w,8,83,Cocker Spaniel,NA,NA,NA,K,2006,w,schwarz,2006-10-10
+82653,71-80,m,5,52,Jack Russel Terrier,NA,NA,NA,K,2006,m,braun/weiss,2006-07-10
+82734,61-70,w,7,74,Dachshund,NA,NA,NA,K,2006,w,saufarben,2006-06-10
+82751,71-80,m,8,83,Leonberger,NA,NA,NA,I,2006,w,löwenfarbig,2006-08-10
+82852,61-70,w,9,92,Chinese Crested Powderpuff,NA,NA,NA,K,2006,w,schwarz/weiss,2006-02-10
+82897,61-70,w,4,44,Collie,Mischling,NA,NA,I,2006,m,beige/weiss,2006-10-10
+82981,71-80,m,12,123,Flat Coated Retriever,NA,NA,NA,I,2006,w,schwarz,2006-04-10
+83133,71-80,m,2,24,Berner Sennenhund,NA,NA,NA,I,2006,w,tricolor,2006-01-10
+83167,51-60,w,5,52,Mischling klein,NA,NA,NA,K,2006,m,schwarz schimmel,2006-08-10
+83171,51-60,w,7,73,Airedale Terrier,NA,NA,NA,I,2006,m,black/tan,2006-09-10
+83171,51-60,w,7,73,Airedale Terrier,NA,NA,NA,I,2006,w,black/tan,2006-12-10
+83427,41-50,w,12,123,Mischling klein,NA,NA,NA,K,2006,m,weiss,2006-05-10
+83452,71-80,w,6,63,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-06-10
+83508,51-60,w,9,92,Malteser,NA,NA,NA,K,2006,w,weiss,2006-05-10
+83690,51-60,w,2,21,Tibet Terrier,NA,NA,NA,K,2006,m,grau,2006-03-10
+83850,41-50,m,10,101,Cirneco dell'Etna,NA,NA,NA,I,2006,w,hellbraun,2006-01-10
+84003,61-70,w,8,82,Scottish Terrier,NA,NA,NA,K,2006,w,schwarz,2006-12-10
+84136,61-70,m,9,92,Labrador Retriever,Mischling,NA,NA,I,2006,m,schwarz,2006-08-10
+84153,41-50,w,3,33,Schäfer,Mischling,NA,NA,I,2006,w,blondfarben,2006-09-10
+84226,71-80,w,11,119,Deutscher Schäfer,NA,NA,NA,I,2006,w,schwarz/braun,2006-11-10
+84233,51-60,m,10,101,Deutscher Langhaarschäfer,NA,NA,NA,I,2006,w,schwarz/braun,2006-08-10
+84247,71-80,w,11,115,Cavalier King Charles Spaniel,NA,NA,NA,K,2006,m,braun/weiss,2006-09-10
+84310,51-60,m,4,42,Afghane,NA,NA,NA,I,2006,w,golden,2006-03-10
+84390,61-70,m,6,63,Mittelschnauzer,NA,NA,NA,I,2006,m,schwarz,2006-06-10
+84408,51-60,w,9,92,Galgo,NA,NA,NA,I,2006,w,weiss,2006-11-10
+84574,71-80,w,7,71,Toy Pudel,NA,NA,NA,K,2006,m,apricot,2006-11-10
+84576,51-60,w,11,111,Deutscher Boxer,NA,NA,NA,I,2006,m,dunkel gestromt,2006-03-10
+84811,61-70,m,2,21,Havaneser,Mischling,NA,NA,K,2006,w,schwarz,2006-10-10
+84854,51-60,w,10,101,Labrador Retriever,Mischling,NA,NA,I,2006,w,schwarz/weiss,2006-05-10
+84878,61-70,w,10,101,Dachshund,NA,NA,NA,K,2006,w,saufarben,2006-03-10
+84941,81-90,w,10,102,Breton,Mischling,NA,NA,I,2006,w,weiss,2006-11-10
+84959,71-80,w,3,33,Schäfer,Mischling,NA,NA,I,2006,w,schwarz/braun,2006-09-10
+85004,61-70,w,2,21,Terrier,Mischling,NA,NA,K,2006,w,schwarz/braun,2006-06-10
+85037,41-50,w,9,92,Pudel,NA,Tibet Terrier,NA,K,2006,m,schwarz/weiss,2006-01-10
+85356,71-80,w,2,24,Rauhaar Dackel,NA,NA,NA,K,2006,m,saufarben,2006-06-10
+85482,61-70,w,6,61,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-02-10
+85520,71-80,w,7,74,Zwergpudel,NA,NA,NA,K,2006,w,schwarz,2006-08-10
+85648,51-60,w,11,111,English Setter,NA,NA,NA,I,2006,w,tricolor,2006-11-10
+85727,61-70,w,7,73,Dackel,Mischling,NA,NA,K,2006,w,braun,2006-07-10
+85731,61-70,w,7,73,Beauceron Berge de Beauce,NA,NA,NA,I,2006,m,schwarz/braun,2006-01-10
+85777,71-80,w,3,34,Chihuahua,NA,NA,NA,K,2006,m,schwarz/weiss,2006-08-10
+85779,51-60,w,9,92,Flat Coated Retriever,NA,NA,NA,I,2006,w,schwarz,2006-02-10
+85889,71-80,m,10,102,Mischling klein,NA,NA,NA,K,2006,w,weiss,2006-11-10
+85909,51-60,w,3,33,Dackel,NA,Terrier,NA,K,2006,m,tricolor,2006-02-10
+85925,51-60,m,4,42,Holländischer Schäfer,NA,NA,NA,I,2006,w,schwarz/braun,2006-01-10
+86198,51-60,m,9,91,Mischling klein,NA,NA,NA,K,2006,w,schwarz/braun,2006-08-10
+86812,61-70,m,6,61,Jack Russel Terrier,NA,NA,NA,K,2006,m,braun/weiss/schwarz,2006-01-10
+87527,61-70,w,4,42,Golden Retriever,NA,NA,NA,I,2006,w,golden,2006-11-10
+87623,71-80,w,12,122,Yorkshire Terrier,NA,NA,NA,K,2006,m,blue/tan,2006-01-10
+87636,51-60,w,10,101,Sennenhund,Mischling,NA,NA,I,2006,m,tricolor,2006-10-10
+87948,51-60,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-07-10
+87982,41-50,m,12,122,Yorkshire Terrier,Mischling,NA,NA,K,2006,w,schwarz/gelb,2006-08-10
+88190,61-70,w,11,115,Mischling klein,NA,NA,NA,K,2006,m,braun,2006-09-10
+88250,31-40,w,7,74,Sibirischer Husky,NA,NA,NA,I,2006,m,schwarz/weiss,2006-05-10
+88510,41-50,w,10,101,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-01-10
+88770,61-70,w,11,115,Dachshund,NA,NA,NA,K,2006,m,rot,2006-08-10
+88806,51-60,w,12,123,Chihuahua,NA,NA,NA,K,2006,w,schwarz/weiss,2006-10-10
+88850,51-60,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,w,tricolor,2006-01-10
+88850,51-60,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,m,blue/tan,2006-05-10
+88923,51-60,w,12,122,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-07-10
+88924,61-70,m,9,91,Mischling klein,NA,NA,NA,K,2006,m,tricolor,2006-01-10
+88930,51-60,w,9,92,Zwergpudel,NA,NA,NA,K,2006,m,apricot,2006-11-10
+88981,61-70,w,4,41,Mischling klein,NA,NA,NA,K,2006,m,schwarz/braun,2006-06-10
+88996,71-80,w,6,61,Mischling klein,NA,NA,NA,K,2006,w,tricolor,2006-08-10
+89025,51-60,w,3,31,Eurasier,NA,NA,NA,I,2006,w,grau,2006-04-10
+89038,41-50,w,3,34,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-07-10
+89050,41-50,m,11,111,Mischling klein,NA,NA,NA,K,2006,w,beige,2006-06-10
+89058,71-80,m,8,83,Deutscher Schäfer,NA,NA,NA,I,2006,w,schwarz/gelb,2006-10-10
+89071,51-60,m,4,42,Mops,NA,NA,NA,K,2006,m,braun,2006-01-10
+89076,51-60,w,8,83,Flat Coated Retriever,NA,NA,NA,I,2006,m,schwarz,2006-01-10
+89089,71-80,w,6,61,Münsterländer,NA,NA,NA,I,2006,m,braun/weiss,2006-11-10
+89110,51-60,w,7,72,Parson Jack Russell Terrier,NA,NA,NA,K,2006,w,tricolor,2006-01-10
+89113,51-60,w,7,74,Labrador Retriever,NA,NA,NA,I,2006,w,gelb,2006-05-10
+89120,71-80,w,12,122,Dalmatiner,NA,NA,NA,I,2006,w,braun/weiss,2006-10-10
+89127,51-60,w,11,115,Kromfohrländer,NA,NA,NA,I,2006,m,weiss/braun,2006-11-10
+89141,41-50,w,12,121,Jack Russel Terrier,Mischling,NA,NA,K,2006,w,schwarz/weiss,2006-12-10
+89143,41-50,w,12,121,Pekingese,NA,NA,NA,K,2006,w,hellbraun,2006-07-10
+89151,31-40,w,2,23,Chihuahua,NA,NA,NA,K,2006,w,schwarz/weiss,2006-01-10
+89153,21-30,w,12,122,Boxer,NA,Appenzeller,NA,I,2006,w,weiss/beige,2006-05-10
+89154,61-70,m,4,44,Jack Russel Terrier,NA,Schnauzer,NA,I,2006,m,schwarz/braun/weiss,2006-06-10
+89160,61-70,w,7,74,Coton de Tulear,NA,NA,NA,K,2006,w,weiss,2006-11-10
+89168,61-70,w,7,71,Lagotto Romagnolo,NA,NA,NA,I,2006,m,braun,2006-03-10
+89169,71-80,w,11,119,Havaneser,NA,NA,NA,K,2006,m,schwarz/weiss,2006-09-10
+89180,51-60,w,8,81,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-07-10
+89190,51-60,w,2,21,Cairn Terrier,NA,NA,NA,K,2006,m,beige/rot,2006-01-10
+89193,41-50,m,9,92,Riesenschnauzer,NA,NA,NA,I,2006,w,schwarz,2006-01-10
+89209,31-40,w,10,101,Chihuahua,NA,NA,NA,K,2006,m,schwarz,2006-09-10
+89221,31-40,m,9,92,Belgischer Schäfer,Mischling,NA,NA,I,2006,w,schwarz/weiss,2006-12-10
+89222,51-60,w,6,61,Golden Retriever,NA,NA,NA,I,2006,w,blondfarben,2006-07-10
+89240,61-70,m,11,115,Yorkshire Terrier,NA,NA,NA,K,2006,w,grau/silber,2006-01-10
+89250,31-40,w,3,31,Weimaraner,NA,NA,NA,I,2006,w,grau/braun,2006-05-10
+89252,51-60,w,7,74,Mischling klein,NA,NA,NA,K,2006,m,schwarz,2006-04-10
+89254,71-80,w,9,92,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-10-10
+89256,81-90,m,11,115,Irish Setter,NA,NA,NA,I,2006,m,braun,2006-11-10
+89260,41-50,m,5,52,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-03-10
+89269,51-60,w,7,71,Welsh Springer Spaniel,NA,NA,NA,I,2006,m,weiss/braun,2006-07-10
+89279,71-80,m,8,82,Tervueren,NA,Belgischer Schäfer,NA,I,2006,w,schwarz/braun/rot,2006-01-10
+89286,51-60,w,2,23,Mischling klein,NA,NA,NA,K,2006,w,hellbraun,2006-04-10
+89290,41-50,m,9,92,Malteser,NA,NA,NA,K,2006,w,weiss,2006-10-10
+89296,61-70,w,9,92,Irish Terrier,NA,NA,NA,I,2006,m,rot,2006-12-10
+89302,61-70,m,6,63,English Setter,NA,NA,NA,I,2006,m,weiss/braun,2006-01-10
+89303,51-60,m,9,92,Zwergpudel,NA,NA,NA,K,2006,w,schwarz,2006-05-10
+89310,41-50,w,6,63,Dalmatiner,NA,NA,NA,I,2006,w,schwarz/weiss,2006-06-10
+89313,21-30,w,9,91,Border Collie,Mischling,NA,NA,I,2006,w,tricolor,2006-04-10
+89320,71-80,w,9,92,Zwergpudel,NA,NA,NA,K,2006,w,silber,2006-10-10
+89332,51-60,w,1,11,Chihuahua,NA,NA,NA,K,2006,m,silbergrau,2006-09-10
+89332,51-60,w,1,11,Chihuahua,NA,NA,NA,K,2006,m,beige/weiss,2006-02-10
+89338,41-50,m,5,52,Schäfer,Mischling,NA,NA,I,2006,m,braun/schwarz/grau,2006-07-10
+89348,51-60,w,8,81,Schäfer,Mischling,NA,NA,I,2006,w,schwarz/braun,2006-04-10
+89349,71-80,m,3,31,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-10-10
+89350,41-50,w,7,73,Spanischer Windhund,NA,NA,NA,I,2006,m,schwarz,2006-11-10
+89353,61-70,w,7,71,Continental Bulldog,NA,NA,NA,I,2006,m,braun/schwarz/weiss,2006-08-10
+89358,41-50,w,9,91,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-01-10
+89363,41-50,w,3,31,Chihuahua,NA,NA,NA,K,2006,m,braun,2006-04-10
+89366,51-60,w,3,31,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-10-10
+89378,51-60,w,11,119,Italienisches Windspiel,NA,NA,NA,K,2006,m,grau,2006-09-10
+89413,61-70,m,7,74,Parson Jack Russell Terrier,NA,NA,NA,K,2006,m,weiss/beige,2006-05-10
+89414,71-80,w,2,24,Cairn Terrier,NA,NA,NA,K,2006,w,beige,2006-06-10
+89415,51-60,w,7,74,Dachshund,NA,NA,NA,K,2006,m,saufarben,2006-04-10
+89415,51-60,w,7,74,Dachshund,NA,NA,NA,K,2006,m,saufarben,2006-10-10
+89423,51-60,w,4,44,Yorkshire Terrier,NA,NA,NA,K,2006,w,blue/tan,2006-09-10
+89427,41-50,w,9,92,Whippet,Mischling,NA,NA,I,2006,w,weiss/braun,2006-02-10
+89433,41-50,w,11,111,Chihuahua,NA,NA,NA,K,2006,m,weiss/braun,2006-01-10
+89433,41-50,w,11,111,Chihuahua,NA,NA,NA,K,2006,m,hellbraun,2006-01-10
+89436,71-80,m,9,92,Malteser,Mischling,NA,NA,K,2006,m,weiss,2006-05-10
+89438,51-60,m,7,71,American Bulldog,NA,NA,NA,I,2006,w,weiss/braun,2006-06-10
+89441,61-70,w,10,102,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-11-10
+89445,81-90,w,12,123,Chihuahua,NA,NA,NA,K,2006,m,schwarz/weiss,2006-08-10
+89448,51-60,w,6,61,Chihuahua,NA,NA,NA,K,2006,m,schwarz/weiss,2006-03-10
+89453,61-70,w,10,102,Havaneser,NA,NA,NA,K,2006,w,braun/weiss,2006-02-10
+89458,61-70,m,2,21,Flat Coated Retriever,NA,NA,NA,I,2006,w,schwarz,2006-07-10
+89459,61-70,w,4,41,Toypudel,NA,NA,NA,K,2006,m,weiss,2006-01-10
+89461,41-50,w,9,92,Dackel,NA,Foxterrier,NA,K,2006,w,hellbraun,2006-01-10
+89466,41-50,w,9,91,Chihuahua,NA,NA,NA,K,2006,m,weiss/braun,2006-06-10
+89477,71-80,w,3,34,Zwergpudel,NA,NA,NA,K,2006,w,braun,2006-10-10
+89478,41-50,w,7,71,Rauhaar Dackel,NA,NA,NA,K,2006,w,saufarben,2006-11-10
+89482,51-60,w,7,74,Havaneser,NA,NA,NA,K,2006,w,beige,2006-03-10
+89489,31-40,w,3,34,Gos d'Atura Català,NA,NA,NA,I,2006,w,braun,2006-12-10
+89494,41-50,w,2,23,Beagle,NA,NA,NA,K,2006,w,tricolor,2006-01-10
+89524,51-60,w,10,101,Magyar Viszla,NA,NA,NA,I,2006,m,braun,2006-02-10
+89528,31-40,w,5,51,Mischling klein,NA,NA,NA,K,2006,m,tricolor,2006-01-10
+89538,61-70,w,7,74,Mischling klein,NA,NA,NA,K,2006,w,schwarz/braun,2006-05-10
+89539,41-50,m,11,119,Terrier,Mischling,NA,NA,K,2006,w,schwarz,2006-06-10
+89559,41-50,w,9,92,Malteser,NA,NA,NA,K,2006,w,weiss,2006-08-10
+89570,31-40,m,11,111,Pinscher,NA,NA,NA,K,2006,m,braun,2006-02-10
+89584,31-40,w,5,51,Podenco,NA,NA,NA,I,2006,w,hellbraun,2006-05-10
+89586,81-90,w,7,72,Pudel,NA,NA,NA,K,2006,m,grau/schwarz,2006-06-10
+89587,61-70,m,8,81,Weimaraner,NA,NA,NA,I,2006,w,silber,2006-04-10
+89591,61-70,m,6,63,Berger de Brie,NA,NA,NA,I,2006,m,schwarz,2006-11-10
+89595,31-40,w,3,31,Thai Ridgeback,NA,NA,NA,I,2006,w,sandfarbig,2006-02-10
+89606,31-40,m,4,42,Maremma-Abruzzenhund,NA,Englische Bulldogge,NA,I,2006,m,fauve,2006-06-10
+89609,31-40,w,2,21,Australian Cattle Dog,NA,NA,NA,I,2006,w,weiss/rot,2006-10-10
+89644,31-40,w,3,31,Australian Shepherd,Mischling,NA,NA,I,2006,w,schwarz/grau/weiss,2006-11-10
+89650,41-50,m,8,82,Dachshund,NA,NA,NA,K,2006,w,schwarz/rot,2006-09-10
+89658,31-40,w,12,123,Deutscher Schäfer,NA,NA,NA,I,2006,w,grau,2006-07-10
+89661,51-60,m,3,31,Belgischer Schäfer,NA,NA,NA,I,2006,w,fauve,2006-01-10
+89664,31-40,m,4,42,Chihuahua,NA,NA,NA,K,2006,w,braun,2006-05-10
+89667,51-60,w,4,42,Chihuahua,NA,NA,NA,K,2006,m,braun,2006-04-10
+89707,51-60,w,12,121,Chihuahua,NA,NA,NA,K,2006,m,tricolor,2006-02-10
+89710,41-50,m,9,92,Golden Retriever,NA,Labrador Retriever,NA,I,2006,m,beige,2006-01-10
+89747,51-60,m,11,115,Poitevin Jagdhund,NA,NA,NA,I,2006,w,tricolor,2006-01-10
+89753,31-40,w,7,74,Deutscher Schäfer,NA,NA,NA,I,2006,m,gelb/schwarz,2006-06-10
+89757,51-60,w,6,61,Mischling klein,NA,NA,NA,K,2006,w,weiss,2006-10-10
+89758,51-60,m,2,23,Mischling klein,NA,NA,NA,K,2006,w,schwarz/grau/weiss,2006-11-10
+89765,31-40,w,6,61,Terrier,Mischling,NA,NA,K,2006,w,schwarz,2006-03-10
+89779,71-80,m,7,74,Mischling klein,NA,NA,NA,K,2006,m,weiss/creme,2006-07-10
+90050,51-60,w,6,61,Schäfer,Mischling,NA,NA,I,2006,w,schwarz/braun,2006-06-10
+90083,61-70,w,8,83,Langhaardackel,NA,NA,NA,K,2006,m,schwarz/rot,2006-03-10
+90319,51-60,w,4,44,Belgischer Schäfer,Mischling,NA,NA,I,2006,m,schwarz,2006-05-10
+90328,31-40,w,4,42,Französische Bulldogge,NA,NA,NA,K,2006,w,braun schwarz gestromt,2006-04-10
+90363,71-80,w,6,63,Malteser,NA,NA,NA,K,2006,m,weiss,2006-07-10
+90455,41-50,m,4,42,Windhund,Mischling,NA,NA,I,2006,m,schwarz/braun,2006-03-10
+90487,61-70,w,6,61,Havaneser,NA,NA,NA,K,2006,w,zobel beige,2006-01-10
+90583,71-80,m,10,101,Tibet Terrier,NA,NA,NA,K,2006,m,schwarz/weiss,2006-12-10
+90660,51-60,m,10,101,Beagle,NA,NA,NA,K,2006,m,tricolor,2006-08-10
+90895,41-50,m,9,92,Golden Retriever,NA,Labrador Retriever,NA,I,2006,w,schwarz,2006-08-10
+90954,31-40,w,11,111,Australian Shepherd,NA,NA,NA,I,2006,w,blue/merle,2006-01-10
+90993,71-80,m,7,73,Malteser,NA,NA,NA,K,2006,m,weiss,2006-08-10
+91145,51-60,w,10,101,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-04-10
+91356,71-80,w,2,24,Appenzeller Sennenhund,NA,NA,NA,I,2006,m,tricolor,2006-09-10
+92060,31-40,w,3,31,Staffordshire Bull Terrier,NA,Boxer,NA,II,2006,m,braun/schwarz/weiss,2006-12-10
+92158,51-60,w,3,34,Soft Coated Wheaten Terrier,NA,NA,NA,I,2006,w,wildfarbig,2006-10-10
+92328,61-70,w,11,119,Bergamasker,NA,Appenzeller,NA,I,2006,w,braun/weiss,2006-05-10
+92596,41-50,w,11,119,Mops,NA,NA,NA,K,2006,w,beige/schwarz,2006-04-10
+92750,51-60,w,11,111,Podenco,NA,NA,NA,I,2006,m,rot/braun,2006-10-10
+92844,51-60,m,5,52,Labrador Retriever,NA,NA,NA,I,2006,m,gelb,2006-12-10
+93125,71-80,w,9,91,Coton de Tulear,NA,NA,NA,K,2006,w,weiss,2006-11-10
+93164,71-80,w,2,24,Lagotto Romagnolo,NA,NA,NA,I,2006,m,braun/weiss,2006-02-10
+93435,51-60,w,5,51,Mischling klein,NA,NA,NA,K,2006,m,braun/schwarz,2006-04-10
+93664,61-70,w,7,74,Dachshund,NA,NA,NA,K,2006,w,schwarz/rot,2006-04-10
+93675,51-60,w,7,72,Dalmatiner,NA,NA,NA,I,2006,m,weiss/schwarz,2006-08-10
+93929,61-70,w,3,34,Mischling klein,NA,NA,NA,K,2006,w,beige/weiss,2006-09-10
+94020,31-40,w,10,101,Mischling klein,NA,NA,NA,K,2006,w,braun,2006-01-10
+94059,31-40,w,6,63,Labrador Retriever,Mischling,NA,NA,I,2006,w,braun,2006-05-10
+94622,61-70,m,7,71,Collie,Mischling,NA,NA,I,2006,w,rot/weiss,2006-10-10
+94783,41-50,w,2,21,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-12-10
+94803,61-70,w,11,111,Mischling klein,NA,NA,NA,K,2006,m,beige,2006-06-10
+94813,31-40,w,8,81,Sennenhund,Mischling,NA,NA,I,2006,w,tricolor,2006-04-10
+95469,51-60,w,11,111,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-10-10
+95625,41-50,w,11,111,Deutscher Schäfer,NA,Border Collie,NA,I,2006,w,tricolor,2006-01-10
+95675,41-50,w,12,123,Sheltie,NA,NA,NA,K,2006,w,tricolor,2006-03-10
+95738,61-70,m,3,31,Labrador Retriever,NA,NA,NA,I,2006,m,gelb,2006-01-10
+95829,51-60,w,9,92,Beagle,NA,NA,NA,K,2006,m,tricolor,2006-09-10
+95863,41-50,m,6,63,Mischling klein,NA,NA,NA,K,2006,w,braun/schwarz,2006-12-10
+96007,51-60,m,7,73,Whippet,NA,NA,NA,I,2006,m,weiss/braun,2006-10-10
+96212,71-80,w,11,115,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-04-10
+96440,31-40,w,7,74,Mischling gross,NA,NA,NA,I,2006,w,weiss,2006-06-10
+96546,61-70,m,4,44,Jack Russel Terrier,NA,NA,NA,K,2006,m,braun/weiss,2006-01-10
+96961,81-90,w,7,72,Cocker Spaniel,NA,NA,NA,K,2006,w,rot,2006-12-10
+97106,41-50,m,10,101,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-11-10
+97774,51-60,w,10,101,Schäfer,Mischling,NA,NA,I,2006,w,braun,2006-02-10
+97925,51-60,w,11,115,Rauhaar Dackel,NA,NA,NA,K,2006,w,dunkelbraun,2006-12-10
+98354,51-60,w,4,42,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-09-10
+98655,51-60,m,10,101,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-06-10
+98732,51-60,m,2,21,Lagotto Romagnolo,NA,NA,NA,I,2006,w,braun/grau,2006-01-10
+98772,31-40,m,2,21,Sheltie,NA,NA,NA,K,2006,w,gold/sable,2006-10-10
+98790,51-60,m,12,123,Bergamasker,Mischling,NA,NA,I,2006,m,schwarz/grau/weiss,2006-12-10
+98842,51-60,w,11,111,Yorkshire Terrier,NA,NA,NA,K,2006,m,black/tan,2006-05-10
+98864,41-50,w,6,63,Mischling klein,NA,NA,NA,K,2006,w,schwarz/weiss,2006-08-10
+98875,71-80,w,9,92,Jack Russel Terrier,NA,NA,NA,K,2006,m,weiss/braun,2006-02-10
+98901,51-60,w,12,122,Zwergspitz,NA,NA,NA,K,2006,w,schwarz,2006-07-10
+98903,51-60,w,10,101,Malteser,NA,NA,NA,K,2006,m,weiss,2006-01-10
+98930,61-70,w,11,115,Mops,NA,NA,NA,K,2006,m,beige,2006-05-10
+98967,41-50,m,3,31,Schweizer Sennenhund,Mischling,NA,NA,I,2006,w,schwarz/weiss/braun,2006-12-10
+99033,41-50,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,m,braun/schwarz,2006-01-10
+99050,21-30,w,11,119,Zwergpudel,NA,NA,NA,K,2006,w,hellbraun,2006-04-10
+99094,31-40,w,11,111,Zwergpinscher,NA,NA,NA,K,2006,m,braun,2006-09-10
+99106,31-40,m,4,42,Mops,NA,NA,NA,K,2006,m,schwarz,2006-06-10
+99107,51-60,w,7,71,Dackel,Mischling,NA,NA,K,2006,w,hellbraun,2006-04-10
+99109,51-60,w,10,102,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-08-10
+99157,51-60,w,9,91,Jack Russel Terrier,NA,NA,NA,K,2006,m,schwarz/weiss,2006-05-10
+99177,71-80,w,5,51,Shih Tzu,NA,NA,NA,K,2006,m,tricolor,2006-03-10
+99323,51-60,m,9,92,Chow Chow,Mischling,NA,NA,I,2006,w,braun,2006-11-10
+99325,31-40,w,3,34,Mops,NA,NA,NA,K,2006,w,beige,2006-08-10
+99345,41-50,w,9,91,Mischling klein,NA,NA,NA,K,2006,m,schwarz/weiss,2006-01-10
+99345,41-50,w,9,91,Mischling gross,NA,NA,NA,I,2006,m,weiss/braun,2006-01-10
+99370,41-50,m,4,42,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-10-10
+99686,61-70,m,4,44,Mischling klein,NA,NA,NA,K,2006,w,weiss/braun,2006-03-10
+99693,61-70,w,11,111,English Setter,NA,NA,NA,I,2006,w,schwarz/weiss,2006-12-10
+99705,31-40,m,11,111,Shar Pei,NA,NA,NA,I,2006,w,beige,2006-06-10
+99722,81-90,w,8,83,Mischling klein,NA,NA,NA,K,2006,m,weiss,2006-01-10
+99730,41-50,w,10,101,Löwchen,NA,NA,NA,K,2006,w,grau,2006-03-10
+99768,41-50,w,2,21,Galgo Español,NA,NA,NA,I,2006,w,beige,2006-04-10
+99793,41-50,w,10,101,Mischling klein,NA,NA,NA,K,2006,m,schwarz/weiss,2006-01-10
+99856,61-70,w,7,72,Labrador Retriever,NA,Dachshund,NA,I,2006,m,schwarz,2006-07-10
+99889,41-50,m,11,111,Chihuahua,NA,NA,NA,K,2006,m,braun,2006-07-10
+99898,51-60,w,10,101,Terrier,Mischling,NA,NA,K,2006,w,tricolor,2006-08-10
+99914,41-50,m,3,31,Jack Russel Terrier,NA,NA,NA,K,2006,m,schwarz/weiss,2006-09-10
+99933,61-70,w,9,92,Mischling klein,NA,NA,NA,K,2006,m,grau/weiss,2006-11-10
+99935,71-80,m,4,44,Bardino,NA,NA,NA,K,2006,w,braun gestromt,2006-03-10
+100056,31-40,w,11,119,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-12-10
+100070,51-60,w,9,91,Pekingese,NA,NA,NA,K,2006,m,braun/schwarz,2006-11-10
+100114,41-50,m,3,34,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-06-10
+100163,31-40,w,10,101,Rehpinscher,NA,NA,NA,K,2006,m,braun,2006-06-10
+100264,41-50,m,12,122,Dogo Argentino,NA,NA,NA,I,2006,m,weiss,2006-01-10
+100265,61-70,m,9,91,Mischling klein,NA,NA,NA,K,2006,w,schwarz/braun,2006-01-10
+100466,31-40,m,10,102,Beagle,NA,NA,NA,K,2006,m,tricolor,2006-05-10
+100879,41-50,w,5,51,Mischling klein,NA,NA,NA,K,2006,m,weiss/beige,2006-05-10
+102378,31-40,w,9,92,Mops,NA,NA,NA,K,2006,w,schwarz,2006-11-10
+102395,41-50,w,12,121,Golden Retriever,NA,NA,NA,I,2006,w,golden,2006-03-10
+102767,71-80,w,10,102,Dackel,NA,Terrier,NA,K,2006,m,schwarz/braun/weiss,2006-11-10
+102908,71-80,w,11,119,Mischling klein,NA,NA,NA,K,2006,w,grau/schwarz,2006-07-10
+103421,61-70,w,11,111,Bolonka Zwetna,NA,Shih Tzu,NA,K,2006,w,tricolor,2006-08-10
+103530,71-80,w,10,101,Mischling klein,NA,NA,NA,K,2006,m,hellbraun/weiss,2006-01-10
+103603,51-60,w,7,72,Jack Russel Terrier,Mischling,NA,NA,K,2006,w,weiss/schwarz,2006-06-10
+103896,41-50,m,11,111,Papillon,NA,NA,NA,K,2006,m,braun/weiss,2006-09-10
+104038,31-40,w,9,92,Malteser,NA,NA,NA,K,2006,m,weiss,2006-08-10
+104214,51-60,m,8,83,Welsh Corgi,NA,NA,NA,K,2006,w,tricolor,2006-06-10
+104269,21-30,w,3,31,Golden Retriever,NA,NA,NA,I,2006,m,tricolor,2006-08-10
+104733,51-60,m,9,91,Labrador Retriever,NA,NA,NA,I,2006,m,braun,2006-03-10
+104994,71-80,m,7,74,Beagle,NA,NA,NA,K,2006,m,tricolor,2006-04-10
+105007,31-40,m,11,115,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-11-10
+105124,31-40,w,4,44,Kerry Blue Terrier,NA,NA,NA,I,2006,w,schwarz,2006-01-10
+105152,61-70,w,10,101,Mischling klein,NA,NA,NA,K,2006,m,schwarz/beige,2006-04-10
+106981,51-60,m,12,123,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-11-10
+107606,41-50,w,9,91,Zwergpinscher,NA,Dachshund,NA,K,2006,m,schwarz/braun,2006-01-10
+108410,61-70,w,8,81,Cairn Terrier,NA,NA,NA,K,2006,m,wheaton,2006-03-10
+109294,51-60,w,11,111,Briard,NA,Bearded Collie,NA,I,2006,w,beige/grau,2006-02-10
+109640,31-40,m,9,92,Retriever,NA,Labrador Retriever,NA,I,2006,w,schwarz,2006-09-10
+109797,71-80,m,7,72,Galgo Español,NA,NA,NA,I,2006,w,braun/schwarz/weiss,2006-11-10
+110296,71-80,m,6,63,Labrador Retriever,NA,NA,NA,I,2006,w,schwarz,2006-11-10
+110745,41-50,w,2,24,Yorkshire Terrier,NA,NA,NA,K,2006,m,beige/schwarz,2006-08-10
+110748,51-60,w,11,111,Labradoodle,NA,NA,NA,I,2006,w,apricot,2006-09-10
+111183,71-80,w,12,123,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-02-10
+111598,31-40,w,9,91,English Cocker Spaniel,NA,NA,NA,K,2006,m,schwarz,2006-01-10
+111981,51-60,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2006,w,gelb/braun,2006-01-10
+112423,21-30,m,8,83,Cocker Spaniel,NA,NA,NA,K,2006,m,dreifarbig,2006-11-10
+113340,41-50,w,12,123,Cocker Spaniel,NA,NA,NA,K,2006,m,rot,2006-09-10
+113646,41-50,w,11,115,Beauceron Berge de Beauce,NA,NA,NA,I,2006,w,schwarz,2006-01-10
+115138,41-50,w,2,23,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-12-10
+115197,41-50,w,5,52,Golden Retriever,NA,NA,NA,I,2006,m,blondfarben,2006-12-10
+115931,51-60,w,10,101,Labrador Retriever,NA,NA,NA,I,2006,m,braun,2006-03-10
+116321,51-60,w,10,102,Malteser,NA,NA,NA,K,2006,w,weiss,2006-09-10
+116892,31-40,w,5,52,Chihuahua,NA,NA,NA,K,2006,w,weiss,2006-08-10
+117944,51-60,m,8,82,Italienisches Windspiel,NA,NA,NA,K,2006,m,blau,2006-10-10
+118155,41-50,m,11,111,Husky,NA,NA,NA,I,2006,w,braun/weiss,2006-09-10
+118653,51-60,w,4,44,Podenco,Mischling,NA,NA,I,2006,m,braun/weiss,2006-06-10
+118694,71-80,w,11,115,Chihuahua,NA,Pinscher,NA,K,2006,m,schwarz/braun,2006-07-10
+118709,71-80,w,7,72,Lhasa Apso,NA,NA,NA,K,2006,m,beige,2006-05-10
+118709,71-80,w,7,72,Lhasa Apso,NA,NA,NA,K,2006,w,beige,2006-06-10
+118838,51-60,m,10,102,Foxterrier,NA,NA,NA,K,2006,w,tricolor,2006-10-10
+119495,31-40,m,1,14,Labrador Retriever,Mischling,NA,NA,I,2006,m,schwarz,2006-10-10
+120105,41-50,w,2,24,Chinese Crested,NA,NA,NA,K,2006,m,weiss/grau,2006-03-10
+120786,31-40,w,3,34,Boston Terrier,NA,NA,NA,K,2006,m,schwarz/weiss,2006-02-10
+120809,31-40,w,10,101,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-05-10
+123492,31-40,w,6,61,Chihuahua,NA,NA,NA,K,2006,w,schwarz/weiss,2006-10-10
+123730,31-40,m,12,122,Golden Retriever,NA,NA,NA,I,2006,w,golden,2006-02-10
+123871,41-50,w,7,74,Dachshund,NA,NA,NA,K,2006,w,schwarz,2006-01-10
+124512,51-60,m,10,101,Französische Bulldogge,NA,NA,NA,K,2006,w,schwarz gestromt,2006-08-10
+124668,51-60,m,11,111,Jack Russel Terrier,NA,NA,NA,K,2006,w,weiss/beige,2006-05-10
+124735,71-80,w,7,71,Norwich Terrier,NA,NA,NA,K,2006,m,beige/rot,2006-04-10
+124796,41-50,m,2,24,Labrador Retriever,NA,NA,NA,I,2006,m,braun,2006-11-10
+125172,71-80,w,11,111,Zwergpudel,NA,NA,NA,K,2006,m,schwarz,2006-01-10
+125370,31-40,w,11,119,Malteser,NA,NA,NA,K,2006,w,weiss,2006-11-10
+125401,31-40,m,6,61,Labrador Retriever,Mischling,NA,NA,I,2006,w,golden,2006-01-10
+125560,51-60,w,10,101,Schweizer Sennenhund,NA,NA,NA,I,2006,w,tricolor,2006-07-10
+125587,31-40,w,11,119,Mischling klein,NA,NA,NA,K,2006,w,weiss,2006-04-10
+125632,31-40,w,3,34,West Highland White Terrier,NA,NA,NA,K,2006,w,weiss,2006-10-10
+125924,21-30,w,11,119,Englische Bulldogge,NA,NA,NA,I,2006,w,braun/weiss,2006-11-10
+125974,31-40,w,11,115,Schnauzer,NA,NA,NA,I,2006,m,pfeffer/salz,2006-12-10
+126048,31-40,w,7,72,Chihuahua,NA,NA,NA,K,2006,w,braun,2006-03-10
+126193,31-40,w,12,123,Mops,NA,NA,NA,K,2006,m,schwarz,2006-09-10
+126244,31-40,w,8,81,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-01-10
+126396,31-40,w,9,91,Mischling gross,NA,NA,NA,I,2006,m,rot/braun,2006-01-10
+126777,41-50,w,12,123,Labrador Retriever,NA,NA,NA,I,2006,m,grau/schwarz,2006-04-10
+126909,31-40,w,5,51,Entlebucher Sennenhund,Mischling,NA,NA,I,2006,m,tricolor,2006-07-10
+127068,61-70,w,7,74,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-08-10
+127078,21-30,m,10,101,Chihuahua,NA,NA,NA,K,2006,w,braun,2006-02-10
+127079,31-40,w,8,82,Dogge,NA,Schäfer,NA,I,2006,m,schwarz/braun/weiss,2006-12-10
+127083,91-100,m,10,101,Vizsla,NA,NA,NA,I,2006,w,braun,2006-07-10
+127116,71-80,w,8,81,English Cocker Spaniel,NA,NA,NA,K,2006,m,schwarz,2006-08-10
+127132,61-70,w,12,123,Chihuahua,NA,NA,NA,K,2006,m,braun/schwarz,2006-07-10
+127136,51-60,m,8,83,Mischling klein,NA,NA,NA,K,2006,m,gestromt,2006-01-10
+127216,31-40,w,5,51,Husky,NA,NA,NA,I,2006,w,braun,2006-02-10
+127225,61-70,w,2,24,Pinscher,NA,NA,NA,K,2006,m,schwarz/braun,2006-01-10
+127226,71-80,m,6,61,Scottish Terrier,NA,NA,NA,K,2006,w,gelb,2006-01-10
+127309,31-40,w,10,101,Französische Bulldogge,NA,NA,NA,K,2006,m,schwarz/weiss,2006-02-10
+127338,31-40,w,11,111,Yorkshire Terrier,NA,NA,NA,K,2006,w,black/tan,2006-06-10
+127610,31-40,w,6,61,Pomeranian,NA,NA,NA,K,2006,m,rot,2006-11-10
+127661,41-50,m,7,73,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-05-10
+127764,61-70,w,11,115,Französische Bulldogge,NA,NA,NA,K,2006,w,schwarz/weiss,2006-05-10
+128103,51-60,w,11,111,Golden Retriever,NA,NA,NA,I,2006,m,golden,2006-02-10
+128115,31-40,w,11,119,Toy Pudel,NA,NA,NA,K,2006,m,schwarz,2006-05-10
+128137,21-30,w,9,92,Papillon,NA,NA,NA,K,2006,w,tricolor,2006-02-10
+128143,51-60,w,2,21,Parson Russell Terrier,NA,NA,NA,K,2006,w,weiss/rot,2006-12-10
+128191,41-50,m,11,111,Mischling gross,NA,NA,NA,I,2006,w,beige/schwarz,2006-02-10
+128783,41-50,w,9,91,Spitz,NA,Prager Rattler,NA,K,2006,m,braun,2006-07-10
+128808,31-40,w,5,52,Labrador Retriever,NA,NA,NA,I,2006,w,gelb,2006-08-10
+129768,61-70,m,6,63,Mischling gross,NA,NA,NA,I,2006,m,beige,2006-10-10
+129947,61-70,w,5,52,Tibetan Spaniel,NA,NA,NA,K,2006,w,rotbraun,2006-08-10
+129950,31-40,w,8,82,Malteser,NA,NA,NA,K,2006,m,weiss,2006-09-10
+130770,31-40,w,11,115,Bolonka Zwetna,NA,NA,NA,K,2006,m,beige,2006-09-10
+131526,41-50,w,11,119,Bichon frisé,NA,NA,NA,K,2006,m,weiss,2006-07-10
+131682,31-40,m,11,119,Parson Russell Terrier,NA,NA,NA,K,2006,w,tricolor,2006-02-10
+132176,31-40,w,10,101,Jack Russel Terrier,NA,NA,NA,K,2006,w,tricolor,2006-04-10
+132195,71-80,w,7,74,Chihuahua,NA,NA,NA,K,2006,m,braun,2006-07-10
+132216,31-40,w,8,81,Mischling gross,NA,NA,NA,I,2006,m,braun,2006-10-10
+132633,31-40,w,4,44,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-08-10
+132871,51-60,m,2,21,Airedale Terrier,NA,NA,NA,I,2006,m,black/tan,2006-07-10
+133181,61-70,w,9,91,Mischling gross,NA,NA,NA,I,2006,w,creme,2006-03-10
+133217,21-30,w,8,83,American Staffordshire Terrier,NA,NA,NA,II,2006,w,beige/braun,2006-10-10
+133526,61-70,m,7,72,Mischling gross,NA,NA,NA,I,2006,w,schwarz,2006-11-10
+133664,21-30,w,5,51,Zwergspitz,NA,NA,NA,K,2006,m,braun/weiss,2006-08-10
+133759,21-30,w,12,123,West Highland White Terrier,NA,NA,NA,K,2006,m,weiss,2006-12-10
+134286,61-70,m,5,51,Chihuahua,NA,NA,NA,K,2006,m,braun,2006-01-10
+134655,21-30,w,9,91,Labrador Retriever,NA,NA,NA,I,2006,m,schwarz,2006-08-10
+134949,31-40,w,11,115,Mischling gross,NA,NA,NA,I,2006,w,tricolor,2006-01-10
+135093,41-50,m,9,91,Appenzeller,NA,Sennenhund,NA,I,2006,m,tricolor,2006-10-10
+135345,31-40,w,4,41,Jack Russel Terrier,NA,NA,NA,K,2006,m,tricolor,2006-06-10
+135475,21-30,w,11,119,Border Collie,NA,NA,NA,I,2006,w,schwarz/weiss,2006-07-10
+135502,41-50,m,9,91,Labrador Retriever,NA,NA,NA,I,2006,w,golden,2006-01-10
+135582,61-70,w,7,71,Rottweiler,NA,NA,NA,I,2006,w,schwarz/braun,2006-08-10

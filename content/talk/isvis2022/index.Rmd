@@ -1,0 +1,42 @@
+---
+title: Community visualization challenges and their educational inspiration
+authors: []
+date: '2022-05-12T16:00:00'
+publishdate: '2022-05-12'
+event: 'Israeli Visualization Conference'
+event_url:
+location: Shenkar
+abstract: ''
+categories: [talk]
+tags: [talk]
+subtitle: ''
+summary: ' '
+lastmod: '2022-06-28T18:00:01-07:00'
+featured: yes
+image:
+  caption: ''
+  focal_point: 'center'
+  preview_only: yes
+projects: []
+links:
+- icon: images
+  icon_pack: fas
+  name: slides
+  url: https://amitlevinson.github.io/talks/isvis/Talk.pdf
+- icon: camera
+  icon_pack: fas
+  name: recording
+  url: https://www.youtube.com/watch?v=s2oQVflzgmA
+---
+
+
+Talk I gave for the Israeli visualization conference. You can also find a summary I wrote [here](https://amitlevinson.com/blog/isvis-talk-post/)
+
+### Abstract
+
+Many community visualization challenges can be found online today: Events targeting specific tools – the #TidyTeusday project, #MakeOverMonday – and other tool agnostic challenges such as the 30daychartchallenge and 30daymapchallenge. They're open to anyone and everyone, beginners and advanced alike. In some challenges you bring your own data – an old dataset you had laying around or something you've been wanting to explore for a while – while in other challenges the data is provided by the organizers. Both have their benefits, the former by engaging you with something you're sentimental about and the latter by challenging you with unknown data. While the challenges' themes are somewhat different, I found the events to be similar in how I learn and improve my visualizations.
+
+Coming with no proper background in data manipulation and visualizations, these challenges provided fruitful grounds to learn how to work with data and fit various charts to the takeaway at hand. As I became more confident I aspired for more: trying out new tools, experimenting with color and minimalism, breaking boundaries or further exploring my curiosity in personal projects. The community participation had a propelling effect, providing both the opportunity and the positive feedback to continue. Besides meeting new friends and inspirational people it created a reason to participate as others did so too. Lastly, seeing others' visualizations of the same topics provided an additional perspective to challenges I just faced, learning about other practices and approaches. In this talk I hope to share my personal experience participating in these challenges, share practices I learned and employ today as an analyst and hopefully motivate you to participate in an upcoming challenge.
+
+
+<iframe src="https://amitlevinson.github.io/talks/isvis/Talk.pdf" width = '100%' height='465px' frameborder="0"></iframe>

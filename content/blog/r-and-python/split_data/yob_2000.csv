@@ -1,0 +1,42 @@
+owner_id,age,gender,city_district,quarter,primary_breed,is_hybrid,secondary_breed,is_secondary_hybrid,breed_type,dog_yob,dog_gender,dog_color,dog_dob
+80209,81-90,m,10,102,Bichon Havanais,NA,NA,NA,K,2000,w,weiss,2000-02-10
+81027,61-70,w,8,82,Parson Jack Russell Terrier,NA,NA,NA,K,2000,w,weiss/braun,2000-07-10
+81584,51-60,m,2,21,Spitz,Mischling,NA,NA,K,2000,m,braun/weiss,2000-06-10
+81587,51-60,w,2,24,Jack Russel Terrier,NA,NA,NA,K,2000,m,grau/braun,2000-04-10
+82131,51-60,w,9,92,Yorkshire Terrier,NA,NA,NA,K,2000,w,schwarz,2000-04-10
+82287,51-60,w,6,61,Tibet Terrier,Mischling,NA,NA,K,2000,m,schwarz,2000-05-10
+82699,71-80,w,7,72,Briard,NA,NA,NA,I,2000,w,schwarz,2000-09-10
+83128,51-60,w,2,21,Mischling klein,NA,NA,NA,K,2000,m,schwarz/weiss,2000-12-10
+83234,51-60,w,12,121,Volpino,NA,NA,NA,K,2000,m,braun,2000-08-10
+83347,71-80,w,3,34,Mischling klein,NA,NA,NA,K,2000,w,weiss,2000-05-10
+83741,51-60,w,8,83,Jack Russel Terrier,NA,NA,NA,K,2000,w,weiss/schwarz,2000-06-10
+83811,31-40,m,4,42,Jack Russel Terrier,NA,NA,NA,K,2000,w,schwarz/weiss,2000-12-10
+83950,61-70,m,9,91,Mischling klein,NA,NA,NA,K,2000,w,braun/weiss,2000-04-10
+84821,71-80,w,6,63,Yorkshire Terrier,Mischling,NA,NA,K,2000,w,schwarz/braun/weiss,2000-03-10
+84874,71-80,m,9,92,Mischling klein,NA,NA,NA,K,2000,w,schwarz,2000-08-10
+85582,81-90,w,11,119,Langhaardackel,NA,NA,NA,K,2000,w,rot,2000-03-10
+85688,51-60,w,11,111,Jack Russel Terrier,NA,NA,NA,K,2000,w,tricolor,2000-06-10
+85777,71-80,w,3,34,Yorkshire Terrier,NA,NA,NA,K,2000,w,silbergrau,2000-03-10
+86055,71-80,w,4,42,West Highland White Terrier,NA,NA,NA,K,2000,w,gestromt,2000-05-10
+86494,31-40,m,10,101,Coton de Tulear,NA,NA,NA,K,2000,m,weiss/creme,2000-05-10
+86552,51-60,w,3,31,Lhasa Apso,NA,NA,NA,K,2000,m,sandfarbig,2000-07-10
+87158,31-40,w,2,23,Collie,Mischling,NA,NA,I,2000,w,schwarz/braun,2000-04-10
+88724,51-60,w,9,92,Mischling klein,NA,NA,NA,K,2000,w,schwarz/braun,2000-12-10
+88902,61-70,w,7,74,Schäfer,NA,Husky,NA,I,2000,w,grau/weiss,2000-09-10
+89031,61-70,w,10,102,Collie,Mischling,NA,NA,I,2000,m,weiss/braun,2000-11-10
+89069,41-50,w,2,23,Schäfer,NA,Husky,NA,I,2000,w,hellbraun,2000-12-10
+90049,31-40,w,9,92,Jack Russel Terrier,NA,NA,NA,K,2000,w,weiss/schwarz,2000-05-10
+93615,31-40,m,6,63,Jack Russel Terrier,NA,NA,NA,K,2000,m,braun/weiss,2000-06-10
+94436,41-50,w,11,119,Mischling klein,NA,NA,NA,K,2000,w,schwarz/weiss,2000-03-10
+94792,81-90,w,9,92,Mischling klein,NA,NA,NA,K,2000,w,braun/weiss,2000-07-10
+95763,61-70,w,4,42,Mischling klein,NA,NA,NA,K,2000,w,braun,2000-06-10
+98554,51-60,w,7,73,Mischling klein,NA,NA,NA,K,2000,m,weiss,2000-01-10
+98593,51-60,m,4,44,Pekingese,NA,NA,NA,K,2000,w,braun,2000-08-10
+98867,51-60,w,5,51,Pinscher,Mischling,NA,NA,K,2000,m,dunkelbraun,2000-09-10
+99207,41-50,w,7,73,Malteser,NA,NA,NA,K,2000,w,weiss,2000-02-10
+99287,41-50,m,8,83,Bichon maltais,NA,NA,NA,K,2000,w,weiss,2000-01-10
+119866,51-60,w,7,72,Mischling klein,NA,NA,NA,K,2000,w,beige/braun,2000-10-10
+120466,31-40,w,2,21,Mischling gross,NA,NA,NA,I,2000,m,schwarz/braun/weiss,2000-07-10
+125892,51-60,w,1,11,Golden Retriever,NA,NA,NA,I,2000,w,golden,2000-09-10
+127186,41-50,w,6,61,Zwergpudel,NA,NA,NA,K,2000,m,schwarz,2000-11-10
+129947,61-70,w,5,52,Tibetan Spaniel,NA,NA,NA,K,2000,m,braun,2000-03-10
