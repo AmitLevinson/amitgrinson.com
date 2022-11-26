@@ -1,0 +1,5 @@
+https://amitlevinson.com/*          https://www.amitgrinson.com/:splat  301!
+http://www.amitlevinson.com/*       https://www.amitgrinson.com/:splat  301!
+https://amitlevinson.com/post/*     https://www.amitgrinson.com/blog/:splat  301!
+https://amitlevinson.com/talks      https://www.amitgrinson.com/talk/:splat  301!
+http://amitlevinson.com/*           https://www.amitgrinson.com/:splat  301!
