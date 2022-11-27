@@ -7,4 +7,4 @@ headline: |
 ---
 
 <!-- this is a subheadline -->
-Welcome to my personal webiste, very glad you're here and interested in learning more about me. Do reach out and introduce yourself, I'd like to meet you too!
+Welcome to my personal website, very glad you're here and interested in learning more about me. Do reach out and introduce yourself, I'd like to meet you too!

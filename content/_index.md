@@ -2,10 +2,10 @@
 action_label: About me &rarr;
 action_link: /about
 action_type: text
-description: I'm a Risk Data Analyst working in the fraud domain using data & analytics to prevent fraud. In my spare time I enjoy the company of my wife Tal, our sweet boy Tom and dog Milo. I also enjoy blogging about data analysis, data visualization and coding languages such as R, Python & SQL.
+description: I'm a Risk Data Analyst in the fraud domain. I currently live in Rehovot, Israel, with my wife, our sweet boy and dog Milo. I enjoy and blog about data analytics, data visualization and coding languages such as R, Python & SQL.
 image_left: false
 images:
-- old_smaller.png
+- avatar.png
 show_action_link: true
 show_social_links: true
 subtitle: Risk Data Analyst @Payoneer
