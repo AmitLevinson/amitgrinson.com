@@ -21,14 +21,14 @@
 <!--descriptions-->
 {{ $desc := "" }}
 {{/* Generate page description. */}}
-  {{ if .Params.description }}
+  {{ if .IsHome }}
+    {{ $desc = site.Params.description  }}
+  {{ else if .Params.description }}
     {{ $desc = .Params.description }}
   {{ else if .Params.subtitle }}
     {{ $desc = .Params.subtitle }}
   {{ else if .Params.excerpt }}
     {{ $desc = .Params.excerpt }}
-  {{ else }}
-    {{ $desc = site.Params.description  }}
   {{ end }}
 <meta name="description" content="{{ $desc }}">
 
