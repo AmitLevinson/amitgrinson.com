@@ -50,7 +50,7 @@
     {{- if $image_link_absolute -}}
         <meta name="twitter:image" content="{{- $image | absURL -}}"/>
     {{- else -}}
-        <meta name="twitter:image" content="{{- (printf "%s%s" $permalink $image) -}}"/>
+        <meta name="twitter:image" content="{{$site_card}}"/>
     {{- end -}}
 <!--using featured images-->
 {{ else -}}
