@@ -27,8 +27,7 @@ enableEmoji = true
     ordered = false
   [markup.highlight]
     # one of: https://xyproto.github.io/splash/docs/ 
-    style = "native" # friendly "solarized-light", paraiso-light
-    
+    style = "monokai" # friendly, monokailight "solarized-light", 
 [params]
   orgName = "Payoneer"
   orgLocal = ""
@@ -99,6 +98,10 @@ enableEmoji = true
       icon      = "twitter" # icon name without the 'fa-'
       icon_pack = "fab"
       url       = "https://twitter.com/Amit_Levinson"
+  [[params.social]]
+    icon      = "cv" # icon name without the 'fa-'
+    icon_pack = "ai"
+    url       = "cv/Amit-Grinson-CV.pdf"
   [[params.social]]
       icon      = "rss" # icon name without the 'fa-'
       icon_pack = "fas"
