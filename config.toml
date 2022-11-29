@@ -31,7 +31,7 @@ enableEmoji = true
 [params]
   orgName = "Payoneer"
   orgLocal = ""
-  description = "Personal website of Amit Grinson — Data, Analytics & Visualization"
+  description = "Code, Data, Analytics & Visualizations"
   favicon = "/img/favicon.ico"
   logo = "/img/blogophonic-mark-dark.png"
   mainSections = ["blog", "projects", "talk"]
