@@ -4,7 +4,7 @@ author: Amit Grinson
 date: '2022-06-02'
 layout: single-sidebar
 slug: r-and-python
-categories: [R]
+categories: [R, Python]
 tags: [R, Streaming, Python]
 subtitle: 'Questions and answers from the live stream of an R vs Python data analysis'
 summary: 'Using both R and Python we answer various questions about the Dog of Zurich dataset. Try it yourself and get some hands-on data analysis practice'

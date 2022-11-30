@@ -129,18 +129,23 @@ p > a  {
 }
 
 .site-links {
+  
+  a {
+    color: var(--textColorCustom);
+  }
   a::after {
     height: 0.15em;
   }
-
-  a.active::after {
+  a:hover {
+      font-weight: 600;
+  }
+  a.active{
+    font-weight: 600;
+  }
+  a.active:after {
     height: 0.15em;
   }
 
-  a {
-    color: var(--textColorCustom);
-    font-weight: 600;
-  }
 }
 
 
