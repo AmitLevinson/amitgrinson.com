@@ -10,6 +10,7 @@ subtitle: 'Learning recursive CTEs by following payment activity'
 summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal data. In this post we learn to use them to identify where money was moved to by following the transfer activity'
 featured: yes
 projects: []
+mermaid: true
 format: hugo-md
 editor_options: 
   chunk_output_type: inline
@@ -30,6 +31,13 @@ The first time I used it was to calculate the weekdays for a given day from the 
 
 Hopefully either example (the generic and mine) will help you grasp it a little more. It's probably not a hammer to be used frequently, but not bad to have it in your toolbox.
 
+<details>
+<summary>
+Setting up a SQL connection
+</summary>
+
+I write my blog using the [Rstudio IDE](https://posit.co/) and although this post will focus on SQL, we need to set up a local SQL connection. We're basically connecting to our local RDBMS, here MSSQL, and to a database I setup earlier.
+
 ``` r
 library(odbc)
 library(DBI)
@@ -37,8 +45,14 @@ library(DBI)
 sqlconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
-                      Database = "regex")
+                      Database = "recursion")
 ```
+
+**Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
+
+    ```{sql connection='sqlconn', echo = TRUE}```
+
+</details>
 
 ## Recursive CTE --- Basic Example
 
@@ -144,6 +158,27 @@ I'd think carefully before running an unlimited recursion. But if you do, set th
 
 ## Recursive CTE --- Following the Money
 
-## 
+Let's move on to a more practical example, or at least for me. Say you want to track the flow of money sent from one user to another. We can describe a possible flow of funds as such:
+
+User A receives the funds from somewhere and transfers it down the chain. Eventually, it ends up with user D and F (for simplicity we'll use a one-directional relationship). Starting with A, I'd like to identify the final users of the chain.
+
+**Why does a recursion help here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way --- Each row contains the information about one payment. That makes it a little more complex and instead of multiple endless joins, let's solve it with a recursive CTE:
+
+<div class="mermaid">
+
+graph LR;
+A(User A)--\>B(User B);
+B(User B)--\>C(User C);
+C(User C)--\>D(User D);
+C(User C)--\>E(User E);
+E(User E)--\>F(User F);
+A(User A)--\>D(User E);
+A(User A)--\>F(User F);
+
+</div>
+
+<script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
+
+test
 
 -   our example
