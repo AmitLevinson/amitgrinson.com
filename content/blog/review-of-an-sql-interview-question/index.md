@@ -36,12 +36,12 @@ So here it goes:
 
 For a more practical example, consider the following raw data:
 
-<div id="mklulllpbg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="obqghryxsg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mklulllpbg .gt_table {
+#obqghryxsg .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -66,7 +66,7 @@ For a more practical example, consider the following raw data:
   border-left-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_heading {
+#obqghryxsg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -78,7 +78,7 @@ For a more practical example, consider the following raw data:
   border-right-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_title {
+#obqghryxsg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -90,7 +90,7 @@ For a more practical example, consider the following raw data:
   border-bottom-width: 0;
 }
 
-#mklulllpbg .gt_subtitle {
+#obqghryxsg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -102,13 +102,13 @@ For a more practical example, consider the following raw data:
   border-top-width: 0;
 }
 
-#mklulllpbg .gt_bottom_border {
+#obqghryxsg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_col_headings {
+#obqghryxsg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -123,7 +123,7 @@ For a more practical example, consider the following raw data:
   border-right-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_col_heading {
+#obqghryxsg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -143,7 +143,7 @@ For a more practical example, consider the following raw data:
   overflow-x: hidden;
 }
 
-#mklulllpbg .gt_column_spanner_outer {
+#obqghryxsg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -155,15 +155,15 @@ For a more practical example, consider the following raw data:
   padding-right: 4px;
 }
 
-#mklulllpbg .gt_column_spanner_outer:first-child {
+#obqghryxsg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mklulllpbg .gt_column_spanner_outer:last-child {
+#obqghryxsg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mklulllpbg .gt_column_spanner {
+#obqghryxsg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -175,7 +175,7 @@ For a more practical example, consider the following raw data:
   width: 100%;
 }
 
-#mklulllpbg .gt_group_heading {
+#obqghryxsg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -200,7 +200,7 @@ For a more practical example, consider the following raw data:
   vertical-align: middle;
 }
 
-#mklulllpbg .gt_empty_group_heading {
+#obqghryxsg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -215,15 +215,15 @@ For a more practical example, consider the following raw data:
   vertical-align: middle;
 }
 
-#mklulllpbg .gt_from_md > :first-child {
+#obqghryxsg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mklulllpbg .gt_from_md > :last-child {
+#obqghryxsg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mklulllpbg .gt_row {
+#obqghryxsg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -242,7 +242,7 @@ For a more practical example, consider the following raw data:
   overflow-x: hidden;
 }
 
-#mklulllpbg .gt_stub {
+#obqghryxsg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -255,7 +255,7 @@ For a more practical example, consider the following raw data:
   padding-right: 5px;
 }
 
-#mklulllpbg .gt_stub_row_group {
+#obqghryxsg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -269,11 +269,11 @@ For a more practical example, consider the following raw data:
   vertical-align: top;
 }
 
-#mklulllpbg .gt_row_group_first td {
+#obqghryxsg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mklulllpbg .gt_summary_row {
+#obqghryxsg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -283,16 +283,16 @@ For a more practical example, consider the following raw data:
   padding-right: 5px;
 }
 
-#mklulllpbg .gt_first_summary_row {
+#obqghryxsg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_first_summary_row.thick {
+#obqghryxsg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mklulllpbg .gt_last_summary_row {
+#obqghryxsg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -302,7 +302,7 @@ For a more practical example, consider the following raw data:
   border-bottom-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_grand_summary_row {
+#obqghryxsg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -312,7 +312,7 @@ For a more practical example, consider the following raw data:
   padding-right: 5px;
 }
 
-#mklulllpbg .gt_first_grand_summary_row {
+#obqghryxsg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -322,11 +322,11 @@ For a more practical example, consider the following raw data:
   border-top-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_striped {
+#obqghryxsg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mklulllpbg .gt_table_body {
+#obqghryxsg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -335,7 +335,7 @@ For a more practical example, consider the following raw data:
   border-bottom-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_footnotes {
+#obqghryxsg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -349,7 +349,7 @@ For a more practical example, consider the following raw data:
   border-right-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_footnote {
+#obqghryxsg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -358,7 +358,7 @@ For a more practical example, consider the following raw data:
   padding-right: 5px;
 }
 
-#mklulllpbg .gt_sourcenotes {
+#obqghryxsg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -372,7 +372,7 @@ For a more practical example, consider the following raw data:
   border-right-color: #D3D3D3;
 }
 
-#mklulllpbg .gt_sourcenote {
+#obqghryxsg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -380,36 +380,36 @@ For a more practical example, consider the following raw data:
   padding-right: 5px;
 }
 
-#mklulllpbg .gt_left {
+#obqghryxsg .gt_left {
   text-align: left;
 }
 
-#mklulllpbg .gt_center {
+#obqghryxsg .gt_center {
   text-align: center;
 }
 
-#mklulllpbg .gt_right {
+#obqghryxsg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mklulllpbg .gt_font_normal {
+#obqghryxsg .gt_font_normal {
   font-weight: normal;
 }
 
-#mklulllpbg .gt_font_bold {
+#obqghryxsg .gt_font_bold {
   font-weight: bold;
 }
 
-#mklulllpbg .gt_font_italic {
+#obqghryxsg .gt_font_italic {
   font-style: italic;
 }
 
-#mklulllpbg .gt_super {
+#obqghryxsg .gt_super {
   font-size: 65%;
 }
 
-#mklulllpbg .gt_two_val_uncert {
+#obqghryxsg .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -418,31 +418,31 @@ For a more practical example, consider the following raw data:
   margin-left: 0.1em;
 }
 
-#mklulllpbg .gt_footnote_marks {
+#obqghryxsg .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#mklulllpbg .gt_asterisk {
+#obqghryxsg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mklulllpbg .gt_slash_mark {
+#obqghryxsg .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#mklulllpbg .gt_fraction_numerator {
+#obqghryxsg .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#mklulllpbg .gt_fraction_denominator {
+#obqghryxsg .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -502,12 +502,12 @@ For a more practical example, consider the following raw data:
 
 Return the following table (rows highlighted in light green):
 
-<div id="vtndtuauoe" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="luklrmxdyb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#vtndtuauoe .gt_table {
+#luklrmxdyb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -532,7 +532,7 @@ Return the following table (rows highlighted in light green):
   border-left-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_heading {
+#luklrmxdyb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -544,7 +544,7 @@ Return the following table (rows highlighted in light green):
   border-right-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_title {
+#luklrmxdyb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -556,7 +556,7 @@ Return the following table (rows highlighted in light green):
   border-bottom-width: 0;
 }
 
-#vtndtuauoe .gt_subtitle {
+#luklrmxdyb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -568,13 +568,13 @@ Return the following table (rows highlighted in light green):
   border-top-width: 0;
 }
 
-#vtndtuauoe .gt_bottom_border {
+#luklrmxdyb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_col_headings {
+#luklrmxdyb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -589,7 +589,7 @@ Return the following table (rows highlighted in light green):
   border-right-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_col_heading {
+#luklrmxdyb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -609,7 +609,7 @@ Return the following table (rows highlighted in light green):
   overflow-x: hidden;
 }
 
-#vtndtuauoe .gt_column_spanner_outer {
+#luklrmxdyb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -621,15 +621,15 @@ Return the following table (rows highlighted in light green):
   padding-right: 4px;
 }
 
-#vtndtuauoe .gt_column_spanner_outer:first-child {
+#luklrmxdyb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vtndtuauoe .gt_column_spanner_outer:last-child {
+#luklrmxdyb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vtndtuauoe .gt_column_spanner {
+#luklrmxdyb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -641,7 +641,7 @@ Return the following table (rows highlighted in light green):
   width: 100%;
 }
 
-#vtndtuauoe .gt_group_heading {
+#luklrmxdyb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -666,7 +666,7 @@ Return the following table (rows highlighted in light green):
   vertical-align: middle;
 }
 
-#vtndtuauoe .gt_empty_group_heading {
+#luklrmxdyb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -681,15 +681,15 @@ Return the following table (rows highlighted in light green):
   vertical-align: middle;
 }
 
-#vtndtuauoe .gt_from_md > :first-child {
+#luklrmxdyb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vtndtuauoe .gt_from_md > :last-child {
+#luklrmxdyb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vtndtuauoe .gt_row {
+#luklrmxdyb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -708,7 +708,7 @@ Return the following table (rows highlighted in light green):
   overflow-x: hidden;
 }
 
-#vtndtuauoe .gt_stub {
+#luklrmxdyb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -721,7 +721,7 @@ Return the following table (rows highlighted in light green):
   padding-right: 5px;
 }
 
-#vtndtuauoe .gt_stub_row_group {
+#luklrmxdyb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -735,11 +735,11 @@ Return the following table (rows highlighted in light green):
   vertical-align: top;
 }
 
-#vtndtuauoe .gt_row_group_first td {
+#luklrmxdyb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vtndtuauoe .gt_summary_row {
+#luklrmxdyb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -749,16 +749,16 @@ Return the following table (rows highlighted in light green):
   padding-right: 5px;
 }
 
-#vtndtuauoe .gt_first_summary_row {
+#luklrmxdyb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_first_summary_row.thick {
+#luklrmxdyb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vtndtuauoe .gt_last_summary_row {
+#luklrmxdyb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -768,7 +768,7 @@ Return the following table (rows highlighted in light green):
   border-bottom-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_grand_summary_row {
+#luklrmxdyb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -778,7 +778,7 @@ Return the following table (rows highlighted in light green):
   padding-right: 5px;
 }
 
-#vtndtuauoe .gt_first_grand_summary_row {
+#luklrmxdyb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -788,11 +788,11 @@ Return the following table (rows highlighted in light green):
   border-top-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_striped {
+#luklrmxdyb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vtndtuauoe .gt_table_body {
+#luklrmxdyb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -801,7 +801,7 @@ Return the following table (rows highlighted in light green):
   border-bottom-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_footnotes {
+#luklrmxdyb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -815,7 +815,7 @@ Return the following table (rows highlighted in light green):
   border-right-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_footnote {
+#luklrmxdyb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -824,7 +824,7 @@ Return the following table (rows highlighted in light green):
   padding-right: 5px;
 }
 
-#vtndtuauoe .gt_sourcenotes {
+#luklrmxdyb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -838,7 +838,7 @@ Return the following table (rows highlighted in light green):
   border-right-color: #D3D3D3;
 }
 
-#vtndtuauoe .gt_sourcenote {
+#luklrmxdyb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -846,36 +846,36 @@ Return the following table (rows highlighted in light green):
   padding-right: 5px;
 }
 
-#vtndtuauoe .gt_left {
+#luklrmxdyb .gt_left {
   text-align: left;
 }
 
-#vtndtuauoe .gt_center {
+#luklrmxdyb .gt_center {
   text-align: center;
 }
 
-#vtndtuauoe .gt_right {
+#luklrmxdyb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vtndtuauoe .gt_font_normal {
+#luklrmxdyb .gt_font_normal {
   font-weight: normal;
 }
 
-#vtndtuauoe .gt_font_bold {
+#luklrmxdyb .gt_font_bold {
   font-weight: bold;
 }
 
-#vtndtuauoe .gt_font_italic {
+#luklrmxdyb .gt_font_italic {
   font-style: italic;
 }
 
-#vtndtuauoe .gt_super {
+#luklrmxdyb .gt_super {
   font-size: 65%;
 }
 
-#vtndtuauoe .gt_two_val_uncert {
+#luklrmxdyb .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -884,31 +884,31 @@ Return the following table (rows highlighted in light green):
   margin-left: 0.1em;
 }
 
-#vtndtuauoe .gt_footnote_marks {
+#luklrmxdyb .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#vtndtuauoe .gt_asterisk {
+#luklrmxdyb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vtndtuauoe .gt_slash_mark {
+#luklrmxdyb .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#vtndtuauoe .gt_fraction_numerator {
+#luklrmxdyb .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#vtndtuauoe .gt_fraction_denominator {
+#luklrmxdyb .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1052,9 +1052,9 @@ glimpse(payments_big)
 
     Rows: 2,000
     Columns: 3
-    $ username     <chr> "Tom", "Danny", "Tom", "Tom", "Alice", "Tom", "Alice", "D…
-    $ payment_date <date> 2020-01-30, 2020-04-17, 2020-03-06, 2018-08-23, 2020-01-…
-    $ amount       <int> 9583, 6586, 5617, 5204, 9450, 1854, 256, 2260, 79, 7534, …
+    $ username     <chr> "Tom", "Alice", "Danny", "Alice", "Alice", "Alice", "Dann…
+    $ payment_date <date> 2020-01-18, 2020-08-08, 2018-10-15, 2021-01-22, 2018-07-…
+    $ amount       <int> 5969, 4502, 4292, 5169, 6248, 7701, 740, 6865, 9124, 9175…
 
 A total of 2,000 rows for all the three users. Now, let's benchmark using The R package `{sqldf}` which passes the SQL statements to a temporally created database:
 
@@ -1067,12 +1067,12 @@ benchmarking <- microbenchmark::microbenchmark("Window" = sqldf(Window_script),
 
 Finally, let's explore the benchmarking scores:
 
-<div id="whgnkbhszi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kzqidctsvo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#whgnkbhszi .gt_table {
+#kzqidctsvo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1097,7 +1097,7 @@ Finally, let's explore the benchmarking scores:
   border-left-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_heading {
+#kzqidctsvo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1109,7 +1109,7 @@ Finally, let's explore the benchmarking scores:
   border-right-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_title {
+#kzqidctsvo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1121,7 +1121,7 @@ Finally, let's explore the benchmarking scores:
   border-bottom-width: 0;
 }
 
-#whgnkbhszi .gt_subtitle {
+#kzqidctsvo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1133,13 +1133,13 @@ Finally, let's explore the benchmarking scores:
   border-top-width: 0;
 }
 
-#whgnkbhszi .gt_bottom_border {
+#kzqidctsvo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_col_headings {
+#kzqidctsvo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1154,7 +1154,7 @@ Finally, let's explore the benchmarking scores:
   border-right-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_col_heading {
+#kzqidctsvo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1174,7 +1174,7 @@ Finally, let's explore the benchmarking scores:
   overflow-x: hidden;
 }
 
-#whgnkbhszi .gt_column_spanner_outer {
+#kzqidctsvo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1186,15 +1186,15 @@ Finally, let's explore the benchmarking scores:
   padding-right: 4px;
 }
 
-#whgnkbhszi .gt_column_spanner_outer:first-child {
+#kzqidctsvo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#whgnkbhszi .gt_column_spanner_outer:last-child {
+#kzqidctsvo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#whgnkbhszi .gt_column_spanner {
+#kzqidctsvo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1206,7 +1206,7 @@ Finally, let's explore the benchmarking scores:
   width: 100%;
 }
 
-#whgnkbhszi .gt_group_heading {
+#kzqidctsvo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1231,7 +1231,7 @@ Finally, let's explore the benchmarking scores:
   vertical-align: middle;
 }
 
-#whgnkbhszi .gt_empty_group_heading {
+#kzqidctsvo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1246,15 +1246,15 @@ Finally, let's explore the benchmarking scores:
   vertical-align: middle;
 }
 
-#whgnkbhszi .gt_from_md > :first-child {
+#kzqidctsvo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#whgnkbhszi .gt_from_md > :last-child {
+#kzqidctsvo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#whgnkbhszi .gt_row {
+#kzqidctsvo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1273,7 +1273,7 @@ Finally, let's explore the benchmarking scores:
   overflow-x: hidden;
 }
 
-#whgnkbhszi .gt_stub {
+#kzqidctsvo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1286,7 +1286,7 @@ Finally, let's explore the benchmarking scores:
   padding-right: 5px;
 }
 
-#whgnkbhszi .gt_stub_row_group {
+#kzqidctsvo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1300,11 +1300,11 @@ Finally, let's explore the benchmarking scores:
   vertical-align: top;
 }
 
-#whgnkbhszi .gt_row_group_first td {
+#kzqidctsvo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#whgnkbhszi .gt_summary_row {
+#kzqidctsvo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1314,16 +1314,16 @@ Finally, let's explore the benchmarking scores:
   padding-right: 5px;
 }
 
-#whgnkbhszi .gt_first_summary_row {
+#kzqidctsvo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_first_summary_row.thick {
+#kzqidctsvo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#whgnkbhszi .gt_last_summary_row {
+#kzqidctsvo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1333,7 +1333,7 @@ Finally, let's explore the benchmarking scores:
   border-bottom-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_grand_summary_row {
+#kzqidctsvo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1343,7 +1343,7 @@ Finally, let's explore the benchmarking scores:
   padding-right: 5px;
 }
 
-#whgnkbhszi .gt_first_grand_summary_row {
+#kzqidctsvo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1353,11 +1353,11 @@ Finally, let's explore the benchmarking scores:
   border-top-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_striped {
+#kzqidctsvo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#whgnkbhszi .gt_table_body {
+#kzqidctsvo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1366,7 +1366,7 @@ Finally, let's explore the benchmarking scores:
   border-bottom-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_footnotes {
+#kzqidctsvo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1380,7 +1380,7 @@ Finally, let's explore the benchmarking scores:
   border-right-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_footnote {
+#kzqidctsvo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1389,7 +1389,7 @@ Finally, let's explore the benchmarking scores:
   padding-right: 5px;
 }
 
-#whgnkbhszi .gt_sourcenotes {
+#kzqidctsvo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1403,7 +1403,7 @@ Finally, let's explore the benchmarking scores:
   border-right-color: #D3D3D3;
 }
 
-#whgnkbhszi .gt_sourcenote {
+#kzqidctsvo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1411,36 +1411,36 @@ Finally, let's explore the benchmarking scores:
   padding-right: 5px;
 }
 
-#whgnkbhszi .gt_left {
+#kzqidctsvo .gt_left {
   text-align: left;
 }
 
-#whgnkbhszi .gt_center {
+#kzqidctsvo .gt_center {
   text-align: center;
 }
 
-#whgnkbhszi .gt_right {
+#kzqidctsvo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#whgnkbhszi .gt_font_normal {
+#kzqidctsvo .gt_font_normal {
   font-weight: normal;
 }
 
-#whgnkbhszi .gt_font_bold {
+#kzqidctsvo .gt_font_bold {
   font-weight: bold;
 }
 
-#whgnkbhszi .gt_font_italic {
+#kzqidctsvo .gt_font_italic {
   font-style: italic;
 }
 
-#whgnkbhszi .gt_super {
+#kzqidctsvo .gt_super {
   font-size: 65%;
 }
 
-#whgnkbhszi .gt_two_val_uncert {
+#kzqidctsvo .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -1449,31 +1449,31 @@ Finally, let's explore the benchmarking scores:
   margin-left: 0.1em;
 }
 
-#whgnkbhszi .gt_footnote_marks {
+#kzqidctsvo .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#whgnkbhszi .gt_asterisk {
+#kzqidctsvo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#whgnkbhszi .gt_slash_mark {
+#kzqidctsvo .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#whgnkbhszi .gt_fraction_numerator {
+#kzqidctsvo .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#whgnkbhszi .gt_fraction_denominator {
+#kzqidctsvo .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
