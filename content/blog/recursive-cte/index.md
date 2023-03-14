@@ -6,8 +6,8 @@ layout: single-sidebar
 slug: recursive-cte
 categories: [SQL]
 tags: [SQL, Recursion]
-subtitle: 'Learning recursive CTEs by following payment activity'
-summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal data. In this post we learn to use them to identify where money was moved to by following the transfer activity'
+subtitle: 'Learning recursive CTEs by following money layering and transfers'
+summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal formatted data. In this post we learn to use them to identify where money was moved to by following users transfer activities'
 featured: yes
 projects: []
 mermaid: true
@@ -61,39 +61,32 @@ dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT'
 **Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
 ``` r
-cat("```{sql connection='sqlconn', echo = TRUE}```", '```', sep = '\n')
+cat("```{sql connection='sqlconn', echo = TRUE}", '/* SQL code goes here */', '```', sep = '\n')
 ```
 
-`{sql connection='sqlconn', echo = TRUE}`
+`{sql connection='sqlconn', echo = TRUE} /* SQL code goes here */`
 
+</details>
 
+## Basic Example
 
-    </details>
+Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. A recursion, as Wikipedia notes, is defined in terms of itself or of its type. In other words, I like to think of it as something that calls itself.
 
-    ## Basic Recursive Example
+In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.**
 
-    Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. A recursion, as Wikipedia notes, is defined in terms of itself or of its type. In other words, I like to think of it as something that calls itself.
+For example, to count until 10 (1000, ...) in SQL, we can run the following:
 
-    In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.** 
+``` sql
+WITH RecursiveCTE as (
+  SELECT 1 as N
+  UNION ALL
+  SELECT N + 1 as N
+  FROM RecursiveCTE
+  WHERE N < 10
+)
 
-    For example, to count until 10 (1000, ...) in SQL, we can run the following:
-
-
-
-    ::: {.cell connection='sqlconn'}
-
-    ```{.sql .cell-code}
-    WITH RecursiveCTE as (
-      SELECT 1 as N
-      UNION ALL
-      SELECT N + 1 as N
-      FROM RecursiveCTE
-      WHERE N < 10
-    )
-
-    SELECT * FROM RecursiveCTE
-
-<div class="knitsql-table">
+SELECT * FROM RecursiveCTE
+```
 
 | N   |
 |:----|
@@ -109,10 +102,6 @@ cat("```{sql connection='sqlconn', echo = TRUE}```", '```', sep = '\n')
 | 10  |
 
 Displaying records 1 - 10
-
-</div>
-
-:::
 
 ### Block Breakdown
 
@@ -178,31 +167,98 @@ I'd think carefully before running an unlimited recursion. But if you do, set th
 
 ## Following the Money
 
-Let's move on to a more practical example, or at least more practical for me. Payoneer is a payments platform and as a result we analyze large quantities of payments. A scenario that might occur is wanting to track the flow of money sent from one user to another, from that user to another and so on down the chain. \*\*Given
+### The Network & Problem
 
-User A receives the funds from somewhere and transfers it down the chain. Eventually, it ends up with user D and F (for simplicity we'll use a one-directional relationship). Starting with A, I'd like to identify the final users of the chain.
+Let's move on to a more practical example, or at least more practical for me. Payoneer is a payments platform and as a result we analyze large quantities of payments. A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.
 
-**Why does a recursion help here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way --- Each row contains the information about one payment. That makes it a little more complex and instead of multiple endless joins, let's solve it with a recursive CTE:
+So far example, looking at the below figure, assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?
+
+**Why does a recursion help here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way --- Each row contains the information about one payment, from one payer to one receiver. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. \*\*This makes it a little complex to track multiple 'hops' between users, making multiple joins a very problematic approach.
 
 <div class="mermaid">
 
 title\[<u>My Title</u>\]
 graph LR;
 title Flow of funds between users
-A(User A)--1--\>B(User B);
-B(User B)--2--\>C(User C);
-C(User C)--3--\>D(User D);
-C(User C)--3--\>E(User E);
-E(User E)--4--\>F(User F);
-D(User D)--4--\>G(User G);
-G(User G)--5--\>H(User H);
-F(User F)--5--\>H(User H);
+A(User Bob)--1--\>B(User Dan);
+B(User Dan)--2--\>C(User Joe);
+C(User Joe)--3--\>D(User Sarah);
+C(User Joe)--3--\>E(User Sharon);
+E(User Sharon)--4--\>F(User Fred);
+D(User Sarah)--4--\>G(User Greg);
+G(User Greg)--5--\>H(User Hanah);
+F(User Fred)--5--\>H(User Hanah);
 caption Given a user, we'd like to know where the funds ended up
 
 </div>
 
 <script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
 
-test
+Identifying the chain of transactions shows us **where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers**. This could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections.
 
--   our example
+#### The Data
+
+Let's have a look at our data:
+
+``` sql
+SELECT * 
+FROM Payments
+```
+
+| payment_id | payer | receiver | amount | payment_date |
+|:-----------|:------|:---------|-------:|:-------------|
+| 1          | A     | B        |    320 | 2023-01-14   |
+| 2          | B     | C        |    301 | 2023-01-15   |
+| 3          | C     | D        |    150 | 2023-01-16   |
+| 4          | C     | E        |    142 | 2023-01-16   |
+| 5          | E     | F        |    141 | 2023-01-17   |
+| 6          | D     | G        |    148 | 2023-01-17   |
+| 7          | F     | H        |    140 | 2023-01-18   |
+| 8          | G     | H        |    140 | 2023-01-18   |
+
+8 records
+
+Our table records payments between users, with each payment recorded as a separate row. We can reframe our whole discussion with the following questions, **given you identified Bob, can you follow the funds to where they ended up?**
+
+### Solution
+
+Let's start by solving it and then we'll break the recursion structure as well as discuss other scenarios:
+
+``` sql
+WITH recursivePayments AS (
+  SELECT 1 AS Iteration,
+    'Bob' as Source,
+    Payments.* 
+  FROM Payments
+  WHERE Payer = 'A'
+  UNION ALL
+  SELECT Iteration + 1 AS Iteration,
+    Source,
+    p.payment_id,
+    p.Payer,
+    p.receiver,
+    p.amount,
+    p.payment_date
+  FROM recursivePayments rp
+  JOIN Payments p on rp.receiver = p.payer
+    and rp.payment_date < p.payment_date
+  WHERE Iteration <= 5
+)
+
+SELECT * 
+FROM recursivePayments
+ORDER BY Iteration
+```
+
+| Iteration | Source | payment_id | payer | receiver | amount | payment_date |
+|----------:|:-------|-----------:|:------|:---------|-------:|:-------------|
+|         1 | Bob    |          1 | A     | B        |    320 | 2023-01-14   |
+|         2 | Bob    |          2 | B     | C        |    301 | 2023-01-15   |
+|         3 | Bob    |          3 | C     | D        |    150 | 2023-01-16   |
+|         3 | Bob    |          4 | C     | E        |    142 | 2023-01-16   |
+|         4 | Bob    |          5 | E     | F        |    141 | 2023-01-17   |
+|         4 | Bob    |          6 | D     | G        |    148 | 2023-01-17   |
+|         5 | Bob    |          8 | G     | H        |    140 | 2023-01-18   |
+|         5 | Bob    |          7 | F     | H        |    140 | 2023-01-18   |
+
+8 records
