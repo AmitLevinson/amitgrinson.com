@@ -62,15 +62,26 @@ sqlconn <- dbConnect(odbc(),
                       Database = "recursion")
 ```
 
+We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
+
+```{r, eval = FALSE}
+dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
+
+dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
+                                                  receiver = 'VARCHAR(10)', amount = 'INT',
+                                                  payment_date = 'DATE'), overwrite = TRUE)
+```
+
+
 **Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
-```
-```{sql connection='sqlconn', echo = TRUE}```
+```{r results='asis'}
+cat("```{sql connection='sqlconn', echo = TRUE}```", '```', sep = '\n')
 ```
 
 </details>
 
-## Basic Recursive Example
+## Basic Example
 
 Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. A recursion, as Wikipedia notes, is defined in terms of itself or of its type. In other words, I like to think of it as something that calls itself.
 
@@ -150,19 +161,25 @@ User A receives the funds from somewhere and transfers it down the chain. Eventu
 **Why does a recursion help here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way — Each row contains the information about one payment. That makes it a little more complex and instead of multiple endless joins, let's solve it with a recursive CTE:
 
 <div class="mermaid">
+title[<u>My Title</u>]
 graph LR;
-  A(User A)-->B(User B);
-  B(User B)-->C(User C);
-  C(User C)-->D(User D);
-  C(User C)-->E(User E);
-  E(User E)-->F(User F);
-  A(User A)-->D(User E);
-  A(User A)-->F(User F);
+  title Flow of funds between users
+  A(User A)--1-->B(User B);
+  B(User B)--2-->C(User C);
+  C(User C)--3-->D(User D);
+  C(User C)--3-->E(User E);
+  E(User E)--4-->F(User F);
+  D(User D)--4-->G(User G);
+  G(User G)--5-->H(User H);
+  F(User F)--5-->H(User H);
+caption Given a user, we'd like to know where the funds ended up
 </div>
 <script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
 
+Identifying the chain of transactions shows us **where the funds ended up as well as other actors along the way, returning a network of senders (payers) and receivers**.
+test
 
-
+dasdasdtwe
 
 test
 

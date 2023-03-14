@@ -48,33 +48,52 @@ sqlconn <- dbConnect(odbc(),
                       Database = "recursion")
 ```
 
+We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
+
+``` r
+dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
+
+dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
+                                                  receiver = 'VARCHAR(10)', amount = 'INT',
+                                                  payment_date = 'DATE'), overwrite = TRUE)
+```
+
 **Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
-    ```{sql connection='sqlconn', echo = TRUE}```
-
-</details>
-
-## Recursive CTE --- Basic Example
-
-### Example
-
-Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. A recursion, as Wikipedia notes, is defined in terms of itself or of its type. In other words, I like to think of it as something that calls itself.
-
-In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.**
-
-For example, to count until 10 (1000, ...) in SQL, we can run the following:
-
-``` sql
-WITH RecursiveCTE as (
-  SELECT 1 as N
-  UNION ALL
-  SELECT N + 1 as N
-  FROM RecursiveCTE
-  WHERE N < 10
-)
-
-SELECT * FROM RecursiveCTE
+``` r
+cat("```{sql connection='sqlconn', echo = TRUE}```", '```', sep = '\n')
 ```
+
+`{sql connection='sqlconn', echo = TRUE}`
+
+
+
+    </details>
+
+    ## Basic Recursive Example
+
+    Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. A recursion, as Wikipedia notes, is defined in terms of itself or of its type. In other words, I like to think of it as something that calls itself.
+
+    In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.** 
+
+    For example, to count until 10 (1000, ...) in SQL, we can run the following:
+
+
+
+    ::: {.cell connection='sqlconn'}
+
+    ```{.sql .cell-code}
+    WITH RecursiveCTE as (
+      SELECT 1 as N
+      UNION ALL
+      SELECT N + 1 as N
+      FROM RecursiveCTE
+      WHERE N < 10
+    )
+
+    SELECT * FROM RecursiveCTE
+
+<div class="knitsql-table">
 
 | N   |
 |:----|
@@ -90,6 +109,10 @@ SELECT * FROM RecursiveCTE
 | 10  |
 
 Displaying records 1 - 10
+
+</div>
+
+:::
 
 ### Block Breakdown
 
@@ -153,12 +176,9 @@ I'd think carefully before running an unlimited recursion. But if you do, set th
 
 ------------------------------------------------------------------------
 
--- Counting to 10
--- another hidden example of creating weekday from start of the year
+## Following the Money
 
-## Recursive CTE --- Following the Money
-
-Let's move on to a more practical example, or at least for me. Say you want to track the flow of money sent from one user to another. We can describe a possible flow of funds as such:
+Let's move on to a more practical example, or at least more practical for me. Payoneer is a payments platform and as a result we analyze large quantities of payments. A scenario that might occur is wanting to track the flow of money sent from one user to another, from that user to another and so on down the chain. \*\*Given
 
 User A receives the funds from somewhere and transfers it down the chain. Eventually, it ends up with user D and F (for simplicity we'll use a one-directional relationship). Starting with A, I'd like to identify the final users of the chain.
 
@@ -166,14 +186,18 @@ User A receives the funds from somewhere and transfers it down the chain. Eventu
 
 <div class="mermaid">
 
+title\[<u>My Title</u>\]
 graph LR;
-A(User A)--\>B(User B);
-B(User B)--\>C(User C);
-C(User C)--\>D(User D);
-C(User C)--\>E(User E);
-E(User E)--\>F(User F);
-A(User A)--\>D(User E);
-A(User A)--\>F(User F);
+title Flow of funds between users
+A(User A)--1--\>B(User B);
+B(User B)--2--\>C(User C);
+C(User C)--3--\>D(User D);
+C(User C)--3--\>E(User E);
+E(User E)--4--\>F(User F);
+D(User D)--4--\>G(User G);
+G(User G)--5--\>H(User H);
+F(User F)--5--\>H(User H);
+caption Given a user, we'd like to know where the funds ended up
 
 </div>
 
