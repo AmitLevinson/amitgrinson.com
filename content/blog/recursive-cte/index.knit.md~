@@ -2,7 +2,7 @@
 title: Recursive CTE to Identify Money Transfers
 author: Amit Grinson
 date: '2023-08-29'
-layout: single
+layout: single-sidebar
 slug: recursive-cte
 categories: [SQL]
 tags: [SQL, Recursion]
@@ -16,22 +16,10 @@ editor_options:
   chunk_output_type: inline
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
-```
 
 
-```{r, echo = FALSE}
-knit_print.data.frame = function(x, ...) {
-  res = paste(c("", "", knitr::kable(x)), collapse = "\n")
-  knitr::asis_output(res)
-}
 
-registerS3method(
-  "knit_print", "data.frame", knit_print.data.frame,
-  envir = asNamespace("knitr")
-)
-```
+
 
 
 > "Roses are red  
@@ -52,7 +40,9 @@ Hopefully either example (the generic and mine) will help you grasp it a little 
 
 I write my blog using the [Rstudio IDE](https://posit.co/) and although this post will focus on SQL, we need  to set up a local SQL connection. We're basically connecting to our local RDBMS, here MSSQL, and to a database I setup earlier.
 
-```{r}
+
+
+```r
 library(odbc)
 library(DBI)
 
@@ -62,9 +52,12 @@ sqlconn <- dbConnect(odbc(),
                       Database = "recursion")
 ```
 
+
 We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
 
-```{r, eval = FALSE}
+
+
+```r
 dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
 
 dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
@@ -73,11 +66,21 @@ dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT'
 ```
 
 
+
 **Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
-```{r}
+
+
+```r
 cat("```{sql connection='sqlconn'}", '/* SQL code goes here */', '```', sep = '\n')
 ```
+
+```
+## ```{sql connection='sqlconn'}
+## /* SQL code goes here */
+## ```
+```
+
 
 </details>
 
@@ -90,7 +93,9 @@ In SQL (here MSSQL), **a recursion comes into play with a Common table expressio
 For example, to count until 10 (1000, ...) in SQL, we can run the following:
 
 
-```{sql connection='sqlconn', echo = TRUE}
+
+
+```sql
 WITH RecursiveCTE as (
   SELECT 1 as N
   UNION ALL
@@ -101,6 +106,28 @@ WITH RecursiveCTE as (
 
 SELECT * FROM RecursiveCTE
 ```
+
+
+<div class="knitsql-table">
+
+
+Table: (\#tab:unnamed-chunk-5)Displaying records 1 - 10
+
+|N  |
+|:--|
+|1  |
+|2  |
+|3  |
+|4  |
+|5  |
+|6  |
+|7  |
+|8  |
+|9  |
+|10 |
+
+</div>
+
 
 ### Block Breakdown
 
@@ -121,7 +148,9 @@ Unlimited Iterations and Errors
 Running the above query for more iterations on the default max (of 100) will throw an error:
 
 
-```{sql connection='sqlconn', echo = TRUE, error = TRUE}
+
+
+```sql
 WITH RecursiveCTE as (
   SELECT 1 as N
   UNION ALL
@@ -135,11 +164,35 @@ OPTION(MAXRECURSION 100)
 
 ```
 
+
+<div class="knitsql-table">
+
+
+Table: (\#tab:unnamed-chunk-6)Displaying records 1 - 10
+
+|N  |
+|:--|
+|1  |
+|2  |
+|3  |
+|4  |
+|5  |
+|6  |
+|7  |
+|8  |
+|9  |
+|10 |
+
+</div>
+
+
 XXXXXXX Error XXXXXXX
 
 If you want your rec200rsion to go more than 100 iterations, just set the MAXRECURSION option to what you need. For an unlimited option use the value 0:
 
-```{sql connection='sqlconn', eval = FALSE}
+
+
+```sql
 WITH RecursiveCTE AS (
  ...
 )
@@ -147,6 +200,7 @@ WITH RecursiveCTE AS (
 SELECT * FROM RecursiveCTE
 OPTION(MAXRECURSION 0)
 ```
+
 
 
 
@@ -187,10 +241,34 @@ Identifying the chain of transactions shows us **where the funds ended up as wel
 
 Let's have a look at our data:
 
-```{sql connection='sqlconn', echo = TRUE}
+
+
+```sql
 SELECT TOP 10 * 
 FROM Payments
 ```
+
+
+<div class="knitsql-table">
+
+
+Table: (\#tab:unnamed-chunk-8)Displaying records 1 - 10
+
+|payment_id |payer  |receiver | amount|payment_date |
+|:----------|:------|:--------|------:|:------------|
+|1          |Bob    |Dan      |    320|2023-01-14   |
+|2          |A      |B        |    140|2023-01-08   |
+|3          |Dan    |Joe      |    301|2023-01-15   |
+|4          |Joe    |Sarah    |    150|2023-01-16   |
+|5          |C      |D        |    100|2023-01-16   |
+|6          |Joe    |Sharon   |    142|2023-01-16   |
+|7          |Sharon |Fred     |    141|2023-01-17   |
+|8          |A      |C        |     40|2023-01-18   |
+|9          |Sarah  |Greg     |    148|2023-01-17   |
+|10         |Fred   |Hanah    |    140|2023-01-18   |
+
+</div>
+
 
 Our table records payments between users, with each payment recorded as a separate row. I added some 'noise' of unrelated payments between users marked as a single letter, but treat them as if they were random names.  
 
@@ -200,49 +278,8 @@ We can reframe our requirment with the following questions, **given you identifi
 
 Let's start by solving it and then we'll break the recursion structure as well as discuss other scenarios:
 
-```{sql connection='sqlconn', echo = TRUE}
-WITH recursivePayments AS (
-  SELECT 1 AS Iteration,
-    Payments.* 
-  FROM Payments
-  WHERE Payer = 'Bob'
-  UNION ALL
-  SELECT Iteration + 1 AS Iteration,
-    p.*
-  FROM recursivePayments rp
-  JOIN Payments p on rp.receiver = p.payer
-    and rp.payment_date < p.payment_date
-  WHERE Iteration <= 5
-)
-
-SELECT * 
-FROM recursivePayments
-ORDER BY Iteration
-```
-
-Gorgeous!
-
-Let's unpack this query, based on the three pieces comprising the recursion:
-
-1. We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column 'Iteration' as (a) a way to understand how many hops we did and (b) as a component for breaking out of the recursion. 
-
-2. Our second part is the recursive member, where we're referencing the CTE we previosuly created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver previosuly now as a payer.** 
-
-So, with regards to our example, if in our anchor section we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on the next. The recrusive member here only plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. Notice how we only take information from the payments table in each section.
-
-I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds.
-
-3. Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations. I'd start with a low number and increase if needed. 
-
-From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? And other questions to help us understand the network and what had happened.
-
-### Possible Cons
 
 
 
 
-
-```{r echo = FALSE}
-dbDisconnect(sqlconn)
-```
 
