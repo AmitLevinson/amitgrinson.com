@@ -2,7 +2,7 @@
 title: Recursive CTE to Identify Money Transfers
 author: Amit Grinson
 date: '2023-08-29'
-layout: single-sidebar
+layout: single
 slug: recursive-cte
 categories: [SQL]
 tags: [SQL, Recursion]
@@ -64,7 +64,9 @@ dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT'
 cat("```{sql connection='sqlconn'}", '/* SQL code goes here */', '```', sep = '\n')
 ```
 
-`{sql connection='sqlconn'} /* SQL code goes here */`
+    ```{sql connection='sqlconn'}
+    /* SQL code goes here */
+    ```
 
 </details>
 
@@ -180,7 +182,6 @@ So far example, looking at the below figure, assuming Bob is the first step in t
 
 title\[<u>My Title</u>\]
 graph LR;
-title Flow of funds between users
 A(User Bob)--1--\>B(User Dan);
 B(User Dan)--2--\>C(User Joe);
 C(User Joe)--3--\>D(User Sarah);
@@ -189,7 +190,6 @@ E(User Sharon)--4--\>F(User Fred);
 D(User Sarah)--4--\>G(User Greg);
 G(User Greg)--5--\>H(User Hanah);
 F(User Fred)--5--\>H(User Hanah);
-caption Given a user, we'd like to know where the funds ended up
 
 </div>
 
@@ -221,7 +221,9 @@ FROM Payments
 
 Displaying records 1 - 10
 
-Our table records payments between users, with each payment recorded as a separate row. We can reframe our whole discussion with the following questions, **given you identified Bob, can you follow the funds to where they ended up?**
+Our table records payments between users, with each payment recorded as a separate row. I added some 'noise' of unrelated payments between users marked as a single letter, but treat them as if they were random names.
+
+We can reframe our requirment with the following questions, **given you identified Bob, can you follow the funds to where they ended up at?**
 
 ### Solution
 
@@ -230,18 +232,12 @@ Let's start by solving it and then we'll break the recursion structure as well a
 ``` sql
 WITH recursivePayments AS (
   SELECT 1 AS Iteration,
-    'Bob' as Source,
     Payments.* 
   FROM Payments
   WHERE Payer = 'Bob'
   UNION ALL
   SELECT Iteration + 1 AS Iteration,
-    Source,
-    p.payment_id,
-    p.Payer,
-    p.receiver,
-    p.amount,
-    p.payment_date
+    p.*
   FROM recursivePayments rp
   JOIN Payments p on rp.receiver = p.payer
     and rp.payment_date < p.payment_date
@@ -253,16 +249,16 @@ FROM recursivePayments
 ORDER BY Iteration
 ```
 
-| Iteration | Source | payment_id | payer  | receiver | amount | payment_date |
-|----------:|:-------|-----------:|:-------|:---------|-------:|:-------------|
-|         1 | Bob    |          1 | Bob    | Dan      |    320 | 2023-01-14   |
-|         2 | Bob    |          3 | Dan    | Joe      |    301 | 2023-01-15   |
-|         3 | Bob    |          4 | Joe    | Sarah    |    150 | 2023-01-16   |
-|         3 | Bob    |          6 | Joe    | Sharon   |    142 | 2023-01-16   |
-|         4 | Bob    |          7 | Sharon | Fred     |    141 | 2023-01-17   |
-|         4 | Bob    |          9 | Sarah  | Greg     |    148 | 2023-01-17   |
-|         5 | Bob    |         12 | Greg   | Hanah    |    140 | 2023-01-18   |
-|         5 | Bob    |         10 | Fred   | Hanah    |    140 | 2023-01-18   |
+| Iteration | payment_id | payer  | receiver | amount | payment_date |
+|----------:|-----------:|:-------|:---------|-------:|:-------------|
+|         1 |          1 | Bob    | Dan      |    320 | 2023-01-14   |
+|         2 |          3 | Dan    | Joe      |    301 | 2023-01-15   |
+|         3 |          4 | Joe    | Sarah    |    150 | 2023-01-16   |
+|         3 |          6 | Joe    | Sharon   |    142 | 2023-01-16   |
+|         4 |          7 | Sharon | Fred     |    141 | 2023-01-17   |
+|         4 |          9 | Sarah  | Greg     |    148 | 2023-01-17   |
+|         5 |         12 | Greg   | Hanah    |    140 | 2023-01-18   |
+|         5 |         10 | Fred   | Hanah    |    140 | 2023-01-18   |
 
 8 records
 
@@ -270,9 +266,11 @@ Gorgeous!
 
 Let's unpack this query, based on the three pieces comprising the recursion:
 
-1.  We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I added two new columns: 'Source' & 'Iteration'. Source is helpful if we are to run this on a few users at once, reminding us with whom we started this recursion. The iteration is also helpful as (a) a way to understand how many hops we did and (b) as a component for breaking out of the recursion.
+1.  We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column 'Iteration' as (a) a way to understand how many hops we did and (b) as a component for breaking out of the recursion.
 
-2.  Our second part is the recursive member, where we're referencing the CTE we previosuly created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver previosuly now as a payer.** So, with regards to our example, if in our anchor section we got Bob -\> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -\> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on the next.
+2.  Our second part is the recursive member, where we're referencing the CTE we previosuly created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver previosuly now as a payer.**
+
+So, with regards to our example, if in our anchor section we got Bob -\> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -\> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on the next. The recrusive member here only plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. Notice how we only take information from the payments table in each section.
 
 I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds.
 
@@ -280,4 +278,26 @@ I also added a Non-Equi Join operator so that we only take payments that *occurr
 
 From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? And other questions to help us understand the network and what had happened.
 
-### Possible Cons
+It's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a recursion in general, that I'll address below.
+
+### Cons
+
+Some of these cons relate specifically for this particular example, but you might be able to generalize them and be prepared for the recursion you'll run.
+
+1.  Complexity problem --- Since we don't know how many receiver we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start, who sends to 5 users, who each send to 5 (or even more!) users and so on. Or even having one user sending to many users at one iteration is risky and can cause setbacks.
+
+Another problem you might face is querying the same users again and again. Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be cleared with the outer final query referencing the recursion result, but is redundant nonetheless.
+
+#### So what can we use
+
+As I was exploring the recursion I met with one of our DBA who suggested that if this query becomes common, one approach might be to use a scripting language instead, e.g. Python.
+
+Instead of running a recursion we can loop through queries collecting the same flow model: The receiver now becomes the sender and we repeat the search process. This approach also makes it more controllable and robust: we can filter AHs we already queried to not repeat ourselves, break early if the next iteration exceeds a threshold, etc.
+
+### Final words --- Recurse away
+
+Hopefully you arrived here knowing a little more about recursive CTEs in SQL. Truthfully, it's likely you can solve the problem you're facing without a recursion. I don't use them frequently but following the several occasions I did I find them a useful tool to have in your SQL-commands toolbox.
+
+Start with a small data, make sure to set a termination condition and be mindful of your servers.
+
+Good luck!

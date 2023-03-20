@@ -168,7 +168,6 @@ So far example, looking at the below figure, assuming Bob is the first step in t
 <div class="mermaid">
 title[<u>My Title</u>]
 graph LR;
-  title Flow of funds between users
   A(User Bob)--1-->B(User Dan);
   B(User Dan)--2-->C(User Joe);
   C(User Joe)--3-->D(User Sarah);
@@ -177,7 +176,6 @@ graph LR;
   D(User Sarah)--4-->G(User Greg);
   G(User Greg)--5-->H(User Hanah);
   F(User Fred)--5-->H(User Hanah);
-caption Given a user, we'd like to know where the funds ended up
 </div>
 <script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
 
@@ -236,11 +234,29 @@ I also added a Non-Equi Join operator so that we only take payments that *occurr
 
 From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? And other questions to help us understand the network and what had happened.
 
-### Possible Cons
+It's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a recursion in general, that I'll address below.
 
+### Cons
 
+Some of these cons relate specifically for this particular example, but you might be able to generalize them and be prepared for the recursion you'll run.
 
+1. Complexity problem — Since we don't know how many receiver we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start, who sends to 5 users, who each send to 5 (or even more!) users and so on. Or even having one user sending to many users at one iteration is risky and can cause setbacks.
 
+Another problem you might face is querying the same users again and again. Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be cleared with the outer final query referencing the recursion result, but is redundant nonetheless.
+
+#### So what can we use
+
+As I was exploring the recursion I met with one of our DBA who suggested that if this query becomes common, one approach might be to use a scripting language instead, e.g. Python.
+
+Instead of running a recursion we can loop through queries collecting the same flow model: The receiver now becomes the sender and we repeat the search process. This approach also makes it more controllable and robust: we can filter AHs we already queried to not repeat ourselves, break early if the next iteration exceeds a threshold, etc.
+
+### Final words — Recurse away
+
+Hopefully you arrived here knowing a little more about recursive CTEs in SQL. Truthfully, it's likely you can solve the problem you're facing without a recursion. I don't use them frequently but following the several occasions I did I find them a useful tool to have in your SQL-commands toolbox. 
+
+Start with a small data, make sure to set a termination condition and be mindful of your servers.
+
+Good luck!
 
 ```{r echo = FALSE}
 dbDisconnect(sqlconn)
