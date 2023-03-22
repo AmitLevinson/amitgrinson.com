@@ -180,20 +180,30 @@ So far example, looking at the below figure, assuming Bob is the first step in t
 
 <div class="mermaid">
 
-title\[<u>My Title</u>\]
 graph LR;
-A(User Bob)--1--\>B(User Dan);
-B(User Dan)--2--\>C(User Joe);
-C(User Joe)--3--\>D(User Sarah);
-C(User Joe)--3--\>E(User Sharon);
-E(User Sharon)--4--\>F(User Fred);
-D(User Sarah)--4--\>G(User Greg);
-G(User Greg)--5--\>H(User Hanah);
-F(User Fred)--5--\>H(User Hanah);
+A(Bob)--1--\>B(Dan);
+B(Dan)--2--\>C(Joe);
+C(Joe)--3--\>D(Sarah);
+C(Joe)--3--\>E(Sharon);
+E(Sharon)--\|4\|--\>F(Fred);
+D(Sarah)--4--\>G(Greg);
+G(Greg)--5--\>H(Hanah);
+F(Fred)--5--\>H(Hanah);
 
 </div>
 
 <script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
+<style type="text/css">
+#mermaid-1679428403739 .edgeLabel {
+  background-color: none;
+  z-index: 1;
+}
+
+#mermaid-1679428403739 .node rect {
+  fill: none;
+  stroke: #3f51b5;
+}
+</style>
 
 Identifying the chain of transactions shows us **where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers**. This could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections.
 

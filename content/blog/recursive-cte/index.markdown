@@ -2,7 +2,7 @@
 title: Recursive CTE to Identify Money Transfers
 author: Amit Grinson
 date: '2023-08-29'
-layout: single-sidebar
+layout: single
 slug: recursive-cte
 categories: [SQL]
 tags: [SQL, Recursion]
@@ -111,7 +111,7 @@ SELECT * FROM RecursiveCTE
 <div class="knitsql-table">
 
 
-Table: (\#tab:unnamed-chunk-5)Displaying records 1 - 10
+Table: Table 1: Displaying records 1 - 10
 
 |N  |
 |:--|
@@ -168,7 +168,7 @@ OPTION(MAXRECURSION 100)
 <div class="knitsql-table">
 
 
-Table: (\#tab:unnamed-chunk-6)Displaying records 1 - 10
+Table: Table 2: Displaying records 1 - 10
 
 |N  |
 |:--|
@@ -219,21 +219,34 @@ So far example, looking at the below figure, assuming Bob is the first step in t
 
 **Why does a recursion help here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way — Each row contains the information about one payment, from one payer to one receiver. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. **This makes it a little complex to track multiple 'hops' between users, making multiple joins a very problematic approach.
 
+
 <div class="mermaid">
-title[<u>My Title</u>]
 graph LR;
-  title Flow of funds between users
-  A(User Bob)--1-->B(User Dan);
-  B(User Dan)--2-->C(User Joe);
-  C(User Joe)--3-->D(User Sarah);
-  C(User Joe)--3-->E(User Sharon);
-  E(User Sharon)--4-->F(User Fred);
-  D(User Sarah)--4-->G(User Greg);
-  G(User Greg)--5-->H(User Hanah);
-  F(User Fred)--5-->H(User Hanah);
-caption Given a user, we'd like to know where the funds ended up
+  A(Bob)--1-->B(Dan);
+  B(Dan)--2-->C(Joe);
+  C(Joe)--3-->D(Sarah);
+  C(Joe)--3-->E(Sharon);
+  E(Sharon)--|4|-->F(Fred);
+  D(Sarah)--4-->G(Greg);
+  G(Greg)--5-->H(Hanah);
+  F(Fred)--5-->H(Hanah);
 </div>
 <script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
+
+
+<style type="text/css">
+#mermaid-1679428403739 .edgeLabel {
+  background-color: none;
+  z-index: 1;
+}
+
+#mermaid-1679428403739 .node rect {
+  fill: none;
+  stroke: #3f51b5;
+}
+</style>
+
+
 
 Identifying the chain of transactions shows us **where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers**. This could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections.
 
@@ -252,7 +265,7 @@ FROM Payments
 <div class="knitsql-table">
 
 
-Table: (\#tab:unnamed-chunk-8)Displaying records 1 - 10
+Table: Table 3: Displaying records 1 - 10
 
 |payment_id |payer  |receiver | amount|payment_date |
 |:----------|:------|:--------|------:|:------------|
@@ -279,6 +292,86 @@ We can reframe our requirment with the following questions, **given you identifi
 Let's start by solving it and then we'll break the recursion structure as well as discuss other scenarios:
 
 
+
+```sql
+WITH recursivePayments AS (
+  SELECT 1 AS Iteration,
+    Payments.* 
+  FROM Payments
+  WHERE Payer = 'Bob'
+  UNION ALL
+  SELECT Iteration + 1 AS Iteration,
+    p.*
+  FROM recursivePayments rp
+  JOIN Payments p on rp.receiver = p.payer
+    and rp.payment_date < p.payment_date
+  WHERE Iteration <= 5
+)
+
+SELECT * 
+FROM recursivePayments
+ORDER BY Iteration
+```
+
+
+<div class="knitsql-table">
+
+
+Table: Table 4: 8 records
+
+| Iteration| payment_id|payer  |receiver | amount|payment_date |
+|---------:|----------:|:------|:--------|------:|:------------|
+|         1|          1|Bob    |Dan      |    320|2023-01-14   |
+|         2|          3|Dan    |Joe      |    301|2023-01-15   |
+|         3|          4|Joe    |Sarah    |    150|2023-01-16   |
+|         3|          6|Joe    |Sharon   |    142|2023-01-16   |
+|         4|          7|Sharon |Fred     |    141|2023-01-17   |
+|         4|          9|Sarah  |Greg     |    148|2023-01-17   |
+|         5|         12|Greg   |Hanah    |    140|2023-01-18   |
+|         5|         10|Fred   |Hanah    |    140|2023-01-18   |
+
+</div>
+
+
+Gorgeous!
+
+Let's unpack this query, based on the three pieces comprising the recursion:
+
+1. We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column 'Iteration' as (a) a way to understand how many hops we did and (b) as a component for breaking out of the recursion. 
+
+2. Our second part is the recursive member, where we're referencing the CTE we previosuly created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver previosuly now as a payer.** 
+
+So, with regards to our example, if in our anchor section we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on the next. The recrusive member here only plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. Notice how we only take information from the payments table in each section.
+
+I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds.
+
+3. Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations. I'd start with a low number and increase if needed. 
+
+From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? And other questions to help us understand the network and what had happened.
+
+It's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a recursion in general, that I'll address below.
+
+### Cons
+
+Some of these cons relate specifically for this particular example, but you might be able to generalize them and be prepared for the recursion you'll run.
+
+1. Complexity problem — Since we don't know how many receiver we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start, who sends to 5 users, who each send to 5 (or even more!) users and so on. Or even having one user sending to many users at one iteration is risky and can cause setbacks.
+
+Another problem you might face is querying the same users again and again. Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be cleared with the outer final query referencing the recursion result, but is redundant nonetheless.
+
+#### So what can we use
+
+As I was exploring the recursion I met with one of our DBA who suggested that if this query becomes common, one approach might be to use a scripting language instead, e.g. Python.
+
+Instead of running a recursion we can loop through queries collecting the same flow model: The receiver now becomes the sender and we repeat the search process. This approach also makes it more controllable and robust: we can filter AHs we already queried to not repeat ourselves, break early if the next iteration exceeds a threshold, etc.
+
+### Final words — Recurse away
+
+Hopefully you arrived here knowing a little more about recursive CTEs in SQL. Truthfully, it's likely you can solve the problem you're facing without a recursion. I don't use them frequently but following the several occasions I did I find them a useful tool to have in your SQL-commands toolbox. 
+
+Start with a small data, make sure to set a termination condition and be mindful of your servers.
+
+Good luck!
 
 
 
