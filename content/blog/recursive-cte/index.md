@@ -119,7 +119,10 @@ A threshold is important to break out, especially if the complexity of the probl
 
 ------------------------------------------------------------------------
 
+<details>
+<summary>
 Unlimited Iterations and Errors
+</summary>
 
 Running the above query for more iterations on the default max (of 100) will throw an error:
 
@@ -129,27 +132,24 @@ WITH RecursiveCTE as (
   UNION ALL
   SELECT N + 1 as N
   FROM RecursiveCTE
-  WHERE N < 1000
+  WHERE N < 10
 )
 
-SELECT * FROM RecursiveCTE
-OPTION(MAXRECURSION 100)
+SELECT TOP 3 FROM RecursiveCTE
+OPTION(MAXRECURSION 5)
 ```
 
-| N   |
-|:----|
-| 1   |
-| 2   |
-| 3   |
-| 4   |
-| 5   |
-| 6   |
-| 7   |
-| 8   |
-| 9   |
-| 10  |
+    Error: nanodbc/nanodbc.cpp:1655: 42000: [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'FROM'.  [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. 
+    <SQL> 'WITH RecursiveCTE as (
+      SELECT 1 as N
+      UNION ALL
+      SELECT N + 1 as N
+      FROM RecursiveCTE
+      WHERE N < 10
+    )
 
-Displaying records 1 - 10
+    SELECT TOP 3 FROM RecursiveCTE
+    OPTION(MAXRECURSION 5)'
 
 XXXXXXX Error XXXXXXX
 
