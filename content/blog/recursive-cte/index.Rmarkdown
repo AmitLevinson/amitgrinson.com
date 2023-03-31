@@ -94,7 +94,7 @@ Let's break this query up and understand how it works (adapted from [sqlservertu
 
 2. The second piece is a `UNION ALL` that enables the returning of all rows for each recursion.
 
-3. The third part is, in a sense, the recursion itself. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here `1`. We select the value and add a 1 to it, returning for the second iteration (R<sub>2</sub>) with the value 2. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE N < 10`, and our query breaks out. 
+3. The third part is, in a sense, the recursion itself and what might also be called a **recrusive member**. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here `1`. We select the value and add a 1 to it, returning for the second iteration (R<sub>2</sub>) the value 2. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE N < 10`, terminating our recursion. 
 
 A threshold is important to break out, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error. 
 
@@ -222,11 +222,11 @@ ORDER BY Iteration
 
 Let's unpack this query, based on the three pieces comprising the recursion:
 
-1. We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
+1. We start off with the *Anchor*, filtering to the user we'd like to track his funds, returing one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
 
-2. Our second part is the recursive member, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver with the original payments now as a payer.**  
+2. Our second part is the *recursive member*, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver with the original payments now as a payer.**  
 <br>If in our anchor section (the first select statement) we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
-<br>We can see that the recursive member here mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table, the recursion helps us iterate across the network.  
+<br>We can see that the recursive member mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table! The recursion helps us iterate across the network.  
 <br>I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the cons section.
 
 3. **Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations.** I would start with a low number and increase if needed. 
@@ -252,13 +252,11 @@ graph LR;
 </div>
 
 
-It's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a SQL recursion in general, that I'll address below.
+In my opinion it's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a SQL recursion in general, that I'll address below.
 
 ### Cons
 
-Some of these cons relate specifically for this particular example, but you might be able to generalize them and be prepared for the recursion you'll run.
-
-1. Complexity — Since we don't know how many receiver we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on. 
+1. Problem complexity — Since we don't know how many receivers we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on. 
 
 2. Querying the same data — Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be dealt with in the outer final query referencing the recursion result, but it is redundant nonetheless.
 
