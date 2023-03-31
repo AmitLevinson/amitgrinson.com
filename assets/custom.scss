@@ -18,8 +18,6 @@ Garrick Aden-Buie https://www.garrickadenbuie.com/
 }
 
 
-
-
 p, summary {
   font-size: 1.150em;
   line-height: 1.25;
@@ -37,6 +35,7 @@ ul, ol {
   font-size: 1.130em;
   > li > p {
     font-size: 1em;
+    line-height: 1.3em;
   }
   ul, ol {
     li {
@@ -110,13 +109,13 @@ code,
   font-weight: 400;
 }
 
-p code:not(.sourceCode) {
+/*p code:not(.sourceCode) {
   white-space: pre-wrap;
   word-break: break-word;
+  
+}*/
 
-}
-
-.post-body > p > code {
+p code, .post-body>p>code  {
   background-color: #f0f0f0;
   padding: 0.15em;
   border-radius: 5px;
@@ -210,7 +209,7 @@ div.alert-warning > div:first-child::before {
 
 /* tables, mainly for SQL tables */
 
-div.knitsql-table caption {
+div.knitsql-table caption, .knitsql-table p {
   display: none;
 }
 /* Based on Bootstrap's `table-responsive` style. */
@@ -237,6 +236,7 @@ table > tfoot > tr > td {
 table > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #ddd;
+  font-size: 1.1em;
 }
 
 table > caption + thead > tr:first-child > th,

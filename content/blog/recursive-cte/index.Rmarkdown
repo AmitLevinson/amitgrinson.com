@@ -1,5 +1,5 @@
 ---
-title: Following Money Transfers and Layering using a Recursive CTE
+title: Following users' funds and possible money layering using a recursive CTE
 author: Amit Grinson
 date: '2023-04-03'
 layout: single
@@ -10,7 +10,6 @@ subtitle: 'Learning recursive CTEs by following money layering and transfers'
 summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal formatted data. In this post we learn to use them to identify where money was moved to by following users transfer activities'
 featured: yes
 projects: []
-mermaid: true
 format: hugo-md
 editor_options: 
   chunk_output_type: inline
@@ -52,7 +51,7 @@ sqlconn <- dbConnect(odbc(),
 We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
 
 ```{r, eval = FALSE}
-# dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
+dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
 
 dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
                                                   receiver = 'VARCHAR(10)', amount = 'INT',
@@ -103,7 +102,28 @@ A threshold is important to break out, especially if the complexity of the probl
 <details>
 <summary>More / Unlimited Iterations</summary>
 
-If we were to run the above query and try to produce 1000 numbers we'd get an error since we'd exceed the default of 100 iterations. If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
+If we were to run the above query and try to produce 1000 numbers we'd get an error since we'd exceed the default of 100 iterations[^1]. You can see something similar - and more explicit - with the following code chunk:
+
+
+[^1]: Though for some reason here it doesn't throw an error so I had to give an example with an explicit lower threshold.
+
+```{sql connection='sqlconn', echo = TRUE, error= TRUE}
+WITH RecursiveCTE as (
+  SELECT 1 as N
+  UNION ALL
+  SELECT N + 1 as N
+  FROM RecursiveCTE
+  WHERE N < 10
+)
+
+SELECT * FROM RecursiveCTE
+OPTION(MAXRECURSION 5)
+```
+
+We set the number of iterations to be 5, but our recursion's termination condition is at 10. Once we reach 5 iterations we receive an error that we exhausted the max recursion and our whole process breaks.
+
+If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
+
 
 ```{sql connection='sqlconn', eval = FALSE}
 WITH RecursiveCTE AS (
@@ -116,6 +136,7 @@ OPTION(MAXRECURSION 0)
 
 **Though I'd think carefully before running an unlimited recursion and if you do**, make sure to set a break-out option in the `WHERE` clause.
 
+
 </details>
 
 ## Following the Money 💸
@@ -124,7 +145,7 @@ Let's move on to a more practical example, or at least more practical for me. Pa
 
 **Why would we want a recursion here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way. Each row contains the information about a payment: date, amount, loader, receiver, etc. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. **Tabluar data like this makes it complex to track multiple 'iterations' between users and, as such, makes a recursive more suitable than multiple (if not endless) joins on the same table.**
 
-#### The Network & Problem
+### The Network & Problem — Tracking the funds
 
 <div class="mermaid">
 graph LR;
@@ -156,9 +177,9 @@ graph LR;
 Looking at the above figure our goal will be to try and track Bob's funds — Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?
 
 
-Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^1]. **Tracking funds could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
+Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
 
-[^1]: For simplicty we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.
+[^2]: For simplicty we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.
 
 ### The Data
 
@@ -204,9 +225,9 @@ Let's unpack this query, based on the three pieces comprising the recursion:
 1. We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
 
 2. Our second part is the recursive member, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver with the original payments now as a payer.**  
-If in our anchor section (the first select statement) we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
-We can see that the recursive member here mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table, the recursion helps us iterate across the network.  
-I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the cons section.
+<br>If in our anchor section (the first select statement) we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
+<br>We can see that the recursive member here mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table, the recursion helps us iterate across the network.  
+<br>I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the cons section.
 
 3. **Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations.** I would start with a low number and increase if needed. 
 
@@ -224,7 +245,7 @@ graph LR;
   B(Dan)--2-->C(Joe);
   C(Joe)--3-->D(Sarah);
   C(Joe)--3-->E(Sharon);
-  E(Sharon)--|4|-->F(Fred);
+  E(Sharon)--4-->F(Fred);
   D(Sarah)--4-->G(Greg);
   G(Greg)--5-->H(Hanah);
   F(Fred)--5-->H(Hanah);
