@@ -73,54 +73,68 @@ Well, before we talk about a recursive CTE let's briefly discuss a recursion in 
 
 In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.** 
 
-For example, to count until 10 (1000, ...) in SQL using a recursion, we can run the following:
+As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates.
+
+Let's see how this looks:
 
 
 ```{sql connection='sqlconn', echo = TRUE}
+DECLARE @StartDate DATE = '2023-01-01';
+
 WITH RecursiveCTE as (
-  SELECT 1 as N
+  SELECT 
+    @StartDate as Date,
+    DATENAME(weekday, @StartDate) as DayOfWeek
   UNION ALL
-  SELECT N + 1 as N
+  SELECT 
+    DATEADD(day, 1, Date) as Date,
+    DATENAME(weekday, DATEADD(day, 1, Date)) as DayOfWeek
   FROM RecursiveCTE
-  WHERE N < 10
+  WHERE Date < GETDATE()
 )
 
 SELECT * FROM RecursiveCTE
+OPTION(MAXRECURSION 300)
 ```
 
-Let's break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)):
+Allright, we'll break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)). We first create a variable with the start date as it's easier than writing inline and requiring `CAST`ing it; probably relevant only for the example.
 
-1. The first part `SELECT 1 as N` is basically **the Anchor**. It's the first query from which the recursion will build on, and here we're explicit in our reference of a specific value: We're creating a table with one column named `N` that contains the value `1`.
+As for the recursion:
 
-2. The second piece is a `UNION ALL` that enables the returning of all rows for each recursion.
+1. The first `SELECT` is basically **the Anchor**. It's the first query from which the recursion will build on, and here we are explicit in our reference of a specific value: We're creating a table with one row filled with two columns Date and its corresponding weekday.
 
-3. The third part is, in a sense, the recursion itself and what might also be called a **recrusive member**. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here `1`. We select the value and add a 1 to it, returning for the second iteration (R<sub>2</sub>) the value 2. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE N < 10`, terminating our recursion. 
+2. The second piece is a `UNION ALL` that enables the returning of all rows for each recursion run.
 
-A threshold is important to break out, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error. 
+3. The third part is, in a sense, the recursion itself and what might also be called a **recrusive member**. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here our start date and weekday. We then select tat row and add a day to the date and increase the week day by one, returning for the second iteration (R<sub>2</sub>) '2023-01-02' and 'Monday'. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE Date < GETDATE()`, terminating our recursion completely. 
+
+A threshold is important to break out, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error. For that purpose I added a MAXRECURSION of 300 to accommodate it. 
 
 
 <details>
 <summary>More / Unlimited Iterations</summary>
 
-If we were to run the above query and try to produce 1000 numbers we'd get an error since we'd exceed the default of 100 iterations[^1]. You can see something similar - and more explicit - with the following code chunk:
-
-
-[^1]: Though for some reason here it doesn't throw an error so I had to give an example with an explicit lower threshold.
+If we were to run the above query and try to produce dates for more than a year without setting the `OPTION (MAXRECURSION X)` we'd get an error since we'd exceed the default of 100 iterations. You can see something similar - and more explicit - with the following code chunk:
 
 ```{sql connection='sqlconn', echo = TRUE, error= TRUE}
+DECLARE @StartDate DATE = '2022-01-01';
+
 WITH RecursiveCTE as (
-  SELECT 1 as N
+  SELECT 
+    @StartDate as Date,
+    DATENAME(weekday, @StartDate) as DayOfWeek
   UNION ALL
-  SELECT N + 1 as N
+  SELECT 
+    DATEADD(day, 1, Date) as Date,
+    DATENAME(weekday, DATEADD(day, 1, Date)) as DayOfWeek
   FROM RecursiveCTE
-  WHERE N < 10
+  WHERE Date < GETDATE()
 )
 
 SELECT * FROM RecursiveCTE
 OPTION(MAXRECURSION 5)
 ```
 
-We set the number of iterations to be 5, but our recursion's termination condition is at 10. Once we reach 5 iterations we receive an error that we exhausted the max recursion and our whole process breaks.
+Once we reach 100 iterations we receive an error that we exhausted the max recursion and our whole process breaks.
 
 If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
 
@@ -141,7 +155,7 @@ OPTION(MAXRECURSION 0)
 
 ## Following the Money 💸
 
-Let's move on to a more practical example, or at least more practical for me. Payoneer is a payments platform, and as a result we analyze large quantities of payments to, from and between users. **A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.** 
+Let's move on to a more complex and practical example, or at least practical for me. Payoneer is a payments platform, and as a result we analyze large quantities of payments to, from and between users. **A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.** 
 
 **Why would we want a recursion here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way. Each row contains the information about a payment: date, amount, loader, receiver, etc. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. **Tabluar data like this makes it complex to track multiple 'iterations' between users and, as such, makes a recursive more suitable than multiple (if not endless) joins on the same table.**
 
