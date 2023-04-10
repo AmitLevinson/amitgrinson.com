@@ -188,7 +188,7 @@ graph LR;
 ```
 
 
-Looking at the above figure our goal will be to try and track Bob's funds — Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?
+Looking at the above figure our goal will be to try and track Bob's funds — **Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?**
 
 
 Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
@@ -251,7 +251,7 @@ Make sure to have a terminating condition in place if you're querying large quan
 
 From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? We can answer these and other questions as well as visualize the network once its collection is completed, whatever helps us gets the job done.
 
-Here's our diagram of the network now complete with the intermediate users:
+Here's our diagram of the network now complete with the intermediate users we identified:
 
 <div class="mermaid">
 graph LR;
@@ -273,6 +273,8 @@ In my opinion it's a pretty slick way to identify a network quickly, without nee
 1. Problem complexity — Since we don't know how many receivers we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on. 
 
 2. Querying the same data — Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be dealt with in the outer final query referencing the recursion result, but it is redundant nonetheless.
+
+I assume there's also other server/performance/query plan issues I'm not aware of, so if you know something do reach out!
 
 #### So what else can we use
 
