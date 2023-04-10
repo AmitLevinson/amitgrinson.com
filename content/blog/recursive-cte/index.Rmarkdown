@@ -113,30 +113,7 @@ A threshold is important to break out, especially if the complexity of the probl
 <details>
 <summary>More / Unlimited Iterations</summary>
 
-If we were to run the above query and try to produce dates for more than a year without setting the `OPTION (MAXRECURSION X)` we'd get an error since we'd exceed the default of 100 iterations. You can see something similar - and more explicit - with the following code chunk:
-
-```{sql connection='sqlconn', echo = TRUE, error= TRUE}
-DECLARE @StartDate DATE = '2022-01-01';
-
-WITH RecursiveCTE as (
-  SELECT 
-    @StartDate as Date,
-    DATENAME(weekday, @StartDate) as DayOfWeek
-  UNION ALL
-  SELECT 
-    DATEADD(day, 1, Date) as Date,
-    DATENAME(weekday, DATEADD(day, 1, Date)) as DayOfWeek
-  FROM RecursiveCTE
-  WHERE Date < GETDATE()
-)
-
-SELECT * FROM RecursiveCTE
-OPTION(MAXRECURSION 5)
-```
-
-Once we reach 100 iterations we receive an error that we exhausted the max recursion and our whole process breaks.
-
-If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
+If we were to run the above query and try to produce dates for more than a year without setting the `OPTION (MAXRECURSION X)` we'd get an error since we'd exceed the default of 100 iterations. If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
 
 
 ```{sql connection='sqlconn', eval = FALSE}
@@ -208,9 +185,41 @@ Our table records payments between users, with each payment recorded as a separa
 
 > Given you identified Bob as someone you want to investigate to where his funds ended up, can you follow his receivers, their receivers and eventually identify where the funds ended up?
 
+
+<details>
+<summary>Create the Data Locally</summary>
+
+Join along and try for yourself by creating the table in your current MSSQL instance (in your server or as a temp table by adding #):
+
+```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+CREATE TABLE Payments
+    ([payment_id] int, [payer] varchar(6), [receiver] varchar(6), [amount] int, [payment_date] varchar(10))
+;
+    
+INSERT INTO Payments
+    ([payment_id], [payer], [receiver], [amount], [payment_date])
+VALUES
+    (1, 'Bob', 'Dan', 320, '14/01/2023'),
+    (2, 'A', 'B', 140, '08/01/2023'),
+    (3, 'Dan', 'Joe', 301, '15/01/2023'),
+    (4, 'Joe', 'Sarah', 150, '16/01/2023'),
+    (5, 'C', 'D', 100, '16/01/2023'),
+    (6, 'Joe', 'Sharon', 142, '16/01/2023'),
+    (7, 'Sharon', 'Fred', 141, '17/01/2023'),
+    (8, 'A', 'C', 40, '18/01/2023'),
+    (9, 'Sarah', 'Greg', 148, '17/01/2023'),
+    (10, 'Fred', 'Hanah', 140, '18/01/2023'),
+    (11, 'E', 'F', 20, '18/01/2023'),
+    (12, 'Greg', 'Hanah', 140, '18/01/2023'),
+    (13, 'G', 'H', 51, '01/02/2023')
+;
+```
+
+</details>
+
 ### Solution — Using a recursion to follow the money
 
-Let's start by solving it and then we'll break the recursion structure similar to our basic example at the start:
+We'll start by solving it and then we'll break the recursion structure similar to our basic example at the start:
 
 ```{sql connection='sqlconn', echo = TRUE}
 WITH recursivePayments AS (
