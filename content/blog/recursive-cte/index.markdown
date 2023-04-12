@@ -194,7 +194,7 @@ graph LR;
 Looking at the above figure our goal will be to try and track Bob's funds — **Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?**
 
 
-Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money laundering and layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
+Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money laundering and layering: Fraudsters get the money into the system (launder it somehow) and then might try to layer it, send it between users in order to masquerade its' origin.** Alternatively, you might one to use it to map out large networks and their connections for other analytical purposes.
 
 [^2]: For simplicity we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.
 
