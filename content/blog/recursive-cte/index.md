@@ -1,5 +1,5 @@
 ---
-title: Following Money Transfers and Layering using a Recursive CTE
+title: Following users' funds and possible money layering using a recursive CTE
 author: Amit Grinson
 date: '2023-04-03'
 layout: single
@@ -10,7 +10,6 @@ subtitle: 'Learning recursive CTEs by following money layering and transfers'
 summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal formatted data. In this post we learn to use them to identify where money was moved to by following users transfer activities'
 featured: yes
 projects: []
-mermaid: true
 format: hugo-md
 editor_options: 
   chunk_output_type: inline
@@ -51,7 +50,7 @@ sqlconn <- dbConnect(odbc(),
 We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
 
 ``` r
-# dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
+dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
 
 dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
                                                   receiver = 'VARCHAR(10)', amount = 'INT',
@@ -70,51 +69,62 @@ Well, before we talk about a recursive CTE let's briefly discuss a recursion in 
 
 In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.**
 
-For example, to count until 10 (1000, ...) in SQL using a recursion, we can run the following:
+As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates[^1].
+
+Let's see how this looks:
 
 ``` sql
+DECLARE @StartDate DATE = '2023-01-01';
+
 WITH RecursiveCTE as (
-  SELECT 1 as N
+  SELECT 
+    @StartDate as Date,
+    DATENAME(weekday, @StartDate) as DayOfWeek
   UNION ALL
-  SELECT N + 1 as N
+  SELECT 
+    DATEADD(day, 1, Date) as Date,
+    DATENAME(weekday, DATEADD(day, 1, Date)) as DayOfWeek
   FROM RecursiveCTE
-  WHERE N < 10
+  WHERE Date < GETDATE()
 )
 
 SELECT * FROM RecursiveCTE
+OPTION(MAXRECURSION 300)
 ```
 
-| N   |
-|:----|
-| 1   |
-| 2   |
-| 3   |
-| 4   |
-| 5   |
-| 6   |
-| 7   |
-| 8   |
-| 9   |
-| 10  |
+| Date       | DayOfWeek |
+|:-----------|:----------|
+| 2023-01-01 | Sunday    |
+| 2023-01-02 | Monday    |
+| 2023-01-03 | Tuesday   |
+| 2023-01-04 | Wednesday |
+| 2023-01-05 | Thursday  |
+| 2023-01-06 | Friday    |
+| 2023-01-07 | Saturday  |
+| 2023-01-08 | Sunday    |
+| 2023-01-09 | Monday    |
+| 2023-01-10 | Tuesday   |
 
 Displaying records 1 - 10
 
-Let's break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)):
+Allright, we'll break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)). We first create a variable with the start date as it's easier than writing inline and requiring `CAST`ing it; probably relevant only for the example.
 
-1.  The first part `SELECT 1 as N` is basically **the Anchor**. It's the first query from which the recursion will build on, and here we're explicit in our reference of a specific value: We're creating a table with one column named `N` that contains the value `1`.
+As for the recursion:
 
-2.  The second piece is a `UNION ALL` that enables the returning of all rows for each recursion.
+1.  The first `SELECT` is basically **the Anchor**. It's the first query from which the recursion will build on, and here we are explicit in our reference of a specific value: We're creating a table with one row filled with two columns Date and its corresponding weekday.
 
-3.  The third part is, in a sense, the recursion itself. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here `1`. We select the value and add a 1 to it, returning for the second iteration (R<sub>2</sub>) with the value 2. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE N < 10`, and our query breaks out.
+2.  The second piece is a `UNION ALL` that enables the returning of all rows for each recursion run.
 
-A threshold is important to break out, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error.
+3.  The third part is, in a sense, the recursion itself and what might also be called a **recrusive member**. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here our start date and weekday. We then select tat row and add a day to the date and increase the week day by one, returning for the second iteration (R<sub>2</sub>) '2023-01-02' and 'Monday'. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE Date < GETDATE()`, terminating our recursion completely.
+
+A threshold is important to break out, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error. For that purpose I added a MAXRECURSION of 300 to accommodate it.
 
 <details>
 <summary>
 More / Unlimited Iterations
 </summary>
 
-If we were to run the above query and try to produce 1000 numbers we'd get an error since we'd exceed the default of 100 iterations. If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
+If we were to run the above query and try to produce dates for more than a year without setting the `OPTION (MAXRECURSION X)` we'd get an error since we'd exceed the default of 100 iterations. If you want your recursion to go more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
 
 ``` sql
 WITH RecursiveCTE AS (
@@ -131,11 +141,11 @@ OPTION(MAXRECURSION 0)
 
 ## Following the Money 💸
 
-Let's move on to a more practical example, or at least more practical for me. Payoneer is a payments platform, and as a result we analyze large quantities of payments to, from and between users. **A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.**
+Let's move on to a more complex and practical example, or at least practical for me. Payoneer is a payments platform, and as a result we analyze large quantities of payments to, from and between users. **A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.**
 
 **Why would we want a recursion here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way. Each row contains the information about a payment: date, amount, loader, receiver, etc. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. **Tabluar data like this makes it complex to track multiple 'iterations' between users and, as such, makes a recursive more suitable than multiple (if not endless) joins on the same table.**
 
-#### The Network & Problem
+### The Network & Problem --- Tracking the funds
 
 <div class="mermaid">
 
@@ -164,9 +174,9 @@ F(?)--5--\>H(Hanah);
 }
 </style>
 
-Looking at the above figure our goal will be to try and track Bob's funds --- Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?
+Looking at the above figure our goal will be to try and track Bob's funds --- **Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?**
 
-Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^1]. **Tracking funds could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
+Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money layering, sending funds between users to masquerade the funds, as well as mapping out large networks and their connections for other purposes.**
 
 ### The Data
 
@@ -191,9 +201,42 @@ Our table records payments between users, with each payment recorded as a separa
 
 > Given you identified Bob as someone you want to investigate to where his funds ended up, can you follow his receivers, their receivers and eventually identify where the funds ended up?
 
+<details>
+<summary>
+Create the Data Locally
+</summary>
+
+Join along and try for yourself by creating the table in your current MSSQL instance (in your server or as a temp table by adding \#):
+
+``` sql
+CREATE TABLE Payments
+    ([payment_id] int, [payer] varchar(6), [receiver] varchar(6), [amount] int, [payment_date] varchar(10))
+;
+    
+INSERT INTO Payments
+    ([payment_id], [payer], [receiver], [amount], [payment_date])
+VALUES
+    (1, 'Bob', 'Dan', 320, '14/01/2023'),
+    (2, 'A', 'B', 140, '08/01/2023'),
+    (3, 'Dan', 'Joe', 301, '15/01/2023'),
+    (4, 'Joe', 'Sarah', 150, '16/01/2023'),
+    (5, 'C', 'D', 100, '16/01/2023'),
+    (6, 'Joe', 'Sharon', 142, '16/01/2023'),
+    (7, 'Sharon', 'Fred', 141, '17/01/2023'),
+    (8, 'A', 'C', 40, '18/01/2023'),
+    (9, 'Sarah', 'Greg', 148, '17/01/2023'),
+    (10, 'Fred', 'Hanah', 140, '18/01/2023'),
+    (11, 'E', 'F', 20, '18/01/2023'),
+    (12, 'Greg', 'Hanah', 140, '18/01/2023'),
+    (13, 'G', 'H', 51, '01/02/2023')
+;
+```
+
+</details>
+
 ### Solution --- Using a recursion to follow the money
 
-Let's start by solving it and then we'll break the recursion structure similar to our basic example at the start:
+We'll start by solving it and then we'll break the recursion structure similar to our basic example at the start:
 
 ``` sql
 WITH recursivePayments AS (
@@ -232,12 +275,12 @@ ORDER BY Iteration
 
 Let's unpack this query, based on the three pieces comprising the recursion:
 
-1.  We start off with the Anchor, filtering to the user we'd like to track his funds, returing one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
+1.  We start off with the *Anchor*, filtering to the user we'd like to track his funds, returing one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
 
-2.  Our second part is the recursive member, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver with the original payments now as a payer.**  
-    If in our anchor section (the first select statement) we got Bob -\> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -\> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
-    We can see that the recursive member here mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table, the recursion helps us iterate across the network.  
-    I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the cons section.
+2.  Our second part is the *recursive member*, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining that who was a receiver with the original payments now as a payer.**  
+    <br>If in our anchor section (the first select statement) we got Bob -\> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -\> Joe. This repeates until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
+    <br>We can see that the recursive member mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table! The recursion helps us iterate across the network.  
+    <br>I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the cons section.
 
 3.  **Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations.** I would start with a low number and increase if needed.
 
@@ -247,7 +290,7 @@ Make sure to have a terminating condition in place if you're querying large quan
 
 From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: At whom the funds ended up? How much did each user receive? How long did it take the funds to end up with the final user? We can answer these and other questions as well as visualize the network once its collection is completed, whatever helps us gets the job done.
 
-Here's our diagram of the network now complete with the intermediate users:
+Here's our diagram of the network now complete with the intermediate users we identified:
 
 <div class="mermaid">
 
@@ -256,22 +299,22 @@ A(Bob)--1--\>B(Dan);
 B(Dan)--2--\>C(Joe);
 C(Joe)--3--\>D(Sarah);
 C(Joe)--3--\>E(Sharon);
-E(Sharon)--\|4\|--\>F(Fred);
+E(Sharon)--4--\>F(Fred);
 D(Sarah)--4--\>G(Greg);
 G(Greg)--5--\>H(Hanah);
 F(Fred)--5--\>H(Hanah);
 
 </div>
 
-It's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a SQL recursion in general, that I'll address below.
+In my opinion it's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few setbacks, specifically this example and a SQL recursion in general, that I'll address below.
 
 ### Cons
 
-Some of these cons relate specifically for this particular example, but you might be able to generalize them and be prepared for the recursion you'll run.
-
-1.  Complexity --- Since we don't know how many receiver we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on.
+1.  Problem complexity --- Since we don't know how many receivers we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on.
 
 2.  Querying the same data --- Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be dealt with in the outer final query referencing the recursion result, but it is redundant nonetheless.
+
+I assume there's also other server/performance/query plan issues I'm not aware of, so if you know something do reach out!
 
 #### So what else can we use
 
@@ -289,4 +332,6 @@ Start with small data, make sure to set a termination condition and be mindful o
 
 Good luck!
 
-[^1]: For simplicty we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.
+[^1]: I later realized we already have a table just like this in our servers 🤦️, so maybe look for it before generating one yourself.
+
+[^2]: For simplicty we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.

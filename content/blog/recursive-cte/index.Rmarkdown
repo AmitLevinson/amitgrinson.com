@@ -3,7 +3,7 @@ title: Following users' funds and possible money layering using a recursive CTE
 author: Amit Grinson
 date: '2023-04-03'
 layout: single
-slug: recursive-cte-to-follow-the-money-flow
+slug: follow-the-money-flow-with-a-recursion
 categories: [SQL]
 tags: [SQL, Recursion]
 subtitle: 'Learning recursive CTEs by following money layering and transfers'
@@ -73,7 +73,10 @@ Well, before we talk about a recursive CTE let's briefly discuss a recursion in 
 
 In SQL (here MSSQL), **a recursion comes into play with a Common table expression (aka CTE), where we call the table we're currently evaluating.** 
 
-As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates.
+As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates[^1].
+
+
+[^1]: I later realized we already have a table just like this in our servers 🤦️, so maybe look for it before generating one yourself.
 
 Let's see how this looks:
 
@@ -214,6 +217,8 @@ VALUES
     (13, 'G', 'H', 51, '01/02/2023')
 ;
 ```
+
+
 
 </details>
 
