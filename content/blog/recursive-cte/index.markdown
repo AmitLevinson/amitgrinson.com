@@ -1,7 +1,7 @@
 ---
 title: Following users' funds and possible money layering using a recursive CTE
 author: Amit Grinson
-date: '2023-04-03'
+date: '2023-04-16'
 layout: single
 slug: follow-the-money-with-a-recursion
 categories: [SQL]
@@ -17,13 +17,6 @@ editor_options:
 
 
 
-
-> "Roses are red  
-  Violets are blue,  
-  Write a Recursion  
-  and the DBA will find you"
-  
-<br>
 
 Recursive common table expressions (CTE)s are one of those things I encountered as an SQL beginner but never really understood. When I sought out information to learn more about it, it was usually explained through the 'identify who's who's boss' example. While this may work for some, to me it seemed liked an example completely unrelated to my work, making it harder to understand what it is.
 
@@ -366,6 +359,8 @@ Truthfully, it's likely you can solve the problem you're facing without a recurs
 Start with small data, make sure to set a termination condition and be mindful of your servers.
 
 Good luck!
+
+
 
 
 
