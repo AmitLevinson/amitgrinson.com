@@ -172,7 +172,7 @@ div.alert > div:first-child::before {
  }
 
 
-div.alert-note > div:first-child::before {
+.alert-note {
   font-family: 'Font Awesome 5 Free';
   color: #5a66a5;
   font-size: 1.2rem;
@@ -205,6 +205,8 @@ div.alert-warning > div:first-child::before {
   box-shadow: 2px 2px 2px 2px #ff3860;
   content: "\f12a";
   font-weight: 500;
+  font-size: 1.1rem;
+
   text-align: left;
 }
 

@@ -54,8 +54,11 @@ dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT'
 
 **Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
-```{sql connection='sqlconn'}
-/* SQL code goes here */
+
+```
+## ```{sql connection='sqlconn'}
+## /* SQL code goes here */
+## ```
 ```
 
 </details>
@@ -66,12 +69,10 @@ Well, before we talk about a recursive CTE let's briefly discuss a recursion in 
 
 In SQL (here MSSQL), **a recursion comes into play with a CTE, where we call the table we're currently evaluating.** 
 
-As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates[^1].
+As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates[^1]:
 
 
 [^1]: I later realized we already have a table just like this in our servers 🤦️, so maybe look for it before generating one yourself.
-
-Let's see how this looks:
 
 
 
@@ -90,7 +91,7 @@ WITH RecursiveCTE as (
   WHERE Date < GETDATE()
 )
 
-SELECT * FROM RecursiveCTE
+SELECT TOP 10 * FROM RecursiveCTE
 OPTION(MAXRECURSION 300)
 ```
 
@@ -115,7 +116,7 @@ Table: Table 1: Displaying records 1 - 10
 
 </div>
 
-Allright, we'll break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)). We first create a variable with the start date as it's easier than writing inline and requiring `CAST`ing it; probably relevant only for the example.
+Allright, we'll break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)). We first create a variable with the start date as it's easier than writing inline and requiring to `CAST` it; probably relevant only for the example.
 
 As for the recursion:
 
@@ -193,7 +194,7 @@ Identifying Bob's flow of funds shows us where the funds ended up as well as oth
 
 ### The Data
 
-Let's have a look at our data:
+Let's have a look at our example dataset:
 
 
 ```sql
@@ -264,12 +265,20 @@ We'll start by solving it and then we'll break the recursion structure similar t
 ```sql
 WITH recursivePayments AS (
   SELECT 1 AS Iteration,
-    Payments.* 
-  FROM Payments
+    p.payment_id,
+    p.payer,
+    p.receiver,
+    p.amount,
+    p.payment_date
+  FROM Payments p
   WHERE Payer = 'Bob'
   UNION ALL
   SELECT Iteration + 1 AS Iteration,
-    p.*
+    p.payment_id,
+    p.payer,
+    p.receiver,
+    p.amount,
+    p.payment_date
   FROM recursivePayments rp
   JOIN Payments p on rp.receiver = p.payer
     and rp.payment_date < p.payment_date
