@@ -1,13 +1,13 @@
 ---
-title: Following users' funds and possible money layering using a recursive CTE
+title: Using window functions after a GROUP BY clause
 author: Amit Grinson
-date: '2023-04-03'
+date: '2023-06-15'
 layout: single
-slug: follow-the-money-with-a-recursion
+slug: window-function-with-groupby
 categories: [SQL]
-tags: [SQL, Recursion]
-subtitle: 'Learning recursive CTEs by following money layering and transfers'
-summary: 'Though not commonly used, recursive CTEs can be a great tool to work with hierarchal formatted data. In this post we learn to use them to identify where money was moved to by following users transfer activities'
+tags: [SQL, window]
+subtitle: 'Leveraging window functions following a group by caluse'
+summary: 'A short overview of how to use window functions within a group by query. Going over 3 examples that help illustrate how to combine the two, as well as a better understanding of order of opertaions in SQL'
 featured: yes
 projects: []
 format: hugo-md
@@ -20,24 +20,6 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE
 ```
 
 
-> "Roses are red  
-  Violets are blue,  
-  Write a Recursion  
-  and the DBA will find you"
-  
-<br>
-
-Recursive common table expressions (CTE)s are one of those things I encountered as an SQL beginner but never really understood. When I sought out information to learn more about it, it was usually explained through the 'identify who's who's boss' example. While this may work for some, to me it seemed liked an example completely unrelated to my work, making it harder to understand what it is.
-
-The first time I used it was to calculate the weekdays for a given day from the start of the year, an example adapted from Anthony Molinaro's [SQL Cookbook](https://www.oreilly.com/library/view/sql-cookbook/0596009763/) I keep at home. It worked great and finally clicked how I can further use this feature set.
-
-When I wanted to share with my team how to use a recursion, I thought of a more relateable example for us: **Using it to identify the flow of funds in our tabular data** (more on that below). Hopefully either example I go through — a generic basic one and another more practical for me — will help you grasp it a little better.
-
-<details>
-<summary>Setting up a SQL connection in R</summary>
-
-I write my blog using the [Rstudio IDE](https://posit.co/). Since we'll be writing SQL in this post, we need to set up a local SQL connection. We're basically connecting to our local RDBMS, here MSSQL, and to a database I setup earlier.
-
 ```{r}
 library(odbc)
 library(DBI)
@@ -48,8 +30,6 @@ sqlconn <- dbConnect(odbc(),
                       Database = "recursion")
 ```
 
-We also need to load the data for this post to the database. It's only needed once and we can do it in R as follows:
-
 ```{r, eval = FALSE}
 dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
 
@@ -58,253 +38,19 @@ dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT'
                                                   payment_date = 'DATE'), overwrite = TRUE)
 ```
 
+### Intro
 
-**Aside:** Moving forward we'll be using SQL code only. instead of having to write SQL code through some R function we can use the SQL engine directly in the code chunks. Just add the connection you created to the chunk header as such:
 
-```{r echo = FALSE, results ='asis'}
-cat("```{sql connection='sqlconn'}", '/* SQL code goes here */', '```', sep = '\n')
-```
+### Classic order by
 
-</details>
 
-## Basic Example
 
-Well, before we talk about a recursive CTE let's briefly discuss a recursion in general. **A recursion is defined in terms of itself or of its type (~Wikipedia).** In other words, I like to think of it as something that calls itself.
+### Ranking for additional filters
 
-In SQL (here MSSQL), **a recursion comes into play with a CTE, where we call the table we're currently evaluating.** 
 
-As an example, we can use a recursion to generate a table of a range of dates with their corresponding day of the week. I ran this in the past a few times to filter out weekends for measuring a rough SLA estimate, or to fill in missing dates in a range of dates[^1].
 
+### New variables based on grouped outputs
 
-[^1]: I later realized we already have a table just like this in our servers 🤦️, so maybe look for it before generating one yourself.
-
-Let's see how this looks:
-
-
-```{sql connection='sqlconn', echo = TRUE}
-DECLARE @StartDate DATE = '2023-01-01';
-
-WITH RecursiveCTE as (
-  SELECT 
-    @StartDate as Date,
-    DATENAME(weekday, @StartDate) as DayOfWeek
-  UNION ALL
-  SELECT 
-    DATEADD(day, 1, Date) as Date,
-    DATENAME(weekday, DATEADD(day, 1, Date)) as DayOfWeek
-  FROM RecursiveCTE
-  WHERE Date < GETDATE()
-)
-
-SELECT * FROM RecursiveCTE
-OPTION(MAXRECURSION 300)
-```
-
-Allright, we'll break this query up and understand how it works (adapted from [sqlservertutorial](https://www.sqlservertutorial.net/sql-server-basics/sql-server-recursive-cte/)). We first create a variable with the start date as it's easier than writing inline and requiring `CAST`ing it; probably relevant only for the example.
-
-As for the recursion:
-
-1. The first `SELECT` is basically **the Anchor**. It's the first query from which the recursion will build on, and here we are explicit in our reference of a specific value: We're creating a table with one row filled with two columns Date and its corresponding weekday.
-
-2. The second piece is a `UNION ALL` that enables the returning of all rows for each recursion run.
-
-3. The third part is, in a sense, the recursion itself and what might also be called a **recursive member**. When calling the CTE for the first time (R<sub>1</sub>) we're returning the iteration before the union, here our start date and weekday. We then select tat row and add a day to the date and increase the week day by one, returning for the second iteration (R<sub>2</sub>) '2023-01-02' and 'Monday'. This repeats for the third, fourth (R<sub>n</sub>)... until we reach a **termination condition**, a threshold we set, here `WHERE Date < GETDATE()`, terminating our recursion completely. 
-
-A threshold is important for breaking out of the recursion, especially if the complexity of the problem *might* increase substantially in each iteration as we'll see shortly. Besides the exit option in the `WHERE` clause, the *default* recursion will go to a max of 100 iterations before throwing an error. For that purpose I added a MAXRECURSION of 300 to accommodate it. 
-
-
-<details>
-<summary>More / Unlimited Iterations</summary>
-
-If we were to run the above query and try to produce dates for more than a year without setting the `OPTION (MAXRECURSION X)` we'd get an error since we'd exceed the default of 100 iterations. If you want your recursion to itreate more than the default, just set the `MAXRECURSION OPTION` to what you need. For an unlimited option use the value 0:
-
-
-```{sql connection='sqlconn', eval = FALSE}
-WITH RecursiveCTE AS (
- ...
-)
-
-SELECT * FROM RecursiveCTE
-OPTION(MAXRECURSION 0)
-```
-
-**Though I'd think carefully before running an unlimited recursion and if you do**, make sure to set a break-out option in the `WHERE` clause.
-
-
-</details>
-
-## Following the Money 💸
-
-Let's move on to a more complex and practical example, or at least practical for me. Payoneer is a payments platform, and as a result we analyze large quantities of payments to, from and between users. **A scenario that might occur is wanting to track the flow of money sent from one user to another, and then from that user to another and so on down the chain.** 
-
-**Why would we want a recursion here?** Well, usually actions like these - a payment of sort - are recorded in a tabular normalized way. Each row contains the information about a payment: date, amount, loader, receiver, etc. Even multiple transactions between the same two pairs of individuals will be recorded in separate rows. **Tabular data like this makes it complex to track multiple 'iterations' between users and, as such, makes a recursive more suitable than multiple (if not endless) joins on the same table.**
-
-### The Network & Problem — Tracking the funds
-
-<div class="mermaid">
-graph LR;
-  A(Bob)--1-->B(?);
-  B(?)--2-->C(?);
-  C(?)--3-->D(?);
-  C(?)--3-->E(?);
-  E(?)--4-->F(?);
-  D(?)--4-->G(?);
-  G(?)--5-->H(Hanah);
-  F(?)--5-->H(Hanah);
-</div>
-<script async src="https://unpkg.com/mermaid@8.2.3/dist/mermaid.min.js"></script>
-
-
-```{css, echo=FALSE}
-#mermaid-1679428403739 .edgeLabel {
-  background-color: none;
-  z-index: 1;
-}
-
-#mermaid-1679428403739 .node rect {
-  fill: none;
-  stroke: #3f51b5;
-}
-```
-
-
-Looking at the above figure our goal will be to try and track Bob's funds — **Assuming Bob is the first step in the process, can we identify where the funds ended up (i.e., with Hanah)?**
-
-
-Identifying Bob's flow of funds shows us where the funds ended up as well as other actors participating along the way, returning a network of senders (payers) and receivers[^2]. **Tracking funds could be relevant to identify patterns of money laundering and layering: Fraudsters get the money into the system (launder it somehow) and then might try to layer it, send it between users in order to masquerade its' origin.** Alternatively, you might one to use it to map out large networks and their connections for other analytical purposes.
-
-[^2]: For simplicity we'll use a unilateral flow of funds, but the solution can be generalized both ways exploring receivers' senders as well.
-
-### The Data
-
-Let's have a look at our data:
-
-```{sql connection='sqlconn', echo = TRUE}
-SELECT TOP 5 * 
-FROM Payments
-```
-
-Our table records payments between users, with each payment recorded as a separate row. I added some 'noise' of unrelated payments between users marked as a single letter, but treat them as if they were random names.  
-
-> Given you identified Bob as someone you want to investigate to where his funds ended up, can you follow his receivers, their receivers and eventually identify where the funds ended up?
-
-
-<details>
-<summary>Create the Data Locally</summary>
-
-Join along and try for yourself by creating the table in your current MSSQL instance (in your server or as a temp table by adding #):
-
-```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
-CREATE TABLE Payments
-    ([payment_id] int, [payer] varchar(6), [receiver] varchar(6), [amount] int, [payment_date] varchar(10))
-;
-    
-INSERT INTO Payments
-    ([payment_id], [payer], [receiver], [amount], [payment_date])
-VALUES
-    (1, 'Bob', 'Dan', 320, '14/01/2023'),
-    (2, 'A', 'B', 140, '08/01/2023'),
-    (3, 'Dan', 'Joe', 301, '15/01/2023'),
-    (4, 'Joe', 'Sarah', 150, '16/01/2023'),
-    (5, 'C', 'D', 100, '16/01/2023'),
-    (6, 'Joe', 'Sharon', 142, '16/01/2023'),
-    (7, 'Sharon', 'Fred', 141, '17/01/2023'),
-    (8, 'A', 'C', 40, '18/01/2023'),
-    (9, 'Sarah', 'Greg', 148, '17/01/2023'),
-    (10, 'Fred', 'Hanah', 140, '18/01/2023'),
-    (11, 'E', 'F', 20, '18/01/2023'),
-    (12, 'Greg', 'Hanah', 140, '18/01/2023'),
-    (13, 'G', 'H', 51, '01/02/2023')
-;
-```
-
-
-
-</details>
-
-### Solution — Using a recursion to follow the money
-
-We'll start by solving it and then we'll break the recursion structure similar to our basic example at the start:
-
-```{sql connection='sqlconn', echo = TRUE}
-WITH recursivePayments AS (
-  SELECT 1 AS Iteration,
-    Payments.* 
-  FROM Payments
-  WHERE Payer = 'Bob'
-  UNION ALL
-  SELECT Iteration + 1 AS Iteration,
-    p.*
-  FROM recursivePayments rp
-  JOIN Payments p on rp.receiver = p.payer
-    and rp.payment_date < p.payment_date
-  WHERE Iteration <= 5 
-)
-
-SELECT * 
-FROM recursivePayments
-ORDER BY Iteration
-```
-
-**Gorgeous! Notice how we have all users participating in the flow of funds along with a number referencing what 'iteration' they are in the transaction flow.**
-
-Let's unpack this query, based on the three pieces comprising the recursion:
-
-1. We start off with the *Anchor*, filtering to the user we'd like to track his funds, returning one row. I also added a column *Iteration* as (a) a way to understand how many hops we did and (b) as a component for later terminating the recursion.
-
-2. Our second part is the *recursive member*, where we're referencing the CTE we previously created (with the anchor). What comes next is a `JOIN` of the recursive member on the original payments table. **The key part is joining [that] who was a receiver with the original payments now as a payer.**  
-<br>If in our anchor section (the first select statement) we got Bob -> Dan, our second iteration of the recursion now takes Dan and `JOIN`s anyone he sent funds to, so Dan -> Joe. This repeats until the recursion ends, every time UNIONing the previous rows on to the next; **think of stacking each recursion output on top of the next, where the last iteration is now the table for the next step in the recursion.**  
-<br>We can see that the recursive member mainly plays a role in helping us identifying the next payer for whom we'd like to pull users he sent funds to. All the information added is just from the payments table! The recursion helps us iterate across the network.  
-<br>I also added a Non-Equi Join operator so that we only take payments that *occurred after* the user received his funds. Though not sure how critical it is, you can read more on that below in the Cons section.
-
-3. **Our third part, the termination condition, enables us to break out of the recursion once we reached 5 iterations.** I would start with a low number and increase if needed. 
-
-{{% alert warning %}}
-Make sure to have a terminating condition in place if you're querying large quantities of data. Start with a low number and increase gradually if the complexity of the network might grow substantially.
-{{% /alert %}}
-
-From here we have the funds pipeline for our original user, Bob, and can follow up with more questions: With whom did the funds end up? How much did each user receive? How long did it take the funds to end up with the final user? We can answer these and other questions as well as visualize the network once its collection is completed, whatever helps us gets the job done.
-
-Here's our diagram of the network now complete with the intermediate users we identified:
-
-<div class="mermaid">
-graph LR;
-  A(Bob)--1-->B(Dan);
-  B(Dan)--2-->C(Joe);
-  C(Joe)--3-->D(Sarah);
-  C(Joe)--3-->E(Sharon);
-  E(Sharon)--4-->F(Fred);
-  D(Sarah)--4-->G(Greg);
-  G(Greg)--5-->H(Hanah);
-  F(Fred)--5-->H(Hanah);
-</div>
-
-
-In my opinion it's a pretty slick way to identify a network quickly, without needing to leave the SQL script you're working on. However it does have a few limitations, specifically this example and a SQL recursion in general, that I'll address below.
-
-### Cons
-
-1. Problem complexity — Since we don't know how many receivers we'll identify in each iteration, you might find yourself with data growing exponentially. For example, assume you have one node at the start who sends to 5 users, who each send to 5 (or even more!) users and so on. 
-
-2. Querying the same data — Even though we took new users' payments sent *after* those they received, they might be sending funds to the original sender. This then repeats and can result with querying the same observations multiple times. It could be dealt with in the outer final query referencing the recursion result, but it is redundant nonetheless.
-
-I assume there's also other server/performance/query plan issues I'm not aware of, so if you know something do reach out!
-
-#### So what else can we use
-
-As I was exploring the recursion I met with one of our DBA who suggested that if this query becomes common, one approach might be to use a scripting language instead, e.g. Python/R.
-
-Instead of running a recursion we can loop through queries collecting the same flow model: The receiver now becomes the sender and we repeat the search process. This approach increases the control and makes it more robust: we can filter users we already queried to not repeat ourselves, break early if the next iteration exceeds a threshold, etc.
-
-You can also employ more complex SQL operations, a procedure or other operations. However this already steps out of the recursion and becomes longer and maybe even repetitive.
-
-### Final words — Recurse away
-
-Truthfully, it's likely you can solve the problem you're facing without a recursion. I don't use them often but following the several occasions I did I find them a useful tool to have in my SQL-commands toolbox. 
-
-Start with small data, make sure to set a termination condition and be mindful of your servers.
-
-Good luck!
 
 ```{r echo = FALSE}
 dbDisconnect(sqlconn)
