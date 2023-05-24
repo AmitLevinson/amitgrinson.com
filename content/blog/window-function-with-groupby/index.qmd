@@ -27,15 +27,17 @@ library(DBI)
 sqlconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
-                      Database = "recursion")
+                      Database = "window_groupby")
 ```
 
 ```{r, eval = FALSE}
-dat <- read.csv('content/blog/recursive-cte/payments.csv', colClasses = c('numeric', 'character', 'character', 'numeric', 'Date'))
+payments <- read.csv('content/blog/window-function-with-groupby/payments.csv', colClasses = c('numeric', 'character', 'Date', 'numeric'))
 
-dbWriteTable(conn = sqlconn, 'payments', dat, field.types = c(payment_id = 'INT', payer = 'VARCHAR(10)', 
-                                                  receiver = 'VARCHAR(10)', amount = 'INT',
-                                                  payment_date = 'DATE'), overwrite = TRUE)
+dbWriteTable(conn = sqlconn, 'payments', payments, field.types = c(user_id = 'INT', payment_id = 'VARCHAR(12)',payment_date = 'DATE', amount = 'INT' ), overwrite = TRUE)
+
+users <- read.csv('content/blog/window-function-with-groupby/users.csv')
+
+dbWriteTable(conn = sqlconn, 'users', users, field.types = c(user_id = 'INT', country = 'VARCHAR(2)'), overwrite = TRUE)
 ```
 
 ### Intro
