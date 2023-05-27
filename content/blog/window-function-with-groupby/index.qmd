@@ -42,6 +42,16 @@ dbWriteTable(conn = sqlconn, 'users', users, field.types = c(user_id = 'INT', co
 
 ### Intro
 
+I've been using both `GROUP BY` & Window functions for a while now, but for some reason I never thought of combining them. Maybe I tried once and used it wrong, got an error and felt intimidated since. 
+
+Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem] use it to solve a question from a set of questions he posted online. I really liked the use there mainly because I initially solved it in a more cumbersome way, so his solution seemed elegant and informative.
+
+I've since started playing with the two more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1).
+
+This post is about some experimentation I played around, and what it taught me about order of operations in a SQL query. We'll start from a basic use case, move to a little more complex and end with what seems as an unintended use case. I'm not that well versed in the SQL infrastructure to state it's an unindetend use, but I have to admit it just doesn't seem right (though it is pretty cool how we'll use it!).
+
+Alright then, let's begin!
+
 
 ### Classic order by
 
