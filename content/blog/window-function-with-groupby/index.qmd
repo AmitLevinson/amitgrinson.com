@@ -103,7 +103,7 @@ WITH users_sum as (
 SELECT u.user_id,
   u.Country,
   SUM(amount) AS total_sum,
-  rnk = DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY sum(amount) DESC)
+  DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 GROUP BY u.user_id, u.country
@@ -118,9 +118,9 @@ where rnk = 1
 
 Nice! 
 
-The key part here is the `rnk` column we create which I belive also highlights the order of operations in our query: We use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
+The key part here is the `rnk` column we create which I believe also highlights the order of operations in our query: We use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
 
-In terms of order of operations they are as follows:
+In terms of order of operations it goes as follows:
 
 1. `FROM`
 
@@ -134,9 +134,26 @@ In terms of order of operations they are as follows:
 
 5. `ORDER BY`
 
-Window functions are called in the `SELECT` statement and thus can be called *after* we aggregated. So in this case, we order our window function as a function of the aggregate sum we called per user. We then filter to the user with highest amount in the outer query.
+Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation. Itzik Ben-Gan in his book XXX describes this very well:
+
+> Some quote from Itzik's book.
+
+
+
+So in this case, we order our window function conditional on the aggregate sum we called per user. The window function is evaluated separately from the aggregate, in what seems as different contexts altogether.
 
 ### New variables based on grouped outputs
+
+The previous example opens up an opportunity to use our aggregate results within a window function. There we used it as an ordering clause, but can we use other forms of aggregation within the window refrencing the previous aggregation?
+
+Let's take an example to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
+
+Well you can, let's have a look:
+
+```{r}
+
+```
+
 
 
 ```{r echo = FALSE}
