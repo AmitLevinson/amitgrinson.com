@@ -81,7 +81,7 @@ So the first and pretty simple example would be to add simple window function in
 ```{sql connection='sqlconn'}
 SELECT u.user_id,
   u.Country,
-  SUM(amount)
+  SUM(amount) as total_funds
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 GROUP BY u.user_id, u.country
@@ -102,7 +102,7 @@ So relating to our data, let's return users receiving the most funds within a gi
 WITH users_sum as (
 SELECT u.user_id,
   u.Country,
-  SUM(amount) AS total_sum,
+  SUM(amount) AS total_funds,
   DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id

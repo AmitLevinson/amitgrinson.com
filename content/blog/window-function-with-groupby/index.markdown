@@ -15,12 +15,11 @@ editor_options:
   chunk_output_type: inline
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
-```
 
 
-```{r, eval = FALSE}
+
+
+```r
 payments <- read.csv('content/blog/window-function-with-groupby/payments.csv', colClasses = c('numeric', 'character', 'Date', 'numeric'))
 
 dbWriteTable(conn = sqlconn, 'payments', payments, field.types = c(user_id = 'INT', payment_id = 'VARCHAR(12)',payment_date = 'DATE', amount = 'DECIMAL(5,2)' ), overwrite = TRUE)
@@ -53,7 +52,8 @@ Similar to many recent posts of mine, we'll be looking at payments information. 
 
 Since I write my blog posts using R, we need to setup a SQL connection to our SSMS localhost. We can do it with the following, and then moving forward just write SQL syntax in a regular code chunk.
 
-```{r}
+
+```r
 library(odbc)
 library(DBI)
 
@@ -65,11 +65,28 @@ sqlconn <- dbConnect(odbc(),
 
 </details>
 
-```{sql, connection = 'sqlconn'}
+
+```sql
 SELECT TOP 5 * 
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id;
 ```
+
+
+<div class="knitsql-table">
+
+
+Table: Table 1: 5 records
+
+| user_id|country | user_id|payment_id  |payment_date | amount|
+|-------:|:-------|-------:|:-----------|:------------|------:|
+|       1|IL      |       1|754159275-7 |2023-04-03   |    122|
+|       1|IL      |       1|841959830-5 |2023-04-06   |    169|
+|       1|IL      |       1|780694055-3 |2023-02-17   |    126|
+|       1|IL      |       1|871148278-8 |2023-01-19   |     29|
+|       2|IL      |       2|795256048-4 |2023-01-04   |    313|
+
+</div>
 
 Great, this will enable us TO aggregate while maintaining other columns we'll manipulate in our window functions. Speaking of them, let's go ahead and start experimenting.
 
@@ -78,7 +95,8 @@ Great, this will enable us TO aggregate while maintaining other columns we'll ma
 
 So the first and pretty simple example would be to add simple window function in the `ORDER BY` clause *after* an aggregation occurred. That is, sort the output by the evaluation of a window function, for example:
 
-```{sql connection='sqlconn'}
+
+```sql
 SELECT u.user_id,
   u.Country,
   SUM(amount)
@@ -87,6 +105,24 @@ LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 GROUP BY u.user_id, u.country
 ORDER BY COUNT(*) OVER (PARTITION BY country) DESC 
 ```
+
+
+<div class="knitsql-table">
+
+
+Table: Table 2: 7 records
+
+|user_id |Country |     |
+|:-------|:-------|----:|
+|1       |IL      |  446|
+|2       |IL      | 2398|
+|3       |IL      | 1011|
+|4       |US      |  830|
+|5       |US      | 1067|
+|6       |FR      |  691|
+|7       |FR      | 1305|
+
+</div>
 
 The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data. In this case, we have 3 Israeli users and thus that country appears on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords). 
 
@@ -98,7 +134,8 @@ Let's assume you want to aggregate data, and then take the top X rows for each g
 
 So relating to our data, let's return users receiving the most funds within a given country.
 
-```{sql connection='sqlconn'}
+
+```sql
 WITH users_sum as (
 SELECT u.user_id,
   u.Country,
@@ -115,6 +152,20 @@ SELECT user_id,
 FROM USERS_SUM
 where rnk = 1
 ```
+
+
+<div class="knitsql-table">
+
+
+Table: Table 3: 3 records
+
+| user_id|Country | total_sum|
+|-------:|:-------|---------:|
+|       7|FR      |      1305|
+|       2|IL      |      2398|
+|       5|US      |      1067|
+
+</div>
 
 Nice! 
 
@@ -150,7 +201,8 @@ Let's take an example to better explore this: How would you aggregate the total 
 
 Well you can, let's have a look:
 
-```{sql connection='sqlconn'}
+
+```sql
 SELECT u.user_id,
   u.Country,
   SUM(amount) AS total_funds,
@@ -161,11 +213,27 @@ GROUP BY u.user_id, u.country
 ORDER BY pct_funds DESC
 ```
 
+
+<div class="knitsql-table">
+
+
+Table: Table 4: 7 records
+
+| user_id|Country | total_funds| pct_funds|
+|-------:|:-------|-----------:|---------:|
+|       2|IL      |        2398|   30.9499|
+|       7|FR      |        1305|   16.8430|
+|       5|US      |        1067|   13.7712|
+|       3|IL      |        1011|   13.0485|
+|       4|US      |         830|   10.7124|
+|       6|FR      |         691|    8.9184|
+|       1|IL      |         446|    5.7563|
+
+</div>
+
 Et Voila!
 
 Though this seems like weird syntax it's valid nonetheless.
 
-```{r echo = FALSE}
-dbDisconnect(sqlconn)
-```
+
 

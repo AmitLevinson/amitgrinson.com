@@ -1,5 +1,8 @@
 {
   "content/blog/github-professional-development/index.qmd": {
     "index.md": "aec2d69a"
+  },
+  "content/blog/window-function-with-groupby/index.qmd": {
+    "index.md": "b995fec6"
   }
 }
