@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE
 ```
 
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = FALSE}
 payments <- read.csv('content/blog/window-function-with-groupby/payments.csv', colClasses = c('numeric', 'character', 'Date', 'numeric'))
 
 dbWriteTable(conn = sqlconn, 'payments', payments, field.types = c(user_id = 'INT', payment_id = 'VARCHAR(12)',payment_date = 'DATE', amount = 'DECIMAL(5,2)' ), overwrite = TRUE)
@@ -111,16 +111,22 @@ GROUP BY u.user_id, u.country
 
 SELECT user_id,
   Country,
-  total_sum
+  total_funds
 FROM USERS_SUM
 where rnk = 1
 ```
 
 Nice! 
 
-The key part here is the `rnk` column we create which I believe also highlights the order of operations in our query: We use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
+The interesting part for our discussion (and the purpose of this blog post) is the following line to create the `rnk` column:
 
-In terms of order of operations it goes as follows:
+```{sql connection='sqlconn', eval =FALSE}
+DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
+```
+
+What's interesting here is that we use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
+
+Now I'm not a SQL Server savvy, but here's my understanding of it from also reading Itzik Ben-Gan's book. To better understand this, here's a quick reminder of the order of operations in SQL:
 
 1. `FROM`
 
@@ -134,17 +140,16 @@ In terms of order of operations it goes as follows:
 
 5. `ORDER BY`
 
-Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation. Itzik Ben-Gan in his book XXX describes this very well:
+Following the `FROM` and others, Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation statements. Itzik Ben-Gan in his book XXX describes this very well, where we can think of the two - When the aggregation happens with a `GROUP BY` and the window functions - occurring in two different contexts. 
 
-> Some quote from Itzik's book.
+XXX QUOTE? XXX
 
 
+The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data!**
 
-So in this case, we order our window function conditional on the aggregate sum we called per user. The window function is evaluated separately from the aggregate, in what seems as different contexts altogether.
+### Aggregating the Aggregated data
 
-### New variables based on grouped outputs
-
-The previous example opens up an opportunity to use our aggregate results within a window function. There we used it as an ordering clause, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, aggregated what we just aggregated?
+The previous example opens up an opportunity to use our aggregate results within a window function. There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregated what we just aggregated?**
 
 Let's take an example to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
 
@@ -164,6 +169,30 @@ ORDER BY pct_funds DESC
 Et Voila!
 
 Though this seems like weird syntax it's valid nonetheless.
+
+Let's break our important code line:
+
+```{sql connection='sqlconn', eval = FALSE}
+SUM(amount) / SUM(SUM(amount)) OVER() * 100 AS pct_funds
+```
+
+The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our GROUP BY aggregation as before, this is wrapped within an outer `SUM` that invokes a window function with the `OVER()` command. 
+
+Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as window function of summing all users aggregated funds. We finalize it by multiplying with 100 to get a percentage value.
+
+Personally, this was mind blowing when I played around with this and realized this worked. I initially got it wrong and thought it worked, realized my mistake and got dissaopinted only to later succeed. Only then did the order of operations for a given query with Window functions and Grouping actually clicked.
+
+### Closing notes
+
+First off, I highly recommend Itzik Ben-Gan's book. I bought it when I learned what I shared in this blog post and realized that I actually don't think I really know Window functions; despite using them in many ways. The book is fantastic and addresses a lot of topics ranging from basics of a window function to optimization. What I address in this post - The relationship between `GROUP BY` AND Window Functions - is a very small section of the book; he covers so much more and I highly recommend. I feel like the way I use window functions efficiently has improved (and I'm only 1-2 chapters in!).
+
+The second thing I'd like to share is about my discovery of this and why it was exciting. I love learning new things, I imagine most of us do. I've learned [correlated sub-queries](https://www.amitgrinson.com/blog/review-of-an-sql-interview-question/) a while back that was cool, [recursive CTE's](https://www.amitgrinson.com/blog/follow-the-money-with-a-recursion/), using things such as `CROSS/OUTER APPLY` and more. But they've all been new concepts altogether, so it was a different kind of excitement compared to what I shared here.
+
+I've been using the `GROUP BY` clause since I started writing SQL a few years ago, and window functions not much after. I became better at both, learned how to maximize the use of both and general tips and tricks. However this understanding I hopefully was able to convey in the post was a new kind of learning: It was taking what seemed as two concepts I continuously used and learn more about both separately and relationship together. When are they actually evaluated in the query plan and how I can leverage that for my use. I usually avoided window function when I grouped the data so this definitely changed how I approach analytical tasks in SQL. It was definitely exciting to extend my knowledge in a domain I thought I already was good at.
+
+
+
+
 
 ```{r echo = FALSE}
 dbDisconnect(sqlconn)
