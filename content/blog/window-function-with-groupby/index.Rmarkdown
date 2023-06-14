@@ -180,11 +180,14 @@ The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we h
 
 Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as window function of summing all users aggregated funds. We finalize it by multiplying with 100 to get a percentage value.
 
-Personally, this was mind blowing when I played around with this and realized this worked. I initially got it wrong and thought it worked, realized my mistake and got dissaopinted only to later succeed. Only then did the order of operations for a given query with Window functions and Grouping actually clicked.
+Personally, this was mind blowing when I played around with it and realized this worked. Only then did the order of operations for a given query with Window functions and Grouping actually clicked.
+
+I will say, however, that it's not necessarily easily understandable. SQL is a declarative language that usually feels intuitive to read; this somewhat contradicts it. Though valid SQL code, and pretty cool nonetheless, maybe breaking it up to several parts (e.g. with CTE) would make it more readable for others.
+
 
 ### Closing notes
 
-First off, I highly recommend Itzik Ben-Gan's book. I bought it when I learned what I shared in this blog post and realized that I actually don't think I really know Window functions; despite using them in many ways. The book is fantastic and addresses a lot of topics ranging from basics of a window function to optimization. What I address in this post - The relationship between `GROUP BY` AND Window Functions - is a very small section of the book; he covers so much more and I highly recommend. I feel like the way I use window functions efficiently has improved (and I'm only 1-2 chapters in!).
+First off, I highly recommend Itzik Ben-Gan's book. I bought it when I learned what I shared in this blog post and realized that I actually don't think I really know Window functions; despite using them in many ways. The book is fantastic and addresses a lot of topics ranging from basics of a window function to optimization. What I address in this post - The relationship between `GROUP BY` and Window Functions - is a very small section of the book; he covers so much more and I highly recommend. I feel like the way I use window functions efficiently has improved (and I'm only 1-2 chapters in!).
 
 The second thing I'd like to share is about my discovery of this and why it was exciting. I love learning new things, I imagine most of us do. I've learned [correlated sub-queries](https://www.amitgrinson.com/blog/review-of-an-sql-interview-question/) a while back that was cool, [recursive CTE's](https://www.amitgrinson.com/blog/follow-the-money-with-a-recursion/), using things such as `CROSS/OUTER APPLY` and more. But they've all been new concepts altogether, so it was a different kind of excitement compared to what I shared here.
 
