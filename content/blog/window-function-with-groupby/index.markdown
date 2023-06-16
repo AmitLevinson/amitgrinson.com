@@ -22,15 +22,17 @@ editor_options:
 
 ### Intro
 
-I've been using both `GROUP BY` & Window functions for a while now, but for some reason I never thought of combining them. Maybe I tried once and used it wrong, got an error and felt intimidated since. 
+I've been using both `GROUP BY` & Window functions for a while now, but never really in the same query. I imagine I got an error in the past and thought it to be not feasible so left it.
 
-Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem] use it to solve a question from a set of questions he posted online. I really liked the use there mainly because I initially solved it in a more cumbersome way, so his solution seemed elegant and informative.
+Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem] use it to solve a question from a set of questions he posted online. I really liked the use there mainly because I initially solved it in a more cumbersome way, so his solution seemed elegant. 
 
-I've since started playing with the two more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1).
+I've since started playing with the two (Windows & GROUP BY) more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1). It's mainly about Window Functions but there's a small section specifically about the relationship of the two.
 
-This post is about some experimentation I played around, and what it taught me about order of operations in a SQL query. We'll start from a basic use case, move to a little more complex and end with what seems as an unintended use case. I'm not that well versed in the SQL infrastructure to state it's an unindetend use, but I have to admit it just doesn't seem right (though it is pretty cool how we'll use it!).
+This post is about some experimentation I did with both of the concepts and what it taught me about order of operations in a SQL query. We'll start from a basic use case, move to a little more complex and end with what seems as an unintended use case (though valid SQL code!). Hopefully this will be helpful to you as it was to me; I combine the two much more since learning about this.
 
-> Basic knowledge in both SQL aggregations and window functions is required. I will not be going over their structure.
+{{% alert note %}}
+Basic knowledge in both SQL aggregations and Window functions is required. I will not be going over their structure.
+{{% /alert %}}
 
 Alright then, let's begin!
 
@@ -82,7 +84,7 @@ Table: Table 1: 5 records
 Great, this will enable us TO aggregate while maintaining other columns we'll manipulate in our window functions. Speaking of them, let's go ahead and start experimenting.
 
 
-### Classic order by
+#### Classic order by
 
 So the first and pretty simple example would be to add simple window function in the `ORDER BY` clause *after* an aggregation occurred. That is, sort the output by the evaluation of a window function, for example:
 
@@ -115,15 +117,47 @@ Table: Table 2: 7 records
 
 </div>
 
-The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data. In this case, we have 3 Israeli users and thus that country appears on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords). 
+**The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data using a window function.** In this case, we have 3 Israeli users and thus that country appears on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords when it comes to fraud). 
 
-If you've run a few window functions you probably used this method; maybe also in a group by query. We got the easy part of the way, let's move forward to some deeper diving in.
+If you've run a few window functions you probably used this method; maybe also in a group by query without noticing. We got the easy part of the way, let's move forward to some deeper diving in and explore the `SELECT` area.
 
-### Ranking for additional filters
+### The SELECT Clause
+
+Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is grouped*. Let's see a quick example when we try to collect the total funds by user, but also have an aggregate amount for each country (read as a window function of `SUM() OVER ()`).
+
+Here's what you'll probably get:
+
+
+```sql
+SELECT u.user_id,
+  country,
+  SUM(amount) AS total_funds,
+  SUM(amount) OVER(Partition BY country)
+FROM USERS U 
+LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
+GROUP BY u.user_id, Country
+```
+
+```
+## Error: nanodbc/nanodbc.cpp:1655: 42000: [Microsoft][ODBC SQL Server Driver][SQL Server]Column 'PAYMENTS.amount' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.  [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. 
+## <SQL> 'SELECT u.user_id,
+##   country,
+##   SUM(amount) AS total_funds,
+##   SUM(amount) OVER(Partition BY country)
+## FROM USERS U 
+## LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
+## GROUP BY u.user_id, Country'
+```
+
+Ha, that is weird! **The error states that the "'Payments.amount' column is invalid in the select because it's not in either an aggregate function or `GROUP BY` clause." But we can see it right there in the row above our window function, aggregated as total_funds!**
+
+What's going on here? Well hopefully in the next two examples you'll better understand this error and (spoiler) how you can actually do what we're trying here.
+
+#### Ranking for additional filters
 
 Let's assume you want to aggregate data, and then take the top X rows for each group. I've actually encountered this (what we'll see shortly) in a stackoverflow answer and later in one of [Ram Kedem](https://ramkedem.com/en/)'s online stream. It was only when I played with it that I understood more how to use it.
 
-So relating to our data, let's return users receiving the most funds within a given country.
+So relating to our data, let's return users receiving the most funds within a given country:
 
 
 ```sql
@@ -173,26 +207,26 @@ Now I'm not a SQL Server savvy, but here's my understanding of it from also read
 
 1. `FROM`
 
-...
+1. `WHERE`
 
-2. `GROUP BY`
+1. `GROUP BY`
 
-3. `HAVING`
+1. `HAVING`
 
-4. `SELECT`
+1. `SELECT`
 
-5. `ORDER BY`
+1. `ORDER BY`
 
-Following the `FROM` and others, Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation statements. Itzik Ben-Gan in his book XXX describes this very well, where we can think of the two - When the aggregation happens with a `GROUP BY` and the window functions - occurring in two different contexts. 
+Following the `FROM` and others, Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation statements. Itzik Ben-Gan in his book XXX describes this very well, where we can think of the two - When the aggregation happens with a `GROUP BY` and the window functions - occurring in two different contexts: 
 
 XXX QUOTE? XXX
 
 
-The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data!**
+The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data!** In a sense we reference the already-aggregated column `SUM(Amount)` as a column to sort our ranking window function we're creating.
 
-### Aggregating the Aggregated data
+#### Aggregating the Aggregated data
 
-The previous example opens up an opportunity to use our aggregate results within a window function. There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregated what we just aggregated?**
+**The previous example opens up an opportunity to use our aggregate results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregate what we just aggregated in the `GROUP BY`?**
 
 Let's take an example to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
 
@@ -232,16 +266,16 @@ Et Voila!
 
 Though this seems like weird syntax it's valid nonetheless.
 
-Let's break our important code line:
+Let's lookk into our important code line:
 
 
 ```sql
 SUM(amount) / SUM(SUM(amount)) OVER() * 100 AS pct_funds
 ```
 
-The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our GROUP BY aggregation as before, this is wrapped within an outer `SUM` that invokes a window function with the `OVER()` command. 
+The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our `GROUP BY` aggregation as before, this is wrapped within an outer `SUM` that invokes a window function with the `OVER()` command. 
 
-Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as window function of summing all users aggregated funds. We finalize it by multiplying with 100 to get a percentage value.
+**Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as window function of summing all users aggregated funds.** This is also how we'd solve the error we got a few sections back. Lastly, we finalize it by multiplying with 100 to get a percentage value.
 
 Personally, this was mind blowing when I played around with it and realized this worked. Only then did the order of operations for a given query with Window functions and Grouping actually clicked.
 
