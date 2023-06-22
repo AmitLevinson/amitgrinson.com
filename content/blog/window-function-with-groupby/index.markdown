@@ -1,12 +1,12 @@
 ---
-title: Using window functions after a GROUP BY clause
+title: 'How To: Group by & Window Functions Together'
 author: Amit Grinson
 date: '2023-06-15'
 layout: single
 slug: window-function-with-groupby
 categories: [SQL]
 tags: [SQL, window]
-subtitle: 'How To: Group by & Window Functions together'
+subtitle: 'Diving into using window functions following a GROUP BY clause - how it works.'
 summary: 'A short overview of how to use window functions within a group by query. Going over 3 examples that help illustrate how to combine the two, as well as a better understanding the order of opertaions in SQL'
 featured: yes
 projects: []
