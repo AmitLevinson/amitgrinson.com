@@ -241,7 +241,7 @@ Well you can, let's have a look:
 SELECT u.user_id,
   u.Country,
   SUM(amount) AS total_funds,
-  SUM(amount) / SUM(SUM(amount)) OVER() * 100 AS pct_funds
+  SUM(amount) / SUM(SUM(amount)) OVER() * 100.0 AS pct_funds
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 GROUP BY u.user_id, u.country
