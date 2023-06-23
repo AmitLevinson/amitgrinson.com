@@ -22,16 +22,16 @@ editor_options:
 
 ### Intro
 
-I've been using both `GROUP BY` & Window functions for a while now, but never really in the same query. I imagine I got an error in the past and thought it to be not feasible so left it be.
+I've been using both `GROUP BY` & Window functions since I started writing SQL, but never really in the same query. Thinking back I'm assuming I got an error one time and just thought them to be not compatible together so never really tried it since.
 
 Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem](https://ramkedem.com/en/about/) use it to solve a question from a [set of questions he posted online for practice](https://docs.google.com/document/d/1H4Jo215InMGDVxU7Zuk31cJeh8vy_knF1xJ-jtzXST0/edit?fbclid=IwAR1lmuH5GM3yqOpbXnavnBe_v26tD_ZG3cjqtqWeImwfXeBRR2vOI3LcEWA). I really liked the use there mainly because [I initially solved it](https://amitlevinson.github.io/streaming/arena-sql/) in a more cumbersome way (see question 5), so his solution seemed elegant. 
 
 I've since started playing with the two (Windows & GROUP BY) more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1). It's mainly about Window Functions but there's a small section specifically about the relationship of the two.
 
-**This post is about some experimentation I did with both concepts and what it taught me about order of operations in a SQL query.** We'll start from a basic use case, move to a little more complex and end with what seems as an unintended use case (though valid SQL code!). Hopefully this will be helpful to you as it was to me; I combine the two much more since learning about this.
+**This post is about some experimentation I did with both concepts and what it taught me about order of operations in a SQL query.** We'll start from a basic use case, move to a little more complex and end with what seems to me as an unintended use case, but helpful nonetheless (and valid SQL code!). 
 
 {{% alert warning %}}
-Basic knowledge in both SQL aggregations and Window functions is required. I will not be going over their basics here
+Basic knowledge in both SQL GROUP BY aggregations and Window functions is required. I will not be going over their basics here
 {{% /alert %}}
 
 Alright then, let's begin!
@@ -81,11 +81,11 @@ Table: Table 1: 5 records
 
 </div>
 
-We've got users, their country, payments ids, dates and amount. Great, let's go ahead and starting exploring.
+We've got users, their country, payment ids, dates and amounts. Great, let's go ahead and starting exploring.
 
 #### Classic order by
 
-So the first and pretty simple example would be to add a simple window function in the `ORDER BY` clause *after* an aggregation occurred. That is, sort the output by the evaluation of a window function, for example:
+So the first and pretty simple example would be to add a window function in the `ORDER BY` clause *after* an aggregation occurred. That is, sort the output by the evaluation of a window function, for example:
 
 
 ```sql
@@ -116,7 +116,7 @@ Table: Table 2: 7 records
 
 </div>
 
-**The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data: values created in a window function and not the aggregation itself.** In this case, we have 3 Israeli users and thus that country appears on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords when it comes to fraud). 
+**The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data: values created in a window function and not the aggregation itself.** In this case, we have 3 Israeli users and thus users with that country appear on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords when it comes to fraud). 
 
 If you've run a few window functions you probably used this method; maybe also in a group by query without noticing. In comparison to the next parts, this also makes sense technically: an `ORDER BY` clause is evaluated after the `GROUP BY`, `HAVING` and even `SELECT`. So ordering by a vector created on the fly doesn't yet create 'tension' between the Window Function and `GROUP BY` being selected together. 
 
@@ -124,7 +124,9 @@ We got the easy part of the way, let's move forward to some deeper diving in and
 
 ### The SELECT Clause
 
-Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is grouped*. Let's see a quick example when we try to collect the total funds by user, but also have an aggregate amount for each country (read as a window function of `SUM() OVER ()`).
+Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is still grouped*? Let's see a quick example when we try to collect the total funds by user, but also aggregate the total amount for all users together as a new column (read as a window function of `SUM() OVER ()`).[^1]
+
+[^1]: We could use `WITH ROLLUP` to get the total here in the bottom row, but for the sake of the tutorial let's ignore it for now.
 
 Here's what you'll probably get:
 
@@ -133,7 +135,7 @@ Here's what you'll probably get:
 SELECT u.user_id,
   country,
   SUM(amount) AS total_funds,
-  SUM(amount) OVER(Partition BY country)
+  SUM(amount) OVER()
 FROM USERS U 
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 GROUP BY u.user_id, Country
@@ -144,13 +146,13 @@ GROUP BY u.user_id, Country
 ## <SQL> 'SELECT u.user_id,
 ##   country,
 ##   SUM(amount) AS total_funds,
-##   SUM(amount) OVER(Partition BY country)
+##   SUM(amount) OVER()
 ## FROM USERS U 
 ## LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
 ## GROUP BY u.user_id, Country'
 ```
 
-Ha, that is weird! **The error states that the "_Payments.amount_ column is invalid in the select because it's not in either an aggregate function or `GROUP BY` clause." But we can see it right there in the row above our window function, aggregated as total_funds!**
+Ha, that is weird! **The error states that the "_Payments.amount_ column is invalid in the select because it's not in either an aggregate function or `GROUP BY` clause." But we can see it right there in the row above our window function, aggregated as `total_funds`!**
 
 What's going on here? Well hopefully in the next two examples you'll better understand this error, how you can actually do what we're trying here and how do these two concepts relate to one another when used in the same query.
 
@@ -204,9 +206,9 @@ DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
 
 What's interesting here is that we use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
 
-Now I'm not a SQL Server savvy, but here's my understanding of it from also reading Itzik Ben-Gan's book[^1]. To better understand this, here's a quick reminder of the order of operations in SQL:
+Now I'm not a SQL Server savvy, but here's my understanding of it from also reading Itzik Ben-Gan's book[^*]. To better understand this, here's a quick reminder of the order of operations in SQL:
 
-[^1]: Do reach out and share insights about this process if you feel that I got it wrong here (or in the post in general).
+[^*]: Do reach out and share insights about this process if you feel that I got it wrong here (or in the post in general).
 
 1. `FROM`
 
@@ -276,7 +278,7 @@ SUM(amount) / SUM(SUM(amount)) OVER() * 100 AS pct_funds
 ```
 
 
-**What's happening here?** The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our `GROUP BY` aggregation as before, this is wrapped within an outer `SUM` that invokes a window function with the `OVER()` command. 
+**What's happening here?** The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our `GROUP BY` aggregation as before, this is then wrapped within an outer `SUM` that invokes a window function with the `OVER()` command to get the total sum of the window passed in. 
 
 **Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as a window function of summing all users aggregated funds.** This is also how we'd solve the error we got a few sections back. Lastly, we finalize it by multiplying with 100 to get a percentage value.
 
