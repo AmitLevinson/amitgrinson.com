@@ -6,7 +6,7 @@ layout: single
 slug: window-function-with-groupby
 categories: [SQL]
 tags: [SQL, window]
-subtitle: 'Diving into using window functions following a GROUP BY clause - how it works.'
+subtitle: 'Understaing how to use window functions with a group by clause'
 summary: 'A short overview of how to use window functions within a group by query. Going over 3 examples that help illustrate how to combine the two, as well as a better understanding the order of opertaions in SQL'
 featured: yes
 projects: []
@@ -73,31 +73,11 @@ FROM USERS U
 LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id;
 ```
 
-We've got users, their country, payment ids, dates and amounts. Great, let's go ahead and starting exploring.
-
-#### Classic order by
-
-So the first and pretty simple example would be to add a window function in the `ORDER BY` clause *after* an aggregation occurred. That is, sort the output by the evaluation of a window function, for example:
-
-```{sql connection='sqlconn'}
-SELECT u.user_id,
-  u.Country,
-  SUM(amount) as total_funds
-FROM USERS U 
-LEFT JOIN PAYMENTS P ON P.USER_ID = u.user_id
-GROUP BY u.user_id, u.country
-ORDER BY COUNT(*) OVER (PARTITION BY country) DESC 
-```
-
-**The interesting thing to notice here is that the output is sorted by the frequency of a country in our outputted data: values created in a window function and not the aggregation itself.** In this case, we have 3 Israeli users and thus users with that country appear on top. I find this useful when I aggregate data for users and what interests me is another parameter I used in the group by, sorting the output using that (for example similar passwords when it comes to fraud). 
-
-If you've run a few window functions you probably used this method; maybe also in a group by query without noticing. In comparison to the next parts, this also makes sense technically: an `ORDER BY` clause is evaluated after the `GROUP BY`, `HAVING` and even `SELECT`. So ordering by a vector created on the fly doesn't yet create 'tension' between the Window Function and `GROUP BY` being selected together. 
-
-We got the easy part of the way, let's move forward to some deeper diving in and explore the `SELECT` area that I find more interesting for this post.
+We've got users, their country, payment ids, dates and amounts. Great, let's go ahead and get started.
 
 ### The SELECT Clause
 
-Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is still grouped*? Let's see a quick example when we try to collect the total funds by user, but also aggregate the total amount for all users together as a new column (read as a window function of `SUM() OVER ()`).[^1]
+Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is grouped*? Let's see a quick example when we try to collect the total funds by user, but also aggregate the total amount for all users together as a new column (read as a window function of `SUM() OVER ()`).[^1]
 
 [^1]: We could use `WITH ROLLUP` to get the total here in the bottom row, but for the sake of the tutorial let's ignore it for now (plus we want it as a column).
 
@@ -119,9 +99,7 @@ What's going on here? Well hopefully in the next two examples you'll better unde
 
 ### Ranking for additional filters
 
-Let's assume you want to aggregate data, and then take the top X rows for each group. I've actually encountered this (what we'll see shortly) in a stackoverflow answer and later in one of [Ram Kedem](https://ramkedem.com/en/)'s online stream I previosuly noted. It was only when I played with it that I understood more how to use it.
-
-So relating to our data, let's return users receiving the most funds within a given country:
+Let's assume you want to aggregate data, and then take the top X rows for each group. So in our case, let's return users receiving the most funds within a given country:
 
 ```{sql connection='sqlconn'}
 WITH users_sum as (
@@ -151,7 +129,7 @@ DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
 
 What's interesting here is that we use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
 
-Now I'm not a SQL Server savvy, but here's my understanding of it from also reading Itzik Ben-Gan's book[^*]. To better understand this, here's a quick reminder of the order of operations in SQL:
+Now I'm not a SQL Server savvy, but here's my understanding of it from reading Itzik Ben-Gan's book[^*]. As a start, let's remind ourselves the order of operations for a given SQL query:
 
 [^*]: Do reach out and share insights about this process if you feel that I got it wrong here (or in the post in general).
 
@@ -167,17 +145,17 @@ Now I'm not a SQL Server savvy, but here's my understanding of it from also read
 
 1. `ORDER BY`
 
-Following the `FROM` and others, Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` operation statements. Itzik Ben-Gan in his book ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1) describes this very well, where we can think of the two - When the `GROUP BY` aggregation happens and the evaluation of window functions - occurring in two different contexts: 
+Following the `FROM` and others, Window functions are evaluated in the `SELECT` statement but separate from the `GROUP BY` aggregations. Itzik Ben-Gan in his book ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1) describes this very well, where we can think of the two - When the `GROUP BY` aggregation happens and the evaluation of window functions - occurring in two different contexts: 
 
 > "Grouped aggregates operate on groups of rows defined by the `GROUP BY` clause and return one value per group. Window aggregates operate on windows of rows and return one value for each row in the underlying query"
 
-The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data.** In a sense we reference the already-aggregated column `SUM(Amount)` as a column to sort our ranking window function we're creating!
+The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data.** In a sense we reference the already-aggregated column `SUM(amount)` as a column to sort our ranking window function we're creating!
 
 ### Aggregating the Aggregated data
 
-**The previous example opens up an opportunity to use our aggregate results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregate what we just aggregated in the `GROUP BY`?**
+**The previous example opens up an opportunity to use our aggregated results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregate what we just aggregated in the `GROUP BY`?**
 
-Let's take an example Itzik's also shares to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
+Let's take an example Itzik's also shares in his book that I used a few times at work to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
 
 Well you can, let's have a look:
 
@@ -194,12 +172,12 @@ ORDER BY pct_funds DESC
 
 Et Voila!
 
-Though this seems like weird syntax it's valid nonetheless.
+Though this seems like weird syntax it's valid SQL nonetheless.
 
 Let's look into our important code line:
 
 ```{sql connection='sqlconn', eval = FALSE}
-SUM(amount) / SUM(SUM(amount)) OVER() * 100 AS pct_funds
+SUM(amount) / SUM(SUM(amount)) OVER() * 100.0 AS pct_funds
 ```
 
 
