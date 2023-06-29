@@ -99,7 +99,7 @@ What's going on here? Well hopefully in the next two examples you'll better unde
 
 ### Ranking for additional filters
 
-Let's assume you want to aggregate data, and then take the top X rows for each group. So in our case, let's return users receiving the most funds within a given country:
+I encountered the following example in [Ram Kedem](https://ramkedem.com/en/)'s online stream and thought it be a good opener a simpler example. Let's assume you want to aggregate the data in some way, and then take the top 1 row of some group. So in our case, we want to return users receiving the most funds within a given country:
 
 ```{sql connection='sqlconn'}
 WITH users_sum as (
