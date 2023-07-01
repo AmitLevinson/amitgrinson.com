@@ -32,13 +32,11 @@ dbWriteTable(conn = sqlconn, 'users', users, field.types = c(user_id = 'INT', co
 
 ### Intro
 
-I've been using both `GROUP BY` & Window functions since I started writing SQL, but never really in the same query. Thinking back I'm assuming I got an error one time and just thought them to be not compatible together so never really tried it since.
+I've been using both `GROUP BY` & Window functions since I started writing SQL, but never really together in the same query. Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem](https://ramkedem.com/en/about/) use it to solve a question from a [set of questions he posted online for practice](https://docs.google.com/document/d/1H4Jo215InMGDVxU7Zuk31cJeh8vy_knF1xJ-jtzXST0/edit?fbclid=IwAR1lmuH5GM3yqOpbXnavnBe_v26tD_ZG3cjqtqWeImwfXeBRR2vOI3LcEWA). I really liked his use of it there  because [I initially solved it](https://amitlevinson.github.io/streaming/arena-sql/) in a more cumbersome way (see question 5). 
 
-Not long ago I encountered a Stackoverflow answer that used a window function & Group by in the same query, and more recently I saw [Ram Kedem](https://ramkedem.com/en/about/) use it to solve a question from a [set of questions he posted online for practice](https://docs.google.com/document/d/1H4Jo215InMGDVxU7Zuk31cJeh8vy_knF1xJ-jtzXST0/edit?fbclid=IwAR1lmuH5GM3yqOpbXnavnBe_v26tD_ZG3cjqtqWeImwfXeBRR2vOI3LcEWA). I really liked the use there mainly because [I initially solved it](https://amitlevinson.github.io/streaming/arena-sql/) in a more cumbersome way (see question 5), so his solution seemed elegant. 
+Since then I started playing with the two (Windows & GROUP BY) more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1). It's mainly about Window Functions but there's a small section specifically about the relationship of the two.
 
-I've since started playing with the two (Windows & GROUP BY) more, so much that I also decided to go ahead and buy a book about it — ["T-SQL Window Functions: For data analysis and beyond"](https://www.amazon.com/gp/product/0135861446/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1). It's mainly about Window Functions but there's a small section specifically about the relationship of the two.
-
-**This post is about some experimentation I did with both concepts and what it taught me about order of operations in a SQL query.** We'll start from a basic use case, move to a little more complex and end with what seems to me as an unintended use case, but helpful nonetheless (and valid SQL code!). 
+**This post is about some experimentation I did with both concepts and what it taught me about the order of operations in a SQL query, specifically in the SELECT.** We'll start from a basic use case, move to a little more complex and end with what seems to me as an unintended use case, but helpful nonetheless (and valid SQL code!). 
 
 {{% alert warning %}}
 Basic knowledge in both SQL GROUP BY aggregations and Window functions is required. I will not be going over their basics here
@@ -77,7 +75,7 @@ We've got users, their country, payment ids, dates and amounts. Great, let's go 
 
 ### The SELECT Clause
 
-Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is grouped*? Let's see a quick example when we try to collect the total funds by user, but also aggregate the total amount for all users together as a new column (read as a window function of `SUM() OVER ()`).[^1]
+Our next two examples will focus on the `SELECT` statement and the relationship between Window Functions and `GROUP BY` there. One question you might have is why can't I use a window function *when the data is still grouped*? Let's see a quick example when we try to collect the total funds by user, but also aggregate the total amount for all users together as a new column (read as a window function of `SUM() OVER ()`).[^1]
 
 [^1]: We could use `WITH ROLLUP` to get the total here in the bottom row, but for the sake of the tutorial let's ignore it for now (plus we want it as a column).
 
@@ -99,7 +97,9 @@ What's going on here? Well hopefully in the next two examples you'll better unde
 
 ### Ranking for additional filters
 
-I encountered the following example in [Ram Kedem](https://ramkedem.com/en/)'s online stream and thought it be a good opener a simpler example. Let's assume you want to aggregate the data in some way, and then take the top 1 row of some group. So in our case, we want to return users receiving the most funds within a given country:
+As previously noted, I encountered the following example in [Ram Kedem](https://ramkedem.com/en/)'s online stream and thought it'll be a good opening example to explain the execution logic.
+
+Let's assume you want to aggregate the data in some way, and then take the top 1 row of some group. So in our case, we want to return users receiving the most funds within a given country:
 
 ```{sql connection='sqlconn'}
 WITH users_sum as (
@@ -127,7 +127,7 @@ The relevant part for our discussion (and the purpose of this blog post) is the 
 DENSE_RANK() OVER(PARTITION BY COUNTRY ORDER BY SUM(amount) DESC) as rnk
 ```
 
-What's interesting here is that we use the aggregate value of the group by, `SUM(Amount)`, within our new column that's a window function.
+What's interesting here is that we use the aggregate value of the group by, `SUM(amount)`, within our new column that's a window function.
 
 Now I'm not a SQL Server savvy, but here's my understanding of it from reading Itzik Ben-Gan's book[^*]. As a start, let's remind ourselves the order of operations for a given SQL query:
 
@@ -153,9 +153,9 @@ The `GROUP BY` occurs, we `SELECT` the relevant columns we want in our aggregati
 
 ### Aggregating the Aggregated data
 
-**The previous example opens up an opportunity to use our aggregated results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? That is, **aggregate what we just aggregated in the `GROUP BY`?**
+**The previous example opens up an opportunity to use our aggregated results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? For example, **aggregate what we just aggregated in the `GROUP BY`?**
 
-Let's take an example Itzik's also shares in his book that I used a few times at work to better explore this: How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users? And more specifically, can you do this in one query?
+Let's take an example Itzik's also shares in his book that I used a few times at work to better explore this: **How would you aggregate the total amount each user received, and the proportion of that amount out of the total funds for all users?** And more specifically, can you do this in one query?
 
 Well you can, let's have a look:
 
@@ -181,22 +181,22 @@ SUM(amount) / SUM(SUM(amount)) OVER() * 100.0 AS pct_funds
 ```
 
 
-**What's happening here?** The first `SUM(amount)` is an aggregation from our intial `GROUP BY` clause we have. That's the total_funds for each variable. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our `GROUP BY` aggregation as before, this is then wrapped within an outer `SUM` that invokes a window function with the `OVER()` command to get the total sum of the window passed in. 
+**What's happening here?** The first `SUM(amount)` is an aggregation from our initial `GROUP BY` clause we have; that's the total_funds for each user. The second part `SUM(SUM(amount)) OVER()` might take a few readings to grasp but is something as follows: The most inner `SUM(amount)` references our `GROUP BY` aggregation as before, this is then wrapped within an outer `SUM` that invokes a window function with the `OVER()` command to get the total sum of the window passed in. 
 
-**Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, which is calculated as a window function of summing all users aggregated funds.** This is also how we'd solve the error we got a few sections back. Lastly, we finalize it by multiplying with 100 to get a percentage value.
+**Basically we're dividing each user's funds that we *just* aggregated by the total funds of all users, the latter calculated as a window function of summing all users aggregated funds.** Lastly, we finalize it by multiplying with 100 to get a percentage value.
 
-Personally, this was mind blowing when I played around with it and realized this worked. Only then did the order of operations for a given query with Window functions and Grouping actually clicked.
+Personally, this was mind blowing when I played around with it and realized this worked. Only then did the order of operations for a given query with Window functions and Grouping actually clicked for me.
 
-**I will say, however, that the above syntax might not be easily understood to someone first encountering this.** SQL is a declarative language that usually feels intuitive to read; this somewhat contradicts it. Though valid SQL code, and pretty cool nonetheless, maybe breaking it up to several parts (e.g. with CTE) would make it more readable for others if you're working on something collaboratively. 
+**I will say, however, that the above syntax might not be easily understood to someone first encountering this.** SQL is a declarative language that usually feels intuitive to read; this somewhat contradicts it. Though valid SQL code, and pretty cool nonetheless, maybe breaking it up to several parts (e.g. with CTE) would make it more readable for others if you're working on something collaboratively or readability is important. I'm also not sure about performance issues so definitely compare the approaches if that's cruicial for you.
 
 
 ### Closing notes
 
 First off, I highly recommend Itzik Ben-Gan's book. I bought it when I learned what I shared in this blog post in order to learn more advanced SQL. I realized that while I know how to *use* window functions and construct them, I still have much more to discover. The book is fantastic and addresses a lot of topics ranging from basics of a window function to optimization. What I address in this post - The relationship between `GROUP BY` and Window Functions - is a very small section of the book, barely two pages; he covers a lot more.
 
-The second thing I'd like to share is about my discovery of this and why it was exciting for me. I love learning new things, which I imagine most of us do. I've learned [correlated sub-queries](https://www.amitgrinson.com/blog/review-of-an-sql-interview-question/) a while back that was cool, [recursive CTE's](https://www.amitgrinson.com/blog/follow-the-money-with-a-recursion/), using things such as `CROSS/OUTER APPLY` and more. But they've all been new concepts altogether, so it was a different kind of excitement compared to what I shared here.
+The second thing I'd like to share is about my discovery of this and why it was exciting for me. I love learning new things which I imagine most of us do. As to SQL I've learned [correlated sub-queries](https://www.amitgrinson.com/blog/review-of-an-sql-interview-question/) a while back that was cool, [recursive CTE's](https://www.amitgrinson.com/blog/follow-the-money-with-a-recursion/), using things such as `CROSS/OUTER APPLY` and more. But they've all been new concepts altogether, so it was a different kind of excitement compared to what I shared here.
 
-I've been using the `GROUP BY` clause since I started writing SQL a few years ago, and window functions not much after. I became better at both, learned how to maximize the use of them and general tips and tricks. However what I was hopefully able to convey in the post was a different kind of learning: **It was taking what seemed as two concepts I continuously used and learned more about how they each operate separately and in relation to one another.** Definitely an exciting thing to discover.
+I've been using the `GROUP BY` clause since I started writing SQL a few years ago and window functions not much after. I became better at both, learned how to maximize the use of them and general tips and tricks. However what I was hopefully able to convey in this post was a different kind of learning: **It was taking what seemed as two concepts I continuously used and learned more about how they each operate separately and in relation to one another.** Definitely an exciting thing to discover.
 
 Hope you enjoyed it too!
 
