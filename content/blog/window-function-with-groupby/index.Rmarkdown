@@ -187,7 +187,7 @@ SUM(amount) / SUM(SUM(amount)) OVER() * 100.0 AS pct_funds
 
 Personally, this was mind blowing when I played around with it and realized this worked. Only then did the order of operations for a given query with Window functions and Grouping actually clicked for me.
 
-**I will say, however, that the above syntax might not be easily understood to someone first encountering this.** SQL is a declarative language that usually feels intuitive to read; this somewhat contradicts it. Though valid SQL code, and pretty cool nonetheless, maybe breaking it up to several parts (e.g. with CTE) would make it more readable for others if you're working on something collaboratively or readability is important. I'm also not sure about performance issues so definitely compare the approaches if that's cruicial for you.
+**I will say, however, that the above syntax might not be easily understood to someone first encountering this.** SQL is a declarative language that usually feels intuitive to read; this somewhat contradicts it. Though valid SQL code, and pretty cool nonetheless, maybe breaking it up to several parts (e.g. with CTE) would make it more readable for others if you're working on something collaboratively or readability is important. I'm also not sure about performance issues here so definitely compare the approaches if that's crucial for you.
 
 
 ### Closing notes
