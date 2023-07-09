@@ -157,6 +157,8 @@ Similarly, [Google Cloud's BigQuery docs](https://cloud.google.com/bigquery/docs
 
 Therefore the `GROUP BY` occurs, and then we `SELECT` the relevant columns we want in our aggregation, and any window function in the `SELECT` is **evaluated on the post-aggregated data.** In a sense we reference the already-aggregated column `SUM(amount)` as a column to sort our ranking window function we're creating!
 
+This also explains the error we got earlier: At the time of evaluating the Window Function the `amount` column doesn't exist anymore. We can only use columns we grouped by or newly created columns in our aggregation, in this case the `SUM(amount)`.
+
 ### Aggregating the Aggregated data
 
 **The previous example opens up an opportunity to use our aggregated results within a window function.** There we used it as an ordering clause in a window function, but can we use other forms of aggregation within the window function that reference the previous aggregation? For example, **aggregate what we just aggregated in the `GROUP BY`?**
