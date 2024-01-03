@@ -10,7 +10,7 @@ image:
 excerpt: Website containing various SQL Challenges from my daily work as a Data Analyst
 layout: single
 links:
-- icon: website
+- icon: house
   icon_pack: fab
   name: Website
   url: https://sql.amitgrinson.com/
@@ -27,5 +27,16 @@ url_slides: ""
 url_video: ""
 ---
 
-### Explanation
+### Project Overview
+
+As a Data Analyst writing a lot of SQL, I find myself coming across challenges I solved that I'd love to share with others. Seeing that this occurred often - the need to share - I decided to open a website containing these challenges I came across and how I solved them. That way I can both share the challenge I faced with others.
+
+This project (the website) is exactly that — Analytical challenges I encountered in work that required solutions with SQL. For each challenge I provide the questions, data that can be locally created, the solutions and a video I recorded going over the answer. Give it a go here:  
+
+**[sql.amitgrinson.com](sql.amitgrinson.com)**
+
+Note that the website is in Hebrew. I find myself writing a lot in English on my personal website and social media platforms that I found it a good opportunity to share stuff in Hebrew. 
+
+Enjoy!
+
 
