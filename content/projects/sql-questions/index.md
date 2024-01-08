@@ -5,13 +5,13 @@ categories:
 - SQL
 image:
   caption: 
-  focal_point: Smart
-  preview_only: yes
+  focal_point: smart
+  preview_only: no
 excerpt: Website containing various SQL Challenges from my daily work as a Data Analyst
 layout: single
 links:
-- icon: house
-  icon_pack: fab
+- icon: link
+  icon_pack: fa
   name: Website
   url: https://sql.amitgrinson.com/
 - icon: github
@@ -29,7 +29,7 @@ url_video: ""
 
 ### Project Overview
 
-As a Data Analyst writing a lot of SQL, I find myself coming across challenges I solved that I'd love to share with others. Seeing that this occurred often - the need to share - I decided to open a website containing these challenges I came across and how I solved them. That way I can both share the challenge I faced with others.
+As a Data Analyst who writes a lot of SQL, I find myself coming across challenges I solved that I'd love to share with others. 
 
 This project (the website) is exactly that — Analytical challenges I encountered in work that required solutions with SQL. For each challenge I provide the questions, data that can be locally created, the solutions and a video I recorded going over the answer. Give it a go here:  
 
@@ -37,6 +37,6 @@ This project (the website) is exactly that — Analytical challenges I encounter
 
 Note that the website is in Hebrew. I find myself writing a lot in English on my personal website and social media platforms that I found it a good opportunity to share stuff in Hebrew. 
 
-Enjoy!
+Hope you enjoy!
 
 
