@@ -88,6 +88,11 @@ Furthermore, We want to measure distances from various locations on the map to t
 
 Grids… What? Let’s have a look:
 
+<details>
+<summary>
+Show Code
+</summary>
+
 ``` r
 theme_set(theme_void()+
             theme(text = element_text("IBM Plex Sans"),
@@ -105,11 +110,18 @@ p1+p2+
     theme = theme(plot.title = element_markdown(size = 12)))
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+</details>
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 On the left we have our map of Israel, and on the right the same map after we ‘cut’ it horizontally and vertically. Each grid represents a square polygon (except those on the borders) with specific geographic references to plot it, creating a 2 squared kilometers area (2km$^2$). **We can measure the distance from the center of each 2km$^2$ grid to the nearest ice-cream location.**
 
 In practical terms, here’s an example of distances from one random grid to a few random Golda locations:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Create a sampled dataframe
@@ -150,7 +162,9 @@ ggplot(isr_map_sf)+
   theme(plot.title = element_text(size = 13, hjust = 0.5))
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+</details>
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Our small square represents a 2km$^2$ area somewhere in southern Israel. **The lines and corresponding values indicate the distance to each ice-cream location from our example grid.** To be specific, I measure the air distance from the *center* of a grid cell to the various locations. In the above graph our sampled grid is connected with a red line to the nearest ice-cream location located in Eilat, 57km away.
 
@@ -163,6 +177,11 @@ We divide Israel into grids and measure the distance between each grid cell to a
 ### Where’s Our Ice-cream
 
 Once we understand how each grid’s nearest ice-cream location distance is found we can measure accordingly for all grids. Following that we can create a map of our grid cells filled with color indicating the distance to the nearest Golda ice-cream location:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Commented out and loaded as an rds instead. Calculate distances:
@@ -225,6 +244,7 @@ full_map <- leaflet() %>%
 # htmlwidgets::saveWidget(full_map, "widgets/full_map.html")
 ```
 
+</details>
 <p align="center">
 <iframe width="95%" height="550px" name="iframe" src="widgets/full_map.html">
 </iframe>
@@ -244,6 +264,11 @@ We could also level up the map and have the distance measured from a specific lo
 #### Version 1
 
 We can visualize it on a static map enabling us to easily share it as an image:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Using the interactive original object we can create a
@@ -280,7 +305,9 @@ ggplot(golda_distances, color = "gray55")+
         legend.key.size = unit(3,"mm"))
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+</details>
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" />
 
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations
@@ -290,6 +317,11 @@ ggplot(golda_distances, color = "gray55")+
 #### Version 2
 
 Considering the geo-political issues in Israel, which I won’t elaborate here, I’ll share another map with different borders. These borders better reflect the feasibility of individuals to access these locations since people living in, say, Gaza (plotted in previous maps), cannot access any of the locations.
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Israel map
@@ -327,7 +359,9 @@ ggplot(golda_distances_rds)+
         legend.key.size = unit(3,"mm"))
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+</details>
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations within Israel’s pre-67 borders <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>

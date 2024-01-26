@@ -16,8 +16,6 @@ format:
     html-math-method: webtex
 ---
 
-
-
 <script src="index_files/libs/core-js-2.5.3/shim.min.js"></script>
 <script src="index_files/libs/react-17.0.0/react.min.js"></script>
 <script src="index_files/libs/react-17.0.0/react-dom.min.js"></script>
@@ -26,16 +24,9 @@ format:
 <script src="index_files/libs/reactable-binding-0.3.0/reactable.js"></script>
 
 
-<style type="text/css">
-newcaption {
-  font-size: 0.9em;
-  text-align: center;
-}
-</style>
-
 ### What's this all about
 
-This past November I participated several times in the [\#30DaysMapChallenge](https://github.com/tjukanovt/30DayMapChallenge), a daily mapping visualization challenge. While I was satisfied with [what I came up with](https://amitlevinson.com/blog/thirty-day-map-challenge/), my main outcome was that I have no idea how to work with maps. Well, to say it differently, I was able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I'll be back to explore some additional geographic data, leading to the following blog post.
+This past November I participated several times in the [#30DaysMapChallenge](https://github.com/tjukanovt/30DayMapChallenge), a daily mapping visualization challenge. While I was satisfied with [what I came up with](https://amitlevinson.com/blog/thirty-day-map-challenge/), my main outcome was that I have no idea how to work with maps. Well, to say it differently, I was able to fiddle around and hit home eventually, but my knowledge of Coordinate Referencing Systems (CRS) and other important features was limited. For that purpose, I knew I'll be back to explore some additional geographic data, leading to the following blog post.
 
 **In this blog post I'll explore [Golda Ice-cream](https://www.goldaglida.co.il/) locations throughout Israel.** My wife and I came across Golda one day and were happily surprised when first tasting it: the ice-cream was fantastic, especially compared to other ice-cream shops we previously visited. Golda has a plethora of ice-cream flavors including fantastic Sorbets, chocolate pretzel, salted cashew, vanilla chocolate pistachio and more. Also, they have this really amazing pretzel sauce you can drizzle on top, what a treat!
 
@@ -65,8 +56,8 @@ Essentially, I geocoded the data twice. Any addresses in English that didn't mat
 
 **Our Golda ice-cream dataset looks as follows:**
 
-<div id="htmlwidget-049aa9dbf880bcb88df9" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-049aa9dbf880bcb88df9">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"city":["אור יהודה","אור עקיבא","אילת","אשדוד","אשקלון","באר יעקב","באר שבע","ביתן אהרון","בת ים","גבעת שמואל","גבעתיים","גבעתיים","גדרה","גן יבנה","הוד השרון","הרצליה","הרצליה","הרצליה","חדרה","חדרה","חולון","חיפה","חריש","טירת הכרמל","יבנה","יוקנעם","יפו","יפו","ירושלים","ירושלים","ירושלים","ירושלים","כרמיאל","כפר סבא","מודיעין","מודיעין","מעלה אדומים","מצפה רמון","נס ציונה","נתיבות","נצרת","נהריה","נתניה","נתניה","סביון","צומת גלילות","עפולה","פרדס חנה","פתח תקווה","קניון הקריון","קריית גת","קריית מוצקין","קרית אונו","ראש העין","ראש פינה","רמלה","רמת גן","רעננה","רעננה","ראשון לציון","ראשון לציון","ראשון לציון","רחובות","רחובות","שוהם","שפיים","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב"],"street":["אריק איינשטיין 1","השקמים 8","מתחם הספירל","אריק איינשטיין 4","שדרות אפריקה 65","יהלום 3","החיטה 1","מתחם ביתנ'ס","בן גוריון 85","הערבה 1","בורכוב 54","דרך השלום 53","מנחם בגין 12","המגינים 56","דרך רמתיים 24","השונית 2- קניון ארנה","חבצלת השרון 37","בן גוריון 22","אקו פארק","צומת חדרה כביש 4","פנחס איילון 13","דוברין 3","גפן 4","ששת הימים 1","הדוגית 16","שדרות יצחק רבין 9","עולי ציון 9","רציף העלייה השנייה 101, נמל יפו","שדרת אלרוב ממילא","אביזוהר 8","המעיין 25","אגריפס 72","מעלה כמון 2","מתחם G","עמק זבולון 24 – קייזר סנטר","קניון מודיעין","הרכס 31","שדרות בן גוריון 2","ויצמן 12","בעלי המלאכה 13","ביג פאשן נצרת","בלפור 1","סינמה סיטי המחקר 3","יכין סנטר","נתיב היובל 1","סינמה סיטי","שדרות יצחק רבין 20","גלעד 1","השחם 30","דרך עכו 192","דרך הדרום 20","שדרות ירושלים 1","המייסדים 3","רחוב שבזי 10","התפוח 1","משה אדרת 4","שדרות ירושלים 3","רחוב ויצמן 273","אחוזה 71, רעננה","הטיילת 14","סחרוב 26","גבעתי 1","מוטי קינד 10","חיים פקריס 3","עמק איילון 30","חוצות שפיים","מקווה ישראל 22","בן יהודה 110","מאיר יערי 19","ז'בוטינסקי 110","שמואל רודנסקי 5","מנחם בגין 144","קניון עזריאלי","חוף גורדון-הירקון 163","משה דיין 2","יחיאלי 9, סוזן דלל","דיזינגוף 245","ישכון 22","דיזנגוף 107"],"number":["03-7797577","04-646-0705","08-9428989","08-9775157","08-6869144","08-9555764","08-6445959","09-9661614","03-9441070","03-7775169","03-9441580","03-5090394","08-6565999","08-6913335","09-9775251","09-9601630","09-9799320","09-7921477","04-8692622","04-8801493","03-7792477","077-7060373","04-8164606","04-612-6444","08-6846192","04-6298822","03-6036275","03-6241041","02-5644496","02-9665661","02-6449253","02-5444077","052-7247441","09-8912336","08-6578945","052-8264820","02-5455570","08-9120806","08-9955289","08-6733343","04-6704343","04-6835333","09-8802035","09-9777555","03-7787088","03-9447269","04-7749599","04-8233660",null,"04-8885555","08-658-9026","04-641-2662","03-7786447","03-9024405","04-6190555","08-9711909","03-5367330","09-7882233","09-9591000","03-5080550","03-7745102","03-6099949","08-9447717","08-6875060","03-559-7967","09-9697969","03-6327766","03-9743322","03-6885836","03-6968581","03-6992770","03-5297797","03-6960405","03-5780170","03-5614016","03-5105545","03-5164014","03-5377887","03-6350409"],"lon":[34.8600193,34.91794008,34.9596765,34.6365283,34.570097,34.8261351,34.7994617,34.8680834,34.7389925,34.8556056,34.8096975,34.803277,34.7835822,34.704494,34.8940276,34.7968935,34.8048763,34.8420226,34.9340366,34.91021,34.7783752,34.9999173,35.0395,34.9729581,34.735896,35.0940528,34.7569213,34.7506434,35.2252087,35.1867225,35.161224,35.21137479,35.3208182,34.9284373,34.9982069,35.0076632,35.3113066,34.8027322,34.7982235,34.5952321,35.30125526,35.0910873,34.8616661,34.86202,34.877472,34.8044874,35.2998605,34.9743126,34.8587367,35.0903414,34.7772321,35.0652399,34.8579994,34.9418992,35.5503387,34.8891982,34.81934893,34.8450306,34.8806584,34.7325432,34.7741726,34.8170841,34.7894096,34.8045454,34.94685,34.8283333,34.7762768,34.7717,34.7877215,34.7866453,34.79277609,34.79484,34.7922028,34.7689540001264,34.799156,34.7642438,34.7761066,34.7674684,34.7736884],"lat":[32.0205064,32.50435742,29.5495247,31.7911936,31.680045,31.9362388,31.2341222,32.3615628,32.018181,32.084025,32.078906,32.066902,31.80029,31.7952815,32.1600277,32.1636494,32.1789864,32.1630141,32.4285114,32.437704,32.0087448,32.8181047,32.471,32.7596281,31.866917,32.6460421,32.0529073,32.0542555,31.7773657,31.7749335,31.764778,31.78468998,32.9271943,32.1720743,31.907639,31.8996612,31.7824447,30.6125647,31.9269473,31.4184847,32.69674366,33.0067673,32.2908142,32.2812249,32.0446395,32.1463675,32.6146772,32.4727894,32.0873026,32.8420813,31.6057407,32.8352351,32.0561635,32.0985708,32.970075,31.9298811,32.07502139,32.191239,32.1789452,31.9988297,31.9895843,31.9671292,31.8946742,31.9119146,31.9990278,32.2208333,32.0627021,32.0831387,32.0999275,32.0871902,32.12071803,32.079904,32.0740769,32.0848266319339,32.047187,32.0607159,32.0921838,32.0688802,32.0800888]},"columns":[{"accessor":"id","name":"id","type":"numeric"},{"accessor":"city","name":"city","type":"character"},{"accessor":"street","name":"street","type":"character"},{"accessor":"number","name":"number","type":"character"},{"accessor":"lon","name":"lon","type":"numeric"},{"accessor":"lat","name":"lat","type":"numeric"}],"defaultPageSize":6,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"2426b7b046f077a64c1b8f702dbe0f5e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-eaa7a5c9124e5ca6817f" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-eaa7a5c9124e5ca6817f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"city":["אור יהודה","אור עקיבא","אילת","אשדוד","אשקלון","באר יעקב","באר שבע","ביתן אהרון","בת ים","גבעת שמואל","גבעתיים","גבעתיים","גדרה","גן יבנה","הוד השרון","הרצליה","הרצליה","הרצליה","חדרה","חדרה","חולון","חיפה","חריש","טירת הכרמל","יבנה","יוקנעם","יפו","יפו","ירושלים","ירושלים","ירושלים","ירושלים","כרמיאל","כפר סבא","מודיעין","מודיעין","מעלה אדומים","מצפה רמון","נס ציונה","נתיבות","נצרת","נהריה","נתניה","נתניה","סביון","צומת גלילות","עפולה","פרדס חנה","פתח תקווה","קניון הקריון","קריית גת","קריית מוצקין","קרית אונו","ראש העין","ראש פינה","רמלה","רמת גן","רעננה","רעננה","ראשון לציון","ראשון לציון","ראשון לציון","רחובות","רחובות","שוהם","שפיים","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב","תל אביב"],"street":["אריק איינשטיין 1","השקמים 8","מתחם הספירל","אריק איינשטיין 4","שדרות אפריקה 65","יהלום 3","החיטה 1","מתחם ביתנ'ס","בן גוריון 85","הערבה 1","בורכוב 54","דרך השלום 53","מנחם בגין 12","המגינים 56","דרך רמתיים 24","השונית 2- קניון ארנה","חבצלת השרון 37","בן גוריון 22","אקו פארק","צומת חדרה כביש 4","פנחס איילון 13","דוברין 3","גפן 4","ששת הימים 1","הדוגית 16","שדרות יצחק רבין 9","עולי ציון 9","רציף העלייה השנייה 101, נמל יפו","שדרת אלרוב ממילא","אביזוהר 8","המעיין 25","אגריפס 72","מעלה כמון 2","מתחם G","עמק זבולון 24 – קייזר סנטר","קניון מודיעין","הרכס 31","שדרות בן גוריון 2","ויצמן 12","בעלי המלאכה 13","ביג פאשן נצרת","בלפור 1","סינמה סיטי המחקר 3","יכין סנטר","נתיב היובל 1","סינמה סיטי","שדרות יצחק רבין 20","גלעד 1","השחם 30","דרך עכו 192","דרך הדרום 20","שדרות ירושלים 1","המייסדים 3","רחוב שבזי 10","התפוח 1","משה אדרת 4","שדרות ירושלים 3","רחוב ויצמן 273","אחוזה 71, רעננה","הטיילת 14","סחרוב 26","גבעתי 1","מוטי קינד 10","חיים פקריס 3","עמק איילון 30","חוצות שפיים","מקווה ישראל 22","בן יהודה 110","מאיר יערי 19","ז'בוטינסקי 110","שמואל רודנסקי 5","מנחם בגין 144","קניון עזריאלי","חוף גורדון-הירקון 163","משה דיין 2","יחיאלי 9, סוזן דלל","דיזינגוף 245","ישכון 22","דיזנגוף 107"],"number":["03-7797577","04-646-0705","08-9428989","08-9775157","08-6869144","08-9555764","08-6445959","09-9661614","03-9441070","03-7775169","03-9441580","03-5090394","08-6565999","08-6913335","09-9775251","09-9601630","09-9799320","09-7921477","04-8692622","04-8801493","03-7792477","077-7060373","04-8164606","04-612-6444","08-6846192","04-6298822","03-6036275","03-6241041","02-5644496","02-9665661","02-6449253","02-5444077","052-7247441","09-8912336","08-6578945","052-8264820","02-5455570","08-9120806","08-9955289","08-6733343","04-6704343","04-6835333","09-8802035","09-9777555","03-7787088","03-9447269","04-7749599","04-8233660",null,"04-8885555","08-658-9026","04-641-2662","03-7786447","03-9024405","04-6190555","08-9711909","03-5367330","09-7882233","09-9591000","03-5080550","03-7745102","03-6099949","08-9447717","08-6875060","03-559-7967","09-9697969","03-6327766","03-9743322","03-6885836","03-6968581","03-6992770","03-5297797","03-6960405","03-5780170","03-5614016","03-5105545","03-5164014","03-5377887","03-6350409"],"lon":[34.8600193,34.91794008,34.9596765,34.6365283,34.570097,34.8261351,34.7994617,34.8680834,34.7389925,34.8556056,34.8096975,34.803277,34.7835822,34.704494,34.8940276,34.7968935,34.8048763,34.8420226,34.9340366,34.91021,34.7783752,34.9999173,35.0395,34.9729581,34.735896,35.0940528,34.7569213,34.7506434,35.2252087,35.1867225,35.161224,35.21137479,35.3208182,34.9284373,34.9982069,35.0076632,35.3113066,34.8027322,34.7982235,34.5952321,35.30125526,35.0910873,34.8616661,34.86202,34.877472,34.8044874,35.2998605,34.9743126,34.8587367,35.0903414,34.7772321,35.0652399,34.8579994,34.9418992,35.5503387,34.8891982,34.81934893,34.8450306,34.8806584,34.7325432,34.7741726,34.8170841,34.7894096,34.8045454,34.94685,34.8283333,34.7762768,34.7717,34.7877215,34.7866453,34.79277609,34.79484,34.7922028,34.7689540001264,34.799156,34.7642438,34.7761066,34.7674684,34.7736884],"lat":[32.0205064,32.50435742,29.5495247,31.7911936,31.680045,31.9362388,31.2341222,32.3615628,32.018181,32.084025,32.078906,32.066902,31.80029,31.7952815,32.1600277,32.1636494,32.1789864,32.1630141,32.4285114,32.437704,32.0087448,32.8181047,32.471,32.7596281,31.866917,32.6460421,32.0529073,32.0542555,31.7773657,31.7749335,31.764778,31.78468998,32.9271943,32.1720743,31.907639,31.8996612,31.7824447,30.6125647,31.9269473,31.4184847,32.69674366,33.0067673,32.2908142,32.2812249,32.0446395,32.1463675,32.6146772,32.4727894,32.0873026,32.8420813,31.6057407,32.8352351,32.0561635,32.0985708,32.970075,31.9298811,32.07502139,32.191239,32.1789452,31.9988297,31.9895843,31.9671292,31.8946742,31.9119146,31.9990278,32.2208333,32.0627021,32.0831387,32.0999275,32.0871902,32.12071803,32.079904,32.0740769,32.0848266319339,32.047187,32.0607159,32.0921838,32.0688802,32.0800888]},"columns":[{"accessor":"id","name":"id","type":"numeric"},{"accessor":"city","name":"city","type":"character"},{"accessor":"street","name":"street","type":"character"},{"accessor":"number","name":"number","type":"character"},{"accessor":"lon","name":"lon","type":"numeric"},{"accessor":"lat","name":"lat","type":"numeric"}],"defaultPageSize":6,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"2426b7b046f077a64c1b8f702dbe0f5e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 
 <br>
 
@@ -92,6 +83,11 @@ Furthermore, We want to measure distances from various locations on the map to t
 
 Grids... What? Let's have a look:
 
+<details>
+<summary>
+Show Code
+</summary>
+
 ``` r
 theme_set(theme_void()+
             theme(text = element_text("IBM Plex Sans"),
@@ -109,11 +105,18 @@ p1+p2+
     theme = theme(plot.title = element_markdown(size = 12)))
 ```
 
-<img src="index_files/figure-gfm/unnamed-chunk-7-1.png" width="768" />
+</details>
+
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
 
 On the left we have our map of Israel, and on the right the same map after we 'cut' it horizontally and vertically. Each grid represents a square polygon (except those on the borders) with specific geographic references to plot it, creating a 2 squared kilometers area (2km![^2](https://latex.codecogs.com/svg.latex?%5E2 "^2")). **We can measure the distance from the center of each 2km![^2](https://latex.codecogs.com/svg.latex?%5E2 "^2") grid to the nearest ice-cream location.**
 
 In practical terms, here's an example of distances from one random grid to a few random Golda locations:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Create a sampled dataframe
@@ -154,7 +157,9 @@ ggplot(isr_map_sf)+
   theme(plot.title = element_text(size = 13, hjust = 0.5))
 ```
 
-<img src="index_files/figure-gfm/unnamed-chunk-8-1.png" width="768" />
+</details>
+
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 
 Our small square represents a 2km![^2](https://latex.codecogs.com/svg.latex?%5E2 "^2") area somewhere in southern Israel. **The lines and corresponding values indicate the distance to each ice-cream location from our example grid.** To be specific, I measure the air distance from the *center* of a grid cell to the various locations. In the above graph our sampled grid is connected with a red line to the nearest ice-cream location located in Eilat, 57km away.
 
@@ -167,6 +172,11 @@ We divide Israel into grids and measure the distance between each grid cell to a
 ### Where's Our Ice-cream
 
 Once we understand how each grid's nearest ice-cream location distance is found we can measure accordingly for all grids. Following that we can create a map of our grid cells filled with color indicating the distance to the nearest Golda ice-cream location:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Commented out and loaded as an rds instead. Calculate distances:
@@ -229,6 +239,7 @@ full_map <- leaflet() %>%
 # htmlwidgets::saveWidget(full_map, "widgets/full_map.html")
 ```
 
+</details>
 <p align="center">
 <iframe width="95%" height="550px" name="iframe" src="widgets/full_map.html">
 </iframe>
@@ -248,6 +259,11 @@ We could also level up the map and have the distance measured from a specific lo
 #### Version 1
 
 We can visualize it on a static map enabling us to easily share it as an image:
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Using the interactive original object we can create a
@@ -284,7 +300,9 @@ ggplot(golda_distances, color = "gray55")+
         legend.key.size = unit(3,"mm"))
 ```
 
-<img src="index_files/figure-gfm/unnamed-chunk-10-1.png" data-fig-align="center" width="768" />
+</details>
+
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" data-fig-align="center" width="768" />
 
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations
@@ -294,6 +312,11 @@ ggplot(golda_distances, color = "gray55")+
 #### Version 2
 
 Considering the geo-political issues in Israel, which I won't elaborate here, I'll share another map with different borders. These borders better reflect the feasibility of individuals to access these locations since people living in, say, Gaza (plotted in previous maps), cannot access any of the locations.
+
+<details>
+<summary>
+Show Code
+</summary>
 
 ``` r
 # Israel map
@@ -331,7 +354,9 @@ ggplot(golda_distances_rds)+
         legend.key.size = unit(3,"mm"))
 ```
 
-<img src="index_files/figure-gfm/unnamed-chunk-13-1.png" width="768" />
+</details>
+
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
 
 <center>
 <newcaption>Static map of distances to Golda ice-cream locations within Israel's pre-67 borders <a download href="imgs/Golda_wo.png"><i class="fa fa-download" aria-hidden="true" style="color:black"></i></a></newcaption>
