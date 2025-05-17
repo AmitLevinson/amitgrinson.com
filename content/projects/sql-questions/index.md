@@ -33,7 +33,7 @@ As a Data Analyst who writes a lot of SQL, I find myself coming across challenge
 
 This project (the website) is exactly that — Analytical challenges I encountered in work that required solutions with SQL. For each challenge I provide the questions, data that can be locally created, the solutions and a video I recorded going over the answer. Give it a go here:  
 
-**[sql.amitgrinson.com](sql.amitgrinson.com)**
+**[sql.amitgrinson.com](https://sql.amitgrinson.com)**
 
 Note that the website is in Hebrew. I find myself writing a lot in English on my personal website and social media platforms that I found it a good opportunity to share stuff in Hebrew. 
 

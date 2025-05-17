@@ -7,7 +7,7 @@ number_categories: 3 # set to zero to exclude
 show_intro: true
 intro: |
 
-  As you've noticed, I'm Amit Grinson (Levinson), a Risk Data Analyst @ Payoneer. I currently live with my wife Tal, our boy Tom and dog Milo in Rehovot, Israel.  
+  As you've noticed, I'm Amit Grinson (Levinson), a Data Scientist @ Meta. I currently live with my wife Tal, our boy Tom and dog Milo in Rehovot, Israel.  
   
   I've come across the R programming language during my MA in Sociology, actually by chance, and have been hooked on it since. I love the R community, data visualization challenges and more recently other languages such as SQL, Python and doing baby steps in JS.
   
