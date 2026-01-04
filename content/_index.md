@@ -8,7 +8,7 @@ images:
 - avatar.png
 show_action_link: true
 show_social_links: true
-subtitle: Data Scientist @Meta
+subtitle:
 text_align_left: true
 title: Amit Grinson
 type: home
