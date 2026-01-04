@@ -120,25 +120,30 @@ enableEmoji = true
     url = "/blog/"
     weight = 1
   [[menu.header]]
+    name = "SQL challenges"
+    title = "SQL challenges from my daily work"
+    url = "/sql-challenges/"
+    weight = 2
+  [[menu.header]]
     name = "Talks"
     title = "Talks"
     url = "/talk/"
-    weight = 2
+    weight = 3
   [[menu.header]]
     name = "Visualizations"
     title = "Visualizations"
     url = "/data-visualizations/"
-    weight = 3
+    weight = 4
   [[menu.header]]
     name = "Projects"
     title = "Project Portfolio"
     url = "/projects/"
-    weight = 4
+    weight = 5
   [[menu.header]]
     name = "About"
     title = "About Blogophonic"
     url = "/about/"
-    weight = 5
+    weight = 6
     
   # Configure footer  
   #[[menu.footer]]
